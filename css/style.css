@@ -1,31 +1,16 @@
-:root {
-  --bg: #0B1120;
-  --card: #111827;
-
-  --primary: #7C3AED;
-  --secondary: #4F46E5;
-  --accent: #22D3EE;
-
-  --text: #F8FAFC;
-  --muted: #94A3B8;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: Inter, sans-serif;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 body{
-  background:#0B1120;
-  color:white;
-  font-family:Arial,sans-serif;
-  text-align:center;
-  padding-top:100px;
+font-family:Arial, sans-serif;
+background:#0B1120;
+color:white;
+}
+
+button{
+cursor:pointer;
+border:none;
 }

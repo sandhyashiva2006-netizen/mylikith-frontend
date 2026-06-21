@@ -1,0 +1,128 @@
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 60px;
+background:#111827;
+}
+
+.logo{
+font-size:28px;
+font-weight:bold;
+color:#ffffff;
+}
+
+.nav-links{
+display:flex;
+gap:30px;
+list-style:none;
+}
+
+.nav-links a{
+text-decoration:none;
+color:white;
+}
+
+.auth-buttons{
+display:flex;
+gap:15px;
+}
+
+.login-btn{
+padding:10px 20px;
+background:transparent;
+color:white;
+border:1px solid #7C3AED;
+}
+
+.signup-btn{
+padding:10px 20px;
+background:#7C3AED;
+color:white;
+}
+
+.hero{
+text-align:center;
+padding:120px 20px;
+}
+
+.hero h1{
+font-size:60px;
+margin-bottom:20px;
+}
+
+.hero p{
+font-size:24px;
+margin-bottom:30px;
+}
+
+.language-chips{
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+margin-bottom:40px;
+}
+
+.language-chips span{
+padding:10px 20px;
+background:#111827;
+border-radius:50px;
+}
+
+.hero-buttons{
+display:flex;
+justify-content:center;
+gap:20px;
+}
+
+.start-btn{
+padding:15px 35px;
+background:#7C3AED;
+color:white;
+font-size:18px;
+}
+
+.writer-btn{
+padding:15px 35px;
+background:#22D3EE;
+color:black;
+font-size:18px;
+}
+
+.section{
+padding:80px 60px;
+}
+
+.section h2{
+margin-bottom:30px;
+}
+
+.card-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+}
+
+.novel-card,
+.writer-card{
+background:#111827;
+padding:30px;
+border-radius:15px;
+}
+
+.writer-cta{
+padding:100px 20px;
+text-align:center;
+background:#111827;
+}
+
+.writer-cta h2{
+font-size:40px;
+margin-bottom:20px;
+}
+
+footer{
+text-align:center;
+padding:50px;
+}
