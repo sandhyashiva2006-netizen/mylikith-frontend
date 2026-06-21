@@ -2,6 +2,19 @@ const params = new URLSearchParams(window.location.search);
 
 const novelId = params.get("id");
 
+function formatNumber(num){
+
+    if(num >= 1000000){
+        return (num/1000000).toFixed(1) + "M";
+    }
+
+    if(num >= 1000){
+        return (num/1000).toFixed(0) + "K";
+    }
+
+    return num;
+}
+
 async function loadNovel() {
 
     try {
@@ -28,10 +41,10 @@ async function loadNovel() {
             novel.status;
 
         document.getElementById("novelReads").textContent =
-            novel.views.toLocaleString();
+            formatNumber(novel.views);
 
         document.getElementById("novelFollowers").textContent =
-            novel.followers.toLocaleString();
+            formatNumber(novel.followers);
 
     } catch (error) {
 

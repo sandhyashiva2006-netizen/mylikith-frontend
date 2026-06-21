@@ -1,21 +1,20 @@
 .novel-hero{
-display:flex;
-gap:60px;
-padding:100px 80px;
-align-items:center;
+    display:flex;
+    gap:60px;
+    align-items:center;
+    padding:80px;
 }
 
 .novel-cover{
-width:320px;
-height:450px;
-
-border-radius:20px;
-
-background:linear-gradient(
-135deg,
-#7C3AED,
-#22D3EE
-);
+    width:320px;
+    height:480px;
+    border-radius:24px;
+    background:linear-gradient(
+        135deg,
+        #7c3aed,
+        #38bdf8
+    );
+    flex-shrink:0;
 }
 
 .novel-info{
@@ -40,21 +39,35 @@ border-radius:50px;
 }
 
 .novel-description{
-font-size:20px;
-line-height:1.8;
-color:#cbd5e1;
-margin-bottom:30px;
+    max-width:800px;
+    font-size:24px;
+    line-height:1.8;
+    color:#d7d7d7;
+    margin-top:30px;
 }
 
 .novel-stats{
-display:flex;
-gap:50px;
-margin-bottom:40px;
+    display:flex;
+    gap:60px;
+    margin:40px 0;
 }
 
-.novel-stats h3{
-font-size:30px;
-color:#22D3EE;
+.stat{
+    display:flex;
+    flex-direction:column;
+}
+
+.stat h3{
+    color:#34d3ff;
+    font-size:42px;
+    font-weight:700;
+    margin:0;
+}
+
+.stat p{
+    color:white;
+    font-size:20px;
+    margin-top:5px;
 }
 
 .novel-actions{
