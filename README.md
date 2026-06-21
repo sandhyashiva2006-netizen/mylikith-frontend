@@ -1,2 +1,8 @@
-# mylikith-frontend
-Mylikith - A multilingual novel reading and publishing platform with writer monetization, translations, subscriptions, and premium content.
+# \# Mylikith Backend
+
+# 
+
+# Backend API for Mylikith - A multilingual novel reading and publishing platform.
+
+# 
+
