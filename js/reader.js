@@ -3,6 +3,8 @@ let fontSize = 24;
 const chapterContent =
 document.getElementById("chapterContent");
 
+document.body.classList.add("dark-mode");
+
 document
 .getElementById("increaseFont")
 .addEventListener("click", () => {
@@ -29,11 +31,8 @@ document
 .getElementById("darkBtn")
 .addEventListener("click", () => {
 
-document.body.style.background =
-"#0B1120";
-
-document.body.style.color =
-"white";
+document.body.classList.remove("light-mode");
+document.body.classList.add("dark-mode");
 
 });
 
@@ -41,11 +40,8 @@ document
 .getElementById("lightBtn")
 .addEventListener("click", () => {
 
-document.body.style.background =
-"#ffffff";
-
-document.body.style.color =
-"#111827";
+document.body.classList.remove("dark-mode");
+document.body.classList.add("light-mode");
 
 });
 

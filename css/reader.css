@@ -56,3 +56,27 @@ display:flex;
 justify-content:space-between;
 margin-top:60px;
 }
+
+body.light-mode{
+background:#ffffff;
+color:#111827;
+}
+
+body.light-mode .chapter-content{
+color:#111827;
+}
+
+body.dark-mode{
+background:#0B1120;
+color:white;
+}
+
+body.dark-mode .chapter-content{
+color:#e2e8f0;
+}
+
+.chapter-content{
+max-width:800px;
+margin:auto;
+}
+
