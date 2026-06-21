@@ -1,0 +1,43 @@
+.explore-header{
+text-align:center;
+padding:80px 20px;
+}
+
+.explore-header h1{
+font-size:60px;
+margin-bottom:20px;
+}
+
+.explore-header p{
+font-size:22px;
+color:#cbd5e1;
+}
+
+.filters{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:15px;
+padding:20px;
+margin-bottom:50px;
+}
+
+.filter{
+padding:12px 25px;
+border:none;
+border-radius:50px;
+background:#111827;
+color:white;
+cursor:pointer;
+}
+
+.filter.active{
+background:#7C3AED;
+}
+
+.novels-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+padding:0 80px 100px;
+}
