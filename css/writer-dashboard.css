@@ -1,0 +1,71 @@
+.dashboard-header{
+text-align:center;
+padding:80px 20px;
+}
+
+.dashboard-header h1{
+font-size:60px;
+margin-bottom:15px;
+}
+
+.dashboard-header p{
+font-size:22px;
+color:#cbd5e1;
+}
+
+.stats-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:25px;
+padding:40px 80px;
+}
+
+.stat-card{
+background:#111827;
+padding:35px;
+border-radius:20px;
+text-align:center;
+}
+
+.stat-card h2{
+font-size:40px;
+color:#22D3EE;
+margin-bottom:10px;
+}
+
+.dashboard-actions{
+display:flex;
+justify-content:center;
+gap:25px;
+flex-wrap:wrap;
+padding:40px;
+}
+
+.action-btn{
+padding:18px 35px;
+border-radius:15px;
+text-decoration:none;
+color:white;
+background:linear-gradient(
+135deg,
+#7C3AED,
+#22D3EE
+);
+font-weight:bold;
+}
+
+.recent-activity{
+padding:80px;
+}
+
+.recent-activity h2{
+margin-bottom:30px;
+font-size:36px;
+}
+
+.activity-card{
+background:#111827;
+padding:25px;
+border-radius:15px;
+margin-bottom:20px;
+}
