@@ -58,9 +58,20 @@ max-width:650px;
 }
 
 .hero-left h1{
-font-size:70px;
-line-height:1.1;
+font-size:56px;
+line-height:1.15;
 margin-bottom:20px;
+max-width:600px;
+
+background:linear-gradient(
+90deg,
+#ffffff,
+#c4b5fd,
+#22D3EE
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
 
 .hero-left p{
@@ -77,8 +88,8 @@ flex:1;
 }
 
 .hero-circle{
-width:400px;
-height:400px;
+width:500px;
+height:500px;
 border-radius:50%;
 background:linear-gradient(
 135deg,
@@ -168,3 +179,40 @@ footer{
 text-align:center;
 padding:50px;
 }
+
+.logo{
+font-size:32px;
+font-weight:800;
+letter-spacing:1px;
+
+background:linear-gradient(
+90deg,
+#ffffff,
+#c4b5fd,
+#22D3EE
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.stats{
+display:flex;
+justify-content:center;
+gap:80px;
+padding:60px 20px;
+}
+
+.stat{
+text-align:center;
+}
+
+.stat h2{
+font-size:40px;
+color:#22D3EE;
+}
+
+.stat p{
+color:#cbd5e1;
+}
+
