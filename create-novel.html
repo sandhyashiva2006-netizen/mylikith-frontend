@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Create Novel</title>
+
+<link rel="stylesheet"
+href="css/style.css">
+
+<link rel="stylesheet"
+href="css/home.css">
+
+<style>
+
+.container{
+max-width:700px;
+margin:auto;
+padding:100px 20px;
+}
+
+input,
+textarea,
+select{
+
+width:100%;
+
+padding:15px;
+
+margin-bottom:20px;
+
+border:none;
+
+border-radius:10px;
+}
+
+button{
+
+padding:15px 30px;
+
+background:#7c3aed;
+
+color:white;
+
+border:none;
+
+border-radius:10px;
+
+cursor:pointer;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Create Novel</h1>
+
+<input
+id="title"
+placeholder="Novel Title">
+
+<textarea
+id="description"
+placeholder="Description"></textarea>
+
+<select id="language">
+
+<option>English</option>
+<option>Telugu</option>
+<option>Hindi</option>
+<option>Tamil</option>
+
+</select>
+
+<select id="category">
+
+<option>Fantasy</option>
+<option>Romance</option>
+<option>Adventure</option>
+<option>Drama</option>
+
+</select>
+
+<button onclick="createNovel()">
+
+Create Novel
+
+</button>
+
+</div>
+
+<script src="js/create-novel.js"></script>
+
+</body>
+
+</html>
