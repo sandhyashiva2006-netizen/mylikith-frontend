@@ -1,39 +1,94 @@
-router.get(
-"/my-novels/:authorId",
-async (req,res)=>{
+<!DOCTYPE html>
+<html>
 
-try{
+<head>
 
-const result =
-await db.query(
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-`
-SELECT *
-FROM novels
-WHERE author_id=$1
-ORDER BY id DESC
-`,
+<title>My Novels</title>
 
-[
-req.params.authorId
-]
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/home.css">
 
-);
+<style>
 
-res.json(
-result.rows
-);
-
+.container{
+max-width:1200px;
+margin:auto;
+padding:80px 20px;
 }
 
-catch(err){
-
-console.log(err);
-
-res.status(500).json({
-success:false
-});
-
+.novels-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+gap:20px;
+margin-top:30px;
 }
 
-});
+.novel-card{
+background:#111827;
+padding:20px;
+border-radius:15px;
+}
+
+.novel-card h3{
+margin-bottom:10px;
+}
+
+.actions{
+margin-top:20px;
+display:flex;
+gap:10px;
+}
+
+.actions button{
+padding:10px 15px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+.edit-btn{
+background:#7c3aed;
+color:white;
+}
+
+.delete-btn{
+background:#dc2626;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+<div class="logo">
+✨ MYLIKITH
+</div>
+
+</nav>
+
+<div class="container">
+
+<h1>My Novels</h1>
+
+<div id="novelsGrid"
+class="novels-grid">
+
+Loading...
+
+</div>
+
+</div>
+
+<script src="js/protect.js"></script>
+<script src="js/my-novels.js"></script>
+
+</body>
+
+</html>
