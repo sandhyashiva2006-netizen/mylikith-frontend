@@ -150,6 +150,16 @@ await fetch(
 const chapter =
 await response.json();
 
+await fetch(
+
+`https://mylikith-backend.onrender.com/api/novels/${chapter.novel_id}/view`,
+
+{
+method:"POST"
+}
+
+);
+
 const readerUser =
 JSON.parse(
 localStorage.getItem("user")

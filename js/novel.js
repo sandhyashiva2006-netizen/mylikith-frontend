@@ -27,6 +27,8 @@ async function loadNovel() {
 
         const novel = await response.json();
 
+console.log("NOVEL DATA:", novel);
+
 currentNovel = novel;
 
 loadFollowers();
