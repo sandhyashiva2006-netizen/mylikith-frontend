@@ -1,14 +1,14 @@
-const user =
+const dashboardUser =
 JSON.parse(
 localStorage.getItem("user")
 );
 
-if(user){
+if(dashboardUser){
 
 document.getElementById(
 "userName"
 ).textContent =
-user.name;
+dashboardUser.name;
 
 }
 
