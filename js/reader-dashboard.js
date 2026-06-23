@@ -114,6 +114,64 @@ ${chapter.title}
 
 }
 
+async function loadHistory(){
+
+const response =
+await fetch(
+
+`https://mylikith-backend.onrender.com/api/writers/reading-history/${readerUser.id}`
+
+);
+
+const history =
+await response.json();
+
+const container =
+document.getElementById(
+"history"
+);
+
+container.innerHTML = "";
+
+if(history.length===0){
+
+container.innerHTML =
+'<div class="card">No history yet</div>';
+
+return;
+
+}
+
+history.forEach(item=>{
+
+container.innerHTML += `
+
+<a
+href="reader.html?chapter=${item.id}"
+style="
+text-decoration:none;
+color:white;
+">
+
+<div class="card">
+
+Chapter ${item.chapter_no}
+
+<br><br>
+
+${item.title}
+
+</div>
+
+</a>
+
+`;
+
+});
+
+}
+
+loadHistory();
 loadBookmarks();
 loadContinueReading();
 

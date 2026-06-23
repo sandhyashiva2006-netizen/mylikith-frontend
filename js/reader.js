@@ -184,6 +184,31 @@ chapter.id
 
 }
 
+fetch(
+
+"https://mylikith-backend.onrender.com/api/writers/reading-history",
+
+{
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+user_id:
+readerUser.id,
+
+chapter_id:
+chapter.id
+
+})
+
+}
+
+);
+
 document.title =
 chapter.title + " - Mylikith";
 
