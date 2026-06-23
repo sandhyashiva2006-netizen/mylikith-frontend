@@ -25,8 +25,17 @@ async function loadNovel() {
 
         const novel = await response.json();
 
+if (!novel || !novel.id) {
+    document.getElementById("novelTitle").textContent =
+        "Novel Not Found";
+    return;
+}
+
         document.getElementById("novelTitle").textContent =
             novel.title;
+
+document.title =
+`${novel.title} - Mylikith`;
 
         document.getElementById("novelDescription").textContent =
             novel.description;
@@ -53,19 +62,32 @@ async function loadNovel() {
     }
 }
 
-loadNovel();
+
 
 async function loadChapters(){
 
+try {
+
 const response =
 await fetch(
-
 `https://mylikith-backend.onrender.com/api/novels/${novelId}/chapters`
-
 );
 
 const chapters =
 await response.json();
+
+...
+}
+catch(error){
+
+console.error(error);
+
+document.getElementById(
+"chaptersList"
+).innerHTML =
+"<p>Failed to load chapters</p>";
+
+}
 
 const container =
 document.getElementById(
@@ -103,4 +125,5 @@ ${chapter.title}
 
 }
 
+loadNovel();
 loadChapters();

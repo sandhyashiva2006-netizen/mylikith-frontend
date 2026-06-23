@@ -105,6 +105,9 @@ await fetch(
 const chapter =
 await response.json();
 
+document.title =
+chapter.title + " - Mylikith";
+
 document.getElementById(
 "chapterTitle"
 ).textContent =
