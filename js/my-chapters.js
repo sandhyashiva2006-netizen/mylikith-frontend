@@ -81,9 +81,8 @@ Delete
 
 function editChapter(id){
 
-alert(
-"Edit Chapter " + id
-);
+window.location =
+`edit-chapter.html?id=${id}`;
 
 }
 
