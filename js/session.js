@@ -10,32 +10,30 @@ document.querySelector(
 
 if(currentUser && authButtons){
 
+const isDashboardPage =
+window.location.pathname.includes(
+"dashboard"
+);
+
 authButtons.innerHTML = `
 
-<a href="reader-dashboard.html">
-
+${!isDashboardPage ? `
+<a href="writer-dashboard.html">
 <button class="login-btn">
-
 Dashboard
-
 </button>
-
 </a>
+` : ""}
 
 <span class="user-name">
-
 👤 ${currentUser.name}
-
 </span>
 
 <button
 class="signup-btn"
 onclick="logout()">
-
 Logout
-
 </button>
-
 `;
 
 }
