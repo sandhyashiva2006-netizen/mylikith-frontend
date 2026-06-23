@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Edit Novel</title>
+
+<link rel="stylesheet"
+href="css/style.css">
+
+<style>
+
+.container{
+max-width:700px;
+margin:auto;
+padding:80px 20px;
+}
+
+input,
+textarea,
+select{
+
+width:100%;
+padding:15px;
+margin-bottom:20px;
+
+border:none;
+border-radius:10px;
+}
+
+button{
+
+padding:15px 30px;
+
+background:#7c3aed;
+color:white;
+
+border:none;
+border-radius:10px;
+
+cursor:pointer;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Edit Novel</h1>
+
+<input id="title">
+
+<textarea
+id="description">
+</textarea>
+
+<select id="language">
+
+<option>English</option>
+<option>Telugu</option>
+<option>Hindi</option>
+<option>Tamil</option>
+
+</select>
+
+<select id="category">
+
+<option>Fantasy</option>
+<option>Romance</option>
+<option>Adventure</option>
+<option>Drama</option>
+
+</select>
+
+<button onclick="updateNovel()">
+
+Save Changes
+
+</button>
+
+</div>
+
+<script src="js/edit-novel.js"></script>
+
+</body>
+
+</html>

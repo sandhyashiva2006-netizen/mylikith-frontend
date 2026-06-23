@@ -91,9 +91,8 @@ console.error(err);
 
 function editNovel(id){
 
-alert(
-"Edit Novel " + id
-);
+window.location =
+`edit-novel.html?id=${id}`;
 
 }
 
