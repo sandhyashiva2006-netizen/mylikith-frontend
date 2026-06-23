@@ -30,6 +30,8 @@ async function loadNovel() {
 currentNovel =
 novel;
 
+checkFollowStatus();
+
 if (!novel || !novel.id) {
     document.getElementById("novelTitle").textContent =
         "Novel Not Found";
@@ -209,6 +211,46 @@ btn.disabled = true;
 
 btn.style.opacity =
 "0.7";
+
+}
+
+async function checkFollowStatus(){
+
+const user =
+JSON.parse(
+localStorage.getItem("user")
+);
+
+if(!user || !currentNovel){
+return;
+}
+
+const response =
+await fetch(
+
+`https://mylikith-backend.onrender.com/api/follow-status?user_id=${user.id}&author_id=${currentNovel.author_id}`
+
+);
+
+const data =
+await response.json();
+
+if(data.following){
+
+const btn =
+document.getElementById(
+"followBtn"
+);
+
+btn.textContent =
+"✓ Following";
+
+btn.disabled = true;
+
+btn.style.opacity =
+"0.7";
+
+}
 
 }
 
