@@ -150,6 +150,40 @@ await fetch(
 const chapter =
 await response.json();
 
+const readerUser =
+JSON.parse(
+localStorage.getItem("user")
+);
+
+if(readerUser){
+
+fetch(
+
+"https://mylikith-backend.onrender.com/api/writers/reading-progress",
+
+{
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+user_id:
+readerUser.id,
+
+chapter_id:
+chapter.id
+
+})
+
+}
+
+);
+
+}
+
 document.title =
 chapter.title + " - Mylikith";
 

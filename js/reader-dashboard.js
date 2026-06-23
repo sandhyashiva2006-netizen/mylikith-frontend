@@ -60,5 +60,60 @@ ${bookmark.title}
 
 }
 
+
+
+async function loadContinueReading(){
+
+const response =
+await fetch(
+
+`https://mylikith-backend.onrender.com/api/writers/reading-progress/${readerUser.id}`
+
+);
+
+const chapter =
+await response.json();
+
+const container =
+document.getElementById(
+"continueReading"
+);
+
+if(!chapter){
+
+container.innerHTML =
+'<div class="card">No reading history yet</div>';
+
+return;
+
+}
+
+container.innerHTML = `
+
+<a
+href="reader.html?chapter=${chapter.id}"
+style="text-decoration:none;color:white;">
+
+<div class="card">
+
+Continue Reading
+
+<br><br>
+
+Chapter ${chapter.chapter_no}
+
+<br>
+
+${chapter.title}
+
+</div>
+
+</a>
+
+`;
+
+}
+
 loadBookmarks();
+loadContinueReading();
 
