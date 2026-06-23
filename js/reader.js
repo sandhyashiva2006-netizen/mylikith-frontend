@@ -111,7 +111,7 @@ chapter.title + " - Mylikith";
 document.getElementById(
 "chapterTitle"
 ).textContent =
-chapter.title;
+`Chapter ${chapter.chapter_no} - ${chapter.title}`;
 
 document.getElementById(
 "chapterContent"
