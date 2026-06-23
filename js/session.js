@@ -1,4 +1,4 @@
-const user =
+const currentUser =
 JSON.parse(
 localStorage.getItem("user")
 );
@@ -8,7 +8,7 @@ document.querySelector(
 ".auth-buttons"
 );
 
-if(user && authButtons){
+if(currentUser && authButtons){
 
 authButtons.innerHTML = `
 
@@ -24,7 +24,7 @@ Dashboard
 
 <span class="user-name">
 
-👤 ${user.name}
+👤 ${currentUser.name}
 
 </span>
 
@@ -43,10 +43,14 @@ Logout
 function logout(){
 
 localStorage.removeItem(
+"token"
+);
+
+localStorage.removeItem(
 "user"
 );
 
-window.location =
+window.location.href =
 "index.html";
 
 }
