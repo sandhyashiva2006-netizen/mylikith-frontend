@@ -76,7 +76,6 @@ await fetch(
 const chapters =
 await response.json();
 
-...
 }
 catch(error){
 
