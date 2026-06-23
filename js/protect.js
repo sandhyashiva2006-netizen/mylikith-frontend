@@ -1,11 +1,11 @@
-const token =
-localStorage.getItem("token");
+const user =
+JSON.parse(
+localStorage.getItem("user")
+);
 
-if (!token) {
+if(!user){
 
-    alert("Please login first");
-
-    window.location =
-    "login.html";
+window.location =
+"login.html";
 
 }
