@@ -87,11 +87,40 @@ alert(
 
 }
 
-function deleteChapter(id){
+async function deleteChapter(id){
+
+const confirmDelete =
+confirm(
+"Delete this chapter?"
+);
+
+if(!confirmDelete){
+return;
+}
+
+const response =
+await fetch(
+
+`${API}/api/writers/chapters/${id}`,
+
+{
+method:"DELETE"
+}
+
+);
+
+const data =
+await response.json();
+
+if(data.success){
 
 alert(
-"Delete Chapter " + id
+"Chapter Deleted"
 );
+
+loadChapters();
+
+}
 
 }
 
