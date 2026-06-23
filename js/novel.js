@@ -214,6 +214,8 @@ btn.style.opacity =
 
 }
 
+}
+
 async function checkFollowStatus(){
 
 const user =
@@ -254,7 +256,6 @@ btn.style.opacity =
 
 }
 
-}
-
 loadNovel();
 loadChapters();
+
