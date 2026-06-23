@@ -57,8 +57,12 @@ document.title =
         document.getElementById("novelStatus").textContent =
             novel.status;
 
-        document.getElementById("novelReads").textContent =
-            formatNumber(novel.views);
+        document.getElementById(
+"novelReads"
+).textContent =
+formatNumber(
+novel.views || 0
+);
 
       
 
