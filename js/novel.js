@@ -2,6 +2,8 @@ const params = new URLSearchParams(window.location.search);
 
 const novelId = params.get("id");
 
+let currentNovel = null;
+
 function formatNumber(num){
 
     if(num >= 1000000){
@@ -24,6 +26,9 @@ async function loadNovel() {
         );
 
         const novel = await response.json();
+
+currentNovel =
+novel;
 
 if (!novel || !novel.id) {
     document.getElementById("novelTitle").textContent =
@@ -131,6 +136,70 @@ document.getElementById(
 "chaptersList"
 ).innerHTML =
 "<p>Failed to load chapters</p>";
+
+}
+
+}
+
+document
+.getElementById(
+"followBtn"
+)
+.addEventListener(
+"click",
+followAuthor
+);
+
+async function followAuthor(){
+
+const user =
+JSON.parse(
+localStorage.getItem("user")
+);
+
+if(!user){
+
+alert(
+"Please login first"
+);
+
+return;
+
+}
+
+const response =
+await fetch(
+
+"https://mylikith-backend.onrender.com/api/follow",
+
+{
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+user_id:user.id,
+
+author_id:
+currentNovel.author_id
+
+})
+
+}
+
+);
+
+const data =
+await response.json();
+
+if(data.success){
+
+alert(
+"Author Followed"
+);
 
 }
 
