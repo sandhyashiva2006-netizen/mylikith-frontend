@@ -97,11 +97,46 @@ alert(
 
 }
 
-function deleteNovel(id){
+async function deleteNovel(id){
+
+const confirmDelete =
+confirm(
+"Delete this novel?"
+);
+
+if(!confirmDelete){
+return;
+}
+
+const response =
+await fetch(
+
+`${API}/api/writers/novels/${id}`,
+
+{
+method:"DELETE"
+}
+
+);
+
+const data =
+await response.json();
+
+if(data.success){
 
 alert(
-"Delete Novel " + id
+"Novel Deleted"
 );
+
+loadMyNovels();
+
+}else{
+
+alert(
+"Delete Failed"
+);
+
+}
 
 }
 
