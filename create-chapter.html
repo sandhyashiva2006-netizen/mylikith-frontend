@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Create Chapter</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+.container{
+max-width:900px;
+margin:auto;
+padding:60px 20px;
+}
+
+input,
+select,
+textarea{
+
+width:100%;
+padding:15px;
+margin-bottom:20px;
+
+border:none;
+border-radius:10px;
+}
+
+textarea{
+height:350px;
+}
+
+button{
+
+padding:15px 30px;
+
+background:#7c3aed;
+color:white;
+
+border:none;
+border-radius:10px;
+
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Create Chapter</h1>
+
+<select id="novelSelect">
+
+<option>
+Loading novels...
+</option>
+
+</select>
+
+<input
+id="chapterNumber"
+type="number"
+placeholder="Chapter Number">
+
+<input
+id="chapterTitle"
+placeholder="Chapter Title">
+
+<textarea
+id="chapterContent"
+placeholder="Write chapter content...">
+</textarea>
+
+<button onclick="createChapter()">
+
+Publish Chapter
+
+</button>
+
+</div>
+
+<script src="js/create-chapter.js"></script>
+
+</body>
+
+</html>
