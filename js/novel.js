@@ -76,6 +76,52 @@ await fetch(
 const chapters =
 await response.json();
 
+const container =
+document.getElementById(
+"chaptersList"
+);
+
+container.innerHTML = "";
+
+if(chapters.length > 0){
+
+document
+.getElementById("startReadingBtn")
+.onclick = () => {
+
+window.location.href =
+`reader.html?chapter=${chapters[0].id}`;
+
+};
+
+}
+
+if(chapters.length === 0){
+
+container.innerHTML =
+"<p>No chapters yet</p>";
+
+return;
+
+}
+
+chapters.forEach(chapter => {
+
+container.innerHTML += `
+
+<a
+href="reader.html?chapter=${chapter.id}"
+class="chapter-card">
+
+Chapter ${chapter.chapter_no} :
+${chapter.title}
+
+</a>
+
+`;
+
+});
+
 }
 catch(error){
 
@@ -87,40 +133,6 @@ document.getElementById(
 "<p>Failed to load chapters</p>";
 
 }
-
-const container =
-document.getElementById(
-"chaptersList"
-);
-
-container.innerHTML = "";
-
-if(chapters.length===0){
-
-container.innerHTML =
-"<p>No chapters yet</p>";
-
-return;
-
-}
-
-chapters.forEach(chapter=>{
-
-container.innerHTML += `
-
-<a
-href="reader.html?chapter=${chapter.id}"
-class="chapter-card">
-
-Chapter ${chapter.chapter_no}
-:
-${chapter.title}
-
-</a>
-
-`;
-
-});
 
 }
 
