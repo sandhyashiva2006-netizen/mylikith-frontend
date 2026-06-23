@@ -82,3 +82,49 @@ alert(
 );
 
 });
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+const chapterId =
+params.get("chapter");
+
+async function loadChapter(){
+
+try{
+
+const response =
+await fetch(
+
+`https://mylikith-backend.onrender.com/api/chapters/${chapterId}`
+
+);
+
+const chapter =
+await response.json();
+
+document.getElementById(
+"chapterTitle"
+).textContent =
+chapter.title;
+
+document.getElementById(
+"chapterContent"
+).innerHTML =
+chapter.content.replace(
+/\n/g,
+"<br><br>"
+);
+
+}
+catch(err){
+
+console.error(err);
+
+}
+
+}
+
+loadChapter();

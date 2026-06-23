@@ -54,3 +54,53 @@ async function loadNovel() {
 }
 
 loadNovel();
+
+async function loadChapters(){
+
+const response =
+await fetch(
+
+`https://mylikith-backend.onrender.com/api/novels/${novelId}/chapters`
+
+);
+
+const chapters =
+await response.json();
+
+const container =
+document.getElementById(
+"chaptersList"
+);
+
+container.innerHTML = "";
+
+if(chapters.length===0){
+
+container.innerHTML =
+"<p>No chapters yet</p>";
+
+return;
+
+}
+
+chapters.forEach(chapter=>{
+
+container.innerHTML += `
+
+<a
+href="reader.html?chapter=${chapter.id}"
+class="chapter-card">
+
+Chapter ${chapter.chapter_no}
+:
+${chapter.title}
+
+</a>
+
+`;
+
+});
+
+}
+
+loadChapters();
