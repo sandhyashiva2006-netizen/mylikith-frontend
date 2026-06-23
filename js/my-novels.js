@@ -65,6 +65,14 @@ Edit
 </button>
 
 <button
+class="edit-btn"
+onclick="manageChapters(${novel.id})">
+
+Chapters
+
+</button>
+
+<button
 class="delete-btn"
 onclick="deleteNovel(${novel.id})">
 
@@ -93,6 +101,13 @@ function editNovel(id){
 
 window.location =
 `edit-novel.html?id=${id}`;
+
+}
+
+function manageChapters(id){
+
+window.location =
+`my-chapters.html?novel=${id}`;
 
 }
 
