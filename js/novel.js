@@ -197,9 +197,18 @@ await response.json();
 
 if(data.success){
 
-alert(
-"Author Followed"
+const btn =
+document.getElementById(
+"followBtn"
 );
+
+btn.textContent =
+"Following";
+
+btn.disabled = true;
+
+btn.style.opacity =
+"0.7";
 
 }
 
