@@ -46,7 +46,7 @@ document.getElementById(
 "novelSelect"
 ).value;
 
-const chapter_number =
+const chapter_no =
 document.getElementById(
 "chapterNumber"
 ).value;
@@ -76,7 +76,7 @@ headers:{
 body:JSON.stringify({
 
 novel_id,
-chapter_number,
+chapter_no,
 title,
 content
 
