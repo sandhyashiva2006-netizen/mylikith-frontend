@@ -27,9 +27,10 @@ async function loadNovel() {
 
         const novel = await response.json();
 
-currentNovel =
-novel;
+currentNovel = novel;
 
+loadFollowers();
+loadRating();
 checkFollowStatus();
 
 if (!novel || !novel.id) {
@@ -59,14 +60,14 @@ document.title =
         document.getElementById("novelReads").textContent =
             formatNumber(novel.views);
 
-        document.getElementById("novelFollowers").textContent =
-            formatNumber(novel.followers);
+      
 
     } catch (error) {
 
         console.error(error);
 
     }
+
 }
 
 
@@ -348,6 +349,15 @@ document.getElementById(
 "reviewsList"
 );
 
+if(reviews.length===0){
+
+container.innerHTML =
+"<p>No reviews yet</p>";
+
+return;
+
+}
+
 container.innerHTML = "";
 
 reviews.forEach(review=>{
@@ -375,6 +385,44 @@ ${review.review}
 `;
 
 });
+
+}
+
+async function loadFollowers(){
+
+const response =
+await fetch(
+
+`https://mylikith-backend.onrender.com/api/follow-count/${currentNovel.author_id}`
+
+);
+
+const data =
+await response.json();
+
+document.getElementById(
+"novelFollowers"
+).textContent =
+data.count;
+
+}
+
+async function loadRating(){
+
+const response =
+await fetch(
+
+`https://mylikith-backend.onrender.com/api/rating/${novelId}`
+
+);
+
+const data =
+await response.json();
+
+document.getElementById(
+"novelRating"
+).textContent =
+data.rating || "0";
 
 }
 
