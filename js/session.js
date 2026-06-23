@@ -12,7 +12,7 @@ if(currentUser && authButtons){
 
 authButtons.innerHTML = `
 
-<a href="writer-dashboard.html">
+<a href="reader-dashboard.html">
 
 <button class="login-btn">
 
