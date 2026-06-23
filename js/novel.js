@@ -256,6 +256,128 @@ btn.style.opacity =
 
 }
 
+async function submitReview(){
+
+const user =
+JSON.parse(
+localStorage.getItem("user")
+);
+
+if(!user){
+
+alert(
+"Please login"
+);
+
+return;
+
+}
+
+const response =
+await fetch(
+
+"https://mylikith-backend.onrender.com/api/reviews",
+
+{
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+user_id:user.id,
+
+novel_id:novelId,
+
+rating:
+document.getElementById(
+"ratingSelect"
+).value,
+
+review:
+document.getElementById(
+"reviewText"
+).value
+
+})
+
+}
+
+);
+
+const data =
+await response.json();
+
+if(data.success){
+
+alert(
+"Review Saved"
+);
+
+loadReviews();
+
+}
+
+}
+
+document
+.getElementById(
+"submitReviewBtn"
+)
+.addEventListener(
+"click",
+submitReview
+);
+
+async function loadReviews(){
+
+const response =
+await fetch(
+
+`https://mylikith-backend.onrender.com/api/reviews/${novelId}`
+
+);
+
+const reviews =
+await response.json();
+
+const container =
+document.getElementById(
+"reviewsList"
+);
+
+container.innerHTML = "";
+
+reviews.forEach(review=>{
+
+container.innerHTML += `
+
+<div class="review-card">
+
+<h4>
+
+${review.name}
+
+⭐ ${review.rating}
+
+</h4>
+
+<p>
+
+${review.review}
+
+</p>
+
+</div>
+
+`;
+
+});
+
+}
+
 loadNovel();
 loadChapters();
-
+loadReviews();
