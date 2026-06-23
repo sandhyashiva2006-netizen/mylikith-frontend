@@ -99,7 +99,7 @@ JSON.stringify(data.user)
 alert("Login Successful");
 
 window.location =
-"writer-dashboard.html";
+"reader-dashboard.html";
 
 }else{
 

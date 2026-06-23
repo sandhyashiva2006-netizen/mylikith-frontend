@@ -69,7 +69,52 @@ document
 .getElementById("bookmarkBtn")
 .addEventListener("click", () => {
 
-alert("Bookmark saved");
+const user =
+JSON.parse(
+localStorage.getItem("user")
+);
+
+const chapterId =
+new URLSearchParams(
+window.location.search
+).get("chapter");
+
+fetch(
+
+"https://mylikith-backend.onrender.com/api/writers/bookmark",
+
+{
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+user_id:user.id,
+
+chapter_id:chapterId
+
+})
+
+}
+
+)
+
+.then(res=>res.json())
+
+.then(data=>{
+
+if(data.success){
+
+alert(
+"Bookmark Saved"
+);
+
+}
+
+});
 
 });
 
