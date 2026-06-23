@@ -1,48 +1,100 @@
 const API_URL =
 "https://mylikith-backend.onrender.com/api/novels";
 
+function renderNovels(novels){
+
+const novelsGrid =
+document.getElementById(
+"novelsGrid"
+);
+
+novelsGrid.innerHTML = "";
+
+if(novels.length === 0){
+
+novelsGrid.innerHTML =
+"<h3>No novels found</h3>";
+
+return;
+
+}
+
+novels.forEach(novel => {
+
+novelsGrid.innerHTML += `
+
+<a
+href="novel.html?id=${novel.id}"
+class="novel-card">
+
+<div class="cover"></div>
+
+<h3>${novel.title}</h3>
+
+<p>
+${novel.category}
+•
+${novel.language}
+</p>
+
+</a>
+
+`;
+
+});
+
+}
+
 async function loadNovels() {
 
-    try {
+try {
 
-        const response =
-        await fetch(API_URL);
+const response =
+await fetch(API_URL);
 
-        const novels =
-        await response.json();
+const novels =
+await response.json();
 
-        const novelsGrid =
-        document.getElementById("novelsGrid");
+renderNovels(
+novels
+);
 
-        novelsGrid.innerHTML = "";
+}
+catch(error){
 
-        novels.forEach(novel => {
+console.error(error);
 
-            novelsGrid.innerHTML += `
-            
-            <a href="novel.html?id=${novel.id}" class="novel-card">
+}
 
-                <div class="cover"></div>
+}
 
-                <h3>${novel.title}</h3>
+async function searchNovels(){
 
-                <p>
-                ${novel.category}
-                •
-                ${novel.language}
-                </p>
+const query =
+document.getElementById(
+"searchInput"
+).value;
 
-            </a>
+if(query.trim() === ""){
 
-            `;
+loadNovels();
+return;
 
-        });
+}
 
-    } catch(error) {
+const response =
+await fetch(
 
-        console.error(error);
+`https://mylikith-backend.onrender.com/api/search?q=${query}`
 
-    }
+);
+
+const novels =
+await response.json();
+
+renderNovels(
+novels
+);
 
 }
 

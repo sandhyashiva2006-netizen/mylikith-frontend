@@ -56,3 +56,31 @@ transition:.3s;
 transform:translateY(-8px);
 }
 
+.search-section{
+
+max-width:1200px;
+
+margin:20px auto;
+
+padding:0 20px;
+
+}
+
+#searchInput{
+
+width:100%;
+
+padding:15px 20px;
+
+border:none;
+
+border-radius:12px;
+
+font-size:16px;
+
+background:#1f2937;
+
+color:white;
+
+}
+
