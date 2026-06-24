@@ -245,3 +245,131 @@ console.error(err);
 }
 
 loadChapter();
+
+document
+.getElementById(
+"commentBtn"
+)
+.addEventListener(
+"click",
+submitComment
+);
+
+async function submitComment(){
+
+const user =
+JSON.parse(
+localStorage.getItem("user")
+);
+
+if(!user){
+
+alert(
+"Please login"
+);
+
+return;
+
+}
+
+const comment =
+document.getElementById(
+"commentText"
+).value;
+
+const response =
+await fetch(
+
+"https://mylikith-backend.onrender.com/api/comments",
+
+{
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+user_id:user.id,
+
+chapter_id:chapterId,
+
+comment
+
+})
+
+}
+
+);
+
+const data =
+await response.json();
+
+if(data.success){
+
+document.getElementById(
+"commentText"
+).value = "";
+
+loadComments();
+
+}
+
+}
+
+async function loadComments(){
+
+const response =
+await fetch(
+
+`https://mylikith-backend.onrender.com/api/comments/${chapterId}`
+
+);
+
+const comments =
+await response.json();
+
+const container =
+document.getElementById(
+"commentsList"
+);
+
+container.innerHTML = "";
+
+if(comments.length===0){
+
+container.innerHTML =
+"<p>No comments yet</p>";
+
+return;
+
+}
+
+comments.forEach(comment=>{
+
+container.innerHTML += `
+
+<div class="comment-card">
+
+<strong>
+
+${comment.name}
+
+</strong>
+
+<p>
+
+${comment.comment}
+
+</p>
+
+</div>
+
+`;
+
+});
+
+}
+
+loadComments();
