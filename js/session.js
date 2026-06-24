@@ -29,6 +29,16 @@ Dashboard
 👤 ${currentUser.name}
 </span>
 
+<a href="reader-profile.html">
+
+<button class="login-btn">
+
+Profile
+
+</button>
+
+</a>
+
 <button
 class="signup-btn"
 onclick="logout()">
@@ -37,6 +47,7 @@ Logout
 `;
 
 }
+
 
 function logout(){
 
