@@ -39,3 +39,34 @@ window.location =
 
 }
 
+async function loadAnalytics(){
+
+const response =
+await fetch(
+
+`${API}/api/writer/analytics/${user.id}`
+
+);
+
+const data =
+await response.json();
+
+document.getElementById("totalNovels").textContent =
+data.novels;
+
+document.getElementById("totalChapters").textContent =
+data.chapters;
+
+document.getElementById("totalReads").textContent =
+data.reads;
+
+document.getElementById("totalFollowers").textContent =
+data.followers;
+
+document.getElementById("averageRating").textContent =
+data.rating;
+
+}
+
+loadAnalytics();
+
