@@ -1,9 +1,17 @@
+const API =
+"https://mylikith-backend.onrender.com";
+
 const user =
 JSON.parse(
 localStorage.getItem("user")
 );
 
-if(user){
+if(!user){
+
+window.location =
+"login.html";
+
+}
 
 document.getElementById(
 "profileName"
@@ -15,16 +23,12 @@ document.getElementById(
 ).textContent =
 user.email;
 
-}
-
-loadProfileStats();
-
-async function loadProfileStats(){
+async function loadStats(){
 
 const response =
 await fetch(
 
-`https://mylikith-backend.onrender.com/api/profile/stats/${user.id}`
+`${API}/api/profile/stats/${user.id}`
 
 );
 
@@ -53,3 +57,4 @@ stats.comments;
 
 }
 
+loadStats();
