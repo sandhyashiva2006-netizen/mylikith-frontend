@@ -195,28 +195,25 @@ chapter.id
 }
 
 fetch(
-
-"https://mylikith-backend.onrender.com/api/writers/reading-history",
-
+"https://mylikith-backend.onrender.com/api/reader/reading-history",
 {
-method:"POST",
+    method:"POST",
 
-headers:{
-"Content-Type":"application/json"
-},
+    headers:{
+        "Content-Type":"application/json"
+    },
 
-body:JSON.stringify({
+    body:JSON.stringify({
 
-user_id:
-readerUser.id,
+        user_id:user.id,
 
-chapter_id:
-chapter.id
+        novel_id:chapter.novel_id,
 
-})
+        chapter_id:chapter.id
+
+    })
 
 }
-
 );
 
 document.title =
