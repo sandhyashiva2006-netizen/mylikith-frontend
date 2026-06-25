@@ -128,3 +128,51 @@ color:#d1d5db;
 
 }
 
+.table-wrapper{
+
+overflow-x:auto;
+
+margin-top:25px;
+
+}
+
+.novels-table{
+
+width:100%;
+
+border-collapse:collapse;
+
+background:rgba(12,18,38,.55);
+
+backdrop-filter:blur(18px);
+
+border-radius:18px;
+
+overflow:hidden;
+
+}
+
+.novels-table th{
+
+background:#7c3aed;
+
+padding:18px;
+
+text-align:left;
+
+}
+
+.novels-table td{
+
+padding:18px;
+
+border-bottom:1px solid rgba(255,255,255,.08);
+
+}
+
+.novels-table tr:hover{
+
+background:rgba(255,255,255,.04);
+
+}
+
