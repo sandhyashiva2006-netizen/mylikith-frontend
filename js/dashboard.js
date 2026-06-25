@@ -1,3 +1,6 @@
+const API =
+"https://mylikith-backend.onrender.com";
+
 const dashboardUser =
 JSON.parse(
 localStorage.getItem("user")
