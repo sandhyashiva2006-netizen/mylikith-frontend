@@ -58,3 +58,52 @@ stats.comments;
 }
 
 loadStats();
+
+async function loadContinueReading(){
+
+const response =
+await fetch(
+
+`${API}/api/profile/continue/${user.id}`
+
+);
+
+const data =
+await response.json();
+
+const container =
+document.getElementById(
+"continueReading"
+);
+
+if(!data){
+
+container.innerHTML =
+"No books in progress.";
+
+return;
+
+}
+
+container.innerHTML = `
+
+<div class="continue-card">
+
+<h3>${data.novel_title}</h3>
+
+<p>${data.chapter_title}</p>
+
+<button
+onclick="window.location='reader.html?chapter=${data.chapter_id}'">
+
+Continue Reading
+
+</button>
+
+</div>
+
+`;
+
+}
+
+loadContinueReading();
