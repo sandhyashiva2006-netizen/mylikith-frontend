@@ -44,10 +44,14 @@ window.location =
 
 async function loadAnalytics(){
 
+if(!dashboardUser){
+return;
+}
+
 const response =
 await fetch(
 
-`${API}/api/writer/analytics/${user.id}`
+`${API}/api/writer/analytics/${dashboardUser.id}`
 
 );
 
