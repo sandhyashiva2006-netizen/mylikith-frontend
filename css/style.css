@@ -1,94 +1,69 @@
+/*==========================================
+MYLIKITH
+GLOBAL RESET & TYPOGRAPHY
+==========================================*/
+
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
 }
 
-body{
-
-margin:0;
-
-font-family:'Segoe UI',sans-serif;
-
-background:
-
-linear-gradient(
-135deg,
-rgba(8,12,30,.82),
-rgba(12,20,45,.86)
-),
-
-url("../assets/images/profile-bg.jpg");
-
-background-size:cover;
-
-background-position:center;
-
-background-repeat:no-repeat;
-
-background-attachment:fixed;
-
-color:#fff;
-
-min-height:100vh;
-
-overflow-x:hidden;
-
-}
-
-button{
-cursor:pointer;
-border:none;
-}
-
-.user-name{
-
-color:white;
-
-font-weight:600;
-
-margin-right:15px;
-
-display:flex;
-
-align-items:center;
-
-}
-
 :root{
 
---bg:#0b1020;
---card:rgba(16,23,42,.60);
---glass:blur(22px);
 --primary:#7c3aed;
+--primary-dark:#5b21b6;
+
 --secondary:#22d3ee;
+
+--success:#16a34a;
+--warning:#f59e0b;
+--danger:#dc2626;
+
+--bg:#081020;
+
+--card:rgba(16,23,42,.60);
+
 --text:#ffffff;
 --muted:#b8c2cc;
 
+--border:rgba(255,255,255,.08);
+
+--shadow:
+0 15px 40px rgba(0,0,0,.28);
+
+--shadow-hover:
+0 20px 60px rgba(124,58,237,.20);
+
+--radius-sm:10px;
+--radius:16px;
+--radius-lg:22px;
+
+--transition:.35s;
+
+}
+
+html{
+
+scroll-behavior:smooth;
+
 }
 
 body{
 
 margin:0;
 
-font-family:'Segoe UI',sans-serif;
+font-family:
 
-background:
+"Segoe UI",
+Tahoma,
+Geneva,
+Verdana,
+sans-serif;
 
-linear-gradient(
-rgba(7,10,25,.82),
-rgba(7,10,25,.88)
-),
+font-size:16px;
 
-url("../assets/images/bg.jpg");
-
-background-size:cover;
-
-background-position:center;
-
-background-repeat:no-repeat;
-
-background-attachment:fixed;
+line-height:1.6;
 
 color:var(--text);
 
@@ -96,62 +71,204 @@ overflow-x:hidden;
 
 }
 
-.site-footer{
+/*==========================================
+HEADINGS
+==========================================*/
 
-margin-top:80px;
+h1{
 
-padding:50px;
+font-size:56px;
 
-background:rgba(10,15,30,.65);
+font-weight:800;
 
-backdrop-filter:blur(18px);
-
-border-top:1px solid rgba(255,255,255,.08);
-
-}
-
-.footer-content{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-
-gap:40px;
+line-height:1.15;
 
 }
 
-.footer-content h2,
-.footer-content h3{
+h2{
 
-margin-bottom:15px;
+font-size:36px;
+
+font-weight:700;
 
 }
 
-.footer-content a{
+h3{
 
-display:block;
+font-size:24px;
 
-margin:8px 0;
+font-weight:600;
 
-color:#cbd5e1;
+}
+
+p{
+
+color:var(--muted);
+
+line-height:1.8;
+
+}
+
+/*==========================================
+LINKS
+==========================================*/
+
+a{
 
 text-decoration:none;
 
-}
+color:inherit;
 
-.footer-content a:hover{
-
-color:#22d3ee;
+transition:var(--transition);
 
 }
 
-.copyright{
+/*==========================================
+IMAGES
+==========================================*/
 
-margin-top:40px;
+img{
+
+max-width:100%;
+
+display:block;
+
+}
+
+/*==========================================
+BUTTON RESET
+==========================================*/
+
+button{
+
+font-family:inherit;
+
+cursor:pointer;
+
+outline:none;
+
+border:none;
+
+}
+
+/*==========================================
+INPUT RESET
+==========================================*/
+
+input,
+textarea,
+select{
+
+font-family:inherit;
+
+outline:none;
+
+}
+
+/*==========================================
+LIST RESET
+==========================================*/
+
+ul{
+
+list-style:none;
+
+}
+
+/*==========================================
+TABLE RESET
+==========================================*/
+
+table{
+
+border-collapse:collapse;
+
+width:100%;
+
+}
+
+/*==========================================
+SCROLLBAR
+==========================================*/
+
+::-webkit-scrollbar{
+
+width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#09101d;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:
+
+linear-gradient(
+180deg,
+#7c3aed,
+#22d3ee
+);
+
+border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+background:
+
+linear-gradient(
+180deg,
+#8b5cf6,
+#38bdf8
+);
+
+}
+
+/*==========================================
+SELECTION
+==========================================*/
+
+::selection{
+
+background:#7c3aed;
+
+color:white;
+
+}
+
+/*==========================================
+HELPERS
+==========================================*/
+
+.text-center{
 
 text-align:center;
 
-color:#94a3b8;
+}
+
+.hidden{
+
+display:none;
 
 }
 
+.w-100{
+
+width:100%;
+
+}
+
+.mt-1{margin-top:10px;}
+.mt-2{margin-top:20px;}
+.mt-3{margin-top:30px;}
+.mt-4{margin-top:40px;}
+
+.mb-1{margin-bottom:10px;}
+.mb-2{margin-bottom:20px;}
+.mb-3{margin-bottom:30px;}
+.mb-4{margin-bottom:40px;}
