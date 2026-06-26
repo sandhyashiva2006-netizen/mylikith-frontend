@@ -12,7 +12,13 @@ let html = `
 
 <div class="logo">
 
-<a href="index.html">
+<a href="${
+navbarUser
+?
+'reader-dashboard.html'
+:
+'index.html'
+}">
 
 ✨ MYLIKITH
 
@@ -22,9 +28,32 @@ let html = `
 
 <ul class="nav-links">
 
-<li><a href="index.html">Home</a></li>
+`;
 
-<li><a href="explore.html">Explore</a></li>
+if(navbarUser){
+
+html += `
+
+<li>
+
+<a href="reader-dashboard.html">
+
+Home
+
+</a>
+
+</li>
+
+<li>
+
+<a href="explore.html">
+
+Explore
+
+</a>
+
+</li>
+
 <li>
 
 <a href="library.html">
@@ -35,17 +64,71 @@ Library
 
 </li>
 
+<li>
+
+<a href="writer-dashboard.html">
+
+Writer Studio
+
+</a>
+
+</li>
+
+<li>
+
+<a href="reader-profile.html">
+
+Profile
+
+</a>
+
+</li>
+
 `;
 
-if(navbarUser){
+}else{
 
 html += `
 
-<li><a href="reader-dashboard.html">Home</a></li>
+<li>
 
-<li><a href="reader-profile.html">Profile</a></li>
+<a href="index.html">
 
-<li><a href="writer-dashboard.html">Writer</a></li>
+Home
+
+</a>
+
+</li>
+
+<li>
+
+<a href="explore.html">
+
+Explore
+
+</a>
+
+</li>
+
+<li>
+
+<a href="login.html">
+
+Login
+
+</a>
+
+</li>
+
+<li>
+
+<a href="signup.html">
+
+Sign Up
+
+</a>
+
+</li>
 
 `;
 
@@ -79,32 +162,6 @@ Logout
 
 `;
 
-}else{
-
-html += `
-
-<a href="login.html">
-
-<button class="login-btn">
-
-Login
-
-</button>
-
-</a>
-
-<a href="signup.html">
-
-<button class="signup-btn">
-
-Sign Up
-
-</button>
-
-</a>
-
-`;
-
 }
 
 html += `
@@ -116,16 +173,20 @@ html += `
 navbar.innerHTML = html;
 
 const logoutBtn =
-document.getElementById("logoutBtn");
+document.getElementById(
+"logoutBtn"
+);
 
 if(logoutBtn){
 
 logoutBtn.onclick = ()=>{
 
 localStorage.removeItem("token");
+
 localStorage.removeItem("user");
 
-window.location = "login.html";
+window.location =
+"login.html";
 
 };
 
