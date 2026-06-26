@@ -311,3 +311,30 @@ gap:12px;
 margin-top:20px;
 
 }
+
+/* ==========================================
+   FIXED NAVBAR SPACING
+========================================== */
+
+body{
+
+padding-top:95px;
+
+}
+
+.dashboard,
+.profile-container,
+.library-container,
+.home-container,
+.reader-container{
+
+padding-top:25px;
+
+}
+
+.dashboard-hero{
+
+margin-top:20px;
+
+}
+
