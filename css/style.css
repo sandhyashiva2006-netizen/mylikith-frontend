@@ -5,9 +5,35 @@ box-sizing:border-box;
 }
 
 body{
-font-family:Arial, sans-serif;
-background:#0B1120;
-color:white;
+
+margin:0;
+
+font-family:'Segoe UI',sans-serif;
+
+background:
+
+linear-gradient(
+135deg,
+rgba(8,12,30,.82),
+rgba(12,20,45,.86)
+),
+
+url("../assets/images/profile-bg.jpg");
+
+background-size:cover;
+
+background-position:center;
+
+background-repeat:no-repeat;
+
+background-attachment:fixed;
+
+color:#fff;
+
+min-height:100vh;
+
+overflow-x:hidden;
+
 }
 
 button{
