@@ -25,6 +25,15 @@ let html = `
 <li><a href="index.html">Home</a></li>
 
 <li><a href="explore.html">Explore</a></li>
+<li>
+
+<a href="library.html">
+
+Library
+
+</a>
+
+</li>
 
 `;
 
@@ -32,7 +41,7 @@ if(navbarUser){
 
 html += `
 
-<li><a href="reader-dashboard.html">Dashboard</a></li>
+<li><a href="reader-dashboard.html">Home</a></li>
 
 <li><a href="reader-profile.html">Profile</a></li>
 

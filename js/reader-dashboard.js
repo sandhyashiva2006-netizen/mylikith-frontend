@@ -1,3 +1,6 @@
+const API =
+"https://mylikith-backend.onrender.com";
+
 const readerUser =
 JSON.parse(
 localStorage.getItem("user")
@@ -12,166 +15,220 @@ readerUser.name;
 
 }
 
-async function loadBookmarks(){
+function formatNumber(num){
 
-const response =
-await fetch(
+if(num>=1000000){
 
-`https://mylikith-backend.onrender.com/api/writers/bookmarks/${readerUser.id}`
-
-);
-
-const bookmarks =
-await response.json();
-
-const container =
-document.getElementById(
-"bookmarks"
-);
-
-container.innerHTML = "";
-
-if(bookmarks.length===0){
-
-container.innerHTML =
-'<div class="card">No bookmarks yet</div>';
-
-return;
+return (num/1000000).toFixed(1)+"M";
 
 }
 
-bookmarks.forEach(bookmark=>{
+if(num>=1000){
 
-container.innerHTML += `
+return (num/1000).toFixed(1)+"K";
 
-<div class="card">
+}
 
-Chapter ${bookmark.chapter_no}
+return num||0;
 
-<br><br>
+}
 
-${bookmark.title}
+function createNovelCard(novel){
+
+return `
+
+<div class="common-novel-card">
+
+<img
+
+class="common-novel-cover"
+
+src="${
+novel.cover_url ||
+"https://placehold.co/300x450"
+}"
+
+alt="${novel.title}"
+
+onerror="this.src='https://placehold.co/300x450'">
+
+<div class="common-novel-body">
+
+<h2>
+
+${novel.title}
+
+</h2>
+
+<p>
+
+${novel.category}
+
+•
+
+${novel.language}
+
+</p>
+
+<div class="common-novel-meta">
+
+<span>
+
+👁 ${formatNumber(novel.views)}
+
+</span>
+
+<span>
+
+❤️ ${formatNumber(novel.followers)}
+
+</span>
+
+</div>
+
+<div class="common-novel-buttons">
+
+<a
+
+href="novel.html?id=${novel.id}"
+
+class="btn btn-primary">
+
+Read
+
+</a>
+
+</div>
+
+</div>
 
 </div>
 
 `;
+
+}
+
+async function loadTrending(){
+
+try{
+
+const response =
+await fetch(
+
+`${API}/api/novels`
+
+);
+
+const novels =
+await response.json();
+
+const container =
+document.getElementById(
+"trendingNovels"
+);
+
+container.innerHTML="";
+
+novels
+.sort((a,b)=>b.views-a.views)
+.slice(0,6)
+.forEach(novel=>{
+
+container.innerHTML +=
+createNovelCard(novel);
 
 });
 
 }
+catch(err){
 
+console.log(err);
 
+}
 
-async function loadContinueReading(){
+}
+
+async function loadRecommended(){
+
+try{
 
 const response =
 await fetch(
 
-`https://mylikith-backend.onrender.com/api/writers/reading-progress/${readerUser.id}`
+`${API}/api/novels`
 
 );
 
-const chapter =
+const novels =
 await response.json();
 
 const container =
 document.getElementById(
-"continueReading"
+"recommendedNovels"
 );
 
-if(!chapter){
+container.innerHTML="";
 
-container.innerHTML =
-'<div class="card">No reading history yet</div>';
+novels
+.slice(0,6)
+.forEach(novel=>{
 
-return;
-
-}
-
-container.innerHTML = `
-
-<a
-href="reader.html?chapter=${chapter.id}"
-style="text-decoration:none;color:white;">
-
-<div class="card">
-
-Continue Reading
-
-<br><br>
-
-Chapter ${chapter.chapter_no}
-
-<br>
-
-${chapter.title}
-
-</div>
-
-</a>
-
-`;
-
-}
-
-async function loadHistory(){
-
-const response =
-await fetch(
-
-`https://mylikith-backend.onrender.com/api/writers/reading-history/${readerUser.id}`
-
-);
-
-const history =
-await response.json();
-
-const container =
-document.getElementById(
-"history"
-);
-
-container.innerHTML = "";
-
-if(history.length===0){
-
-container.innerHTML =
-'<div class="card">No history yet</div>';
-
-return;
-
-}
-
-history.forEach(item=>{
-
-container.innerHTML += `
-
-<a
-href="reader.html?chapter=${item.id}"
-style="
-text-decoration:none;
-color:white;
-">
-
-<div class="card">
-
-Chapter ${item.chapter_no}
-
-<br><br>
-
-${item.title}
-
-</div>
-
-</a>
-
-`;
+container.innerHTML +=
+createNovelCard(novel);
 
 });
 
 }
+catch(err){
 
-loadHistory();
-loadBookmarks();
-loadContinueReading();
+console.log(err);
 
+}
+
+}
+
+async function loadRecent(){
+
+try{
+
+const response =
+await fetch(
+
+`${API}/api/novels`
+
+);
+
+const novels =
+await response.json();
+
+const container =
+document.getElementById(
+"recentNovels"
+);
+
+container.innerHTML="";
+
+novels
+.reverse()
+.slice(0,6)
+.forEach(novel=>{
+
+container.innerHTML +=
+createNovelCard(novel);
+
+});
+
+}
+catch(err){
+
+console.log(err);
+
+}
+
+}
+
+loadTrending();
+
+loadRecommended();
+
+loadRecent();

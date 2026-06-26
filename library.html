@@ -7,7 +7,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Home - MyLikith</title>
+<title>My Library - MyLikith</title>
 
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/common.css">
@@ -47,14 +47,11 @@ font-size:28px;
 
 }
 
-.novels-grid{
+.library-list{
 
 display:grid;
 
-grid-template-columns:
-repeat(auto-fit,minmax(260px,1fr));
-
-gap:25px;
+gap:20px;
 
 }
 
@@ -69,6 +66,56 @@ border-radius:15px;
 text-align:center;
 
 color:#b8c2cc;
+
+}
+
+.library-card{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:20px;
+
+background:rgba(17,24,39,.9);
+
+border-radius:15px;
+
+border:1px solid rgba(255,255,255,.08);
+
+transition:.3s;
+
+}
+
+.library-card:hover{
+
+transform:translateY(-4px);
+
+border-color:#7c3aed;
+
+}
+
+.library-card h3{
+
+margin:0 0 8px;
+
+font-size:22px;
+
+}
+
+.library-card p{
+
+margin:0;
+
+color:#cbd5e1;
+
+}
+
+.library-card a{
+
+text-decoration:none;
 
 }
 
@@ -88,13 +135,7 @@ class="navbar">
 
 <h1>
 
-👋 Welcome,
-
-<span id="readerName">
-
-Reader
-
-</span>
+📚 My Library
 
 </h1>
 
@@ -102,13 +143,13 @@ Reader
 
 <h2>
 
-🔥 Trending Novels
+Continue Reading
 
 </h2>
 
 <div
-id="trendingNovels"
-class="novels-grid">
+id="continueReading"
+class="library-list">
 
 <div class="empty-card">
 
@@ -124,13 +165,13 @@ Loading...
 
 <h2>
 
-⭐ Recommended For You
+Reading History
 
 </h2>
 
 <div
-id="recommendedNovels"
-class="novels-grid">
+id="history"
+class="library-list">
 
 <div class="empty-card">
 
@@ -146,13 +187,13 @@ Loading...
 
 <h2>
 
-🆕 Recently Added
+Bookmarks
 
 </h2>
 
 <div
-id="recentNovels"
-class="novels-grid">
+id="bookmarks"
+class="library-list">
 
 <div class="empty-card">
 
@@ -170,7 +211,7 @@ Loading...
 
 <script src="js/protect.js"></script>
 <script src="js/session.js"></script>
-<script src="js/reader-dashboard.js"></script>
+<script src="js/library.js"></script>
 <script src="js/navbar.js"></script>
 <script src="js/footer.js"></script>
 
