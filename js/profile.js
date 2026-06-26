@@ -23,7 +23,39 @@ document.getElementById(
 ).textContent =
 user.email;
 
+/* --------------------------
+   Writer Badge
+--------------------------- */
+
+if(user.role==="writer"){
+
+document.getElementById(
+"writerBadge"
+).innerHTML=`
+
+<div class="badge badge-success">
+
+✍️ Writer
+
+</div>
+
+`;
+
+document.getElementById(
+"writerSection"
+).style.display="block";
+
+loadWriterStats();
+
+}
+
+/* --------------------------
+   Reader Stats
+--------------------------- */
+
 async function loadStats(){
+
+try{
 
 const response =
 await fetch(
@@ -56,122 +88,68 @@ document.getElementById(
 stats.comments;
 
 }
+catch(err){
 
+console.log(err);
 
+}
 
-async function loadContinueReading(){
+}
+
+/* --------------------------
+   Writer Stats
+--------------------------- */
+
+async function loadWriterStats(){
+
+try{
 
 const response =
 await fetch(
 
-`${API}/api/profile/continue/${user.id}`
+`${API}/api/writer/analytics/${user.id}`
 
 );
 
 const data =
 await response.json();
 
-const container =
 document.getElementById(
-"continueReading"
-);
+"writerNovels"
+).textContent =
+data.novels;
 
-if(!data){
-
-container.innerHTML =
-"No books in progress.";
-
-return;
-
-}
-
-container.innerHTML = `
-
-<div class="continue-card">
-
-<div>
-
-<h3>${data.novel_title}</h3>
-
-<p>${data.chapter_title}</p>
-
-</div>
-
-<button
-onclick="window.location='reader.html?chapter=${data.chapter_id}'">
-
-Continue Reading
-
-</button>
-
-</div>
-
-`;
-
-}
-
-
-
-async function loadHistory(){
-
-const response =
-await fetch(
-
-`${API}/api/profile/history/${user.id}`
-
-);
-
-const history =
-await response.json();
-
-const container =
 document.getElementById(
-"historyList"
-);
+"writerReads"
+).textContent =
+Number(data.reads).toLocaleString();
 
-container.innerHTML="";
+document.getElementById(
+"writerFollowers"
+).textContent =
+data.followers;
 
-if(history.length===0){
+document.getElementById(
+"writerRating"
+).textContent =
+data.rating;
 
-container.innerHTML=
-"No reading history.";
+}
+catch(err){
 
-return;
+console.log(err);
 
 }
 
-history.forEach(item=>{
-
-container.innerHTML+=`
-
-<div class="history-card">
-
-<div>
-
-<h3>${item.novel_title}</h3>
-
-<p>${item.chapter_title}</p>
-
-</div>
-
-<button
-onclick="window.location='reader.html?chapter=${item.chapter_id}'">
-
-Read Again
-
-</button>
-
-</div>
-
-`;
-
-});
-
 }
 
-
+/* --------------------------
+   Reviews
+--------------------------- */
 
 async function loadReviews(){
+
+try{
 
 const response =
 await fetch(
@@ -192,8 +170,15 @@ container.innerHTML="";
 
 if(reviews.length===0){
 
-container.innerHTML=
-"No reviews yet.";
+container.innerHTML=`
+
+<div class="card">
+
+No reviews yet.
+
+</div>
+
+`;
 
 return;
 
@@ -205,11 +190,10 @@ container.innerHTML+=`
 
 <div class="review-card">
 
-<div>
-
 <h3>
 
-<a href="novel.html?id=${review.novel_id}">
+<a
+href="novel.html?id=${review.novel_id}">
 
 ${review.novel_title}
 
@@ -231,17 +215,26 @@ ${review.review}
 
 </div>
 
-</div>
-
 `;
 
 });
 
 }
+catch(err){
 
+console.log(err);
 
+}
+
+}
+
+/* --------------------------
+   Comments
+--------------------------- */
 
 async function loadComments(){
+
+try{
 
 const response =
 await fetch(
@@ -258,12 +251,19 @@ document.getElementById(
 "commentsList"
 );
 
-container.innerHTML = "";
+container.innerHTML="";
 
 if(comments.length===0){
 
-container.innerHTML =
-"No comments yet.";
+container.innerHTML=`
+
+<div class="card">
+
+No comments yet.
+
+</div>
+
+`;
 
 return;
 
@@ -271,15 +271,14 @@ return;
 
 comments.forEach(comment=>{
 
-container.innerHTML += `
+container.innerHTML+=`
 
 <div class="comment-card">
 
-<div>
-
 <h3>
 
-<a href="reader.html?chapter=${comment.chapter_id}">
+<a
+href="reader.html?chapter=${comment.chapter_id}">
 
 ${comment.novel_title}
 
@@ -289,7 +288,11 @@ ${comment.novel_title}
 
 <p>
 
-<b>${comment.chapter_title}</b>
+<b>
+
+${comment.chapter_title}
+
+</b>
 
 </p>
 
@@ -301,19 +304,20 @@ ${comment.comment}
 
 </div>
 
-</div>
-
 `;
 
 });
 
 }
+catch(err){
+
+console.log(err);
+
+}
+
+}
 
 loadStats();
-
-loadContinueReading();
-
-loadHistory();
 
 loadReviews();
 

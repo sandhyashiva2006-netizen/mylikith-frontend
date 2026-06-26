@@ -15,9 +15,9 @@ let html = `
 <a href="${
 navbarUser
 ?
-'reader-dashboard.html'
+"reader-dashboard.html"
 :
-'index.html'
+"index.html"
 }">
 
 ✨ MYLIKITH
@@ -64,6 +64,12 @@ Library
 
 </li>
 
+`;
+
+if(navbarUser.role==="writer"){
+
+html += `
+
 <li>
 
 <a href="writer-dashboard.html">
@@ -73,6 +79,12 @@ Writer Studio
 </a>
 
 </li>
+
+`;
+
+}
+
+html += `
 
 <li>
 
@@ -112,9 +124,9 @@ Explore
 
 <li>
 
-<a href="login.html">
+<a href="languages.html">
 
-Login
+Languages
 
 </a>
 
@@ -122,9 +134,9 @@ Login
 
 <li>
 
-<a href="signup.html">
+<a href="premium.html">
 
-Sign Up
+Premium
 
 </a>
 
@@ -159,6 +171,32 @@ class="login-btn">
 Logout
 
 </button>
+
+`;
+
+}else{
+
+html += `
+
+<a href="login.html">
+
+<button class="login-btn">
+
+Login
+
+</button>
+
+</a>
+
+<a href="signup.html">
+
+<button class="signup-btn">
+
+Sign Up
+
+</button>
+
+</a>
 
 `;
 
