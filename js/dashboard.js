@@ -153,7 +153,12 @@ grid.innerHTML+=`
 <div class="novel-cover">
 
 <img
-src="${novel.cover_url || 'https://placehold.co/180x250'}"
+src="${
+novel.cover_url ||
+
+'assets/images/default-cover.png'
+
+}"
 alt="${novel.title}">
 
 </div>

@@ -8,6 +8,47 @@ JSON.parse(
 localStorage.getItem("user")
 );
 
+let coverUrl="";
+
+const file =
+
+document.getElementById(
+"cover"
+).files[0];
+
+if(file){
+
+const formData =
+new FormData();
+
+formData.append(
+"cover",
+file
+);
+
+const upload =
+await fetch(
+
+`${API}/api/upload-cover`,
+
+{
+
+method:"POST",
+
+body:formData
+
+}
+
+);
+
+const image =
+await upload.json();
+
+coverUrl =
+image.url;
+
+}
+
 const title =
 document.getElementById(
 "title"
