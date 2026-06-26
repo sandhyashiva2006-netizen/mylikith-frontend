@@ -45,6 +45,24 @@ window.location =
 
 }
 
+function formatNumber(num){
+
+if(num>=1000000){
+
+return (num/1000000).toFixed(1)+"M";
+
+}
+
+if(num>=1000){
+
+return (num/1000).toFixed(1)+"K";
+
+}
+
+return num;
+
+}
+
 async function loadAnalytics(){
 
 try{
@@ -72,7 +90,7 @@ data.chapters;
 document.getElementById(
 "totalReads"
 ).textContent =
-Number(data.reads).toLocaleString();
+formatNumber(data.reads);
 
 document.getElementById(
 "totalFollowers"
@@ -107,30 +125,18 @@ await fetch(
 const novels =
 await response.json();
 
-const body =
+const grid =
 document.getElementById(
-"novelsTableBody"
+"novelsGrid"
 );
 
-if(!body){
-return;
-}
-
-body.innerHTML="";
+grid.innerHTML="";
 
 if(novels.length===0){
 
-body.innerHTML=`
+grid.innerHTML=`
 
-<tr>
-
-<td colspan="7">
-
-No novels found
-
-</td>
-
-</tr>
+<h3>No novels found</h3>
 
 `;
 
@@ -140,37 +146,69 @@ return;
 
 novels.forEach(novel=>{
 
-body.innerHTML+=`
+grid.innerHTML+=`
 
-<tr>
+<div class="novel-manage-card">
 
-<td>${novel.title}</td>
+<div class="novel-cover">
 
-<td>${novel.language}</td>
+<img
+src="${novel.cover_url || 'https://placehold.co/180x250'}"
+alt="${novel.title}">
 
-<td>${novel.category}</td>
+</div>
 
-<td>${novel.status}</td>
+<div class="novel-info">
 
-<td>${novel.views}</td>
+<h2>${novel.title}</h2>
 
-<td>${novel.followers}</td>
+<p>
 
-<td>
+🌍 ${novel.language}
+
+•
+
+🏷 ${novel.category}
+
+</p>
+
+<p>
+
+📖 ${novel.status}
+
+</p>
+
+<div class="novel-stats">
+
+<span>
+
+👁 ${formatNumber(novel.views)}
+
+</span>
+
+<span>
+
+❤️ ${formatNumber(novel.followers)}
+
+</span>
+
+</div>
+
+<div class="novel-actions">
 
 <button
 class="edit-btn"
 onclick="editNovel(${novel.id})">
 
-Edit
+✏ Edit
 
 </button>
 
 <button
-class="edit-btn"
+class="chapter-btn"
 onclick="manageChapters(${novel.id})">
 
-Chapters
+📚 Chapters
 
 </button>
 
@@ -178,13 +216,15 @@ Chapters
 class="delete-btn"
 onclick="deleteNovel(${novel.id})">
 
-Delete
+🗑 Delete
 
 </button>
 
-</td>
+</div>
 
-</tr>
+</div>
+
+</div>
 
 `;
 
