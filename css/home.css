@@ -262,36 +262,6 @@ grid-template-columns:repeat(4,1fr);
 gap:25px;
 }
 
-.novel-card{
-background:#111827;
-padding:20px;
-border-radius:20px;
-transition:.3s;
-}
-
-.novel-card:hover{
-transform:translateY(-8px);
-}
-
-.cover{
-height:260px;
-border-radius:15px;
-background:linear-gradient(
-135deg,
-#7C3AED,
-#4F46E5,
-#22D3EE
-);
-margin-bottom:20px;
-}
-
-.novel-card h3{
-margin-bottom:10px;
-}
-
-.novel-card p{
-color:#94A3B8;
-}
 
 .categories{
 display:flex;
