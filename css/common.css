@@ -240,7 +240,7 @@ margin-bottom:30px;
 
 }
 
-.novel-card{
+.common-novel-card{
 
 background:rgba(15,23,42,.55);
 
@@ -262,7 +262,7 @@ border-color:#7c3aed;
 
 }
 
-.novel-cover{
+.common-novel-cover{
 
 width:100%;
 
@@ -274,7 +274,7 @@ display:block;
 
 }
 
-.novel-body{
+.common-novel-body{
 
 padding:22px;
 
@@ -288,7 +288,7 @@ font-size:24px;
 
 }
 
-.novel-meta{
+.common-novel-meta{
 
 display:flex;
 
@@ -302,7 +302,7 @@ color:#22d3ee;
 
 }
 
-.novel-buttons{
+.common-novel-buttons{
 
 display:flex;
 

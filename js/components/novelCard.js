@@ -2,7 +2,7 @@ function createNovelCard(novel){
 
 return `
 
-<div class="novel-card">
+<div class="common-novel-card">
 
 <img
 
@@ -15,7 +15,7 @@ novel.cover_url ||
 
 alt="${novel.title}">
 
-<div class="novel-body">
+<div class="common-novel-body">
 
 <h2>
 
@@ -33,7 +33,7 @@ ${novel.language}
 
 </p>
 
-<div class="novel-meta">
+<div class="common-novel-meta">
 
 <span>
 
@@ -55,7 +55,7 @@ ${novel.language}
 
 </div>
 
-<div class="novel-buttons">
+<div class="common-novel-buttons">
 
 <a
 
