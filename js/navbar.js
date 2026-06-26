@@ -4,9 +4,7 @@ localStorage.getItem("user")
 );
 
 const navbar =
-document.getElementById(
-"navbar"
-);
+document.getElementById("navbar");
 
 if(navbar){
 
@@ -24,63 +22,23 @@ let html = `
 
 <ul class="nav-links">
 
-<li>
-<a href="index.html">
-Home
-</a>
-</li>
+<li><a href="index.html">Home</a></li>
 
-<li>
-<a href="explore.html">
-Explore
-</a>
-</li>
+<li><a href="explore.html">Explore</a></li>
 
 `;
 
-if(navbaruser){
+if(navbarUser){
 
 html += `
 
-<li>
+<li><a href="reader-dashboard.html">Dashboard</a></li>
 
-<a href="reader-dashboard.html">
+<li><a href="reader-profile.html">Profile</a></li>
 
-Dashboard
-
-</a>
-
-</li>
-
-<li>
-
-<a href="reader-profile.html">
-
-Profile
-
-</a>
-
-</li>
+<li><a href="writer-dashboard.html">Writer</a></li>
 
 `;
-
-if(navbaruser){
-
-html += `
-
-<li>
-
-<a href="writer-dashboard.html">
-
-Writer
-
-</a>
-
-</li>
-
-`;
-
-}
 
 }
 
@@ -92,13 +50,13 @@ html += `
 
 `;
 
-if(navbaruser){
+if(navbarUser){
 
 html += `
 
 <span class="welcome">
 
-👋 ${navbaruser.name}
+👋 ${navbarUser.name}
 
 </span>
 
@@ -148,25 +106,17 @@ html += `
 
 navbar.innerHTML = html;
 
-const logout =
-document.getElementById(
-"logoutBtn"
-);
+const logoutBtn =
+document.getElementById("logoutBtn");
 
-if(logout){
+if(logoutBtn){
 
-logout.onclick=()=>{
+logoutBtn.onclick = ()=>{
 
-localStorage.removeItem(
-"user"
-);
+localStorage.removeItem("token");
+localStorage.removeItem("user");
 
-localStorage.removeItem(
-"token"
-);
-
-window.location=
-"login.html";
+window.location = "login.html";
 
 };
 
