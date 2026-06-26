@@ -197,26 +197,26 @@ alt="${novel.title}">
 <div class="novel-actions">
 
 <button
-class="edit-btn"
+class="novel-btn edit-btn"
 onclick="editNovel(${novel.id})">
 
-✏ Edit
+Edit
 
 </button>
 
 <button
-class="chapter-btn"
+class="novel-btn chapter-btn"
 onclick="manageChapters(${novel.id})">
 
-📚 Chapters
+Chapters
 
 </button>
 
 <button
-class="delete-btn"
+class="novel-btn delete-btn"
 onclick="deleteNovel(${novel.id})">
 
-🗑 Delete
+Delete
 
 </button>
 
