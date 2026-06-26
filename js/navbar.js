@@ -1,4 +1,4 @@
-const user =
+const navbarUser =
 JSON.parse(
 localStorage.getItem("user")
 );
@@ -38,7 +38,7 @@ Explore
 
 `;
 
-if(user){
+if(navbaruser){
 
 html += `
 
@@ -64,7 +64,7 @@ Profile
 
 `;
 
-if(user.role==="writer"){
+if(navbaruser){
 
 html += `
 
@@ -92,13 +92,13 @@ html += `
 
 `;
 
-if(user){
+if(navbaruser){
 
 html += `
 
 <span class="welcome">
 
-👋 ${user.name}
+👋 ${navbaruser.name}
 
 </span>
 
