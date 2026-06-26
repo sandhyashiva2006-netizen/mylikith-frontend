@@ -1,3 +1,44 @@
+/*==========================================
+MYLIKITH GLOBAL BACKGROUND
+==========================================*/
+
+:root{
+
+--primary:#7c3aed;
+--secondary:#22d3ee;
+--dark:#0b1020;
+--card:#131b32;
+--border:rgba(255,255,255,.08);
+
+}
+
+body{
+
+background:
+
+linear-gradient(
+rgba(6,10,28,.82),
+rgba(10,15,35,.86)
+),
+
+url("../assets/images/profile-bg.jpg");
+
+background-size:cover;
+
+background-position:center;
+
+background-repeat:no-repeat;
+
+background-attachment:fixed;
+
+color:#fff;
+
+min-height:100vh;
+
+overflow-x:hidden;
+
+}
+
 /* ===========================
    BUTTONS
 =========================== */
@@ -335,6 +376,61 @@ padding-top:25px;
 .dashboard-hero{
 
 margin-top:20px;
+
+}
+
+/*==========================================
+GLOBAL GLASS EFFECT
+==========================================*/
+
+.section,
+.card,
+.stat-card,
+.analytics-card,
+.library-card,
+.history-card,
+.review-card,
+.comment-card,
+.continue-card,
+.activity-card,
+.novel-card,
+.common-novel-card,
+.table-wrapper{
+
+background:rgba(18,26,46,.72);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+
+0 12px 40px rgba(0,0,0,.25);
+
+transition:.35s;
+
+}
+
+.section:hover,
+.card:hover,
+.stat-card:hover,
+.analytics-card:hover,
+.library-card:hover,
+.history-card:hover,
+.review-card:hover,
+.comment-card:hover,
+.continue-card:hover,
+.activity-card:hover,
+.novel-card:hover,
+.common-novel-card:hover{
+
+transform:translateY(-6px);
+
+border-color:#22d3ee;
+
+box-shadow:
+
+0 20px 60px rgba(34,211,238,.15);
 
 }
 
