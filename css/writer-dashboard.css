@@ -1,3 +1,65 @@
+body{
+
+margin:0;
+
+font-family:'Segoe UI',sans-serif;
+
+color:#fff;
+
+background:
+
+linear-gradient(rgba(8,12,30,.78),rgba(8,12,30,.88)),
+
+url("../assets/images/writer-bg.jpg");
+
+background-size:cover;
+
+background-position:center;
+
+background-repeat:no-repeat;
+
+background-attachment:fixed;
+
+min-height:100vh;
+
+overflow-x:hidden;
+
+}
+
+.dashboard-hero{
+
+text-align:center;
+
+padding:90px 20px 60px;
+
+background:
+
+radial-gradient(circle at center,
+
+rgba(124,58,237,.35),
+
+transparent 60%);
+
+margin-bottom:40px;
+
+}
+
+.dashboard-hero h1{
+
+font-size:56px;
+
+margin-bottom:15px;
+
+}
+
+.dashboard-hero p{
+
+font-size:22px;
+
+color:#cbd5e1;
+
+}
+
 .dashboard-header{
 text-align:center;
 padding:80px 20px;
@@ -84,35 +146,39 @@ margin:40px 0;
 
 .analytics-card{
 
-background:rgba(12,18,38,.60);
+background:rgba(15,23,42,.55);
 
 backdrop-filter:blur(18px);
 
 border:1px solid rgba(255,255,255,.08);
 
-border-radius:18px;
+border-radius:22px;
 
-padding:30px;
+padding:35px;
 
 text-align:center;
 
-transition:.3s;
+transition:.35s;
+
+box-shadow:0 15px 40px rgba(0,0,0,.25);
 
 }
 
 .analytics-card:hover{
 
-transform:translateY(-6px);
+transform:translateY(-8px);
 
-border-color:#7c3aed;
+border-color:#22d3ee;
+
+box-shadow:0 25px 60px rgba(34,211,238,.18);
 
 }
 
 .analytics-card h2{
 
-margin:0;
+font-size:46px;
 
-font-size:42px;
+margin:0;
 
 color:#22d3ee;
 
@@ -125,6 +191,24 @@ margin-top:12px;
 font-size:18px;
 
 color:#d1d5db;
+
+}
+
+.dashboard-section{
+
+margin-top:60px;
+
+background:rgba(15,23,42,.45);
+
+backdrop-filter:blur(18px);
+
+border-radius:25px;
+
+padding:35px;
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:0 10px 35px rgba(0,0,0,.25);
 
 }
 
@@ -443,3 +527,34 @@ box-shadow:0 10px 25px rgba(239,68,68,.35);
 
 }
 
+.primary-btn{
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:14px 28px;
+
+border-radius:14px;
+
+background:linear-gradient(135deg,#7c3aed,#22d3ee);
+
+color:#fff;
+
+font-weight:700;
+
+text-decoration:none;
+
+transition:.3s;
+
+box-shadow:0 12px 30px rgba(124,58,237,.25);
+
+}
+
+.primary-btn:hover{
+
+transform:translateY(-4px);
+
+}
