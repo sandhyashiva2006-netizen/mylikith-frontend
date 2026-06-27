@@ -56,8 +56,7 @@ chapters.forEach(ch=>{
 chapterList.innerHTML+=`
 
 <div class="chapter-item"
-
-onclick="openChapter(${ch.id},this)"
+onclick="openChapter(${ch.id},this)">
 
 Chapter ${ch.chapter_no}
 
@@ -77,19 +76,25 @@ async function openChapter(id,element){
 
 document
 .querySelectorAll(".chapter-item")
-.forEach(item=>{
-
-item.classList.remove("active");
-
-});
+.forEach(item=>item.classList.remove("active"));
 
 if(element){
-
 element.classList.add("active");
-
 }
 
 currentChapter=id;
+
+const res=await fetch(`${API}/api/chapters/${id}`);
+
+const chapter=await res.json();
+
+title.value=chapter.title;
+
+editor.innerHTML=chapter.content||"";
+
+calculate();
+
+}
 
 function calculate(){
 
@@ -229,9 +234,10 @@ await loadChapters();
 
 openChapter(data.chapter.id);
 
-titleInput.focus();
+document.getElementById("chapterTitle").focus();
 
 }
 
 }
 
+}
