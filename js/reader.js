@@ -159,6 +159,7 @@ window.location.search
 const chapterId =
 params.get("chapter");
 
+
 async function loadChapter(){
 
 try{
@@ -218,7 +219,7 @@ chapter.id
 }
 
 fetch(
-"https://mylikith-backend.onrender.com/api/reader/reading-history",
+"https://mylikith-backend.onrender.com/api/writers/reading-history",
 {
     method:"POST",
 

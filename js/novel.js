@@ -2,6 +2,8 @@ const params = new URLSearchParams(window.location.search);
 
 const novelId = params.get("id");
 
+const API="https://mylikith-backend.onrender.com";
+
 let currentNovel = null;
 
 function formatNumber(num){
@@ -69,7 +71,7 @@ document.title =
 
 document.getElementById("startReadingBtn").onclick=()=>{
 
-window.location=`reader.html?novel=${novel.id}`;
+loadChapters();
 
 };
 
