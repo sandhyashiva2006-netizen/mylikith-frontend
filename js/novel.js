@@ -31,6 +31,8 @@ console.log("NOVEL DATA:", novel);
 
 currentNovel = novel;
 
+loadAuthor();
+
 document.querySelector(".novel-cover").innerHTML=`
 <img
 src="${novel.cover_url||'assets/images/default-cover.png'}"
@@ -469,6 +471,122 @@ document.getElementById(
 data.rating || "0";
 
 }
+
+async function loadAuthor(){
+
+const response=await fetch(
+
+`${API}/api/users/${currentNovel.author_id}`
+
+);
+
+const author=await response.json();
+
+document.getElementById("authorName").textContent=
+
+author.name;
+
+document.getElementById("authorBio").textContent=
+
+author.bio||"Writer";
+
+document.getElementById("authorAvatar").src=
+
+author.profile_image||
+
+"assets/images/default-avatar.png";
+
+document.getElementById("authorFollowers").textContent=
+
+author.followers||0;
+
+document.getElementById("authorNovels").textContent=
+
+author.total_novels||0;
+
+document.getElementById("authorRating").textContent=
+
+author.rating||0;
+
+}
+
+document.getElementById("shareBtn").onclick=async()=>{
+
+if(navigator.share){
+
+await navigator.share({
+
+title:currentNovel.title,
+
+text:currentNovel.description,
+
+url:window.location.href
+
+});
+
+}else{
+
+navigator.clipboard.writeText(window.location.href);
+
+alert("Novel link copied.");
+
+}
+
+};
+
+document.getElementById("reportBtn").onclick=()=>{
+
+alert("Report feature will be available soon.");
+
+};
+
+document.getElementById("libraryBtn").onclick=async()=>{
+
+const user=JSON.parse(localStorage.getItem("user"));
+
+if(!user){
+
+alert("Please login first.");
+
+return;
+
+}
+
+const res=await fetch(
+
+`${API}/api/library`,
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+user_id:user.id,
+
+novel_id:novelId
+
+})
+
+}
+
+);
+
+const data=await res.json();
+
+if(data.success){
+
+alert("Added to Library.");
+
+}
+
+};
 
 loadNovel();
 loadChapters();
