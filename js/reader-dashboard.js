@@ -320,25 +320,19 @@ ${bookmark.title}
 
 </p>
 
-<div class="bookmark-actions">
-
 <button
-
-class="chapter-btn"
-
+class="start-btn"
 onclick="location.href='reader.html?chapter=${bookmark.id}'">
 
-Open
+📖 Read
 
 </button>
 
 <button
-
-class="novel-btn"
-
+class="report-btn"
 onclick="deleteBookmark(${bookmark.id})">
 
-Delete
+🗑 Delete
 
 </button>
 
@@ -470,7 +464,7 @@ renderDiscover(
 
 .slice(0,5),
 
-"👁 Views"
+`${novel.views} Views`
 
 );
 
@@ -484,7 +478,7 @@ renderDiscover(
 
 .slice(0,5),
 
-"⭐ Rating"
+`${novel.rating||0} ⭐`
 
 );
 
@@ -516,7 +510,7 @@ renderDiscover(
 
 .slice(0,5),
 
-"📖 Reads"
+`${novel.views} Reads`
 
 );
 
@@ -584,11 +578,7 @@ ${label}
 
 }
 
-loadTrending();
 
-loadRecommended();
-
-loadRecent();
 
 loadReaderStats();
 
