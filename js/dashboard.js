@@ -545,9 +545,10 @@ document.getElementById("totalViews").textContent=
 
 novel.views;
 
-document.getElementById("averageRating").textContent=
-
-novel.rating||"New";
+document.getElementById("averageRating").textContent =
+Number(novel.rating) > 0
+? novel.rating
+: "New";
 
 }
 
