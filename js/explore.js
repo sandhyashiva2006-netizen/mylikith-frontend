@@ -27,7 +27,9 @@ novelsGrid.innerHTML += `
 href="novel.html?id=${novel.id}"
 class="novel-card">
 
-<div class="cover"></div>
+<img
+class="cover"
+src="${novel.cover_url || 'assets/images/default-cover.png'}">
 
 <h3>${novel.title}</h3>
 

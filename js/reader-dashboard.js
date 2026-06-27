@@ -37,7 +37,9 @@ function createNovelCard(novel){
 
 return `
 
-<div class="common-novel-card">
+<div
+class="common-novel-card"
+onclick="window.location='novel.html?id=${novel.id}'">
 
 <img
 
@@ -88,15 +90,15 @@ ${novel.language}
 
 <div class="common-novel-buttons">
 
-<a
+<button
 
-href="novel.html?id=${novel.id}"
+class="btn btn-primary"
 
-class="btn btn-primary">
+onclick="event.stopPropagation();window.location='reader.html?chapter=${novel.first_chapter_id||1}'">
 
-Read
+Read Now
 
-</a>
+</button>
 
 </div>
 
