@@ -272,6 +272,7 @@ chapter.content.replace(
 
 restoreReadingPosition();
 saveContinueReading(chapter);
+updateReaderStats(chapter);
 
 }
 catch(err){
@@ -617,6 +618,70 @@ chapterTitle:chapter.title,
 chapterNo:chapter.chapter_no
 
 })
+
+);
+
+}
+
+function updateReaderStats(chapter){
+
+const user=
+
+JSON.parse(localStorage.getItem("user"));
+
+if(!user)return;
+
+const key=`reader-stats-${user.id}`;
+
+let stats=
+
+JSON.parse(localStorage.getItem(key));
+
+if(!stats){
+
+stats={
+
+chapters:0,
+
+books:[],
+
+minutes:0,
+
+lastDate:"",
+
+streak:1
+
+};
+
+}
+
+stats.chapters++;
+
+stats.minutes+=10;
+
+if(!stats.books.includes(chapter.novel_id)){
+
+stats.books.push(chapter.novel_id);
+
+}
+
+const today=
+
+new Date().toDateString();
+
+if(stats.lastDate!==today){
+
+stats.streak++;
+
+stats.lastDate=today;
+
+}
+
+localStorage.setItem(
+
+key,
+
+JSON.stringify(stats)
 
 );
 

@@ -299,6 +299,46 @@ Continue
 
 }
 
+function loadReaderStats(){
+
+const user=
+
+JSON.parse(localStorage.getItem("user"));
+
+if(!user)return;
+
+const stats=
+
+JSON.parse(
+
+localStorage.getItem(
+
+`reader-stats-${user.id}`
+
+)
+
+);
+
+if(!stats)return;
+
+document.getElementById("readingStreak").textContent=
+
+stats.streak;
+
+document.getElementById("chaptersCompleted").textContent=
+
+stats.chapters;
+
+document.getElementById("booksCompleted").textContent=
+
+stats.books.length;
+
+document.getElementById("readingHours").textContent=
+
+(Math.floor(stats.minutes/60)||0);
+
+}
+
 loadTrending();
 
 loadRecommended();
@@ -306,3 +346,5 @@ loadRecommended();
 loadRecent();
 
 loadContinueReading();
+
+loadReaderStats();
