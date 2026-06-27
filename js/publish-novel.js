@@ -51,3 +51,74 @@ document.getElementById("backBtn").onclick=()=>{
 history.back();
 
 };
+
+document.getElementById("publishNowBtn").onclick=async()=>{
+
+const res=await fetch(
+
+`${API}/api/publish/${novelId}/publish`,
+
+{
+
+method:"POST"
+
+}
+
+);
+
+const data=await res.json();
+
+if(data.success){
+
+alert("Novel published successfully.");
+
+window.location=`writer-studio.html?novel=${novelId}`;
+
+}else{
+
+alert("Publishing failed.");
+
+}
+
+};
+
+document.getElementById("saveBtn").onclick=async()=>{
+
+const res=await fetch(
+
+`${API}/api/publish/${novelId}`,
+
+{
+
+method:"PUT",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+visibility:document.getElementById("visibility").value,
+
+allow_comments:document.getElementById("allowComments").checked,
+
+mature:document.getElementById("mature").checked
+
+})
+
+}
+
+);
+
+const data=await res.json();
+
+if(data.success){
+
+alert("Settings saved.");
+
+}
+
+};
+

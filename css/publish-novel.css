@@ -60,7 +60,75 @@ justify-content:flex-end;
 
 gap:15px;
 
-margin-top:30px;
+margin-top:40px;
+
+}
+
+.publish-actions button{
+
+min-width:170px;
+
+height:52px;
+
+border:none;
+
+border-radius:12px;
+
+font-size:16px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.publish-actions button:hover{
+
+transform:translateY(-2px);
+
+}
+
+select{
+
+background:#1f2937;
+
+color:#fff;
+
+border:1px solid #374151;
+
+}
+
+select option{
+
+background:#111827;
+
+color:#fff;
+
+}
+
+#saveBtn{
+
+background:#22c55e;
+
+color:#fff;
+
+}
+
+#backBtn{
+
+background:#374151;
+
+color:#fff;
+
+}
+
+#publishNowBtn{
+
+background:#2563eb;
+
+color:#fff;
 
 }
 
