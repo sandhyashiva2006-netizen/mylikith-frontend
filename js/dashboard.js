@@ -422,4 +422,76 @@ ${new Date(activity.created_at).toLocaleDateString()}
 
 }
 
+async function loadWriterNotifications(){
+
+const user=
+
+JSON.parse(localStorage.getItem("user"));
+
+if(!user)return;
+
+const response=
+
+await fetch(
+
+`${API}/api/writer/notifications/${user.id}`
+
+);
+
+const notifications=
+
+await response.json();
+
+const container=
+
+document.getElementById(
+
+"writerNotifications"
+
+);
+
+container.innerHTML="";
+
+if(notifications.length===0){
+
+container.innerHTML=
+
+"<p>No notifications yet.</p>";
+
+return;
+
+}
+
+notifications.forEach(notification=>{
+
+container.innerHTML+=`
+
+<div class="writer-notification">
+
+<div>
+
+<div class="writer-notification-title">
+
+${notification.title}
+
+</div>
+
+</div>
+
+<div class="writer-notification-time">
+
+${new Date(notification.created_at).toLocaleDateString()}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
 loadRecentActivity();
+
+loadWriterNotifications();

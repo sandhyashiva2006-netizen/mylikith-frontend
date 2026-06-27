@@ -77,12 +77,6 @@ Manage your novels, readers and earnings.
 
 <div class="quick-grid">
 
-<button
-onclick="location.href='writer-studio.html'">
-
-✍ Create Novel
-
-</button>
 
 <button
 onclick="location.href='writer-studio.html?tab=drafts'">
@@ -107,6 +101,22 @@ onclick="location.href='analytics.html'">
 
 </div>
 
+<section class="dashboard-actions">
+
+<a href="create-novel.html" class="primary-btn">
+➕ Create Novel
+</a>
+
+<a href="my-novels.html" class="action-btn">
+📚 My Novels
+</a>
+
+<a href="writer-studio.html" class="action-btn" id="writerStudioBtn">
+✍ Writer Studio
+</a>
+
+</section>
+
 </section>
 
 <section class="dashboard-section">
@@ -126,19 +136,19 @@ Loading...
 
 </section>
 
-<section class="dashboard-actions">
+<section class="dashboard-section">
 
-<a href="create-novel.html" class="primary-btn">
-➕ Create Novel
-</a>
+<h2>
 
-<a href="my-novels.html" class="action-btn">
-📚 My Novels
-</a>
+🔔 Notifications
 
-<a href="writer-studio.html" class="action-btn" id="writerStudioBtn">
-✍ Writer Studio
-</a>
+</h2>
+
+<div id="writerNotifications">
+
+Loading...
+
+</div>
 
 </section>
 

@@ -649,3 +649,45 @@ color:#9ca3af;
 
 }
 
+.writer-notification{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:18px 22px;
+
+margin-top:15px;
+
+background:#111827;
+
+border-left:4px solid #7c3aed;
+
+border-radius:15px;
+
+transition:.25s;
+
+}
+
+.writer-notification:hover{
+
+transform:translateX(5px);
+
+}
+
+.writer-notification-title{
+
+font-weight:700;
+
+}
+
+.writer-notification-time{
+
+font-size:13px;
+
+color:#9ca3af;
+
+}
+
