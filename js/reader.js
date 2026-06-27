@@ -159,6 +159,8 @@ window.location.search
 const chapterId =
 params.get("chapter");
 
+let currentNovelId=null;
+
 console.log("Reader URL:", window.location.href);
 console.log("Chapter ID:", chapterId);
 
@@ -175,6 +177,12 @@ await fetch(
 
 const chapter =
 await response.json();
+
+currentNovelId=
+
+chapter.novel_id;
+
+await loadChapterNavigation();
 
 await fetch(
 
@@ -339,6 +347,38 @@ document.getElementById(
 
 loadComments();
 
+let chapterList=[];
+
+let currentIndex=-1;
+
+async function loadChapterNavigation(){
+
+const response=await fetch(
+
+`${API}/api/novels/${currentNovelId}/chapters`
+
+);
+
+chapterList=await response.json();
+
+currentIndex=
+
+chapterList.findIndex(
+
+c=>c.id==chapterId
+
+);
+
+document.getElementById("prevChapterBtn").disabled=
+
+currentIndex<=0;
+
+document.getElementById("nextChapterBtn").disabled=
+
+currentIndex>=chapterList.length-1;
+
+}
+
 }
 
 }
@@ -398,3 +438,23 @@ ${comment.comment}
 }
 
 loadComments();
+
+document.getElementById("prevChapterBtn").onclick=()=>{
+
+if(currentIndex<=0)return;
+
+location.href=
+
+`reader.html?chapter=${chapterList[currentIndex-1].id}`;
+
+};
+
+document.getElementById("nextChapterBtn").onclick=()=>{
+
+if(currentIndex>=chapterList.length-1)return;
+
+location.href=
+
+`reader.html?chapter=${chapterList[currentIndex+1].id}`;
+
+};
