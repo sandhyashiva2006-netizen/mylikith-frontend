@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Admin - Novels</title>
+
+<link rel="stylesheet" href="css/admin.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<h2>MyLikith</h2>
+
+<p>Admin Panel</p>
+
+</div>
+
+<nav>
+
+<a href="admin-dashboard.html">🏠 Dashboard</a>
+
+<a href="admin-users.html">👥 Users</a>
+
+<a href="admin-novels.html" class="active">📚 Novels</a>
+
+</nav>
+
+</aside>
+
+<main class="main-content">
+
+<div class="topbar">
+
+<div>
+
+<h1>Novel Management</h1>
+
+<p>Manage all novels</p>
+
+</div>
+
+</div>
+
+<div class="dashboard-card">
+
+<input
+id="searchNovel"
+class="admin-search"
+placeholder="Search novel">
+
+<div id="novelsTable">
+
+Loading...
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<script src="js/admin-novels.js"></script>
+
+</body>
+
+</html>

@@ -282,3 +282,31 @@ background:#dc2626;
 
 }
 
+.novel-row{
+
+display:grid;
+
+grid-template-columns:80px 2fr 1fr 1fr 2fr;
+
+gap:15px;
+
+align-items:center;
+
+padding:18px;
+
+border-bottom:1px solid rgba(255,255,255,.08);
+
+}
+
+.novel-row img{
+
+width:60px;
+
+height:80px;
+
+border-radius:8px;
+
+object-fit:cover;
+
+}
+
