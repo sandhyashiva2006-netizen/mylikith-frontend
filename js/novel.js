@@ -202,6 +202,7 @@ document
 followAuthor
 );
 
+document.getElementById("reportNovelBtn").onclick=reportNovel;
 async function followAuthor(){
 
 const user =
@@ -303,6 +304,58 @@ btn.style.opacity =
 "0.7";
 
 }
+
+}
+
+async function reportNovel(){
+
+const user=
+JSON.parse(localStorage.getItem("user"));
+
+if(!user){
+
+alert("Please login");
+
+return;
+
+}
+
+const reason=
+prompt("Reason for reporting this novel");
+
+if(!reason)return;
+
+await fetch(
+
+`${API}/api/report`,
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+user_id:user.id,
+
+type:"Novel",
+
+reported_item:novel.title,
+
+reason
+
+})
+
+}
+
+);
+
+alert("Report submitted.");
 
 }
 
