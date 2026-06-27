@@ -67,7 +67,8 @@ onclick="featureNovel(${novel.id})">
 </button>
 
 <button
-class="admin-btn">
+class="admin-btn"
+onclick="editNovel(${novel.id})">
 
 ✏ Edit
 
@@ -144,6 +145,13 @@ method:"PUT"
 );
 
 alert("Novel Featured");
+
+}
+
+function editNovel(id){
+
+window.location.href=
+`writer-studio.html?novel=${id}`;
 
 }
 
