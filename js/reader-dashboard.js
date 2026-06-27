@@ -365,11 +365,7 @@ JSON.parse(localStorage.getItem("user"));
 
 if(!user)return;
 
-const response=await fetch(
-
-`${API}/api/notifications/${user.id}`
-
-);
+const response=await fetch(`${API}/api/writers/notifications/${user.id}`);
 
 const notifications=
 
@@ -448,83 +444,45 @@ const novels=
 await response.json();
 
 renderDiscover(
-
 "trendingNovels",
-
 [...novels]
-
 .sort((a,b)=>b.views-a.views)
-
 .slice(0,5),
-
-`${novel.views} Views`
-
+"views"
 );
 
 renderDiscover(
-
 "topRatedNovels",
-
 [...novels]
-
 .sort((a,b)=>(b.rating||0)-(a.rating||0))
-
 .slice(0,5),
-
-`${novel.rating||0} ⭐`
-
+"rating"
 );
 
 renderDiscover(
-
 "newNovels",
-
 [...novels]
-
 .sort(
-
 (a,b)=>new Date(b.created_at)-new Date(a.created_at)
-
 )
-
 .slice(0,5),
-
-"🆕"
-
+"new"
 );
 
 renderDiscover(
-
 "mostReadNovels",
-
 [...novels]
-
 .sort((a,b)=>b.views-a.views)
-
 .slice(0,5),
-
-`${novel.views} Reads`
-
+"reads"
 );
 
 }
 
-function renderDiscover(
+function renderDiscover(containerId, novels, type){
 
-containerId,
-
-novels,
-
-label
-
-){
-
-const container=
-
-document.querySelector(
-
+const container=document.querySelector(
 `#${containerId} .discover-list`
-
 );
 
 if(!container)return;
@@ -533,12 +491,36 @@ container.innerHTML="";
 
 novels.forEach(novel=>{
 
+let value="";
+
+if(type==="views"){
+
+value=`👁 ${novel.views}`;
+
+}
+
+else if(type==="reads"){
+
+value=`📖 ${novel.views}`;
+
+}
+
+else if(type==="rating"){
+
+value=`⭐ ${novel.rating||0}`;
+
+}
+
+else{
+
+value="🆕";
+
+}
+
 container.innerHTML+=`
 
 <div
-
 class="discover-item"
-
 onclick="location.href='novel.html?id=${novel.id}'">
 
 <div>
@@ -559,7 +541,7 @@ ${novel.category}
 
 <div>
 
-${label}
+${value}
 
 </div>
 
