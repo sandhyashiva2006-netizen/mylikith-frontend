@@ -6,13 +6,7 @@ JSON.parse(
 localStorage.getItem("user")
 );
 
-const readerNameElement = document.getElementById("readerName");
 
-if(readerUser && readerNameElement){
-
-readerNameElement.textContent = readerUser.name;
-
-}
 
 function formatNumber(num){
 
