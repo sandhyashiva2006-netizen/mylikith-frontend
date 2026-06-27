@@ -310,3 +310,11 @@ color:#fff;
 
 }
 
+.navbar,
+.logo,
+.nav-links,
+.auth-buttons{
+
+all: revert;
+
+}
