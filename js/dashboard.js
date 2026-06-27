@@ -214,6 +214,14 @@ Chapters
 </button>
 
 <button
+class="novel-btn studio-btn"
+onclick="openStudio(${novel.id})">
+
+Studio
+
+</button>
+
+<button
 class="novel-btn delete-btn"
 onclick="deleteNovel(${novel.id})">
 
@@ -251,6 +259,13 @@ function manageChapters(id){
 
 window.location =
 `my-chapters.html?novel=${id}`;
+
+}
+
+function openStudio(id){
+
+window.location =
+`writer-studio.html?novel=${id}`;
 
 }
 

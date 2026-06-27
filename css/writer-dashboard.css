@@ -538,3 +538,22 @@ box-shadow:0 12px 30px rgba(124,58,237,.25);
 transform:translateY(-4px);
 
 }
+
+.studio-btn{
+
+background:linear-gradient(
+135deg,
+#8b5cf6,
+#7c3aed
+);
+
+}
+
+.studio-btn:hover{
+
+transform:translateY(-3px);
+
+box-shadow:0 10px 25px rgba(124,58,237,.35);
+
+}
+
