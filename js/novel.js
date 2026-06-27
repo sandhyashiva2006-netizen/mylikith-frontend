@@ -103,6 +103,10 @@ await fetch(
 const chapters =
 await response.json();
 
+document.getElementById("chapterCount").textContent=
+
+`${chapters.length} Chapter${chapters.length===1?"":"s"}`;
+
 const container =
 document.getElementById(
 "chaptersList"
