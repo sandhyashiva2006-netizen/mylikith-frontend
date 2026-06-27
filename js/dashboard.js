@@ -80,6 +80,16 @@ await fetch(
 const data =
 await response.json();
 
+const draftsBtn=document.querySelector(
+'button[onclick*="tab=drafts"]'
+);
+
+if(draftsBtn){
+
+draftsBtn.disabled=false;
+
+}
+
 document.getElementById(
 "totalNovels"
 ).textContent =
