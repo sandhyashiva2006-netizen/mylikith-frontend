@@ -270,6 +270,9 @@ chapter.content.replace(
 "<br><br>"
 );
 
+restoreReadingPosition();
+saveContinueReading(chapter);
+
 }
 catch(err){
 
@@ -486,3 +489,136 @@ location.href=
 `reader.html?chapter=${chapterList[currentIndex+1].id}`;
 
 };
+
+const themeBtn=document.getElementById("themeBtn");
+
+themeBtn.onclick=()=>{
+
+if(document.body.classList.contains("dark-mode")){
+
+document.body.classList.remove("dark-mode");
+
+document.body.classList.add("light-mode");
+
+themeBtn.textContent="☀ Light";
+
+}else{
+
+document.body.classList.remove("light-mode");
+
+document.body.classList.add("dark-mode");
+
+themeBtn.textContent="🌙 Theme";
+
+}
+
+};
+
+const fullscreenBtn=
+
+document.getElementById("fullscreenBtn");
+
+fullscreenBtn.onclick=()=>{
+
+document.querySelector(".reader-container")
+
+.classList.toggle("fullscreen-mode");
+
+};
+
+function saveReadingPosition(){
+
+const user=
+
+JSON.parse(localStorage.getItem("user"));
+
+if(!user)return;
+
+localStorage.setItem(
+
+`reading-position-${user.id}-${chapterId}`,
+
+window.scrollY
+
+);
+
+}
+
+function restoreReadingPosition(){
+
+const user=
+
+JSON.parse(localStorage.getItem("user"));
+
+if(!user)return;
+
+const position=
+
+localStorage.getItem(
+
+`reading-position-${user.id}-${chapterId}`
+
+);
+
+if(position){
+
+setTimeout(()=>{
+
+window.scrollTo({
+
+top:Number(position),
+
+behavior:"instant"
+
+});
+
+},200);
+
+}
+
+}
+
+let saveTimer;
+
+window.addEventListener("scroll",()=>{
+
+clearTimeout(saveTimer);
+
+saveTimer=setTimeout(
+
+saveReadingPosition,
+
+300
+
+);
+
+});
+
+function saveContinueReading(chapter){
+
+const user=
+
+JSON.parse(localStorage.getItem("user"));
+
+if(!user)return;
+
+localStorage.setItem(
+
+`continue-reading-${user.id}`,
+
+JSON.stringify({
+
+novelId:chapter.novel_id,
+
+chapterId:chapter.id,
+
+chapterTitle:chapter.title,
+
+chapterNo:chapter.chapter_no
+
+})
+
+);
+
+}
+

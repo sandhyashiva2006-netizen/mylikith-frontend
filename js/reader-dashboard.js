@@ -229,8 +229,80 @@ console.log(err);
 
 }
 
+function loadContinueReading(){
+
+const user=
+
+JSON.parse(localStorage.getItem("user"));
+
+if(!user)return;
+
+const data=
+
+JSON.parse(
+
+localStorage.getItem(
+
+`continue-reading-${user.id}`
+
+)
+
+);
+
+if(!data)return;
+
+const container=
+
+document.getElementById(
+
+"continueReadingCard"
+
+);
+
+if(!container)return;
+
+container.innerHTML=`
+
+<div class="continue-card">
+
+<h3>
+
+Continue Reading
+
+</h3>
+
+<p>
+
+Chapter ${data.chapterNo}
+
+</p>
+
+<h4>
+
+${data.chapterTitle}
+
+</h4>
+
+<button
+
+class="btn btn-primary"
+
+onclick="location.href='reader.html?chapter=${data.chapterId}'">
+
+Continue
+
+</button>
+
+</div>
+
+`;
+
+}
+
 loadTrending();
 
 loadRecommended();
 
 loadRecent();
+
+loadContinueReading();

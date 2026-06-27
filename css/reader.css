@@ -15,41 +15,108 @@ background:#22D3EE;
 }
 
 .reader-container{
-max-width:900px;
-margin:auto;
-padding:120px 20px;
+
+max-width:1000px;
+
+margin:0 auto;
+
+padding:140px 40px 60px;
+
+min-height:100vh;
+
 }
 
 .reader-container h1{
-font-size:50px;
-margin-bottom:30px;
+
+font-size:58px;
+
+font-weight:800;
+
+line-height:1.15;
+
+margin-bottom:40px;
+
 }
 
 .reader-tools{
+
 display:flex;
+
 gap:15px;
-margin-bottom:40px;
+
+margin-bottom:55px;
+
+padding-bottom:25px;
+
+border-bottom:1px solid rgba(255,255,255,.08);
+
 flex-wrap:wrap;
+
 }
 
 .reader-tools button{
-padding:12px 20px;
+
+padding:14px 22px;
+
 border:none;
-border-radius:10px;
-background:#111827;
-color:white;
+
+border-radius:14px;
+
+background:#1f2937;
+
+color:#fff;
+
+font-weight:600;
+
+transition:.25s;
+
 cursor:pointer;
+
+}
+
+.reader-tools button:hover{
+
+transform:translateY(-2px);
+
+background:#7c3aed;
+
 }
 
 .chapter-content{
-font-size:24px;
-line-height:2;
-color:#e2e8f0;
+
+max-width:850px;
+
+margin:auto;
+
+font-size:25px;
+
+line-height:2.15;
+
+letter-spacing:.2px;
+
+color:#e5e7eb;
+
+word-break:break-word;
+
 }
 
-.chapter-content p{
-margin-bottom:30px;
+.chapter-content::first-letter{
+
+font-size:72px;
+
+font-weight:700;
+
+float:left;
+
+line-height:1;
+
+padding-right:8px;
+
+color:#7c3aed;
+
 }
+
+
 
 .chapter-navigation{
 
@@ -109,14 +176,10 @@ body.dark-mode .chapter-content{
 color:#e2e8f0;
 }
 
-.chapter-content{
-max-width:800px;
-margin:auto;
-}
 
 .comments-section{
 
-max-width:900px;
+max-width:1000px;
 
 margin:50px auto;
 
@@ -164,11 +227,55 @@ cursor:pointer;
 
 background:#1f2937;
 
-padding:15px;
+padding:18px;
 
-border-radius:10px;
+border-radius:14px;
 
-margin-top:15px;
+margin-top:18px;
+
+border-left:4px solid #7c3aed;
+
+}
+
+.reader-tools button.active{
+
+background:#7c3aed;
+
+}
+
+.fullscreen-mode{
+
+max-width:1200px !important;
+
+}
+
+body.light-mode{
+
+background:#f8fafc;
+
+color:#111827;
+
+}
+
+body.light-mode .reader-tools button{
+
+background:#e5e7eb;
+
+color:#111827;
+
+}
+
+body.light-mode .comments-section{
+
+background:#ffffff;
+
+}
+
+body.light-mode #commentText{
+
+background:#f3f4f6;
+
+color:#111827;
 
 }
 
