@@ -446,3 +446,67 @@ color:#fff;
 
 }
 
+#editorContainer{
+
+position:relative;
+
+flex:1;
+
+}
+
+.chapter-preview{
+
+display:none;
+
+min-height:600px;
+
+padding:30px;
+
+background:#0f172a;
+
+border-radius:15px;
+
+overflow:auto;
+
+line-height:2;
+
+font-size:18px;
+
+}
+
+.chapter-preview.show{
+
+display:block;
+
+}
+
+.chapter-editor.hide{
+
+display:none;
+
+}
+
+.chapter-preview h1{
+
+font-size:34px;
+
+margin-bottom:30px;
+
+}
+
+.chapter-preview img{
+
+max-width:100%;
+
+border-radius:15px;
+
+margin:20px 0;
+
+}
+
+.chapter-preview p{
+
+margin-bottom:18px;
+
+}
+

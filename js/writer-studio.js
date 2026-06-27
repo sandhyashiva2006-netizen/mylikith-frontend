@@ -9,6 +9,10 @@ loadNovel();
 
 const editor=document.getElementById("chapterEditor");
 
+const preview=document.getElementById("previewContainer");
+
+let previewMode=false;
+
 const title=document.getElementById("chapterTitle");
 
 const chapterList=document.getElementById("chapterList");
@@ -233,6 +237,38 @@ chapterModal.classList.remove("show");
 
 document.getElementById("createChapterBtn").onclick=createChapter;
 
+document.getElementById("previewBtn").onclick=()=>{
+
+previewMode=!previewMode;
+
+if(previewMode){
+
+preview.innerHTML=`
+
+<h1>${title.value}</h1>
+
+${editor.innerHTML}
+
+`;
+
+preview.classList.add("show");
+
+editor.classList.add("hide");
+
+document.getElementById("previewBtn").innerHTML="✏ Edit";
+
+}else{
+
+preview.classList.remove("show");
+
+editor.classList.remove("hide");
+
+document.getElementById("previewBtn").innerHTML="👁 Preview";
+
+}
+
+};
+
 document.getElementById("publishBtn").onclick=()=>{
 
 alert("Publishing will be implemented in Phase 15.2");
@@ -266,6 +302,18 @@ content:editor.innerHTML
 });
 
 hasChanges=false;
+
+if(previewMode){
+
+preview.innerHTML=`
+
+<h1>${title.value}</h1>
+
+${editor.innerHTML}
+
+`;
+
+}
 
 saveStatus.textContent="🟢 Saved";
 
