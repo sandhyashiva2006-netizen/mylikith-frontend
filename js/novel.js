@@ -410,17 +410,25 @@ container.innerHTML = "";
 
 reviews.forEach(review=>{
 
-container.innerHTML += `
+container.innerHTML+=`
 
 <div class="review-card">
 
-<h4>
+<div class="review-header">
+
+<strong>
 
 ${review.name}
 
-⭐ ${review.rating}
+</strong>
 
-</h4>
+<span>
+
+${"⭐".repeat(review.rating)}
+
+</span>
+
+</div>
 
 <p>
 
