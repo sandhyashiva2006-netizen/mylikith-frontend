@@ -31,8 +31,6 @@ let currentChapter=null;
 
 let hasChanges=false;
 
-let autoSaveTimer=null;
-
 async function loadNovel(){
 
 const res=await fetch(`${API}/api/novels/${novelId}`);
@@ -183,8 +181,6 @@ charCount.textContent=`Characters : ${text.length}`;
 
 readingTime.textContent=`Reading : ${Math.max(1,Math.ceil(words/220))} min`;
 
-saveStatus.textContent="Unsaved";
-
 saveStatus.textContent="🟡 Unsaved";
 
 hasChanges=true;
@@ -215,38 +211,6 @@ title.addEventListener("input",calculate);
 
 document.getElementById("saveDraftBtn").onclick=saveChapter;
 
-async function saveChapter(){
-
-if(!currentChapter) return;
-
-saveStatus.textContent="🔄 Saving...";
-
-await fetch(`${API}/api/writers/chapters/${currentChapter}`,{
-
-method:"PUT",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-
-title:title.value,
-
-content:editor.innerHTML
-
-})
-
-});
-
-hasChanges=false;
-
-saveStatus.textContent="🟢 Saved";
-
-document.getElementById("lastSaved").textContent=
-new Date().toLocaleTimeString();
-
-}
 
 const chapterModal=document.getElementById("chapterModal");
 
@@ -267,10 +231,6 @@ document.getElementById("cancelChapterBtn").onclick=()=>{
 chapterModal.classList.remove("show");
 
 document.getElementById("newChapterTitle").value="";
-
-};
-
-chapterModal.classList.remove("show");
 
 };
 
@@ -310,7 +270,7 @@ document.getElementById("previewBtn").innerHTML="👁 Preview";
 
 document.getElementById("publishBtn").onclick=()=>{
 
-alert("Publishing will be implemented in Phase 15.2");
+window.location=`publish-novel.html?novel=${novelId}`;
 
 };
 
