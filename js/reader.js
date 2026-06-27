@@ -5,9 +5,11 @@ document.getElementById("chapterContent");
 
 document.body.classList.add("dark-mode");
 
-document
-.getElementById("increaseFont")
-.addEventListener("click", () => {
+const increaseFont=document.getElementById("increaseFont");
+
+if(increaseFont){
+
+increaseFont.addEventListener("click", () => {
 
 fontSize += 2;
 
@@ -16,9 +18,13 @@ fontSize + "px";
 
 });
 
-document
-.getElementById("decreaseFont")
-.addEventListener("click", () => {
+}
+
+const decreaseFont=document.getElementById("decreaseFont");
+
+if(decreaseFont){
+
+decreaseFont.addEventListener("click", () => {
 
 fontSize -= 2;
 
@@ -27,18 +33,33 @@ fontSize + "px";
 
 });
 
-document
-.getElementById("darkBtn")
-.addEventListener("click", () => {
+}
+
+const darkBtn=document.getElementById("darkBtn");
+
+if(darkBtn){
+
+darkBtn.addEventListener("click", () => {
 
 document.body.classList.remove("light-mode");
 document.body.classList.add("dark-mode");
 
 });
 
-document
-.getElementById("lightBtn")
-.addEventListener("click", () => {
+}
+
+const lightBtn=document.getElementById("lightBtn");
+
+if(lightBtn){
+
+lightBtn.addEventListener("click",()=>{
+
+document.body.classList.remove("dark-mode");
+document.body.classList.add("light-mode");
+
+});
+
+}
 
 document.body.classList.remove("dark-mode");
 document.body.classList.add("light-mode");
@@ -64,15 +85,19 @@ document.getElementById(
 scrolled + "%";
 
 });
+`
+const bookmarkBtn=document.getElementById("bookmarkBtn");
 
-document
-.getElementById("bookmarkBtn")
-.addEventListener("click", () => {
+if(bookmarkBtn){
+
+bookmarkBtn.addEventListener("click", () => {
 
 const user =
 JSON.parse(
 localStorage.getItem("user")
 );
+
+}
 
 const chapterId =
 new URLSearchParams(
@@ -116,17 +141,20 @@ alert(
 
 });
 
-});
+}
 
-document
-.getElementById("translateBtn")
-.addEventListener("click", () => {
+const translateBtn=document.getElementById("translateBtn");
+
+if(translateBtn){
+
+translateBtn.addEventListener("click", () => {
 
 alert(
 "Translation feature coming soon"
 );
 
 });
+}
 
 const params =
 new URLSearchParams(
@@ -243,14 +271,16 @@ console.error(err);
 
 loadChapter();
 
-document
-.getElementById(
-"commentBtn"
-)
-.addEventListener(
+const commentBtn=document.getElementById("commentBtn");
+
+if(commentBtn){
+
+commentBtn.addEventListener(
 "click",
 submitComment
 );
+
+}
 
 async function submitComment(){
 
