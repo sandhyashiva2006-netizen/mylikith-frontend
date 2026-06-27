@@ -6,12 +6,11 @@ JSON.parse(
 localStorage.getItem("user")
 );
 
-if(readerUser){
+const readerNameElement = document.getElementById("readerName");
 
-document.getElementById(
-"readerName"
-).textContent =
-readerUser.name;
+if(readerUser && readerNameElement){
+
+readerNameElement.textContent = readerUser.name;
 
 }
 
