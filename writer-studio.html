@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Writer Studio</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/writer-dashboard.css">
+<link rel="stylesheet" href="css/writer-studio.css">
+
+</head>
+
+<body>
+
+<nav id="navbar"></nav>
+
+<section class="studio-header">
+
+<div>
+
+<h1>✍ Writer Studio</h1>
+
+<p>Write, edit and publish your novel chapters.</p>
+
+</div>
+
+<div class="studio-actions">
+
+<button id="saveDraftBtn" class="novel-btn chapter-btn">
+💾 Save Draft
+</button>
+
+<button id="publishBtn" class="novel-btn edit-btn">
+🚀 Publish
+</button>
+
+</div>
+
+</section>
+
+<section class="studio-layout">
+
+<aside class="chapter-sidebar">
+
+<div class="sidebar-top">
+
+<h2>Chapters</h2>
+
+<button id="newChapterBtn" class="primary-btn">
+＋ New
+</button>
+
+</div>
+
+<div id="chapterList" class="chapter-list">
+
+</div>
+
+</aside>
+
+<main class="editor-area">
+
+<input
+id="chapterTitle"
+class="studio-title"
+placeholder="Chapter Title">
+
+<div
+id="chapterEditor"
+class="chapter-editor"
+contenteditable="true">
+
+Start writing your story...
+
+</div>
+
+<div class="editor-footer">
+
+<div>
+
+<span id="wordCount">
+Words : 0
+</span>
+
+<span id="charCount">
+Characters : 0
+</span>
+
+<span id="readingTime">
+Reading : 0 min
+</span>
+
+</div>
+
+<div>
+
+<span id="saveStatus">
+Saved
+</span>
+
+</div>
+
+</div>
+
+</main>
+
+</section>
+
+<script src="js/session.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/footer.js"></script>
+<script src="js/writer-studio.js"></script>
+
+</body>
+
+</html>

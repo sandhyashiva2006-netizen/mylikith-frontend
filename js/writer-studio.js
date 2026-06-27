@@ -1,0 +1,131 @@
+const API="https://mylikith-backend.onrender.com";
+
+const user=JSON.parse(localStorage.getItem("user"));
+
+const params=new URLSearchParams(location.search);
+
+const novelId=params.get("novel");
+
+const editor=document.getElementById("chapterEditor");
+
+const title=document.getElementById("chapterTitle");
+
+const chapterList=document.getElementById("chapterList");
+
+const wordCount=document.getElementById("wordCount");
+
+const charCount=document.getElementById("charCount");
+
+const readingTime=document.getElementById("readingTime");
+
+const saveStatus=document.getElementById("saveStatus");
+
+let currentChapter=null;
+
+async function loadChapters(){
+
+const res=await fetch(`${API}/api/writers/chapters/${novelId}`);
+
+const chapters=await res.json();
+
+chapterList.innerHTML="";
+
+chapters.forEach(ch=>{
+
+chapterList.innerHTML+=`
+
+<div class="chapter-item"
+
+onclick="openChapter(${ch.id})">
+
+Chapter ${ch.chapter_no}
+
+<br>
+
+<small>${ch.title}</small>
+
+</div>
+
+`;
+
+});
+
+}
+
+async function openChapter(id){
+
+currentChapter=id;
+
+const res=await fetch(`${API}/api/chapters/${id}`);
+
+const chapter=await res.json();
+
+title.value=chapter.title;
+
+editor.innerHTML=chapter.content||"";
+
+calculate();
+
+}
+
+function calculate(){
+
+const text=editor.innerText;
+
+const words=text.trim()==""?0:text.trim().split(/\s+/).length;
+
+wordCount.textContent=`Words : ${words}`;
+
+charCount.textContent=`Characters : ${text.length}`;
+
+readingTime.textContent=`Reading : ${Math.max(1,Math.ceil(words/220))} min`;
+
+saveStatus.textContent="Unsaved";
+
+}
+
+editor.addEventListener("input",calculate);
+
+title.addEventListener("input",calculate);
+
+document.getElementById("saveDraftBtn").onclick=async()=>{
+
+if(!currentChapter) return;
+
+await fetch(`${API}/api/writers/chapters/${currentChapter}`,{
+
+method:"PUT",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+title:title.value,
+
+content:editor.innerHTML
+
+})
+
+});
+
+saveStatus.textContent="Saved";
+
+};
+
+document.getElementById("newChapterBtn").onclick=()=>{
+
+location.href=`create-chapter.html?novel=${novelId}`;
+
+};
+
+document.getElementById("publishBtn").onclick=()=>{
+
+alert("Publishing will be implemented in Phase 15.2");
+
+};
+
+loadChapters();
