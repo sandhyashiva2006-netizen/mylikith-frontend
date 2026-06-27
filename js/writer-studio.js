@@ -23,6 +23,10 @@ const saveStatus=document.getElementById("saveStatus");
 
 let currentChapter=null;
 
+let hasChanges=false;
+
+let autoSaveTimer=null;
+
 async function loadNovel(){
 
 const res=await fetch(`${API}/api/novels/${novelId}`);
@@ -58,11 +62,39 @@ chapterList.innerHTML+=`
 <div class="chapter-item"
 onclick="openChapter(${ch.id},this)">
 
+<div class="chapter-header">
+
+<strong>
+
 Chapter ${ch.chapter_no}
 
-<br>
+</strong>
 
-<small>${ch.title}</small>
+<div class="chapter-actions">
+
+<button
+onclick="event.stopPropagation();renameChapter(${ch.id},'${ch.title.replace(/'/g,"\\'")}')">
+
+✏
+
+</button>
+
+<button
+onclick="event.stopPropagation();deleteChapter(${ch.id})">
+
+🗑
+
+</button>
+
+</div>
+
+</div>
+
+<small>
+
+${ch.title}
+
+</small>
 
 </div>
 
@@ -94,6 +126,10 @@ editor.innerHTML=chapter.content||"";
 
 calculate();
 
+hasChanges=false;
+
+saveStatus.textContent="🟢 Saved";
+
 }
 
 function calculate(){
@@ -110,13 +146,17 @@ readingTime.textContent=`Reading : ${Math.max(1,Math.ceil(words/220))} min`;
 
 saveStatus.textContent="Unsaved";
 
+saveStatus.textContent="🟡 Unsaved";
+
+hasChanges=true;
+
 }
 
 editor.addEventListener("input",calculate);
 
 title.addEventListener("input",calculate);
 
-document.getElementById("saveDraftBtn").onclick=async()=>{
+document.getElementById("saveDraftBtn").onclick=saveChapter;
 
 if(!currentChapter) return;
 
@@ -173,6 +213,40 @@ alert("Publishing will be implemented in Phase 15.2");
 };
 
 loadChapters();
+
+async function saveChapter(){
+
+if(!currentChapter)return;
+
+saveStatus.textContent="🔄 Saving...";
+
+await fetch(`${API}/api/writers/chapters/${currentChapter}`,{
+
+method:"PUT",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+title:title.value,
+
+content:editor.innerHTML
+
+})
+
+});
+
+hasChanges=false;
+
+saveStatus.textContent="🟢 Saved";
+
+document.getElementById("lastSaved").textContent=
+
+new Date().toLocaleTimeString();
+
+}
 
 async function createChapter(){
 
@@ -232,10 +306,92 @@ document.getElementById("newChapterTitle").value="";
 
 await loadChapters();
 
-openChapter(data.chapter.id);
+setTimeout(()=>{
+
+const item=document.querySelector(".chapter-item:last-child");
+
+if(item){
+
+item.click();
+
+}
+
+},100);
 
 document.getElementById("chapterTitle").focus();
 
 }
 
 }
+
+async function renameChapter(id,currentTitle){
+
+const newTitle=prompt("Rename Chapter",currentTitle);
+
+if(!newTitle || newTitle===currentTitle)return;
+
+const chapter=await fetch(`${API}/api/chapters/${id}`)
+.then(r=>r.json());
+
+await fetch(`${API}/api/writers/chapters/${id}`,{
+
+method:"PUT",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+title:newTitle,
+
+content:chapter.content
+
+})
+
+});
+
+loadChapters();
+
+}
+
+async function deleteChapter(id){
+
+if(!confirm("Delete this chapter?")) return;
+
+await fetch(`${API}/api/writers/chapters/${id}`,{
+
+method:"DELETE"
+
+});
+
+title.value="";
+
+editor.innerHTML="";
+
+loadChapters();
+
+}
+
+setInterval(()=>{
+
+if(hasChanges){
+
+saveChapter();
+
+}
+
+},20000);
+
+document.addEventListener("keydown",(e)=>{
+
+if((e.ctrlKey||e.metaKey)&&e.key==="s"){
+
+e.preventDefault();
+
+saveChapter();
+
+}
+
+});
+
