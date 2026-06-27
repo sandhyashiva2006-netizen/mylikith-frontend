@@ -1,22 +1,4 @@
-#navbar{
 
-position:fixed;
-
-top:0;
-
-left:0;
-
-width:100%;
-
-z-index:9999;
-
-}
-
-body{
-
-padding-top:90px;
-
-}
 
 .studio-header{
 
@@ -293,6 +275,38 @@ transition:.25s;
 .editor-toolbar button:hover{
 
 background:#7c3aed;
+
+}
+
+.studio-header{
+
+margin-top:30px;
+
+}
+
+#previewBtn{
+
+background:linear-gradient(135deg,#64748b,#475569);
+
+color:#fff;
+
+}
+
+#previewBtn:hover{
+
+background:linear-gradient(135deg,#475569,#334155);
+
+}
+
+#previewBtn:disabled{
+
+opacity:1;
+
+cursor:not-allowed;
+
+background:linear-gradient(135deg,#64748b,#475569);
+
+color:#fff;
 
 }
 
