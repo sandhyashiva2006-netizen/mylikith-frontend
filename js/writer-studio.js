@@ -124,6 +124,8 @@ title.value=chapter.title;
 
 editor.innerHTML=chapter.content||"";
 
+editor.focus();
+
 calculate();
 
 hasChanges=false;
@@ -153,6 +155,24 @@ hasChanges=true;
 }
 
 editor.addEventListener("input",calculate);
+
+document
+.querySelectorAll(".editor-toolbar button[data-command]")
+.forEach(button=>{
+
+button.onclick=()=>{
+
+const command=button.dataset.command;
+
+document.execCommand(command,false,null);
+
+editor.focus();
+
+calculate();
+
+};
+
+});
 
 title.addEventListener("input",calculate);
 
@@ -399,6 +419,44 @@ e.preventDefault();
 saveChapter();
 
 }
+
+});
+
+document.getElementById("undoBtn").onclick=()=>{
+
+document.execCommand("undo");
+
+editor.focus();
+
+};
+
+document.getElementById("redoBtn").onclick=()=>{
+
+document.execCommand("redo");
+
+editor.focus();
+
+};
+
+editor.addEventListener("keydown",e=>{
+
+if(e.key==="Tab"){
+
+e.preventDefault();
+
+document.execCommand("insertHTML",false,"&nbsp;&nbsp;&nbsp;&nbsp;");
+
+}
+
+});
+
+editor.addEventListener("paste",e=>{
+
+e.preventDefault();
+
+const text=(e.clipboardData||window.clipboardData).getData("text");
+
+document.execCommand("insertText",false,text);
 
 });
 

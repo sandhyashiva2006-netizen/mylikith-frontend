@@ -274,7 +274,9 @@ transition:.25s;
 
 .editor-toolbar button:hover{
 
-background:#7c3aed;
+background:#5b21b6;
+
+transform:translateY(-2px);
 
 }
 
@@ -433,6 +435,14 @@ margin-right:20px;
 color:#94a3b8;
 
 font-size:14px;
+
+}
+
+.editor-toolbar button.active{
+
+background:#7c3aed;
+
+color:#fff;
 
 }
 
