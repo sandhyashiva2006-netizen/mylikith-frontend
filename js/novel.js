@@ -65,6 +65,12 @@ document.title =
         document.getElementById("novelStatus").textContent =
             novel.status;
 
+document.getElementById("startReadingBtn").onclick=()=>{
+
+window.location=`reader.html?novel=${novel.id}`;
+
+};
+
         document.getElementById(
 "novelReads"
 ).textContent =
@@ -128,14 +134,39 @@ return;
 
 chapters.forEach(chapter => {
 
-container.innerHTML += `
+container.innerHTML+=`
 
 <a
 href="reader.html?chapter=${chapter.id}"
 class="chapter-card">
 
-Chapter ${chapter.chapter_no} :
+<div class="chapter-left">
+
+<div class="chapter-title">
+
+Chapter ${chapter.chapter_no}
+
+</div>
+
+<div>
+
 ${chapter.title}
+
+</div>
+
+<div class="chapter-meta">
+
+Ready to read
+
+</div>
+
+</div>
+
+<div class="chapter-right">
+
+📖 Read →
+
+</div>
 
 </a>
 
