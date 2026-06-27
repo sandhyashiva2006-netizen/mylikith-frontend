@@ -61,11 +61,6 @@ document.body.classList.add("light-mode");
 
 }
 
-document.body.classList.remove("dark-mode");
-document.body.classList.add("light-mode");
-
-});
-}
 
 window.addEventListener("scroll", () => {
 
@@ -86,7 +81,7 @@ document.getElementById(
 scrolled + "%";
 
 });
-`
+
 const bookmarkBtn=document.getElementById("bookmarkBtn");
 
 if(bookmarkBtn){
@@ -97,8 +92,6 @@ const user =
 JSON.parse(
 localStorage.getItem("user")
 );
-
-}
 
 const chapterId =
 new URLSearchParams(
@@ -141,7 +134,8 @@ alert(
 }
 
 });
-
+});
+}
 }
 
 const translateBtn=document.getElementById("translateBtn");
@@ -234,7 +228,7 @@ fetch(
 
     body:JSON.stringify({
 
-        user_id:user.id,
+        user_id:readerUser.id,
 
         novel_id:chapter.novel_id,
 
