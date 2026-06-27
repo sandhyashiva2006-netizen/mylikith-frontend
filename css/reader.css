@@ -52,9 +52,43 @@ margin-bottom:30px;
 }
 
 .chapter-navigation{
+
 display:flex;
+
 justify-content:space-between;
-margin-top:60px;
+
+align-items:center;
+
+margin:50px 0;
+
+gap:20px;
+
+}
+
+.chapter-navigation button{
+
+min-width:220px;
+
+height:52px;
+
+border:none;
+
+border-radius:12px;
+
+cursor:pointer;
+
+font-size:16px;
+
+font-weight:700;
+
+}
+
+.chapter-navigation button:disabled{
+
+opacity:.45;
+
+cursor:not-allowed;
+
 }
 
 body.light-mode{
