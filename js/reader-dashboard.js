@@ -229,75 +229,6 @@ console.log(err);
 
 }
 
-function loadContinueReading(){
-
-const user=
-
-JSON.parse(localStorage.getItem("user"));
-
-if(!user)return;
-
-const data=
-
-JSON.parse(
-
-localStorage.getItem(
-
-`continue-reading-${user.id}`
-
-)
-
-);
-
-if(!data)return;
-
-const container=
-
-document.getElementById(
-
-"continueReadingCard"
-
-);
-
-if(!container)return;
-
-container.innerHTML=`
-
-<div class="continue-card">
-
-<h3>
-
-Continue Reading
-
-</h3>
-
-<p>
-
-Chapter ${data.chapterNo}
-
-</p>
-
-<h4>
-
-${data.chapterTitle}
-
-</h4>
-
-<button
-
-class="btn btn-primary"
-
-onclick="location.href='reader.html?chapter=${data.chapterId}'">
-
-Continue
-
-</button>
-
-</div>
-
-`;
-
-}
 
 function loadReaderStats(){
 
@@ -339,12 +270,330 @@ document.getElementById("readingHours").textContent=
 
 }
 
+async function loadBookmarks(){
+
+const user=
+
+JSON.parse(localStorage.getItem("user"));
+
+if(!user)return;
+
+const response=await fetch(
+
+`${API}/api/writers/bookmarks/${user.id}`
+
+);
+
+const bookmarks=await response.json();
+
+const container=
+
+document.getElementById("bookmarksContainer");
+
+if(!container)return;
+
+container.innerHTML="";
+
+if(bookmarks.length===0){
+
+container.innerHTML="<p>No bookmarks yet.</p>";
+
+return;
+
+}
+
+bookmarks.forEach(bookmark=>{
+
+container.innerHTML+=`
+
+<div class="bookmark-card">
+
+<h3>
+
+Chapter ${bookmark.chapter_no}
+
+</h3>
+
+<p>
+
+${bookmark.title}
+
+</p>
+
+<div class="bookmark-actions">
+
+<button
+
+class="chapter-btn"
+
+onclick="location.href='reader.html?chapter=${bookmark.id}'">
+
+Open
+
+</button>
+
+<button
+
+class="novel-btn"
+
+onclick="deleteBookmark(${bookmark.id})">
+
+Delete
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+async function deleteBookmark(id){
+
+await fetch(
+
+`${API}/api/writers/bookmark/${id}`,
+
+{
+
+method:"DELETE"
+
+}
+
+);
+
+loadBookmarks();
+
+}
+
+async function loadNotifications(){
+
+const user=
+
+JSON.parse(localStorage.getItem("user"));
+
+if(!user)return;
+
+const response=await fetch(
+
+`${API}/api/notifications/${user.id}`
+
+);
+
+const notifications=
+
+await response.json();
+
+const container=
+
+document.getElementById(
+
+"notificationsContainer"
+
+);
+
+if(!container)return;
+
+container.innerHTML="";
+
+if(notifications.length===0){
+
+container.innerHTML=`
+
+<p>
+
+No notifications yet.
+
+</p>
+
+`;
+
+return;
+
+}
+
+notifications.forEach(notification=>{
+
+container.innerHTML+=`
+
+<div class="notification-card">
+
+<div>
+
+<div class="notification-title">
+
+${notification.title}
+
+</div>
+
+<div class="notification-time">
+
+${notification.created_at}
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+async function loadDiscover(){
+
+const response=
+
+await fetch(
+
+`${API}/api/novels`
+
+);
+
+const novels=
+
+await response.json();
+
+renderDiscover(
+
+"trendingNovels",
+
+[...novels]
+
+.sort((a,b)=>b.views-a.views)
+
+.slice(0,5),
+
+"👁 Views"
+
+);
+
+renderDiscover(
+
+"topRatedNovels",
+
+[...novels]
+
+.sort((a,b)=>(b.rating||0)-(a.rating||0))
+
+.slice(0,5),
+
+"⭐ Rating"
+
+);
+
+renderDiscover(
+
+"newNovels",
+
+[...novels]
+
+.sort(
+
+(a,b)=>new Date(b.created_at)-new Date(a.created_at)
+
+)
+
+.slice(0,5),
+
+"🆕"
+
+);
+
+renderDiscover(
+
+"mostReadNovels",
+
+[...novels]
+
+.sort((a,b)=>b.views-a.views)
+
+.slice(0,5),
+
+"📖 Reads"
+
+);
+
+}
+
+function renderDiscover(
+
+containerId,
+
+novels,
+
+label
+
+){
+
+const container=
+
+document.querySelector(
+
+`#${containerId} .discover-list`
+
+);
+
+if(!container)return;
+
+container.innerHTML="";
+
+novels.forEach(novel=>{
+
+container.innerHTML+=`
+
+<div
+
+class="discover-item"
+
+onclick="location.href='novel.html?id=${novel.id}'">
+
+<div>
+
+<div class="discover-title">
+
+${novel.title}
+
+</div>
+
+<div class="discover-meta">
+
+${novel.category}
+
+</div>
+
+</div>
+
+<div>
+
+${label}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
 loadTrending();
 
 loadRecommended();
 
 loadRecent();
 
-loadContinueReading();
-
 loadReaderStats();
+
+loadBookmarks();
+
+loadNotifications();
+
+loadDiscover();
