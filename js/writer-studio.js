@@ -51,6 +51,15 @@ document.getElementById("novelFollowers").textContent=`❤️ ${novel.followers}
 
 document.getElementById("novelCover").src=novel.cover_url||"assets/images/default-cover.png";
 
+document.getElementById("settingsCover").src=
+novel.cover_url||"assets/images/default-cover.png";
+
+document.getElementById("settingsNovelTitle").textContent=
+novel.title;
+
+document.getElementById("settingsNovelInfo").textContent=
+`${novel.category} • ${novel.language}`;
+
 document.getElementById("settingTitle").value=novel.title;
 
 document.getElementById("settingDescription").value=novel.description||"";
@@ -254,6 +263,12 @@ chapterModal.classList.add("show");
 };
 
 document.getElementById("cancelChapterBtn").onclick=()=>{
+
+chapterModal.classList.remove("show");
+
+document.getElementById("newChapterTitle").value="";
+
+};
 
 chapterModal.classList.remove("show");
 

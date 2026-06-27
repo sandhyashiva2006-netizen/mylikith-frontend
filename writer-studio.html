@@ -135,6 +135,24 @@ Create First Chapter
 
 <main class="editor-area">
 
+<div class="editor-header">
+
+<h2>
+
+Chapter Editor
+
+</h2>
+
+<button
+id="newChapterBtn"
+class="chapter-btn">
+
+➕ New Chapter
+
+</button>
+
+</div>
+
 <input
 id="chapterTitle"
 class="studio-title"
@@ -270,6 +288,30 @@ Novel Settings
 
 </h2>
 
+<div class="current-novel">
+
+<img
+id="settingsCover"
+class="settings-cover">
+
+<div>
+
+<h3 id="settingsNovelTitle">
+
+Novel
+
+</h3>
+
+<p id="settingsNovelInfo">
+
+Fantasy • English
+
+</p>
+
+</div>
+
+</div>
+
 <label>Title</label>
 
 <input
@@ -285,15 +327,52 @@ rows="5"></textarea>
 
 <label>Category</label>
 
-<input
+<select
 id="settingCategory"
 class="input">
 
+<option>Fantasy</option>
+<option>Romance</option>
+<option>Mystery</option>
+<option>Thriller</option>
+<option>Adventure</option>
+<option>Historical</option>
+<option>Science Fiction</option>
+<option>Horror</option>
+<option>Comedy</option>
+<option>Drama</option>
+<option>Action</option>
+<option>Young Adult</option>
+<option>Children</option>
+<option>Poetry</option>
+<option>Biography</option>
+
+</select>
+
 <label>Language</label>
 
-<input
+<select
 id="settingLanguage"
 class="input">
+
+<option>English</option>
+<option>Telugu</option>
+<option>Hindi</option>
+<option>Tamil</option>
+<option>Kannada</option>
+<option>Malayalam</option>
+<option>Marathi</option>
+<option>Bengali</option>
+<option>Gujarati</option>
+<option>Punjabi</option>
+<option>Urdu</option>
+<option>Japanese</option>
+<option>Korean</option>
+<option>Chinese</option>
+<option>Spanish</option>
+<option>French</option>
+
+</select>
 
 <label>Status</label>
 
@@ -422,35 +501,6 @@ Save
 </div>
 
 </div>
-
-</div>
-
-<div class="modal-content">
-
-<h2>Create Chapter</h2>
-
-<input
-id="newChapterTitle"
-class="input"
-placeholder="Chapter Title">
-
-<div class="modal-actions">
-
-<button
-id="cancelChapterBtn"
-class="novel-btn delete-btn">
-
-Cancel
-
-</button>
-
-<button
-id="createChapterBtn"
-class="novel-btn chapter-btn">
-
-Create
-
-</button>
 
 </div>
 
