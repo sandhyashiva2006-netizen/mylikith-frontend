@@ -159,6 +159,8 @@ window.location.search
 const chapterId =
 params.get("chapter");
 
+console.log("Reader URL:", window.location.href);
+console.log("Chapter ID:", chapterId);
 
 async function loadChapter(){
 

@@ -69,11 +69,7 @@ document.title =
         document.getElementById("novelStatus").textContent =
             novel.status;
 
-document.getElementById("startReadingBtn").onclick=()=>{
 
-loadChapters();
-
-};
 
         document.getElementById(
 "novelReads"
