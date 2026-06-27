@@ -309,12 +309,3 @@ background:linear-gradient(135deg,#64748b,#475569);
 color:#fff;
 
 }
-
-.navbar,
-.logo,
-.nav-links,
-.auth-buttons{
-
-all: revert;
-
-}
