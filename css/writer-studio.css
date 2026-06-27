@@ -1,3 +1,23 @@
+#navbar{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+z-index:9999;
+
+}
+
+body{
+
+padding-top:90px;
+
+}
+
 .studio-header{
 
 display:flex;
@@ -86,13 +106,19 @@ overflow:auto;
 
 .sidebar-top{
 
-display:flex;
+display:grid;
 
-justify-content:space-between;
+grid-template-columns:1fr;
 
-align-items:center;
+gap:15px;
 
 margin-bottom:20px;
+
+}
+
+#newChapterBtn{
+
+width:100%;
 
 }
 
@@ -217,3 +243,56 @@ height:auto;
 }
 
 }
+
+.editor-toolbar{
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:10px;
+
+margin-bottom:18px;
+
+padding:12px;
+
+background:#111827;
+
+border-radius:12px;
+
+}
+
+.editor-toolbar button{
+
+width:42px;
+
+height:42px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+border:none;
+
+border-radius:10px;
+
+background:#1f2937;
+
+color:white;
+
+font-size:16px;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.editor-toolbar button:hover{
+
+background:#7c3aed;
+
+}
+

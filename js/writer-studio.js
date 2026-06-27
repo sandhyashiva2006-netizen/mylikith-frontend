@@ -5,6 +5,7 @@ const user=JSON.parse(localStorage.getItem("user"));
 const params=new URLSearchParams(location.search);
 
 const novelId=params.get("novel");
+loadNovel();
 
 const editor=document.getElementById("chapterEditor");
 
@@ -21,6 +22,26 @@ const readingTime=document.getElementById("readingTime");
 const saveStatus=document.getElementById("saveStatus");
 
 let currentChapter=null;
+
+async function loadNovel(){
+
+const res=await fetch(`${API}/api/novels/${novelId}`);
+
+const novel=await res.json();
+
+document.getElementById("novelTitle").textContent=novel.title;
+
+document.getElementById("novelGenre").textContent=`${novel.category} • ${novel.language}`;
+
+document.getElementById("novelStatus").textContent=novel.status;
+
+document.getElementById("novelViews").textContent=`👁 ${novel.views}`;
+
+document.getElementById("novelFollowers").textContent=`❤️ ${novel.followers}`;
+
+document.getElementById("novelCover").src=novel.cover_url||"assets/images/default-cover.png";
+
+}
 
 async function loadChapters(){
 
