@@ -158,16 +158,18 @@ title.addEventListener("input",calculate);
 
 document.getElementById("saveDraftBtn").onclick=saveChapter;
 
+async function saveChapter(){
+
 if(!currentChapter) return;
+
+saveStatus.textContent="🔄 Saving...";
 
 await fetch(`${API}/api/writers/chapters/${currentChapter}`,{
 
 method:"PUT",
 
 headers:{
-
 "Content-Type":"application/json"
-
 },
 
 body:JSON.stringify({
@@ -180,9 +182,14 @@ content:editor.innerHTML
 
 });
 
-saveStatus.textContent="Saved";
+hasChanges=false;
 
-};
+saveStatus.textContent="🟢 Saved";
+
+document.getElementById("lastSaved").textContent=
+new Date().toLocaleTimeString();
+
+}
 
 const chapterModal=document.getElementById("chapterModal");
 
