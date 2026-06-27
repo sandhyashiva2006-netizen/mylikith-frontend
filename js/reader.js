@@ -1,3 +1,5 @@
+const API = "https://mylikith-backend.onrender.com";
+
 let fontSize = 24;
 
 const chapterContent =
@@ -159,7 +161,11 @@ window.location.search
 const chapterId =
 params.get("chapter");
 
-let currentNovelId=null;
+let currentNovelId = null;
+
+let chapterList = [];
+
+let currentIndex = -1;
 
 console.log("Reader URL:", window.location.href);
 console.log("Chapter ID:", chapterId);
@@ -178,9 +184,7 @@ await fetch(
 const chapter =
 await response.json();
 
-currentNovelId=
-
-chapter.novel_id;
+currentNovelId = chapter.novel_id;
 
 await loadChapterNavigation();
 
@@ -285,6 +289,30 @@ commentBtn.addEventListener(
 "click",
 submitComment
 );
+
+}
+
+async function loadChapterNavigation(){
+
+const response = await fetch(
+
+`${API}/api/novels/${currentNovelId}/chapters`
+
+);
+
+chapterList = await response.json();
+
+currentIndex = chapterList.findIndex(
+
+c => c.id == chapterId
+
+);
+
+document.getElementById("prevChapterBtn").disabled =
+currentIndex <= 0;
+
+document.getElementById("nextChapterBtn").disabled =
+currentIndex >= chapterList.length - 1;
 
 }
 
