@@ -65,6 +65,7 @@ document.body.classList.remove("dark-mode");
 document.body.classList.add("light-mode");
 
 });
+}
 
 window.addEventListener("scroll", () => {
 
