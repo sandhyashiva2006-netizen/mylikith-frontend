@@ -6,6 +6,9 @@ JSON.parse(
 localStorage.getItem("user")
 );
 
+const writerStudioBtn =
+document.getElementById("writerStudioBtn");
+
 if(!dashboardUser){
 
 window.location =
@@ -314,3 +317,31 @@ console.log(err);
 loadAnalytics();
 
 loadMyNovels();
+
+if(writerStudioBtn){
+
+writerStudioBtn.onclick=(e)=>{
+
+e.preventDefault();
+
+fetch(`${API}/api/writers/my-novels/${dashboardUser.id}`)
+.then(res=>res.json())
+.then(novels=>{
+
+if(novels.length===0){
+
+alert("Please create a novel first.");
+
+window.location="create-novel.html";
+
+return;
+
+}
+
+window.location=`writer-studio.html?novel=${novels[0].id}`;
+
+});
+
+};
+
+}
