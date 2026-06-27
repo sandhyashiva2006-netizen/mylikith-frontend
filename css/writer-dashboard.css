@@ -691,3 +691,57 @@ color:#9ca3af;
 
 }
 
+.analytics-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+
+gap:20px;
+
+margin-top:20px;
+
+}
+
+.analytics-card{
+
+background:#111827;
+
+padding:28px;
+
+border-radius:18px;
+
+text-align:center;
+
+transition:.25s;
+
+border:1px solid rgba(255,255,255,.08);
+
+}
+
+.analytics-card:hover{
+
+transform:translateY(-5px);
+
+border-color:#7c3aed;
+
+}
+
+.analytics-card h3{
+
+font-size:16px;
+
+color:#9ca3af;
+
+margin-bottom:15px;
+
+}
+
+.analytics-card h2{
+
+font-size:34px;
+
+color:#7c3aed;
+
+}
+

@@ -492,6 +492,44 @@ ${new Date(notification.created_at).toLocaleDateString()}
 
 }
 
+async function loadTopNovel(){
+
+const user=
+
+JSON.parse(localStorage.getItem("user"));
+
+if(!user)return;
+
+const response=
+
+await fetch(
+
+`${API}/api/writer/top-novel/${user.id}`
+
+);
+
+const novel=
+
+await response.json();
+
+if(!novel)return;
+
+document.getElementById("topNovel").textContent=
+
+novel.title;
+
+document.getElementById("totalViews").textContent=
+
+novel.views;
+
+document.getElementById("averageRating").textContent=
+
+novel.rating||"New";
+
+}
+
 loadRecentActivity();
 
 loadWriterNotifications();
+
+loadTopNovel();
