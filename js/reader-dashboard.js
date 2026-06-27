@@ -507,8 +507,15 @@ value=`📖 ${novel.views}`;
 
 else if(type==="rating"){
 
-value=`⭐ ${novel.rating||0}`;
+if(Number(novel.rating)>0){
 
+value=`⭐ ${Number(novel.rating)>0 ? novel.rating : "New"}`;
+
+}else{
+
+value="⭐ New";
+
+}
 }
 
 else{
