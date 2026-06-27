@@ -239,5 +239,3 @@ document.getElementById("chapterTitle").focus();
 }
 
 }
-
-}
