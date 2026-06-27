@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Publish Novel</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/publish-novel.css">
+
+</head>
+
+<body>
+
+<nav id="navbar" class="navbar"></nav>
+
+<main class="publish-container">
+
+<div class="publish-card">
+
+<div class="publish-left">
+
+<img
+id="publishCover"
+class="publish-cover"
+src="assets/images/default-cover.png">
+
+</div>
+
+<div class="publish-right">
+
+<h1 id="publishTitle">
+
+Loading...
+
+</h1>
+
+<p id="publishDescription">
+
+Loading...
+
+</p>
+
+<div class="publish-grid">
+
+<div>
+
+<label>Category</label>
+
+<p id="publishCategory"></p>
+
+</div>
+
+<div>
+
+<label>Language</label>
+
+<p id="publishLanguage"></p>
+
+</div>
+
+</div>
+
+<hr>
+
+<label>Visibility</label>
+
+<select id="visibility" class="input">
+
+<option value="public">Public</option>
+
+<option value="private">Private</option>
+
+<option value="unlisted">Unlisted</option>
+
+</select>
+
+<label>
+
+<input
+type="checkbox"
+id="allowComments">
+
+Allow Comments
+
+</label>
+
+<label>
+
+<input
+type="checkbox"
+id="mature">
+
+18+ Mature Content
+
+</label>
+
+<div class="publish-actions">
+
+<button
+id="backBtn"
+class="novel-btn">
+
+← Back
+
+</button>
+
+<button
+id="saveBtn"
+class="chapter-btn">
+
+💾 Save
+
+</button>
+
+<button
+id="publishNowBtn"
+class="edit-btn">
+
+🚀 Publish Now
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+<script src="js/session.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/footer.js"></script>
+<script src="js/publish-novel.js"></script>
+
+</body>
+
+</html>
