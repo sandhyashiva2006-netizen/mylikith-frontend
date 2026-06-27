@@ -57,7 +57,7 @@ chapterList.innerHTML+=`
 
 <div class="chapter-item"
 
-onclick="openChapter(${ch.id})">
+onclick="openChapter(${ch.id},this)"
 
 Chapter ${ch.chapter_no}
 
@@ -73,21 +73,23 @@ Chapter ${ch.chapter_no}
 
 }
 
-async function openChapter(id){
+async function openChapter(id,element){
 
-currentChapter=id;
+document
+.querySelectorAll(".chapter-item")
+.forEach(item=>{
 
-const res=await fetch(`${API}/api/chapters/${id}`);
+item.classList.remove("active");
 
-const chapter=await res.json();
+});
 
-title.value=chapter.title;
+if(element){
 
-editor.innerHTML=chapter.content||"";
-
-calculate();
+element.classList.add("active");
 
 }
+
+currentChapter=id;
 
 function calculate(){
 
@@ -137,9 +139,27 @@ saveStatus.textContent="Saved";
 
 };
 
-document.getElementById("newChapterBtn").onclick=showCreateChapterDialog;
+const chapterModal=document.getElementById("chapterModal");
 
-document.getElementById("firstChapterBtn").onclick=showCreateChapterDialog;
+document.getElementById("newChapterBtn").onclick=()=>{
+
+chapterModal.classList.add("show");
+
+};
+
+document.getElementById("firstChapterBtn").onclick=()=>{
+
+chapterModal.classList.add("show");
+
+};
+
+document.getElementById("cancelChapterBtn").onclick=()=>{
+
+chapterModal.classList.remove("show");
+
+};
+
+document.getElementById("createChapterBtn").onclick=createChapter;
 
 document.getElementById("publishBtn").onclick=()=>{
 
@@ -149,20 +169,36 @@ alert("Publishing will be implemented in Phase 15.2");
 
 loadChapters();
 
-async function showCreateChapterDialog(){
+async function createChapter(){
 
-const title=prompt("Enter Chapter Title");
+const title=document
+.getElementById("newChapterTitle")
+.value
+.trim();
 
-if(!title) return;
+if(!title){
 
-const chapterNo=document.querySelectorAll(".chapter-item").length+1;
+alert("Enter chapter title");
 
-const response=await fetch(`${API}/api/writers/chapters`,{
+return;
+
+}
+
+const chapterNo=
+document.querySelectorAll(".chapter-item").length+1;
+
+const response=await fetch(
+
+`${API}/api/writers/chapters`,
+
+{
 
 method:"POST",
 
 headers:{
+
 "Content-Type":"application/json"
+
 },
 
 body:JSON.stringify({
@@ -177,15 +213,23 @@ content:""
 
 })
 
-});
+}
+
+);
 
 const data=await response.json();
 
 if(data.success){
 
-loadChapters();
+chapterModal.classList.remove("show");
+
+document.getElementById("newChapterTitle").value="";
+
+await loadChapters();
 
 openChapter(data.chapter.id);
+
+titleInput.focus();
 
 }
 
