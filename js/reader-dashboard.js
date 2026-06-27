@@ -322,7 +322,7 @@ onclick="location.href='reader.html?chapter=${bookmark.id}'">
 </button>
 
 <button
-class="report-btn"
+class="btn btn-danger"
 onclick="deleteBookmark(${bookmark.id})">
 
 🗑 Delete
