@@ -135,7 +135,7 @@ alert(
 
 });
 });
-}
+
 }
 
 const translateBtn=document.getElementById("translateBtn");
