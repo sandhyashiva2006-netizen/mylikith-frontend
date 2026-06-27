@@ -79,21 +79,21 @@ Manage your novels, readers and earnings.
 
 
 <button
-onclick="location.href='writer-studio.html?tab=drafts'">
+onclick="location.href='writer-studio.html?filter=draft'">
 
 📝 Drafts
 
 </button>
 
 <button
-onclick="location.href='writer-studio.html?tab=published'">
+onclick="location.href='writer-studio.html?filter=published'">
 
 📚 Published
 
 </button>
 
 <button
-onclick="location.href='analytics.html'">
+onclick="document.getElementById('analyticsSection').scrollIntoView({behavior:'smooth'})">
 
 📊 Analytics
 
@@ -152,7 +152,9 @@ Loading...
 
 </section>
 
-<section class="dashboard-section">
+<section
+id="analyticsSection"
+class="dashboard-section">
 
 <h2>
 

@@ -138,6 +138,29 @@ await fetch(
 const novels =
 await response.json();
 
+const filter =
+new URLSearchParams(window.location.search)
+.get("filter");
+
+let filteredNovels = novels;
+
+if(filter==="draft"){
+
+filteredNovels =
+novels.filter(
+n=>n.status.toLowerCase()==="draft"
+);
+
+}
+else if(filter==="published"){
+
+filteredNovels =
+novels.filter(
+n=>n.status.toLowerCase()==="published"
+);
+
+}
+
 const grid =
 document.getElementById(
 "novelsGrid"
@@ -145,7 +168,7 @@ document.getElementById(
 
 grid.innerHTML="";
 
-if(novels.length===0){
+if(filteredNovels.length===0){
 
 grid.innerHTML=`
 
@@ -157,7 +180,7 @@ return;
 
 }
 
-novels.forEach(novel=>{
+filteredNovels.forEach(novel=>{
 
 grid.innerHTML+=`
 
