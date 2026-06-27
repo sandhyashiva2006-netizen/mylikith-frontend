@@ -25,6 +25,8 @@ const readingTime=document.getElementById("readingTime");
 
 const saveStatus=document.getElementById("saveStatus");
 
+const settingsModal=document.getElementById("settingsModal");
+
 let currentChapter=null;
 
 let hasChanges=false;
@@ -49,7 +51,29 @@ document.getElementById("novelFollowers").textContent=`❤️ ${novel.followers}
 
 document.getElementById("novelCover").src=novel.cover_url||"assets/images/default-cover.png";
 
+document.getElementById("settingTitle").value=novel.title;
+
+document.getElementById("settingDescription").value=novel.description||"";
+
+document.getElementById("settingCategory").value=novel.category;
+
+document.getElementById("settingLanguage").value=novel.language;
+
+document.getElementById("settingStatus").value=novel.status;
+
 }
+
+document.getElementById("settingsBtn").onclick=()=>{
+
+settingsModal.classList.add("show");
+
+};
+
+document.getElementById("closeSettingsBtn").onclick=()=>{
+
+settingsModal.classList.remove("show");
+
+};
 
 async function loadChapters(){
 
@@ -507,4 +531,52 @@ const text=(e.clipboardData||window.clipboardData).getData("text");
 document.execCommand("insertText",false,text);
 
 });
+
+document.getElementById("saveSettingsBtn").onclick=async()=>{
+
+const response=await fetch(
+
+`${API}/api/writers/novels/${novelId}`,
+
+{
+
+method:"PUT",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+title:document.getElementById("settingTitle").value,
+
+description:document.getElementById("settingDescription").value,
+
+category:document.getElementById("settingCategory").value,
+
+language:document.getElementById("settingLanguage").value,
+
+status:document.getElementById("settingStatus").value
+
+})
+
+}
+
+);
+
+const data=await response.json();
+
+if(data.success){
+
+settingsModal.classList.remove("show");
+
+loadNovel();
+
+alert("Novel updated successfully.");
+
+}
+
+};
 

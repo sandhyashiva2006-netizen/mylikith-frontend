@@ -510,3 +510,29 @@ margin-bottom:18px;
 
 }
 
+.settings-modal{
+
+width:700px;
+
+max-width:95%;
+
+}
+
+.settings-modal label{
+
+display:block;
+
+margin:15px 0 8px;
+
+font-weight:600;
+
+}
+
+.settings-modal textarea{
+
+resize:vertical;
+
+min-height:120px;
+
+}
+
