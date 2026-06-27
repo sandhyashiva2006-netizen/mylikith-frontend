@@ -222,10 +222,6 @@ class="chapter-preview">
 
 </div>
 
-Start writing your story...
-
-</div>
-
 <div class="editor-footer">
 
 <div>
@@ -265,8 +261,6 @@ Never
 </main>
 
 <div id="chapterModal" class="modal">
-
-<div id="settingsModal" class="modal">
 
 <div class="modal-content settings-modal">
 
@@ -324,6 +318,86 @@ Completed
 Hiatus
 
 </option>
+
+</select>
+
+<div class="modal-actions">
+
+<button
+id="closeSettingsBtn"
+class="novel-btn delete-btn">
+
+Cancel
+
+</button>
+
+<button
+id="saveSettingsBtn"
+class="novel-btn chapter-btn">
+
+Save
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="settingsModal" class="modal">
+
+<div class="modal-content settings-modal">
+
+<h2>
+
+Novel Settings
+
+</h2>
+
+<label>Cover</label>
+
+<input
+type="file"
+id="coverUpload"
+accept="image/*">
+
+<label>Title</label>
+
+<input
+id="settingTitle"
+class="input">
+
+<label>Description</label>
+
+<textarea
+id="settingDescription"
+class="input"
+rows="5"></textarea>
+
+<label>Category</label>
+
+<input
+id="settingCategory"
+class="input">
+
+<label>Language</label>
+
+<input
+id="settingLanguage"
+class="input">
+
+<label>Status</label>
+
+<select
+id="settingStatus"
+class="input">
+
+<option value="Ongoing">Ongoing</option>
+
+<option value="Completed">Completed</option>
+
+<option value="Hiatus">Hiatus</option>
 
 </select>
 
