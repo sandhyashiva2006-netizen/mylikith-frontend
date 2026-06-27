@@ -206,18 +206,10 @@ Edit
 </button>
 
 <button
-class="novel-btn chapter-btn"
-onclick="manageChapters(${novel.id})">
-
-Chapters
-
-</button>
-
-<button
 class="novel-btn studio-btn"
 onclick="openStudio(${novel.id})">
 
-Studio
+✍ Writer Studio
 
 </button>
 
@@ -255,12 +247,7 @@ window.location =
 
 }
 
-function manageChapters(id){
 
-window.location =
-`my-chapters.html?novel=${id}`;
-
-}
 
 function openStudio(id){
 

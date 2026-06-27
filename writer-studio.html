@@ -22,22 +22,59 @@
 
 <section class="studio-header">
 
+<div class="studio-info">
+
+<img
+id="novelCover"
+class="studio-cover"
+src="assets/images/default-cover.png">
+
 <div>
 
-<h1>✍ Writer Studio</h1>
+<h1 id="novelTitle">
+Loading...
+</h1>
 
-<p>Write, edit and publish your novel chapters.</p>
+<p id="novelStatus">
+Draft
+</p>
+
+</div>
 
 </div>
 
 <div class="studio-actions">
 
-<button id="saveDraftBtn" class="novel-btn chapter-btn">
-💾 Save Draft
+<button
+id="saveDraftBtn"
+class="novel-btn chapter-btn">
+
+💾 Save
+
 </button>
 
-<button id="publishBtn" class="novel-btn edit-btn">
+<button
+id="previewBtn"
+class="novel-btn">
+
+👁 Preview
+
+</button>
+
+<button
+id="publishBtn"
+class="novel-btn edit-btn">
+
 🚀 Publish
+
+</button>
+
+<button
+id="settingsBtn"
+class="novel-btn studio-btn">
+
+⚙ Settings
+
 </button>
 
 </div>
@@ -50,15 +87,53 @@
 
 <div class="sidebar-top">
 
-<h2>Chapters</h2>
+<h2>
+
+📚 Chapters
+
+</h2>
+
+<p id="chapterCount">
+
+0 Chapters
+
+</p>
 
 <button id="newChapterBtn" class="primary-btn">
-＋ New
+＋ New Chapter
 </button>
 
 </div>
 
-<div id="chapterList" class="chapter-list">
+<div
+id="chapterList"
+class="chapter-list">
+
+<div
+id="emptyChapterState"
+class="empty-state">
+
+<h3>
+
+No chapters yet
+
+</h3>
+
+<p>
+
+Create your first chapter.
+
+</p>
+
+<button
+id="firstChapterBtn"
+class="primary-btn">
+
+Create First Chapter
+
+</button>
+
+</div>
 
 </div>
 
@@ -70,6 +145,70 @@
 id="chapterTitle"
 class="studio-title"
 placeholder="Chapter Title">
+
+<div class="editor-toolbar">
+
+<button data-command="bold">
+<b>B</b>
+</button>
+
+<button data-command="italic">
+<i>I</i>
+</button>
+
+<button data-command="underline">
+<u>U</u>
+</button>
+
+<button data-command="insertUnorderedList">
+
+•
+
+List
+
+</button>
+
+<button data-command="insertOrderedList">
+
+1.
+
+List
+
+</button>
+
+<button data-command="justifyLeft">
+
+⬅
+
+</button>
+
+<button data-command="justifyCenter">
+
+⬌
+
+</button>
+
+<button data-command="justifyRight">
+
+➡
+
+</button>
+
+<button
+id="undoBtn">
+
+↶
+
+</button>
+
+<button
+id="redoBtn">
+
+↷
+
+</button>
+
+</div>
 
 <div
 id="chapterEditor"
@@ -101,7 +240,7 @@ Reading : 0 min
 <div>
 
 <span id="saveStatus">
-Saved
+🟢 Saved
 </span>
 
 </div>

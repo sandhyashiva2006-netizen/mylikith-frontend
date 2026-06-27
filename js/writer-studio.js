@@ -116,11 +116,9 @@ saveStatus.textContent="Saved";
 
 };
 
-document.getElementById("newChapterBtn").onclick=()=>{
+document.getElementById("newChapterBtn").onclick=showCreateChapterDialog;
 
-location.href=`create-chapter.html?novel=${novelId}`;
-
-};
+document.getElementById("firstChapterBtn").onclick=showCreateChapterDialog;
 
 document.getElementById("publishBtn").onclick=()=>{
 
@@ -129,3 +127,46 @@ alert("Publishing will be implemented in Phase 15.2");
 };
 
 loadChapters();
+
+async function showCreateChapterDialog(){
+
+const title=prompt("Enter Chapter Title");
+
+if(!title) return;
+
+const chapterNo=document.querySelectorAll(".chapter-item").length+1;
+
+const response=await fetch(`${API}/api/writers/chapters`,{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+novel_id:novelId,
+
+chapter_no:chapterNo,
+
+title,
+
+content:""
+
+})
+
+});
+
+const data=await response.json();
+
+if(data.success){
+
+loadChapters();
+
+openChapter(data.chapter.id);
+
+}
+
+}
+
