@@ -472,6 +472,14 @@ data.rating || "0";
 
 async function loadAuthor(){
 
+const authorCard=document.getElementById("authorName");
+
+if(!authorCard){
+
+return;
+
+}
+
 const response=await fetch(
 
 `${API}/api/users/${currentNovel.author_id}`
