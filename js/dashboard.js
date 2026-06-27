@@ -355,3 +355,71 @@ window.location=`writer-studio.html?novel=${novels[0].id}`;
 };
 
 }
+
+async function loadRecentActivity(){
+
+const user=
+
+JSON.parse(localStorage.getItem("user"));
+
+if(!user)return;
+
+const response=await fetch(
+
+`${API}/api/writer/activity/${user.id}`
+
+);
+
+const activities=await response.json();
+
+const container=
+
+document.getElementById("recentActivity");
+
+container.innerHTML="";
+
+if(activities.length===0){
+
+container.innerHTML="<p>No activity yet.</p>";
+
+return;
+
+}
+
+activities.forEach(activity=>{
+
+container.innerHTML+=`
+
+<div class="activity-card">
+
+<div>
+
+<div class="activity-title">
+
+${activity.action}
+
+</div>
+
+<div>
+
+${activity.title}
+
+</div>
+
+</div>
+
+<div class="activity-time">
+
+${new Date(activity.created_at).toLocaleDateString()}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+loadRecentActivity();

@@ -605,3 +605,47 @@ box-shadow:0 12px 30px rgba(124,58,237,.35);
 
 }
 
+.activity-card{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:18px 20px;
+
+margin-top:15px;
+
+background:#111827;
+
+border-radius:15px;
+
+border-left:4px solid #7c3aed;
+
+transition:.25s;
+
+}
+
+.activity-card:hover{
+
+transform:translateX(5px);
+
+}
+
+.activity-title{
+
+font-weight:700;
+
+font-size:16px;
+
+}
+
+.activity-time{
+
+font-size:13px;
+
+color:#9ca3af;
+
+}
+
