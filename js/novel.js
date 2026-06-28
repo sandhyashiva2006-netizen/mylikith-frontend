@@ -33,8 +33,11 @@ console.log("NOVEL DATA:", novel);
 
 currentNovel = novel;
 await Promise.all([
-loadAuthor();
-loadFollowers();
+    loadAuthor(),
+    loadFollowers(),
+    loadRating(),
+    loadRelated(),
+    checkFollowStatus()
 ]);
 
 document.querySelector(".novel-cover").innerHTML=`
@@ -43,10 +46,6 @@ src="${novel.cover_url||'assets/images/default-cover.png'}"
 style="width:100%;height:100%;object-fit:cover;border-radius:20px;">
 `;
 
-
-loadRating();
-loadRelated();
-checkFollowStatus();
 
 if (!novel || !novel.id) {
     document.getElementById("novelTitle").textContent =
@@ -209,11 +208,15 @@ followAuthor
 
 }
 
-const reportBtn=document.getElementById("reportNovelBtn");
+const reportButton = document.getElementById("reportBtn");
 
-if(reportBtn){
+if(reportButton){
 
-reportBtn.onclick=reportNovel;
+    reportButton.onclick = () => {
+
+        alert("Report feature will be available soon.");
+
+    };
 
 }
 
