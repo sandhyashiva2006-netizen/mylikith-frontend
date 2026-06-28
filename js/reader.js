@@ -2,6 +2,14 @@ const API = "https://mylikith-backend.onrender.com";
 
 let fontSize = 24;
 
+const likeBtn=document.getElementById("likeBtn");
+
+if(likeBtn){
+
+likeBtn.onclick=toggleLike;
+
+}
+
 const chapterContent =
 document.getElementById("chapterContent");
 
@@ -99,6 +107,11 @@ const chapterId =
 new URLSearchParams(
 window.location.search
 ).get("chapter");
+
+let liked = false;
+
+let readerUser =
+JSON.parse(localStorage.getItem("user"));
 
 fetch(
 
@@ -210,10 +223,6 @@ method:"POST"
 
 );
 
-const readerUser =
-JSON.parse(
-localStorage.getItem("user")
-);
 
 if(readerUser){
 
@@ -347,6 +356,9 @@ chapter.content.replace(
 restoreReadingPosition();
 saveContinueReading(chapter);
 updateReaderStats(chapter);
+await checkLikeStatus();
+
+await loadLikes();
 
 }
 catch(err){
@@ -572,6 +584,103 @@ document
 };
 
 }
+
+async function loadLikes(){
+
+const response=await fetch(
+
+`${API}/api/chapters/${chapterId}/likes`
+
+);
+
+const data=await response.json();
+
+const count=document.getElementById("likeCount");
+
+if(count){
+
+count.textContent=data.likes;
+
+}
+
+}
+
+async function checkLikeStatus(){
+
+if(!readerUser)return;
+
+const response=await fetch(
+
+`${API}/api/chapters/${chapterId}/liked/${readerUser.id}`
+
+);
+
+const data=await response.json();
+
+liked=data.liked;
+
+updateLikeButton();
+
+}
+
+function updateLikeButton(){
+
+const btn=document.getElementById("likeBtn");
+
+if(!btn)return;
+
+btn.innerHTML=liked
+
+?`❤️ Liked <span id="likeCount"></span>`
+
+:`🤍 Like <span id="likeCount"></span>`;
+
+}
+
+async function toggleLike(){
+
+if(!readerUser){
+
+alert("Please login");
+
+return;
+
+}
+
+const method=liked?"DELETE":"POST";
+
+await fetch(
+
+`${API}/api/chapters/${chapterId}/like`,
+
+{
+
+method,
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+user_id:readerUser.id
+
+})
+
+}
+
+);
+
+liked=!liked;
+
+updateLikeButton();
+
+loadLikes();
+
+}
+
 
 function saveReadingPosition(){
 
