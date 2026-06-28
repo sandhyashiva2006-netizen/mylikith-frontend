@@ -16,21 +16,7 @@ window.location.href="index.html";
 
 }
 
-const admin =
-JSON.parse(localStorage.getItem("user"));
 
-if(admin){
-
-const name =
-document.getElementById("adminName");
-
-if(name){
-
-name.textContent = admin.name;
-
-}
-
-}
 
 async function loadDashboard(){
 
