@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Payment</title>
+
+</head>
+
+<body>
+
+<h2>
+
+Verifying Payment...
+
+</h2>
+
+<script>
+
+const params=
+new URLSearchParams(
+location.search
+);
+
+const orderId=
+params.get("order_id");
+
+fetch(
+
+"https://mylikith-backend.onrender.com/api/wallet/verify-payment",
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+order_id:orderId
+
+})
+
+}
+
+)
+
+.then(r=>r.json())
+
+.then(data=>{
+
+if(data.success){
+
+alert(
+
+"Payment Successful"
+
+);
+
+location.href="wallet.html";
+
+}else{
+
+alert(
+
+"Payment Failed"
+
+);
+
+history.back();
+
+}
+
+});
+
+</script>
+
+</body>
+
+</html>

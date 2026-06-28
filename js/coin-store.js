@@ -1,5 +1,10 @@
 const API="https://mylikith-backend.onrender.com/api";
 
+const cashfree =
+Cashfree({
+mode:"sandbox"
+});
+
 const user=
 JSON.parse(
 localStorage.getItem("user")
@@ -100,48 +105,66 @@ async function buyPackage(packageId){
 
 try{
 
-const res=await fetch(
+const res=
+await fetch(
 
-`${API}/wallet/packages/list`
+`${API}/wallet/create-order`,
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":
+"application/json"
+
+},
+
+body:JSON.stringify({
+
+user_id:user.id,
+
+package_id:packageId
+
+})
+
+}
 
 );
 
-const packages=
+const data=
 await res.json();
 
-const selected=
-packages.find(
+if(!data.success){
 
-p=>p.id===packageId
-
-);
-
-if(!selected){
-
-alert("Package not found.");
+alert("Unable to create order.");
 
 return;
 
 }
 
-/* Razorpay Integration
-   Coming Next */
+const checkoutOptions={
 
-alert(
+paymentSessionId:
 
-`Selected Package
+data.paymentSessionId,
 
-${selected.name}
+redirectTarget:"_self"
 
-₹${selected.price}
+};
 
-${selected.coins+selected.bonus_coins} Coins`
+await cashfree.checkout(
+
+checkoutOptions
 
 );
 
 }catch(err){
 
 console.log(err);
+
+alert("Payment initialization failed.");
 
 }
 
