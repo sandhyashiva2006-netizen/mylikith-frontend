@@ -19,87 +19,71 @@ Verifying Payment...
 
 <script>
 
-const params=
-new URLSearchParams(
-location.search
-);
+const params = new URLSearchParams(window.location.search);
 
-const orderId=
-params.get("order_id");
+const orderId = params.get("order_id");
 
-fetch(
+if (!orderId) {
 
-"https://mylikith-backend.onrender.com/api/wallet/verify-payment",
+    alert("Order ID not found.");
 
-{
-
-method:"POST",
-
-headers:{
-
-"Content-Type":"application/json"
-
-},
-
-body:JSON.stringify({
-
-order_id:orderId
-
-})
+    location.href = "coin-store.html";
 
 }
 
-)
-
-.then(r=>r.json())
-
-.then(data=>{
-
-if(data.success){
-
-alert(
-
-"Payment Successful"
-
-);
-
-location.href="wallet.html";
-
-}else{
-
 fetch(
-"https://mylikith-backend.onrender.com/api/wallet/verify-payment",
-{
-    method:"POST",
-    headers:{
-        "Content-Type":"application/json"
-    },
-    body:JSON.stringify({
-        order_id:orderId
-    })
-})
-.then(r=>r.json())
-.then(data=>{
 
-    console.log(data);
+    "https://mylikith-backend.onrender.com/api/wallet/verify-payment",
 
-    if(data.success){
+    {
 
-        alert("Payment Successful");
+        method: "POST",
 
-        location.href="wallet.html";
+        headers: {
 
-    }else{
+            "Content-Type": "application/json"
 
-        alert(JSON.stringify(data));
+        },
+
+        body: JSON.stringify({
+
+            order_id: orderId
+
+        })
 
     }
 
-});
+)
 
-history.back();
+.then(async (res) => {
 
-}
+    const data = await res.json();
+
+    console.log("VERIFY RESPONSE:", data);
+
+    if (data.success) {
+
+        alert("Payment Successful!");
+
+        location.replace("wallet.html");
+
+    } else {
+
+        alert(data.message || "Payment verification failed.");
+
+        location.replace("coin-store.html");
+
+    }
+
+})
+
+.catch(err => {
+
+    console.error(err);
+
+    alert("Server Error");
+
+    location.replace("coin-store.html");
 
 });
 
