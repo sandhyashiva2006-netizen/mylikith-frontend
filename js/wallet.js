@@ -182,3 +182,5 @@ alert("Coin Purchase Module Coming Next.");
 }
 
 );
+
+
