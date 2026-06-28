@@ -558,6 +558,35 @@ Number(novel.rating) > 0
 
 }
 
+async function loadWalletBalance(){
+
+    try{
+
+        const res=await fetch(
+            `${API}/wallet/${user.id}`
+        );
+
+        const data=await res.json();
+
+        const balance=document.getElementById("walletBalance");
+
+        if(balance){
+
+            balance.innerText=
+            "₹"+Number(data.balance).toFixed(2);
+
+        }
+
+    }catch(err){
+
+        console.log(err);
+
+    }
+
+}
+
+loadWalletBalance();
+
 loadRecentActivity();
 
 loadWriterNotifications();

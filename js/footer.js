@@ -35,9 +35,9 @@ and enjoy stories in every language.
 
 <a href="explore.html">Explore</a>
 
-<a href="categories.html">Categories</a>
+<a href="explore.html">Categories</a>
 
-<a href="top-rated.html">Top Rated</a>
+<a href="explore.html?sort=rating">Top Rated</a>
 
 <a href="library.html">Library</a>
 
@@ -53,9 +53,9 @@ and enjoy stories in every language.
 
 <a href="create-novel.html">Create Novel</a>
 
-<a href="#">Publishing Guide</a>
+<a href="writer-dashboard.html">Publishing Guide</a>
 
-<a href="#">Writer Rewards</a>
+<a href="writer-dashboard.html">Writer Rewards</a>
 
 </div>
 
@@ -63,15 +63,15 @@ and enjoy stories in every language.
 
 <h3>⚙ Support</h3>
 
-<a href="#">Help Center</a>
+<a href="contact.html">Help Center</a>
 
-<a href="#">Contact</a>
+<a href="contact.html">Contact</a>
 
-<a href="#">Privacy Policy</a>
+<a href="privacy.html">Privacy Policy</a>
 
-<a href="#">Terms & Conditions</a>
+<a href="terms.html">Terms</a>
 
-<a href="#">About Us</a>
+<a href="about.html">About Us</a>
 
 </div>
 
