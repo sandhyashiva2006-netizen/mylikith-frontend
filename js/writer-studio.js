@@ -133,7 +133,7 @@ ${ch.title}
 
 <div class="chapter-meta">
 
-❤️ ${ch.likes || 0}
+❤️ ${ch.likes || 0} Likes
 
 </div>
 
