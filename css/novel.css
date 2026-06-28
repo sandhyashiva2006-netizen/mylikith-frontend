@@ -455,3 +455,25 @@ color:#9ca3af;
 
 }
 
+.premium-badge{
+
+display:inline-block;
+
+margin-left:12px;
+
+padding:4px 10px;
+
+background:#F59E0B;
+
+color:#111;
+
+border-radius:20px;
+
+font-size:12px;
+
+font-weight:700;
+
+vertical-align:middle;
+
+}
+

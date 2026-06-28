@@ -140,7 +140,10 @@ return;
 
 chapters.forEach(chapter => {
 
-container.innerHTML+=`
+const premium =
+chapter.is_premium;
+
+container.innerHTML += `
 
 <a
 href="reader.html?chapter=${chapter.id}"
@@ -152,6 +155,12 @@ class="chapter-card">
 
 Chapter ${chapter.chapter_no}
 
+${premium
+? `<span class="premium-badge">
+🔒 Premium
+</span>`
+: ""}
+
 </div>
 
 <div>
@@ -162,7 +171,9 @@ ${chapter.title}
 
 <div class="chapter-meta">
 
-Ready to read
+${premium
+? `Unlock for ${chapter.coins_required} Coins`
+: `Ready to read`}
 
 </div>
 
@@ -170,7 +181,9 @@ Ready to read
 
 <div class="chapter-right">
 
-📖 Read →
+${premium
+? `🪙 Unlock →`
+: `📖 Read →`}
 
 </div>
 
