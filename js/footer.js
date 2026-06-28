@@ -1,59 +1,109 @@
-const footer =
-document.getElementById(
-"footer"
-);
+const footer = document.getElementById("footer");
 
-if(footer){
+if (footer) {
 
 footer.innerHTML = `
 
 <footer class="site-footer">
 
-<div class="footer-content">
+<div class="footer-container">
 
-<div>
+<div class="footer-brand">
 
 <h2>✨ MYLIKITH</h2>
 
-<p>
+<p class="tagline">
 
-Read. Write. Inspire.
+Stories Live Forever
+
+</p>
+
+<p class="footer-desc">
+
+Discover thousands of novels, support talented writers,
+and enjoy stories in every language.
 
 </p>
 
 </div>
 
-<div>
+<div class="footer-links">
 
-<h3>Quick Links</h3>
+<h3>📚 Explore</h3>
 
 <a href="index.html">Home</a>
 
 <a href="explore.html">Explore</a>
 
-<a href="reader-dashboard.html">Dashboard</a>
+<a href="categories.html">Categories</a>
+
+<a href="top-rated.html">Top Rated</a>
+
+<a href="library.html">Library</a>
 
 </div>
 
-<div>
+<div class="footer-links">
 
-<h3>Support</h3>
+<h3>✍ Writers</h3>
 
-<a href="#">Privacy Policy</a>
+<a href="writer-dashboard.html">Dashboard</a>
 
-<a href="#">Terms</a>
+<a href="writer-studio.html">Writer Studio</a>
+
+<a href="create-novel.html">Create Novel</a>
+
+<a href="#">Publishing Guide</a>
+
+<a href="#">Writer Rewards</a>
+
+</div>
+
+<div class="footer-links">
+
+<h3>⚙ Support</h3>
+
+<a href="#">Help Center</a>
 
 <a href="#">Contact</a>
 
-</div>
+<a href="#">Privacy Policy</a>
+
+<a href="#">Terms & Conditions</a>
+
+<a href="#">About Us</a>
 
 </div>
 
-<p class="copyright">
+</div>
 
-© 2026 MyLikith. All Rights Reserved.
+<div class="footer-social">
+
+<a href="#">📘</a>
+
+<a href="#">📷</a>
+
+<a href="#">▶</a>
+
+<a href="#">💬</a>
+
+</div>
+
+<div class="footer-bottom">
+
+<p>
+
+© 2026 MyLikith • Made with ❤️ in India
 
 </p>
+
+<p>
+
+Version 1.0.0
+
+</p>
+
+</div>
 
 </footer>
 
