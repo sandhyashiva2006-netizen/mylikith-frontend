@@ -11,7 +11,7 @@ const password=
 document.getElementById("password").value;
 
 const response=
-await fetch(`${API}/api/login`,{
+await fetch(`${API}/api/auth/login`,{
 
 method:"POST",
 
@@ -31,12 +31,27 @@ password
 
 });
 
-const data=
-await response.json();
+let data;
 
-if(!data.success){
+try{
+
+data=await response.json();
+
+}catch{
 
 document.getElementById("loginError").textContent=
+"Server error.";
+
+return;
+
+}
+
+if(!response.ok){
+
+document.getElementById("loginError").textContent=
+
+data.message||
+
 "Invalid credentials";
 
 return;
