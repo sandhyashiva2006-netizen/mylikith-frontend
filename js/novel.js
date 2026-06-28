@@ -32,7 +32,7 @@ async function loadNovel() {
 console.log("NOVEL DATA:", novel);
 
 currentNovel = novel;
-
+await Promise.all([
 loadAuthor();
 
 document.querySelector(".novel-cover").innerHTML=`
@@ -193,16 +193,28 @@ document.getElementById(
 
 }
 
-document
-.getElementById(
-"followBtn"
-)
-.addEventListener(
+const followBtn=document.getElementById("followBtn");
+
+if(followBtn){
+
+followBtn.addEventListener(
+
 "click",
+
 followAuthor
+
 );
 
-document.getElementById("reportNovelBtn").onclick=reportNovel;
+}
+
+const reportBtn=document.getElementById("reportNovelBtn");
+
+if(reportBtn){
+
+reportBtn.onclick=reportNovel;
+
+}
+
 async function followAuthor(){
 
 const user =
@@ -345,7 +357,7 @@ user_id:user.id,
 
 type:"Novel",
 
-reported_item:novel.title,
+reported_item: currentNovel.title,
 
 reason
 
@@ -500,6 +512,8 @@ ${review.review}
 
 async function loadFollowers(){
 
+if(!currentNovel)return;
+
 const response =
 await fetch(
 
@@ -537,6 +551,8 @@ data.rating || "0";
 }
 
 async function loadAuthor(){
+
+if(!currentNovel)return;
 
 const authorCard=document.getElementById("authorName");
 
@@ -661,6 +677,8 @@ alert("Added to Library.");
 };
 
 async function loadRelated(){
+
+if(!currentNovel)return;
 
 const response=await fetch(
 
