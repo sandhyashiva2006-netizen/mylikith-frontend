@@ -263,15 +263,6 @@ async function loadChapter(){
 
 try{
 
-const locked=
-
-await checkLockedChapter();
-
-if(locked){
-
-return;
-
-}
 
 const response =
 await fetch(
@@ -282,6 +273,23 @@ await fetch(
 
 const chapter =
 await response.json();
+
+document.title =
+chapter.title + " - Mylikith";
+
+document.getElementById(
+"chapterTitle"
+).textContent =
+`Chapter ${chapter.chapter_no} - ${chapter.title}`;
+
+const locked =
+await checkLockedChapter();
+
+if(locked){
+
+    return;
+
+}
 
 currentNovelId = chapter.novel_id;
 
@@ -423,13 +431,6 @@ fetch(
 }
 );
 
-document.title =
-chapter.title + " - Mylikith";
-
-document.getElementById(
-"chapterTitle"
-).textContent =
-`Chapter ${chapter.chapter_no} - ${chapter.title}`;
 
 document.getElementById(
 "chapterContent"
