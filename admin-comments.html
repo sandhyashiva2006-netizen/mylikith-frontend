@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -8,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Admin Settings</title>
+<title>Admin - Comments</title>
 
 <link rel="stylesheet" href="css/admin.css">
 
@@ -30,8 +29,6 @@
 
 <nav>
 
-<nav>
-
 <a href="admin-dashboard.html">🏠 Dashboard</a>
 
 <a href="admin-users.html">👥 Users</a>
@@ -44,7 +41,7 @@
 
 <a href="admin-reviews.html">⭐ Reviews</a>
 
-<a href="admin-comments.html">💬 Comments</a>
+<a href="admin-comments.html" class="active">💬 Comments</a>
 
 <a href="admin-reports.html">🚩 Reports</a>
 
@@ -52,7 +49,7 @@
 
 <a href="admin-revenue.html">💰 Revenue</a>
 
-<a href="admin-settings.html" class="active">⚙ Settings</a>
+<a href="admin-settings.html">⚙ Settings</a>
 
 <a href="admin-login.html" id="logoutBtn">🚪 Logout</a>
 
@@ -64,68 +61,22 @@
 
 <div class="topbar">
 
-<h1>
-
-Site Settings
-
-</h1>
+<h1>Comment Management</h1>
 
 </div>
 
 <div class="dashboard-card">
 
-<label>
-
-Site Name
-
-</label>
-
 <input
-id="siteName"
-class="admin-search">
-
-<label>
-
-Announcement
-
-</label>
-
-<textarea
-id="announcement"
+id="searchComment"
 class="admin-search"
-style="height:140px"></textarea>
+placeholder="Search comments">
 
-<label>
+<div id="commentsTable">
 
-Maintenance Mode
+Loading...
 
-</label>
-
-<select
-id="maintenance"
-class="admin-search">
-
-<option value="false">
-
-OFF
-
-</option>
-
-<option value="true">
-
-ON
-
-</option>
-
-</select>
-
-<button
-id="saveSettings"
-class="admin-btn">
-
-Save Settings
-
-</button>
+</div>
 
 </div>
 
@@ -133,7 +84,7 @@ Save Settings
 
 </div>
 
-<script src="js/admin-settings.js"></script>
+<script src="js/admin-comments.js"></script>
 
 </body>
 

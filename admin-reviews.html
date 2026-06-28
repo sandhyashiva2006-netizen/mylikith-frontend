@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -8,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Admin Settings</title>
+<title>Admin - Reviews</title>
 
 <link rel="stylesheet" href="css/admin.css">
 
@@ -30,8 +29,6 @@
 
 <nav>
 
-<nav>
-
 <a href="admin-dashboard.html">🏠 Dashboard</a>
 
 <a href="admin-users.html">👥 Users</a>
@@ -42,7 +39,7 @@
 
 <a href="admin-chapters.html">📝 Chapters</a>
 
-<a href="admin-reviews.html">⭐ Reviews</a>
+<a href="admin-reviews.html" class="active">⭐ Reviews</a>
 
 <a href="admin-comments.html">💬 Comments</a>
 
@@ -52,7 +49,7 @@
 
 <a href="admin-revenue.html">💰 Revenue</a>
 
-<a href="admin-settings.html" class="active">⚙ Settings</a>
+<a href="admin-settings.html">⚙ Settings</a>
 
 <a href="admin-login.html" id="logoutBtn">🚪 Logout</a>
 
@@ -64,68 +61,28 @@
 
 <div class="topbar">
 
-<h1>
+<div>
 
-Site Settings
+<h1>Review Management</h1>
 
-</h1>
+<p>Manage all reviews</p>
+
+</div>
 
 </div>
 
 <div class="dashboard-card">
 
-<label>
-
-Site Name
-
-</label>
-
 <input
-id="siteName"
-class="admin-search">
-
-<label>
-
-Announcement
-
-</label>
-
-<textarea
-id="announcement"
+id="searchReview"
 class="admin-search"
-style="height:140px"></textarea>
+placeholder="Search reviews">
 
-<label>
+<div id="reviewsTable">
 
-Maintenance Mode
+Loading...
 
-</label>
-
-<select
-id="maintenance"
-class="admin-search">
-
-<option value="false">
-
-OFF
-
-</option>
-
-<option value="true">
-
-ON
-
-</option>
-
-</select>
-
-<button
-id="saveSettings"
-class="admin-btn">
-
-Save Settings
-
-</button>
+</div>
 
 </div>
 
@@ -133,7 +90,7 @@ Save Settings
 
 </div>
 
-<script src="js/admin-settings.js"></script>
+<script src="js/admin-reviews.js"></script>
 
 </body>
 

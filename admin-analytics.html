@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -8,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Admin Settings</title>
+<title>Admin Analytics</title>
 
 <link rel="stylesheet" href="css/admin.css">
 
@@ -30,8 +29,6 @@
 
 <nav>
 
-<nav>
-
 <a href="admin-dashboard.html">🏠 Dashboard</a>
 
 <a href="admin-users.html">👥 Users</a>
@@ -48,11 +45,11 @@
 
 <a href="admin-reports.html">🚩 Reports</a>
 
-<a href="admin-analytics.html">📈 Analytics</a>
+<a href="admin-analytics.html" class="active">📈 Analytics</a>
 
 <a href="admin-revenue.html">💰 Revenue</a>
 
-<a href="admin-settings.html" class="active">⚙ Settings</a>
+<a href="admin-settings.html">⚙ Settings</a>
 
 <a href="admin-login.html" id="logoutBtn">🚪 Logout</a>
 
@@ -64,68 +61,55 @@
 
 <div class="topbar">
 
-<h1>
-
-Site Settings
-
-</h1>
+<h1>Platform Analytics</h1>
 
 </div>
 
+<section class="stats-grid">
+
+<div class="stat-card">
+
+<h3>Total Reads</h3>
+
+<h2 id="reads">0</h2>
+
+</div>
+
+<div class="stat-card">
+
+<h3>Avg Rating</h3>
+
+<h2 id="rating">0</h2>
+
+</div>
+
+<div class="stat-card">
+
+<h3>Top Novel</h3>
+
+<h2 id="topNovel">-</h2>
+
+</div>
+
+<div class="stat-card">
+
+<h3>Top Writer</h3>
+
+<h2 id="topWriter">-</h2>
+
+</div>
+
+</section>
+
 <div class="dashboard-card">
 
-<label>
+<h2>Most Popular Novels</h2>
 
-Site Name
+<div id="popularNovels">
 
-</label>
+Loading...
 
-<input
-id="siteName"
-class="admin-search">
-
-<label>
-
-Announcement
-
-</label>
-
-<textarea
-id="announcement"
-class="admin-search"
-style="height:140px"></textarea>
-
-<label>
-
-Maintenance Mode
-
-</label>
-
-<select
-id="maintenance"
-class="admin-search">
-
-<option value="false">
-
-OFF
-
-</option>
-
-<option value="true">
-
-ON
-
-</option>
-
-</select>
-
-<button
-id="saveSettings"
-class="admin-btn">
-
-Save Settings
-
-</button>
+</div>
 
 </div>
 
@@ -133,7 +117,7 @@ Save Settings
 
 </div>
 
-<script src="js/admin-settings.js"></script>
+<script src="js/admin-analytics.js"></script>
 
 </body>
 

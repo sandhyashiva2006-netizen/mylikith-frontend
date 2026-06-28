@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -8,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Admin Settings</title>
+<title>Revenue Dashboard</title>
 
 <link rel="stylesheet" href="css/admin.css">
 
@@ -30,8 +29,6 @@
 
 <nav>
 
-<nav>
-
 <a href="admin-dashboard.html">🏠 Dashboard</a>
 
 <a href="admin-users.html">👥 Users</a>
@@ -50,9 +47,9 @@
 
 <a href="admin-analytics.html">📈 Analytics</a>
 
-<a href="admin-revenue.html">💰 Revenue</a>
+<a href="admin-revenue.html" class="active">💰 Revenue</a>
 
-<a href="admin-settings.html" class="active">⚙ Settings</a>
+<a href="admin-settings.html">⚙ Settings</a>
 
 <a href="admin-login.html" id="logoutBtn">🚪 Logout</a>
 
@@ -66,66 +63,61 @@
 
 <h1>
 
-Site Settings
+Revenue Dashboard
 
 </h1>
 
 </div>
 
+<section class="stats-grid">
+
+<div class="stat-card">
+
+<h3>Total Revenue</h3>
+
+<h2 id="totalRevenue">₹0</h2>
+
+</div>
+
+<div class="stat-card">
+
+<h3>Writer Payouts</h3>
+
+<h2 id="writerPayouts">₹0</h2>
+
+</div>
+
+<div class="stat-card">
+
+<h3>Platform Earnings</h3>
+
+<h2 id="platformRevenue">₹0</h2>
+
+</div>
+
+<div class="stat-card">
+
+<h3>Pending Withdrawals</h3>
+
+<h2 id="pendingWithdrawals">₹0</h2>
+
+</div>
+
+</section>
+
 <div class="dashboard-card">
 
-<label>
+<h2>
 
-Site Name
+Revenue History
 
-</label>
+</h2>
 
-<input
-id="siteName"
-class="admin-search">
+<div id="revenueHistory">
 
-<label>
+No revenue yet.
 
-Announcement
-
-</label>
-
-<textarea
-id="announcement"
-class="admin-search"
-style="height:140px"></textarea>
-
-<label>
-
-Maintenance Mode
-
-</label>
-
-<select
-id="maintenance"
-class="admin-search">
-
-<option value="false">
-
-OFF
-
-</option>
-
-<option value="true">
-
-ON
-
-</option>
-
-</select>
-
-<button
-id="saveSettings"
-class="admin-btn">
-
-Save Settings
-
-</button>
+</div>
 
 </div>
 
@@ -133,7 +125,7 @@ Save Settings
 
 </div>
 
-<script src="js/admin-settings.js"></script>
+<script src="js/admin-revenue.js"></script>
 
 </body>
 
