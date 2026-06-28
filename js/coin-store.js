@@ -133,31 +133,32 @@ package_id:packageId
 
 );
 
-const data=
+const data =
 await res.json();
+
+console.log("ORDER RESPONSE:", data);
 
 if(!data.success){
 
-alert("Unable to create order.");
+    alert("Unable to create order.");
 
-return;
+    return;
 
 }
 
 const checkoutOptions={
 
-paymentSessionId:
+    paymentSessionId:
+    data.paymentSessionId,
 
-data.paymentSessionId,
-
-redirectTarget:"_self"
+    redirectTarget:"_self"
 
 };
 
+console.log("CHECKOUT OPTIONS:", checkoutOptions);
+
 await cashfree.checkout(
-
-checkoutOptions
-
+    checkoutOptions
 );
 
 }catch(err){

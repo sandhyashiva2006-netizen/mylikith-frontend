@@ -67,11 +67,35 @@ location.href="wallet.html";
 
 }else{
 
-alert(
+fetch(
+"https://mylikith-backend.onrender.com/api/wallet/verify-payment",
+{
+    method:"POST",
+    headers:{
+        "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+        order_id:orderId
+    })
+})
+.then(r=>r.json())
+.then(data=>{
 
-"Payment Failed"
+    console.log(data);
 
-);
+    if(data.success){
+
+        alert("Payment Successful");
+
+        location.href="wallet.html";
+
+    }else{
+
+        alert(JSON.stringify(data));
+
+    }
+
+});
 
 history.back();
 
