@@ -103,6 +103,17 @@ return;
 
 list.innerHTML="";
 
+if(!Array.isArray(data)){
+
+    console.error(data);
+
+    document.getElementById("transactionList").innerHTML =
+    "<p>Unable to load transactions.</p>";
+
+    return;
+
+}
+
 data.forEach(item=>{
 
 const div=document.createElement("div");
