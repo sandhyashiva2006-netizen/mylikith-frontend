@@ -4,6 +4,12 @@ const user=JSON.parse(localStorage.getItem("user"));
 
 const params=new URLSearchParams(location.search);
 
+const premiumChapter =
+document.getElementById("premiumChapter");
+
+const chapterCoins =
+document.getElementById("chapterCoins");
+
 const novelId=params.get("novel");
 loadNovel();
 
@@ -165,6 +171,12 @@ title.value=chapter.title;
 
 editor.innerHTML=chapter.content||"";
 
+premiumChapter.checked=
+chapter.is_premium||false;
+
+chapterCoins.value=
+chapter.coins_required||20;
+
 editor.focus();
 
 calculate();
@@ -300,7 +312,13 @@ body:JSON.stringify({
 
 title:title.value,
 
-content:editor.innerHTML
+content:editor.innerHTML,
+
+is_premium:
+premiumChapter.checked,
+
+coins_required:
+Number(chapterCoins.value)
 
 })
 
