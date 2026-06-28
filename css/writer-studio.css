@@ -572,9 +572,15 @@ margin-top:8px;
 
 font-size:13px;
 
-color:#f87171;
-
 font-weight:600;
+
+color:#ef4444;
+
+display:flex;
+
+align-items:center;
+
+gap:6px;
 
 }
 

@@ -225,7 +225,13 @@ onerror="this.src='assets/images/default-cover.png'">
 
 <span>
 
-❤️ ${formatNumber(novel.followers)}
+👥 ${formatNumber(novel.followers)}
+
+</span>
+
+<span>
+
+❤️ ${formatNumber(novel.likes || 0)}
 
 </span>
 
