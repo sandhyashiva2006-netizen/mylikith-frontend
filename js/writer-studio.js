@@ -131,6 +131,12 @@ ${ch.title}
 
 </small>
 
+<div class="chapter-meta">
+
+❤️ ${ch.likes || 0}
+
+</div>
+
 </div>
 
 `;
