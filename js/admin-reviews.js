@@ -57,7 +57,7 @@ table.innerHTML+=`
 
 <br>
 
-${review.comment}
+${review.review}
 
 </div>
 
@@ -102,7 +102,7 @@ renderReviews(
 
 reviews.filter(r=>
 
-r.comment.toLowerCase().includes(q)
+r.review.toLowerCase().includes(q)
 
 ||
 
