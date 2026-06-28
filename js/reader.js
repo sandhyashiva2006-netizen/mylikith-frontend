@@ -207,6 +207,8 @@ const response=await fetch(
 
 const data=await response.json();
 
+console.log("LOCK STATUS:", data);
+
 if(!data.locked){
 
 return false;
