@@ -557,8 +557,6 @@ themeBtn.textContent="🌙 Theme";
 
 };
 
-}
-
 
 const fullscreenBtn =
 document.getElementById("fullscreenBtn");
