@@ -174,6 +174,9 @@ window.location.search
 const chapterId =
 params.get("chapter");
 
+const readerUser =
+JSON.parse(localStorage.getItem("user"));
+
 let currentNovelId = null;
 
 let chapterList = [];
