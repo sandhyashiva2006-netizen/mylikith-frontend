@@ -1,28 +1,10 @@
-.wallet-page{
-
-min-height:100vh;
-
-padding:40px 0;
-
-background:transparent;
-
-}
-
 .wallet-container{
 
-width:92%;
-
-max-width:1300px;
+max-width:1400px;
 
 margin:auto;
 
-}
-
-.wallet-container{
-
-max-width:1000px;
-
-margin:auto;
+padding:50px 20px;
 
 }
 
