@@ -237,8 +237,138 @@ console.log(err);
 
 }
 
+async function loadLibraryBooks(){
+
+try{
+
+const response=await fetch(
+
+`${API}/api/library/${libraryUser.id}`
+
+);
+
+const books=await response.json();
+
+const container=
+
+document.getElementById("libraryBooks");
+
+container.innerHTML="";
+
+if(books.length===0){
+
+container.innerHTML=`
+
+<div class="empty-card">
+
+No novels in your library.
+
+</div>
+
+`;
+
+return;
+
+}
+
+books.forEach(book=>{
+
+container.innerHTML+=`
+
+<div class="library-card">
+
+<div>
+
+<h3>
+
+${book.title}
+
+</h3>
+
+<p>
+
+${book.author}
+
+</p>
+
+<p>
+
+${book.category} • ${book.language}
+
+</p>
+
+<p>
+
+Progress: ${book.progress}%
+
+</p>
+
+</div>
+
+<div style="display:flex;gap:10px;">
+
+<a
+
+href="reader.html?chapter=${book.last_chapter}"
+
+class="btn btn-primary">
+
+Continue
+
+</a>
+
+<button
+
+class="btn btn-danger"
+
+onclick="removeLibraryBook(${book.id})">
+
+Remove
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+async function removeLibraryBook(id){
+
+if(!confirm("Remove this novel?"))
+
+return;
+
+await fetch(
+
+`${API}/api/library/${id}`,
+
+{
+
+method:"DELETE"
+
+}
+
+);
+
+loadLibraryBooks();
+
+}
+
 loadContinueReading();
 
 loadHistory();
 
 loadBookmarks();
+
+loadLibraryBooks();
