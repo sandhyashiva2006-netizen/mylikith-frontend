@@ -174,6 +174,11 @@ window.location.search
 const chapterId =
 params.get("chapter");
 
+const lockContainer =
+document.getElementById(
+"chapterLockContainer"
+);
+
 const readerUser =
 JSON.parse(localStorage.getItem("user"));
 
@@ -186,9 +191,85 @@ let currentIndex = -1;
 console.log("Reader URL:", window.location.href);
 console.log("Chapter ID:", chapterId);
 
+async function checkLockedChapter(){
+
+if(!readerUser){
+
+return false;
+
+}
+
+const response=await fetch(
+
+`${API}/api/locked/${chapterId}/${readerUser.id}`
+
+);
+
+const data=await response.json();
+
+if(!data.locked){
+
+return false;
+
+}
+
+lockContainer.innerHTML=`
+
+<div class="locked-chapter-card">
+
+<h2>
+
+🔒 Premium Chapter
+
+</h2>
+
+<p>
+
+Unlock this chapter for
+
+<strong>
+
+${data.coins}
+
+Coins
+
+</strong>
+
+</p>
+
+<button id="unlockChapterBtn">
+
+🪙 Unlock Chapter
+
+</button>
+
+</div>
+
+`;
+
+document.getElementById("chapterContent").style.display="none";
+
+document.getElementById("unlockChapterBtn").onclick=
+
+unlockChapter;
+
+return true;
+
+}
+
 async function loadChapter(){
 
 try{
+
+const locked=
+
+await checkLockedChapter();
+
+if(locked){
+
+return;
+
+}
 
 const response =
 await fetch(
@@ -842,6 +923,56 @@ key,
 JSON.stringify(stats)
 
 );
+
+}
+
+async function unlockChapter(){
+
+const response=
+
+await fetch(
+
+`${API}/api/locked/unlock`,
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+user_id:readerUser.id,
+
+chapter_id:chapterId
+
+})
+
+}
+
+);
+
+const data=
+
+await response.json();
+
+if(!data.success){
+
+alert(data.message);
+
+return;
+
+}
+
+lockContainer.innerHTML="";
+
+document.getElementById("chapterContent").style.display="block";
+
+loadChapter();
 
 }
 

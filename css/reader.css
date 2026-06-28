@@ -279,3 +279,62 @@ color:#111827;
 
 }
 
+.locked-chapter-card{
+
+max-width:650px;
+
+margin:50px auto;
+
+padding:45px;
+
+border-radius:20px;
+
+text-align:center;
+
+background:linear-gradient(
+135deg,
+#6D28D9,
+#9333EA
+);
+
+color:white;
+
+box-shadow:
+0 15px 45px rgba(109,40,217,.35);
+
+}
+
+.locked-chapter-card h2{
+
+margin-bottom:20px;
+
+}
+
+.locked-chapter-card p{
+
+font-size:18px;
+
+margin-bottom:30px;
+
+}
+
+.locked-chapter-card button{
+
+background:#FFD54A;
+
+color:#111;
+
+border:none;
+
+padding:14px 28px;
+
+border-radius:10px;
+
+cursor:pointer;
+
+font-size:18px;
+
+font-weight:700;
+
+}
+
