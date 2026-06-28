@@ -297,9 +297,17 @@ ${book.category} • ${book.language}
 
 </p>
 
+<div class="progress">
+
+<span style="width:${book.progress}%">
+
+</span>
+
+</div>
+
 <p>
 
-Progress: ${book.progress}%
+${book.progress}% Complete
 
 </p>
 

@@ -188,6 +188,18 @@ currentNovelId = chapter.novel_id;
 
 await loadChapterNavigation();
 
+const progress = Math.min(
+
+100,
+
+Math.round(
+
+((currentIndex + 1) / chapterList.length) * 100
+
+)
+
+);
+
 await fetch(
 
 `https://mylikith-backend.onrender.com/api/novels/${chapter.novel_id}/view`,
@@ -223,6 +235,68 @@ readerUser.id,
 
 chapter_id:
 chapter.id
+
+})
+
+}
+
+);
+
+}
+
+await fetch(
+
+`${API}/api/library/progress`,
+
+{
+
+method:"PUT",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+user_id:readerUser.id,
+
+novel_id:chapter.novel_id,
+
+last_chapter:chapter.id,
+
+progress:progress
+
+})
+
+}
+
+);
+
+if(progress===100){
+
+await fetch(
+
+`${API}/api/library/status`,
+
+{
+
+method:"PUT",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+user_id:readerUser.id,
+
+novel_id:chapter.novel_id,
+
+status:"Completed"
 
 })
 
@@ -322,36 +396,41 @@ currentIndex >= chapterList.length - 1;
 
 async function submitComment(){
 
-const user =
-JSON.parse(
-localStorage.getItem("user")
-);
+const user=
+JSON.parse(localStorage.getItem("user"));
 
 if(!user){
 
-alert(
-"Please login"
-);
+alert("Please login");
 
 return;
 
 }
 
-const comment =
-document.getElementById(
-"commentText"
-).value;
+const comment=
+document.getElementById("commentText").value.trim();
 
-const response =
+if(comment===""){
+
+alert("Please enter a comment.");
+
+return;
+
+}
+
+const response=
 await fetch(
 
-"https://mylikith-backend.onrender.com/api/comments",
+`${API}/api/comments`,
 
 {
+
 method:"POST",
 
 headers:{
+
 "Content-Type":"application/json"
+
 },
 
 body:JSON.stringify({
@@ -368,48 +447,18 @@ comment
 
 );
 
-const data =
+const data=
 await response.json();
 
 if(data.success){
 
-document.getElementById(
-"commentText"
-).value = "";
+document.getElementById("commentText").value="";
 
 loadComments();
 
-let chapterList=[];
+}else{
 
-let currentIndex=-1;
-
-async function loadChapterNavigation(){
-
-const response=await fetch(
-
-`${API}/api/novels/${currentNovelId}/chapters`
-
-);
-
-chapterList=await response.json();
-
-currentIndex=
-
-chapterList.findIndex(
-
-c=>c.id==chapterId
-
-);
-
-document.getElementById("prevChapterBtn").disabled=
-
-currentIndex<=0;
-
-document.getElementById("nextChapterBtn").disabled=
-
-currentIndex>=chapterList.length-1;
-
-}
+alert("Failed to post comment.");
 
 }
 
@@ -417,27 +466,24 @@ currentIndex>=chapterList.length-1;
 
 async function loadComments(){
 
-const response =
+const response=
 await fetch(
 
-`https://mylikith-backend.onrender.com/api/comments/${chapterId}`
+`${API}/api/comments/${chapterId}`
 
 );
 
-const comments =
+const comments=
 await response.json();
 
-const container =
-document.getElementById(
-"commentsList"
-);
+const container=
+document.getElementById("commentsList");
 
-container.innerHTML = "";
+container.innerHTML="";
 
 if(comments.length===0){
 
-container.innerHTML =
-"<p>No comments yet</p>";
+container.innerHTML="<p>No comments yet</p>";
 
 return;
 
@@ -445,21 +491,13 @@ return;
 
 comments.forEach(comment=>{
 
-container.innerHTML += `
+container.innerHTML+=`
 
 <div class="comment-card">
 
-<strong>
+<strong>${comment.name}</strong>
 
-${comment.name}
-
-</strong>
-
-<p>
-
-${comment.comment}
-
-</p>
+<p>${comment.comment}</p>
 
 </div>
 
@@ -493,6 +531,8 @@ location.href=
 
 const themeBtn=document.getElementById("themeBtn");
 
+if(themeBtn){
+
 themeBtn.onclick=()=>{
 
 if(document.body.classList.contains("dark-mode")){
@@ -515,17 +555,25 @@ themeBtn.textContent="🌙 Theme";
 
 };
 
-const fullscreenBtn=
+};
 
+}
+
+
+const fullscreenBtn =
 document.getElementById("fullscreenBtn");
+
+if(fullscreenBtn){
 
 fullscreenBtn.onclick=()=>{
 
-document.querySelector(".reader-container")
-
+document
+.querySelector(".reader-container")
 .classList.toggle("fullscreen-mode");
 
 };
+
+}
 
 function saveReadingPosition(){
 
