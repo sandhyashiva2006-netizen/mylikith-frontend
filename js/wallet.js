@@ -29,9 +29,6 @@ const res=await fetch(
 
 const data=await res.json();
 
-document.getElementById("walletBalance").innerText=
-
-"₹"+Number(data.balance).toFixed(2);
 
 document.getElementById("walletCoins").innerText=
 
@@ -58,13 +55,11 @@ const res=await fetch(
 
 const data=await res.json();
 
-document.getElementById("credits").innerText=
+document.getElementById("credits").innerText =
+data.earned_coins;
 
-"₹"+data.credits;
-
-document.getElementById("debits").innerText=
-
-"₹"+data.debits;
+document.getElementById("debits").innerText =
+data.spent_coins;
 
 document.getElementById("transactions").innerText=
 
@@ -150,7 +145,7 @@ item.type==="Credit"
 "-"
 }
 
-₹${item.amount}
+${item.coins} 🪙
 
 </div>
 
