@@ -215,29 +215,50 @@ return false;
 
 }
 
-lockContainer.innerHTML=`
+lockContainer.innerHTML = `
 
 <div class="locked-chapter-card">
 
+<div class="premium-icon">
+
+🔒
+
+</div>
+
 <h2>
 
-🔒 Premium Chapter
+Premium Chapter
 
 </h2>
 
-<p>
+<p class="preview-text">
 
-Unlock this chapter for
+You've reached a premium chapter.
 
-<strong>
+Unlock it to continue reading and support the author.
 
-${data.coins}
+</p>
+
+<div class="coin-price">
+
+🪙 ${data.coins} Coins
+
+</div>
+
+<div class="wallet-info">
+
+Your Balance :
+<span id="readerCoins">
+
+Loading...
+
+</span>
 
 Coins
 
-</strong>
+</div>
 
-</p>
+<div class="premium-actions">
 
 <button id="unlockChapterBtn">
 
@@ -245,9 +266,29 @@ Coins
 
 </button>
 
+<button
+id="buyCoinsBtn">
+
+➕ Buy Coins
+
+</button>
+
+</div>
+
 </div>
 
 `;
+
+document.getElementById(
+"buyCoinsBtn"
+).onclick=()=>{
+
+location.href=
+"coin-store.html";
+
+};
+
+loadWalletCoins();
 
 document.getElementById("chapterContent").style.display="none";
 
@@ -256,6 +297,26 @@ document.getElementById("unlockChapterBtn").onclick=
 unlockChapter;
 
 return true;
+
+}
+
+async function loadWalletCoins(){
+
+const response=
+await fetch(
+
+`${API}/api/wallet/${readerUser.id}`
+
+);
+
+const wallet=
+await response.json();
+
+document.getElementById(
+"readerCoins"
+).textContent=
+
+wallet.coins||0;
 
 }
 
@@ -965,13 +1026,65 @@ await response.json();
 
 if(!data.success){
 
+if(
+
+data.message==="Not enough coins."
+
+){
+
+alert(
+
+`You need more coins.
+
+Click OK to open Coin Store.`
+
+);
+
+location.href="coin-store.html";
+
+return;
+
+}
+
 alert(data.message);
 
 return;
 
 }
 
+lockContainer.innerHTML=`
+
+<div class="unlock-success">
+
+🎉
+
+<h2>
+
+Chapter Unlocked!
+
+</h2>
+
+<p>
+
+Enjoy reading.
+
+</p>
+
+</div>
+
+`;
+
+setTimeout(()=>{
+
 lockContainer.innerHTML="";
+
+document.getElementById(
+"chapterContent"
+).style.display="block";
+
+loadChapter();
+
+},1200);
 
 document.getElementById("chapterContent").style.display="block";
 
