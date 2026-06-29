@@ -1,0 +1,435 @@
+/* ==========================================
+   ADMIN WITHDRAWALS
+========================================== */
+
+.withdrawals-container{
+
+max-width:1400px;
+
+margin:40px auto;
+
+padding:20px;
+
+}
+
+.withdrawals-container h1{
+
+font-size:36px;
+
+font-weight:700;
+
+margin-bottom:10px;
+
+}
+
+.page-subtitle{
+
+font-size:17px;
+
+opacity:.8;
+
+margin-bottom:35px;
+
+}
+
+/* ==========================================
+   SUMMARY
+========================================== */
+
+.summary-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:20px;
+
+margin-bottom:35px;
+
+}
+
+.summary-card{
+
+background:linear-gradient(135deg,#6D28D9,#9333EA);
+
+border-radius:18px;
+
+padding:28px;
+
+color:#fff;
+
+box-shadow:0 15px 35px rgba(109,40,217,.25);
+
+transition:.3s;
+
+}
+
+.summary-card:hover{
+
+transform:translateY(-5px);
+
+}
+
+.summary-card h3{
+
+font-size:16px;
+
+font-weight:500;
+
+opacity:.9;
+
+margin-bottom:10px;
+
+}
+
+.summary-card h2{
+
+font-size:30px;
+
+margin-bottom:8px;
+
+}
+
+.summary-card p{
+
+font-size:15px;
+
+opacity:.9;
+
+}
+
+/* ==========================================
+   TOOLBAR
+========================================== */
+
+.toolbar{
+
+display:flex;
+
+gap:20px;
+
+flex-wrap:wrap;
+
+margin-bottom:30px;
+
+}
+
+.toolbar input{
+
+flex:1;
+
+min-width:250px;
+
+padding:14px;
+
+border:1px solid #ddd;
+
+border-radius:10px;
+
+font-size:16px;
+
+outline:none;
+
+}
+
+.toolbar select{
+
+padding:14px;
+
+border:1px solid #ddd;
+
+border-radius:10px;
+
+font-size:16px;
+
+outline:none;
+
+cursor:pointer;
+
+}
+
+/* ==========================================
+   TABLE
+========================================== */
+
+.table-card{
+
+background:#fff;
+
+border-radius:20px;
+
+padding:25px;
+
+margin-bottom:30px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+}
+
+.table-wrapper{
+
+overflow-x:auto;
+
+}
+
+.withdraw-table{
+
+width:100%;
+
+border-collapse:collapse;
+
+}
+
+.withdraw-table th{
+
+background:#6D28D9;
+
+color:#fff;
+
+padding:15px;
+
+text-align:left;
+
+font-size:15px;
+
+}
+
+.withdraw-table td{
+
+padding:15px;
+
+border-bottom:1px solid #eee;
+
+font-size:15px;
+
+vertical-align:middle;
+
+}
+
+.withdraw-table tr:hover{
+
+background:#faf7ff;
+
+}
+
+/* ==========================================
+   STATUS
+========================================== */
+
+.status{
+
+display:inline-block;
+
+padding:6px 14px;
+
+border-radius:20px;
+
+font-size:13px;
+
+font-weight:600;
+
+}
+
+.status.pending{
+
+background:#FFF3CD;
+
+color:#856404;
+
+}
+
+.status.approved{
+
+background:#D4EDDA;
+
+color:#155724;
+
+}
+
+.status.rejected{
+
+background:#F8D7DA;
+
+color:#721C24;
+
+}
+
+.status.completed{
+
+background:#D1ECF1;
+
+color:#0C5460;
+
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.action-buttons{
+
+display:flex;
+
+gap:10px;
+
+flex-wrap:wrap;
+
+}
+
+.approve-btn{
+
+background:#28A745;
+
+color:#fff;
+
+border:none;
+
+padding:8px 16px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.approve-btn:hover{
+
+background:#218838;
+
+}
+
+.reject-btn{
+
+background:#DC3545;
+
+color:#fff;
+
+border:none;
+
+padding:8px 16px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.reject-btn:hover{
+
+background:#C82333;
+
+}
+
+/* ==========================================
+   DETAILS
+========================================== */
+
+.details-card{
+
+background:#fff;
+
+border-radius:20px;
+
+padding:30px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+}
+
+.details-card h2{
+
+margin-bottom:20px;
+
+font-size:24px;
+
+}
+
+#paymentDetails{
+
+line-height:2;
+
+font-size:16px;
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+.toolbar{
+
+flex-direction:column;
+
+}
+
+.toolbar input,
+
+.toolbar select{
+
+width:100%;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.withdrawals-container{
+
+padding:15px;
+
+}
+
+.withdrawals-container h1{
+
+font-size:28px;
+
+}
+
+.summary-card h2{
+
+font-size:24px;
+
+}
+
+.withdraw-table th,
+
+.withdraw-table td{
+
+font-size:14px;
+
+padding:10px;
+
+}
+
+.action-buttons{
+
+flex-direction:column;
+
+}
+
+.approve-btn,
+
+.reject-btn{
+
+width:100%;
+
+}
+
+.details-card{
+
+padding:20px;
+
+}
+
+}

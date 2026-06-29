@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Withdrawal Management | MyLikith Admin</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/admin-withdrawals.css">
+
+</head>
+
+<body>
+
+<nav id="navbar" class="navbar"></nav>
+
+<div class="dashboard">
+
+<div class="withdrawals-container">
+
+<h1>
+
+💸 Withdrawal Management
+
+</h1>
+
+<p class="page-subtitle">
+
+Manage writer withdrawal requests and payouts.
+
+</p>
+
+<!-- ==========================
+SUMMARY
+========================== -->
+
+<div class="summary-grid">
+
+<div class="summary-card">
+
+<h3>
+
+Pending
+
+</h3>
+
+<h2 id="pendingCount">
+
+0
+
+</h2>
+
+<p id="pendingAmount">
+
+₹0.00
+
+</p>
+
+</div>
+
+<div class="summary-card">
+
+<h3>
+
+Approved
+
+</h3>
+
+<h2 id="approvedCount">
+
+0
+
+</h2>
+
+<p id="approvedAmount">
+
+₹0.00
+
+</p>
+
+</div>
+
+<div class="summary-card">
+
+<h3>
+
+Rejected
+
+</h3>
+
+<h2 id="rejectedCount">
+
+0
+
+</h2>
+
+<p id="rejectedAmount">
+
+₹0.00
+
+</p>
+
+</div>
+
+<div class="summary-card">
+
+<h3>
+
+Completed
+
+</h3>
+
+<h2 id="completedCount">
+
+0
+
+</h2>
+
+<p id="completedAmount">
+
+₹0.00
+
+</p>
+
+</div>
+
+</div>
+
+<!-- ==========================
+FILTERS
+========================== -->
+
+<div class="toolbar">
+
+<input
+
+type="text"
+
+id="searchWriter"
+
+placeholder="Search writer...">
+
+<select id="statusFilter">
+
+<option value="All">
+
+All
+
+</option>
+
+<option value="Pending">
+
+Pending
+
+</option>
+
+<option value="Approved">
+
+Approved
+
+</option>
+
+<option value="Rejected">
+
+Rejected
+
+</option>
+
+<option value="Completed">
+
+Completed
+
+</option>
+
+</select>
+
+</div>
+
+<!-- ==========================
+TABLE
+========================== -->
+
+<div class="table-card">
+
+<div class="table-wrapper">
+
+<table class="withdraw-table">
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Writer</th>
+
+<th>Amount</th>
+
+<th>Method</th>
+
+<th>Status</th>
+
+<th>Requested</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="withdrawTable">
+
+<tr>
+
+<td colspan="7">
+
+Loading...
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- ==========================
+DETAILS
+========================== -->
+
+<div class="details-card">
+
+<h2>
+
+Payment Details
+
+</h2>
+
+<div id="paymentDetails">
+
+Select a withdrawal request to view payment information.
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="footer"></div>
+
+<script src="js/session.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/admin-withdrawals.js"></script>
+<script src="js/footer.js"></script>
+
+</body>
+
+</html>
