@@ -234,6 +234,8 @@ Reject
 
 <button
 
+class="view-btn"
+
 onclick="showDetails(${item.id})"
 
 >
