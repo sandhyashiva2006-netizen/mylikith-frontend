@@ -46,11 +46,13 @@ data.reviews || 0;
 document.getElementById("totalComments").textContent =
 data.comments || 0;
 
-document.getElementById("totalViews").textContent =
-data.views || 0;
+document.getElementById("coinSales")
+.textContent =
+"₹"+Number(data.coin_sales||0).toFixed(2);
 
-document.getElementById("totalReports").textContent =
-data.reports || 0;
+document.getElementById("platformRevenue")
+.textContent =
+"₹"+Number(data.platform_revenue||0).toFixed(2);
 
 }catch(err){
 
