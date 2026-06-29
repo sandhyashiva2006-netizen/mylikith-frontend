@@ -60,9 +60,9 @@ class="navbar">
         🪙 Buy Coins
     </button>
 
-    <button disabled>
-        Withdraw
-    </button>
+    <button id="withdrawBtn">
+    💸 Withdraw
+</button>
 
 </div>
 
@@ -93,6 +93,63 @@ class="navbar">
         </div>
 
     </div>
+
+<section class="withdraw-section">
+
+<h2>
+
+💸 Withdraw Earnings
+
+</h2>
+
+<input
+type="number"
+id="withdrawAmount"
+placeholder="Enter Amount">
+
+<select id="paymentMethod">
+
+<option value="UPI">
+
+UPI
+
+</option>
+
+<option value="BANK">
+
+Bank Account
+
+</option>
+
+</select>
+
+<input
+type="text"
+id="upiId"
+placeholder="UPI ID (if UPI selected)">
+
+<input
+type="text"
+id="accountName"
+placeholder="Account Holder Name">
+
+<input
+type="text"
+id="accountNumber"
+placeholder="Account Number">
+
+<input
+type="text"
+id="ifscCode"
+placeholder="IFSC Code">
+
+<button id="submitWithdraw">
+
+Submit Withdrawal Request
+
+</button>
+
+</section>
 
     <div class="transaction-section">
 

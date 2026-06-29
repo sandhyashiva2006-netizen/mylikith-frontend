@@ -585,6 +585,95 @@ async function loadWalletBalance(){
 
 }
 
+async function loadWriterEarnings(){
+
+try{
+
+const response=
+await fetch(
+
+`${API}/api/writers/earnings/${dashboardUser.id}`
+
+);
+
+const data=
+await response.json();
+
+document.getElementById("writerCoins").textContent=
+data.summary.coins;
+
+document.getElementById("writerAmount").textContent=
+"₹"+Number(data.summary.amount).toFixed(2);
+
+document.getElementById("premiumSales").textContent=
+data.summary.sales;
+
+document.getElementById("withdrawableAmount").textContent=
+"₹"+Number(data.summary.amount).toFixed(2);
+
+const table=
+document.getElementById("earningsTable");
+
+table.innerHTML="";
+
+if(data.history.length===0){
+
+table.innerHTML=`
+
+<tr>
+
+<td colspan="6">
+
+No premium earnings yet.
+
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+data.history.forEach(item=>{
+
+table.innerHTML+=`
+
+<tr>
+
+<td>${item.name}</td>
+
+<td>${item.novel}</td>
+
+<td>Chapter ${item.chapter_no}</td>
+
+<td>${item.coins}</td>
+
+<td>₹${item.amount}</td>
+
+<td>
+
+${new Date(item.created_at).toLocaleDateString()}
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+catch(err){
+
+console.log(err);
+
+}
+}
+
+loadWriterEarnings();
+
 loadWalletBalance();
 
 loadRecentActivity();

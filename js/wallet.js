@@ -183,4 +183,93 @@ alert("Coin Purchase Module Coming Next.");
 
 );
 
+document.getElementById(
+
+"submitWithdraw"
+
+).onclick=
+
+submitWithdrawal;
+
+async function submitWithdrawal(){
+
+const amount=
+Number(
+
+document.getElementById(
+"withdrawAmount"
+).value
+
+);
+
+const payment_method=
+
+document.getElementById(
+"paymentMethod"
+).value;
+
+const body={
+
+writer_id:userId,
+
+amount,
+
+payment_method,
+
+upi_id:
+
+document.getElementById(
+"upiId"
+).value,
+
+account_name:
+
+document.getElementById(
+"accountName"
+).value,
+
+account_number:
+
+document.getElementById(
+"accountNumber"
+).value,
+
+ifsc_code:
+
+document.getElementById(
+"ifscCode"
+).value
+
+};
+
+const response=
+
+await fetch(
+
+`${API}/writers/withdraw`,
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify(body)
+
+}
+
+);
+
+const data=
+
+await response.json();
+
+alert(data.message);
+
+}
+
 
