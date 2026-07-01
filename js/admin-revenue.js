@@ -45,6 +45,12 @@ document.getElementById("pendingWithdrawals").textContent=
 
 `₹${data.pendingWithdrawals}`;
 
+document.getElementById("writerShare").textContent =
+`${data.writerShare}%`;
+
+document.getElementById("platformShare").textContent =
+`${data.platformShare}%`;
+
 }
 
 loadRevenue();
