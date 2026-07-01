@@ -33,7 +33,20 @@ container.innerHTML+=`
 
 <div class="price">
 
-₹${plan.price}
+${
+plan.name==="Quarterly"
+?
+
+`<div class="popular-badge">
+⭐ MOST POPULAR
+</div>`
+
+:
+
+""
+}
+
+<h2>${plan.name}</h2>
 
 </div>
 

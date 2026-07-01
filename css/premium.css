@@ -1,8 +1,12 @@
 body{
 
-background:#f5f5ff;
+margin:0;
+
+background:#0f172a url("../images/profile-bg.jpg") center/cover fixed;
 
 font-family:Poppins,sans-serif;
+
+color:#fff;
 
 }
 
@@ -34,11 +38,19 @@ background:#fff;
 
 border-radius:20px;
 
-padding:30px;
+padding:25px;
 
-box-shadow:0 10px 30px rgba(0,0,0,.08);
+max-width:340px;
 
-text-align:center;
+margin:auto;
+
+min-height:430px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:space-between;
 
 }
 
@@ -64,18 +76,49 @@ margin:20px 0;
 
 width:100%;
 
-padding:14px;
+padding:16px;
 
 border:none;
 
-border-radius:10px;
+border-radius:12px;
 
-background:#6D28D9;
+background:linear-gradient(90deg,#7c3aed,#9333ea);
 
 color:#fff;
 
-font-size:16px;
+font-size:18px;
+
+font-weight:700;
 
 cursor:pointer;
 
+transition:.3s;
+
 }
+
+.plan button:hover{
+
+transform:translateY(-2px);
+
+}
+
+.popular-badge{
+
+background:#f59e0b;
+
+color:#fff;
+
+padding:8px 16px;
+
+border-radius:30px;
+
+display:inline-block;
+
+font-size:13px;
+
+font-weight:700;
+
+margin-bottom:15px;
+
+}
+
