@@ -1,4 +1,8 @@
-const API="https://mylikith-backend.onrender.com";
+const API="https://mylikith-backend.onrender.com/api";
+
+const cashfree=Cashfree({
+mode:"sandbox"
+});
 
 const user=
 JSON.parse(localStorage.getItem("user"));
@@ -77,18 +81,16 @@ async function buyPlan(planId){
 
 try{
 
-const response=await fetch(
+const res=await fetch(
 
-`${API}/api/premium/create-order`,
+`${API}/premium/create-order`,
 
 {
 
 method:"POST",
 
 headers:{
-
 "Content-Type":"application/json"
-
 },
 
 body:JSON.stringify({
@@ -103,18 +105,35 @@ plan_id:planId
 
 );
 
-console.log("STATUS:",response.status);
+const data=await res.json();
 
-const text=await response.text();
+console.log("ORDER RESPONSE:",data);
 
-console.log("RAW RESPONSE:",text);
+if(!data.success){
 
-alert("Check Console");
+alert("Unable to create order.");
+
+return;
 
 }
-catch(err){
+
+const checkoutOptions={
+
+paymentSessionId:data.paymentSessionId,
+
+redirectTarget:"_self"
+
+};
+
+console.log("CHECKOUT OPTIONS:",checkoutOptions);
+
+await cashfree.checkout(checkoutOptions);
+
+}catch(err){
 
 console.log(err);
+
+alert("Payment initialization failed.");
 
 }
 
