@@ -62,6 +62,8 @@ await fetch(
 const data =
 await response.json();
 
+console.log("SUMMARY", data);
+
 document.getElementById("totalEarnings").innerText =
 "₹"+Number(data.summary.amount||0).toFixed(2);
 
@@ -387,9 +389,11 @@ alert(data.message);
 
 document.getElementById("withdrawAmount").value="";
 
-loadSummary();
+await loadSummary();
 
-loadWithdrawalHistory();
+await loadWithdrawalHistory();
+
+await loadEarnings();
 
 }catch(err){
 
