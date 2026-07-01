@@ -328,7 +328,25 @@ body:JSON.stringify({
 
 writer_id:writerId,
 
-amount
+amount,
+
+payment_method:
+document.getElementById("paymentMethod").value,
+
+upi_id:
+document.getElementById("upiId").value,
+
+account_name:
+document.getElementById("accountName").value,
+
+bank_name:
+document.getElementById("bankName").value,
+
+account_number:
+document.getElementById("accountNumber").value,
+
+ifsc_code:
+document.getElementById("ifscCode").value
 
 })
 
