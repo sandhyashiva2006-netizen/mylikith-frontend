@@ -77,9 +77,7 @@ async function buyPlan(planId){
 
 try{
 
-const response=
-
-await fetch(
+const response=await fetch(
 
 `${API}/api/premium/create-order`,
 
@@ -105,42 +103,18 @@ plan_id:planId
 
 );
 
-const data=
+console.log("STATUS:",response.status);
 
-await response.json();
+const text=await response.text();
 
-if(!data.success){
+console.log("RAW RESPONSE:",text);
 
-alert(data.message);
-
-return;
-
-}
-
-const cashfree=
-
-Cashfree({
-
-mode:"sandbox"
-
-});
-
-await cashfree.checkout({
-
-paymentSessionId:
-
-data.paymentSessionId,
-
-redirectTarget:"_self"
-
-});
+alert("Check Console");
 
 }
 catch(err){
 
 console.log(err);
-
-alert("Unable to start payment.");
 
 }
 
