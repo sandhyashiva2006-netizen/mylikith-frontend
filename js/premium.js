@@ -75,18 +75,7 @@ Buy Now
 
 async function buyPlan(planId){
 
-const user=
-JSON.parse(localStorage.getItem("user"));
-
-if(!user){
-
-alert("Please login first.");
-
-location.href="login.html";
-
-return;
-
-}
+try{
 
 const response=
 
@@ -136,7 +125,7 @@ mode:"sandbox"
 
 });
 
-cashfree.checkout({
+await cashfree.checkout({
 
 paymentSessionId:
 
@@ -145,6 +134,15 @@ data.paymentSessionId,
 redirectTarget:"_self"
 
 });
+
+}
+catch(err){
+
+console.log(err);
+
+alert("Unable to start payment.");
+
+}
 
 }
 
