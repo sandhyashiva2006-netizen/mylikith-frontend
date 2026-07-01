@@ -13,7 +13,7 @@ const res=
 
 await fetch(
 
-`${API}/api/premium/plans`
+`${API}/premium/plans`
 
 );
 
