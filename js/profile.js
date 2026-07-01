@@ -18,6 +18,30 @@ document.getElementById(
 ).textContent =
 user.name;
 
+const premium=await fetch(
+
+`${API}/premium/status/${user.id}`
+
+);
+
+const p=await premium.json();
+
+if(p.premium){
+
+document.getElementById(
+
+"profileName"
+
+).innerHTML+=
+
+` <span class="premium-badge">
+
+👑 PREMIUM
+
+</span>`;
+
+}
+
 document.getElementById(
 "profileEmail"
 ).textContent =

@@ -21,6 +21,14 @@ const plans=
 
 await res.json();
 
+const status=await fetch(
+
+`${API}/premium/status/${user.id}`
+
+);
+
+const premium=await status.json();
+
 const container=
 
 document.getElementById("plans");
@@ -59,15 +67,26 @@ ${plan.duration_days} Days
 
 </p>
 
-<button
+${
+premium.premium
 
-onclick="buyPlan(${plan.id})"
+?
 
->
+`<button disabled class="active-plan">
+
+✅ Active Plan
+
+</button>`
+
+:
+
+`<button onclick="buyPlan(${plan.id})">
 
 Buy Now
 
-</button>
+</button>`
+
+}
 
 </div>
 

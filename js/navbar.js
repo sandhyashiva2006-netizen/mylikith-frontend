@@ -3,6 +3,7 @@ JSON.parse(
 localStorage.getItem("user")
 );
 
+
 const navbar =
 document.getElementById("navbar");
 
@@ -241,3 +242,39 @@ window.location =
 }
 
 }
+
+async function loadPremiumBadge(){
+
+try{
+
+const res=await fetch(
+
+`${API}/premium/status/${user.id}`
+
+);
+
+const data=await res.json();
+
+if(data.premium){
+
+const profile=document.querySelector(".profile-link");
+
+if(profile){
+
+profile.innerHTML=
+
+`👑 Profile`;
+
+}
+
+}
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+loadPremiumBadge();
