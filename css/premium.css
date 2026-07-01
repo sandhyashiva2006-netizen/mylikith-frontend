@@ -2,9 +2,15 @@ body{
 
 margin:0;
 
-background:#0f172a url("../images/profile-bg.jpg") center/cover fixed;
+background-image:url("../images/profile-bg.jpg");
 
-font-family:Poppins,sans-serif;
+background-size:cover;
+
+background-position:center;
+
+background-attachment:fixed;
+
+background-color:#0f172a;
 
 color:#fff;
 
@@ -119,6 +125,18 @@ font-size:13px;
 font-weight:700;
 
 margin-bottom:15px;
+
+}
+
+.price{
+
+font-size:42px;
+
+font-weight:700;
+
+color:#111827;
+
+margin:20px 0;
 
 }
 
