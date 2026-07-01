@@ -46,6 +46,14 @@ data.reviews || 0;
 document.getElementById("totalComments").textContent =
 data.comments || 0;
 
+document.getElementById("pendingWithdrawals")
+.textContent =
+data.pending_withdrawals || 0;
+
+document.getElementById("completedWithdrawals")
+.textContent =
+data.completed_withdrawals || 0;
+
 document.getElementById("coinSales")
 .textContent =
 "₹"+Number(data.coin_sales||0).toFixed(2);

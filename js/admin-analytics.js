@@ -29,9 +29,21 @@ const data=
 
 await response.json();
 
+users.textContent=data.users;
+
+writers.textContent=data.writers;
+
+novels.textContent=data.novels;
+
+chapters.textContent=data.chapters;
+
 reads.textContent=data.reads;
 
-rating.textContent=data.rating;
+coinSales.textContent=`₹${data.coinSales}`;
+
+coinsSpent.textContent=data.coinsSpent;
+
+pendingWithdrawals.textContent=data.pendingWithdrawals;
 
 topNovel.textContent=data.topNovel;
 
