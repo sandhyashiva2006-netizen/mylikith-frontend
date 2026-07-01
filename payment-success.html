@@ -19,71 +19,123 @@ Verifying Payment...
 
 <script>
 
-const params = new URLSearchParams(window.location.search);
+const params = new URLSearchParams(location.search);
 
 const orderId = params.get("order_id");
 
-if (!orderId) {
+const type = params.get("type");
 
-    alert("Order ID not found.");
+const planId = params.get("plan_id");
 
-    location.href = "coin-store.html";
+const user = JSON.parse(localStorage.getItem("user"));
+
+if(type==="premium"){
+
+// Call:
+/api/premium/verify-payment
+
+}else{
+
+// Existing code:
+/api/wallet/verify-payment
+
+}
+
+let url;
+
+let body;
+
+if(type==="premium"){
+
+url="https://mylikith-backend.onrender.com/api/premium/verify-payment";
+
+body={
+
+order_id:orderId,
+
+plan_id:planId,
+
+user_id:user.id
+
+};
+
+}else{
+
+url="https://mylikith-backend.onrender.com/api/wallet/verify-payment";
+
+body={
+
+order_id:orderId
+
+};
 
 }
 
 fetch(
 
-    "https://mylikith-backend.onrender.com/api/wallet/verify-payment",
+url,
 
-    {
+{
 
-        method: "POST",
+method:"POST",
 
-        headers: {
+headers:{
 
-            "Content-Type": "application/json"
+"Content-Type":"application/json"
 
-        },
+},
 
-        body: JSON.stringify({
+body:JSON.stringify(body)
 
-            order_id: orderId
-
-        })
-
-    }
+}
 
 )
 
-.then(async (res) => {
+.then(async(res)=>{
 
-    const data = await res.json();
+const data=await res.json();
 
-    console.log("VERIFY RESPONSE:", data);
+console.log(data);
 
-    if (data.success) {
+if(data.success){
 
-        alert("Payment Successful!");
+alert("Payment Successful!");
 
-        location.replace("wallet.html");
+if(type==="premium"){
 
-    } else {
+location.replace("premium.html");
 
-        alert(data.message || "Payment verification failed.");
+}else{
 
-        location.replace("coin-store.html");
+location.replace("wallet.html");
 
-    }
+}
+
+}else{
+
+alert(data.message||"Payment verification failed.");
+
+if(type==="premium"){
+
+location.replace("premium.html");
+
+}else{
+
+location.replace("coin-store.html");
+
+}
+
+}
 
 })
 
-.catch(err => {
+.catch(err=>{
 
-    console.error(err);
+console.log(err);
 
-    alert("Server Error");
+alert("Server Error");
 
-    location.replace("coin-store.html");
+location.replace("premium.html");
 
 });
 
