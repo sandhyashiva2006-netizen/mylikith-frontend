@@ -165,26 +165,20 @@ console.log(err);
 
 
 document.getElementById("addMoneyBtn")
-
 .addEventListener(
-
 "click",
-
 ()=>{
-
-alert("Coin Purchase Module Coming Next.");
-
+location.href = "coin-store.html";
 }
-
 );
 
-document.getElementById(
+const withdrawBtn = document.getElementById("submitWithdraw");
 
-"submitWithdraw"
+if(withdrawBtn){
 
-).onclick=
+    withdrawBtn.onclick = submitWithdrawal;
 
-submitWithdrawal;
+}
 
 async function submitWithdrawal(){
 
