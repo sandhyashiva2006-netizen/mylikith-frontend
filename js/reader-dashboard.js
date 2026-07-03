@@ -766,6 +766,166 @@ days
 
 }
 
+async function loadReadingChallenges(){
+
+const response=await fetch(
+
+`${API}/api/challenges/${readerUser.id}`
+
+);
+
+const challenges=await response.json();
+
+const container=
+
+document.getElementById(
+
+"readingChallenges"
+
+);
+
+container.innerHTML="";
+
+challenges.forEach(c=>{
+
+const progress=c.progress||0;
+
+container.innerHTML+=`
+
+<div class="challenge-card">
+
+<h3>
+
+${c.title}
+
+</h3>
+
+<p>
+
+${c.description}
+
+</p>
+
+<p>
+
+${progress}/${c.target}
+
+</p>
+
+<p>
+
+🪙 Reward: ${c.reward_coins} Coins
+
+</p>
+
+${c.completed
+
+?
+
+"<span style='color:lime'>✅ Completed</span>"
+
+:
+
+""
+
+}
+
+</div>
+
+`;
+
+});
+
+}
+
+async function loadDailyReward(){
+
+const response=await fetch(
+
+`${API}/api/daily-reward/${readerUser.id}`
+
+);
+
+const reward=await response.json();
+
+document.getElementById(
+
+"dailyRewardCard"
+
+).innerHTML=`
+
+<div class="reward-card">
+
+🔥 Daily Streak
+
+<b>
+
+${reward.claim_streak}
+
+</b>
+
+days
+
+<br><br>
+
+<button onclick="claimDailyReward()">
+
+Claim Today's Reward
+
+</button>
+
+</div>
+
+`;
+
+}
+
+async function claimDailyReward(){
+
+const response=await fetch(
+
+`${API}/api/daily-reward`,
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+user_id:readerUser.id
+
+})
+
+}
+
+);
+
+const data=await response.json();
+
+alert(
+
+data.success
+
+?
+
+`🎉 ${data.coins} Coins Claimed!`
+
+:
+
+data.message
+
+);
+
+loadDailyReward();
+
+}
+
 loadReaderStats();
 
 loadBookmarks();
@@ -779,3 +939,7 @@ loadReaderFeed();
 loadActivity();
 
 loadReadingStreak();
+
+loadReadingChallenges();
+
+loadDailyReward();

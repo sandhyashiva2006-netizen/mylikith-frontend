@@ -738,3 +738,61 @@ box-shadow:0 12px 30px rgba(249,115,22,.3);
 
 }
 
+.challenge-card{
+
+background:#111827;
+
+padding:20px;
+
+border-radius:16px;
+
+margin-bottom:15px;
+
+border-left:5px solid #10B981;
+
+transition:.3s;
+
+}
+
+.challenge-card:hover{
+
+transform:translateY(-3px);
+
+}
+
+.reward-card{
+
+background:linear-gradient(
+135deg,
+#059669,
+#10B981
+);
+
+padding:24px;
+
+border-radius:18px;
+
+text-align:center;
+
+color:white;
+
+font-weight:bold;
+
+}
+
+.reward-card button{
+
+margin-top:15px;
+
+padding:10px 20px;
+
+border:none;
+
+border-radius:10px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+}
+
