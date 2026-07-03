@@ -260,6 +260,8 @@ let chapterList = [];
 
 let currentIndex = -1;
 
+let readingStarted = Date.now();
+
 console.log("Reader URL:", window.location.href);
 console.log("Chapter ID:", chapterId);
 
@@ -555,6 +557,66 @@ await fetch(
 const chapter =
 await response.json();
 
+if(
+
+chapter.early_access
+
+){
+
+const premium=await fetch(
+
+`${API}/api/premium/status/${readerUser.id}`
+
+);
+
+const status=
+await premium.json();
+
+if(!status.premium){
+
+document.getElementById(
+
+"chapterContent"
+
+).style.display="none";
+
+lockContainer.innerHTML=`
+
+<div class="locked-chapter-card">
+
+<h2>
+
+⭐ Premium Early Access
+
+</h2>
+
+<p>
+
+This chapter is available first for Premium Members.
+
+</p>
+
+<a
+href="premium.html">
+
+<button>
+
+Become Premium
+
+</button>
+
+</a>
+
+</div>
+
+`;
+
+return;
+
+}
+
+}
+
 document.title =
 chapter.title + " - Mylikith";
 
@@ -573,6 +635,8 @@ if(locked){
 }
 
 currentNovelId = chapter.novel_id;
+
+readingStarted = Date.now();
 
 await loadChapterNavigation();
 
@@ -1221,6 +1285,8 @@ behavior:"instant"
 
 let saveTimer;
 
+window.addEventListener("beforeunload",saveReadingAnalytics);
+
 window.addEventListener("scroll",()=>{
 
 clearTimeout(saveTimer);
@@ -1322,6 +1388,56 @@ localStorage.setItem(
 key,
 
 JSON.stringify(stats)
+
+);
+
+}
+
+async function saveReadingAnalytics(){
+
+if(!readerUser)return;
+
+const premium=await fetch(
+
+`${API}/api/premium/status/${readerUser.id}`
+
+);
+
+const status=await premium.json();
+
+if(!status.premium)return;
+
+const seconds=Math.floor(
+
+(Date.now()-readingStarted)/1000
+
+);
+
+await fetch(
+
+`${API}/api/premium/reading-stats`,
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+user_id:readerUser.id,
+
+chapter_id:chapterId,
+
+reading_seconds:seconds
+
+})
+
+}
 
 );
 

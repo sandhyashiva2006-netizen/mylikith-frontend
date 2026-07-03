@@ -385,6 +385,96 @@ console.log(err);
 
 }
 
+loadPremiumReading();
+
+async function loadPremiumReading(){
+
+const response=
+
+await fetch(
+
+`${API}/api/premium/reading-stats/${user.id}`
+
+);
+
+const data=
+
+await response.json();
+
+if(!data.premium){
+
+document.getElementById(
+
+"premiumReadingStats"
+
+).style.display="none";
+
+return;
+
+}
+
+document.getElementById(
+
+"premiumReadingStats"
+
+).innerHTML=`
+
+<div class="analytics-grid">
+
+<div class="analytics-card">
+
+<h2>
+
+${data.totalHours}
+
+</h2>
+
+<p>
+
+Hours Read
+
+</p>
+
+</div>
+
+<div class="analytics-card">
+
+<h2>
+
+${data.totalChapters}
+
+</h2>
+
+<p>
+
+Premium Chapters
+
+</p>
+
+</div>
+
+<div class="analytics-card">
+
+<h2>
+
+${data.totalDays}
+
+</h2>
+
+<p>
+
+Reading Days
+
+</p>
+
+</div>
+
+</div>
+
+`;
+
+}
+
 loadStats();
 
 loadReviews();

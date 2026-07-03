@@ -155,7 +155,12 @@ class="chapter-card">
 
 Chapter ${chapter.chapter_no}
 
-${premium
+${chapter.early_access
+? `<span class="premium-badge">
+⭐ Early Access
+</span>`
+:
+premium
 ? `<span class="premium-badge">
 🔒 Premium
 </span>`
