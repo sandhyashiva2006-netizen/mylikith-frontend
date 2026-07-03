@@ -364,18 +364,8 @@ const data=await response.json();
 if(!data.premium)return;
 
 document.getElementById(
-
 "premiumBadge"
-
-).innerHTML=`
-
-<div class="badge badge-warning">
-
-⭐ Premium Member
-
-</div>
-
-`;
+).style.display="none";
 
 }catch(err){
 
@@ -468,6 +458,38 @@ Reading Days
 </p>
 
 </div>
+
+</div>
+
+<div class="analytics-card">
+
+<h2>
+
+${data.totalWords}
+
+</h2>
+
+<p>
+
+Words Read
+
+</p>
+
+</div>
+
+<div class="analytics-card">
+
+<h2>
+
+${data.completed}
+
+</h2>
+
+<p>
+
+Chapters Finished
+
+</p>
 
 </div>
 

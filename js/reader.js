@@ -262,6 +262,8 @@ let currentIndex = -1;
 
 let readingStarted = Date.now();
 
+let totalWords = 0;
+
 console.log("Reader URL:", window.location.href);
 console.log("Chapter ID:", chapterId);
 
@@ -784,6 +786,12 @@ chapter.content.replace(
 /\n/g,
 "<br><br>"
 );
+
+totalWords =
+chapter.content
+.trim()
+.split(/\s+/)
+.length;
 
 restoreReadingPosition();
 saveContinueReading(chapter);
@@ -1433,7 +1441,15 @@ user_id:readerUser.id,
 
 chapter_id:chapterId,
 
-reading_seconds:seconds
+reading_seconds:seconds,
+
+words_read:totalWords,
+
+completed:
+
+window.innerHeight+
+window.scrollY>=
+document.body.offsetHeight-100
 
 })
 
