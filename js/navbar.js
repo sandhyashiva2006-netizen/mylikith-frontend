@@ -279,36 +279,4 @@ console.log(err);
 
 }
 
-if(welcome){
-
-welcome.innerHTML = `
-👋 ${navbarUser.name}
-
-<span
-style="
-margin-left:8px;
-font-size:18px;
-">
-
-👑
-
-</span>
-
-<span
-style="
-background:#FFD700;
-color:#111;
-padding:3px 10px;
-border-radius:20px;
-font-size:12px;
-margin-left:6px;
-font-weight:bold;
-">
-
-PREMIUM
-
-</span>
-
-`;
-
 loadPremiumBadge();
