@@ -249,9 +249,7 @@ async function loadPremiumBadge(){
 
 try{
 
-const res=await fetch(
-
-`${API}/premium/status/${user.id}`
+const res=await fetch(`https://mylikith-backend.onrender.com/api/premium/status/${user.id}`)
 
 );
 
