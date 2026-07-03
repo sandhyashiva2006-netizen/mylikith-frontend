@@ -497,6 +497,64 @@ Chapters Finished
 
 }
 
+async function loadPremiumAchievements(){
+
+const response=await fetch(
+
+`${API}/api/premium/achievements/${user.id}`
+
+);
+
+const achievements=await response.json();
+
+const container=
+
+document.getElementById(
+
+"premiumAchievements"
+
+);
+
+if(!container)return;
+
+container.innerHTML="";
+
+if(achievements.length===0){
+
+container.innerHTML=
+
+"<p>No achievements yet.</p>";
+
+return;
+
+}
+
+achievements.forEach(item=>{
+
+container.innerHTML+=`
+
+<div class="achievement-card">
+
+<h3>
+
+${item.icon} ${item.title}
+
+</h3>
+
+<p>
+
+${item.description}
+
+</p>
+
+</div>
+
+`;
+
+});
+
+}
+
 loadStats();
 
 loadReviews();
@@ -504,3 +562,6 @@ loadReviews();
 loadComments();
 
 loadPremiumBadge();
+
+loadPremiumAchievements();
+
