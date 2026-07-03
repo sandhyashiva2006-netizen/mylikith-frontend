@@ -607,6 +607,71 @@ Unlimited Premium Chapters
 
 }
 
+async function loadReaderFeed(){
+
+const response=await fetch(
+
+`${API}/api/profile/feed/${readerUser.id}`
+
+);
+
+const feed=await response.json();
+
+const container=
+
+document.getElementById(
+
+"readerFeed"
+
+);
+
+if(!container)return;
+
+container.innerHTML="";
+
+if(feed.length===0){
+
+container.innerHTML=
+
+"<p>No updates yet.</p>";
+
+return;
+
+}
+
+feed.forEach(item=>{
+
+container.innerHTML+=`
+
+<div class="feed-card">
+
+<h3>
+
+📚 ${item.title}
+
+</h3>
+
+<p>
+
+${item.message}
+
+</p>
+
+<a
+href="reader.html?chapter=${item.chapter_id}">
+
+Read Now →
+
+</a>
+
+</div>
+
+`;
+
+});
+
+}
+
 loadReaderStats();
 
 loadBookmarks();
@@ -614,3 +679,5 @@ loadBookmarks();
 loadNotifications();
 
 loadDiscover();
+
+loadReaderFeed();

@@ -658,3 +658,35 @@ margin-top:10px;
 
 }
 
+.feed-card{
+
+background:#111827;
+
+padding:20px;
+
+border-radius:16px;
+
+margin-bottom:18px;
+
+border-left:4px solid #7C3AED;
+
+transition:.3s;
+
+}
+
+.feed-card:hover{
+
+transform:translateY(-3px);
+
+}
+
+.feed-card a{
+
+color:#22D3EE;
+
+font-weight:700;
+
+text-decoration:none;
+
+}
+
