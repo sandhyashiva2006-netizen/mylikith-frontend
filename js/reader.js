@@ -523,6 +523,24 @@ console.error(err);
 
 }
 
+const savedTheme=
+
+localStorage.getItem(
+
+"reader-theme"
+
+);
+
+if(savedTheme==="premium"){
+
+document.body.classList.add(
+
+"premium-theme"
+
+);
+
+}
+
 loadChapter();
 
 const commentBtn=document.getElementById("commentBtn");
@@ -723,6 +741,21 @@ themeBtn.textContent="🌙 Theme";
 
 };
 
+const premiumThemeBtn=
+
+document.getElementById(
+
+"premiumThemeBtn"
+
+);
+
+if(premiumThemeBtn){
+
+premiumThemeBtn.onclick=
+
+enablePremiumTheme;
+
+}
 
 const fullscreenBtn =
 document.getElementById("fullscreenBtn");
@@ -736,6 +769,61 @@ document
 .classList.toggle("fullscreen-mode");
 
 };
+
+}
+
+async function enablePremiumTheme(){
+
+const user=
+
+JSON.parse(localStorage.getItem("user"));
+
+if(!user)return;
+
+const response=
+
+await fetch(
+
+`${API}/api/premium/status/${user.id}`
+
+);
+
+const data=
+
+await response.json();
+
+if(!data.premium){
+
+alert(
+
+"Premium Theme is available only for Premium Members."
+
+);
+
+return;
+
+}
+
+document.body.classList.remove(
+
+"light-mode",
+"dark-mode"
+
+);
+
+document.body.classList.add(
+
+"premium-theme"
+
+);
+
+localStorage.setItem(
+
+"reader-theme",
+
+"premium"
+
+);
 
 }
 

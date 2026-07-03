@@ -560,7 +560,52 @@ ${value}
 
 }
 
+loadPremiumBanner();
 
+async function loadPremiumBanner(){
+
+const user=
+
+JSON.parse(localStorage.getItem("user"));
+
+if(!user)return;
+
+const response=
+
+await fetch(
+
+`${API}/api/premium/status/${user.id}`
+
+);
+
+const data=
+
+await response.json();
+
+if(!data.premium)return;
+
+document.getElementById(
+
+"premiumBanner"
+
+).innerHTML=`
+
+<div
+class="premium-dashboard-banner">
+
+⭐ Premium Member
+
+<div>
+
+Unlimited Premium Chapters
+
+</div>
+
+</div>
+
+`;
+
+}
 
 loadReaderStats();
 

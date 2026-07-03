@@ -257,6 +257,8 @@ const res=await fetch(
 
 const data=await res.json();
 
+if(!data.premium) return;
+
 if(data.premium){
 
 const profile=document.querySelector('a[href="reader-profile.html"]');
@@ -274,6 +276,31 @@ profile.innerHTML="👑 Profile";
 console.log(err);
 
 }
+
+}
+
+if(welcome){
+
+welcome.innerHTML=`
+
+⭐ ${navbarUser.name}
+
+<span
+style="
+background:#FFD700;
+color:#111;
+padding:3px 10px;
+border-radius:20px;
+font-size:12px;
+margin-left:8px;
+font-weight:bold;
+">
+
+PREMIUM
+
+</span>
+
+`;
 
 }
 

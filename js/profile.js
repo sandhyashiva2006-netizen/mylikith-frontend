@@ -6,6 +6,8 @@ JSON.parse(
 localStorage.getItem("user")
 );
 
+loadPremiumStatus();
+
 if(!user){
 
 window.location =
@@ -338,6 +340,42 @@ document.getElementById("profileName").innerHTML+=
 ` <span class="premium-badge">👑 PREMIUM</span>`;
 
 }
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+async function loadPremiumStatus(){
+
+try{
+
+const response=await fetch(
+
+`${API}/api/premium/status/${user.id}`
+
+);
+
+const data=await response.json();
+
+if(!data.premium)return;
+
+document.getElementById(
+
+"premiumBadge"
+
+).innerHTML=`
+
+<div class="badge badge-warning">
+
+⭐ Premium Member
+
+</div>
+
+`;
 
 }catch(err){
 

@@ -416,3 +416,46 @@ transform:scale(1);
 
 }
 
+body.premium-theme{
+
+background:linear-gradient(
+135deg,
+#120F2B,
+#2D1B69,
+#111827
+);
+
+color:#F8FAFC;
+
+}
+
+body.premium-theme .reader-container{
+
+background:rgba(255,255,255,.04);
+
+backdrop-filter:blur(18px);
+
+border-radius:25px;
+
+}
+
+body.premium-theme .reader-tools button{
+
+background:#7C3AED;
+
+color:#fff;
+
+}
+
+body.premium-theme .comments-section{
+
+background:rgba(255,255,255,.05);
+
+}
+
+body.premium-theme .chapter-content{
+
+color:#F8FAFC;
+
+}
+

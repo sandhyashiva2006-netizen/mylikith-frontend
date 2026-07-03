@@ -615,3 +615,46 @@ background:#dc2626;
 
 }
 
+.premium-dashboard-banner{
+
+background:linear-gradient(
+135deg,
+#FFD54A,
+#F59E0B
+);
+
+padding:22px;
+
+border-radius:18px;
+
+margin-bottom:35px;
+
+color:#111;
+
+font-weight:700;
+
+font-size:20px;
+
+box-shadow:
+0 10px 30px rgba(245,158,11,.3);
+
+}
+
+.badge-warning{
+
+display:inline-block;
+
+background:#FFD54A;
+
+color:#111;
+
+padding:8px 18px;
+
+border-radius:25px;
+
+font-weight:bold;
+
+margin-top:10px;
+
+}
+
