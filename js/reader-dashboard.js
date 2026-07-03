@@ -609,11 +609,7 @@ Unlimited Premium Chapters
 
 async function loadReaderFeed(){
 
-const response=await fetch(
-
-`${API}/api/profile/feed/${readerUser.id}`
-
-);
+const response=await fetch(`${API}/api/feed/${readerUser.id}`);
 
 const feed=await response.json();
 
