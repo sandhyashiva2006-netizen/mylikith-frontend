@@ -724,6 +724,48 @@ ${new Date(item.created_at).toLocaleString()}
 
 }
 
+async function loadReadingStreak(){
+
+const response=await fetch(
+
+`${API}/api/streak/${readerUser.id}`
+
+);
+
+const streak=await response.json();
+
+document.getElementById(
+
+"readingStreak"
+
+).innerHTML=`
+
+<div class="streak-card">
+
+🔥 Current Streak
+
+<h1>
+
+${streak.current_streak}
+
+</h1>
+
+days
+
+<br><br>
+
+🏆 Best
+
+${streak.best_streak}
+
+days
+
+</div>
+
+`;
+
+}
+
 loadReaderStats();
 
 loadBookmarks();
@@ -735,3 +777,5 @@ loadDiscover();
 loadReaderFeed();
 
 loadActivity();
+
+loadReadingStreak();
