@@ -690,3 +690,25 @@ text-decoration:none;
 
 }
 
+.activity-card{
+
+background:#0F172A;
+
+padding:18px;
+
+margin-bottom:12px;
+
+border-radius:14px;
+
+border-left:4px solid #8B5CF6;
+
+transition:.3s;
+
+}
+
+.activity-card:hover{
+
+transform:translateY(-2px);
+
+}
+

@@ -668,6 +668,62 @@ Read Now →
 
 }
 
+async function loadActivity(){
+
+const response=await fetch(
+
+`${API}/api/activity/${readerUser.id}`
+
+);
+
+const activity=await response.json();
+
+const container=
+
+document.getElementById(
+
+"readerActivity"
+
+);
+
+if(!container)return;
+
+container.innerHTML="";
+
+if(activity.length===0){
+
+container.innerHTML="<p>No activity yet.</p>";
+
+return;
+
+}
+
+activity.forEach(item=>{
+
+container.innerHTML+=`
+
+<div class="activity-card">
+
+<h3>
+
+${item.title}
+
+</h3>
+
+<small>
+
+${new Date(item.created_at).toLocaleString()}
+
+</small>
+
+</div>
+
+`;
+
+});
+
+}
+
 loadReaderStats();
 
 loadBookmarks();
@@ -677,3 +733,5 @@ loadNotifications();
 loadDiscover();
 
 loadReaderFeed();
+
+loadActivity();
