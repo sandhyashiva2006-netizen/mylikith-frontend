@@ -680,11 +680,19 @@ headers:{
 
 body:JSON.stringify({
 
-user_id:
-readerUser.id,
+user_id:readerUser.id,
 
-chapter_id:
-chapter.id
+chapter_id:chapterId,
+
+progress:Math.floor(
+
+(window.scrollY/
+
+(document.body.scrollHeight-window.innerHeight))
+
+*100
+
+)
 
 })
 

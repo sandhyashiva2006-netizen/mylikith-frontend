@@ -954,6 +954,68 @@ loadReadingGoal();
 
 }
 
+async function loadRecommendations(){
+
+const response=await fetch(
+
+`${API}/api/recommendations/${readerUser.id}`
+
+);
+
+const novels=await response.json();
+
+const container=
+
+document.getElementById(
+
+"recommendedNovels"
+
+);
+
+if(!container)return;
+
+container.innerHTML="";
+
+if(novels.length===0){
+
+container.innerHTML=
+
+"<p>No recommendations yet.</p>";
+
+return;
+
+}
+
+novels.forEach(novel=>{
+
+container.innerHTML+=`
+
+<div class="novel-card"
+
+onclick="location.href='novel.html?id=${novel.id}'">
+
+<img src="${novel.cover_url}">
+
+<h3>
+
+${novel.title}
+
+</h3>
+
+<p>
+
+${novel.category}
+
+</p>
+
+</div>
+
+`;
+
+});
+
+}
+
 loadReaderStats();
 
 loadBookmarks();
@@ -971,3 +1033,5 @@ loadReadingStreak();
 loadDailyReward();
 
 loadReadingGoal();
+
+loadRecommendations();

@@ -796,3 +796,27 @@ margin:15px 0;
 
 }
 
+.continue-progress{
+
+width:100%;
+
+height:10px;
+
+background:#374151;
+
+border-radius:20px;
+
+overflow:hidden;
+
+margin:10px 0;
+
+}
+
+.continue-progress div{
+
+height:100%;
+
+background:#7C3AED;
+
+}
+

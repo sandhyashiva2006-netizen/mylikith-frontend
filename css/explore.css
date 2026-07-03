@@ -71,3 +71,29 @@ color:white;
 
 }
 
+.recent-search{
+
+display:inline-block;
+
+margin:6px;
+
+padding:8px 14px;
+
+background:#1E293B;
+
+border-radius:20px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.recent-search:hover{
+
+background:#7C3AED;
+
+color:white;
+
+}
+

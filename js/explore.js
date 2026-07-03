@@ -1,6 +1,14 @@
 const API_URL =
 "https://mylikith-backend.onrender.com/api/novels";
 
+const API =
+"https://mylikith-backend.onrender.com";
+
+const readerUser =
+JSON.parse(
+localStorage.getItem("user")
+);
+
 function renderNovels(novels){
 
 const novelsGrid =
@@ -84,6 +92,36 @@ return;
 
 }
 
+if(readerUser && query.trim()!==""){
+
+fetch(
+
+`${API}/api/search/history`,
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+user_id:readerUser.id,
+
+keyword:query
+
+})
+
+}
+
+);
+
+}
+
 const response =
 await fetch(
 
@@ -98,6 +136,90 @@ renderNovels(
 novels
 );
 
+loadRecentSearches();
+
+}
+
+async function loadRecentSearches(){
+
+if(!readerUser)return;
+
+const response=await fetch(
+
+`${API}/api/search/history/${readerUser.id}`
+
+);
+
+const searches=await response.json();
+
+const container=document.getElementById(
+
+"recentSearches"
+
+);
+
+if(!container)return;
+
+container.innerHTML="";
+
+searches.forEach(item=>{
+
+container.innerHTML+=`
+
+<span
+
+class="recent-search"
+
+onclick="searchAgain('${item.keyword}')">
+
+${item.keyword}
+
+</span>
+
+`;
+
+});
+
 }
 
 loadNovels();
+
+function searchAgain(keyword){
+
+document.getElementById(
+
+"searchInput"
+
+).value=keyword;
+
+searchNovels();
+
+}
+
+const clearBtn =
+document.getElementById(
+"clearSearchHistory"
+);
+
+if(clearBtn){
+
+clearBtn.onclick=async()=>{
+
+await fetch(
+
+`${API}/api/search/history/${readerUser.id}`,
+
+{
+
+method:"DELETE"
+
+}
+
+);
+
+loadRecentSearches();
+
+};
+
+}
+
