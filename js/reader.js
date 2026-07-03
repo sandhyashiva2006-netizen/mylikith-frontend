@@ -13,6 +13,36 @@ likeBtn.onclick=toggleLike;
 const chapterContent =
 document.getElementById("chapterContent");
 
+let speech = null;
+
+const readBtn =
+document.getElementById("readAloudBtn");
+
+const pauseBtn =
+document.getElementById("pauseSpeechBtn");
+
+const stopBtn =
+document.getElementById("stopSpeechBtn");
+
+const speechRate =
+document.getElementById("speechRate");
+
+const fontSelector=
+
+document.getElementById(
+
+"fontSelector"
+
+);
+
+if(fontSelector){
+
+fontSelector.onchange=
+
+changeReaderFont;
+
+}
+
 document.body.classList.add("dark-mode");
 
 const increaseFont=document.getElementById("increaseFont");
@@ -166,6 +196,48 @@ alert(
 });
 }
 
+if(readBtn){
+
+readBtn.onclick=startReading;
+
+}
+
+if(pauseBtn){
+
+pauseBtn.onclick=()=>{
+
+window.speechSynthesis.pause();
+
+};
+
+}
+
+if(stopBtn){
+
+stopBtn.onclick=()=>{
+
+window.speechSynthesis.cancel();
+
+};
+
+}
+
+if(speechRate){
+
+speechRate.onchange=()=>{
+
+localStorage.setItem(
+
+"speechRate",
+
+speechRate.value
+
+);
+
+};
+
+}
+
 const params =
 new URLSearchParams(
 window.location.search
@@ -303,6 +375,148 @@ document.getElementById("unlockChapterBtn").onclick=
 unlockChapter;
 
 return true;
+
+}
+
+async function changeReaderFont(){
+
+const user=
+
+JSON.parse(localStorage.getItem("user"));
+
+if(!user)return;
+
+const response=
+
+await fetch(
+
+`${API}/api/premium/status/${user.id}`
+
+);
+
+const data=
+
+await response.json();
+
+const value=
+
+fontSelector.value;
+
+if(
+
+value!=="default"
+
+&&
+
+!data.premium
+
+){
+
+alert(
+
+"Premium fonts are available only for Premium Members."
+
+);
+
+fontSelector.value="default";
+
+return;
+
+}
+
+chapterContent.classList.remove(
+
+"font-serif",
+"font-literata",
+"font-garamond"
+
+);
+
+if(value==="serif"){
+
+chapterContent.classList.add(
+
+"font-serif"
+
+);
+
+}
+
+if(value==="literata"){
+
+chapterContent.classList.add(
+
+"font-literata"
+
+);
+
+}
+
+if(value==="garamond"){
+
+chapterContent.classList.add(
+
+"font-garamond"
+
+);
+
+}
+
+localStorage.setItem(
+
+"reader-font",
+
+value
+
+);
+
+}
+
+async function startReading(){
+
+const user=
+JSON.parse(localStorage.getItem("user"));
+
+if(!user)return;
+
+const premium=
+await fetch(
+`${API}/api/premium/status/${user.id}`
+);
+
+const status=
+await premium.json();
+
+if(!status.premium){
+
+alert("Read Aloud is available only for Premium Members.");
+
+return;
+
+}
+
+window.speechSynthesis.cancel();
+
+speech=new SpeechSynthesisUtterance(
+
+document.getElementById(
+"chapterContent"
+).innerText
+
+);
+
+speech.rate=
+Number(speechRate.value);
+
+speech.pitch=1;
+
+speech.volume=1;
+
+speech.lang="en-US";
+
+window.speechSynthesis.speak(
+speech
+);
 
 }
 
@@ -513,6 +727,35 @@ updateReaderStats(chapter);
 await checkLikeStatus();
 
 await loadLikes();
+
+const savedFont=
+
+localStorage.getItem(
+
+"reader-font"
+
+);
+
+if(savedFont){
+
+fontSelector.value=savedFont;
+
+fontSelector.dispatchEvent(
+
+new Event("change")
+
+);
+
+}
+
+const savedRate=
+localStorage.getItem("speechRate");
+
+if(savedRate && speechRate){
+
+speechRate.value=savedRate;
+
+}
 
 }
 catch(err){
