@@ -796,3 +796,25 @@ font-weight:bold;
 
 }
 
+.goal-card{
+
+background:#1E293B;
+
+padding:22px;
+
+border-radius:18px;
+
+text-align:center;
+
+}
+
+.goal-card progress{
+
+width:100%;
+
+height:12px;
+
+margin:15px 0;
+
+}
+

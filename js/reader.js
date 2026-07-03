@@ -826,6 +826,30 @@ user_id:readerUser.id
 
 );
 
+await fetch(
+
+`${API}/api/goals/update`,
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+user_id:readerUser.id
+
+})
+
+}
+
+);
+
 document.getElementById(
 "chapterContent"
 ).innerHTML =

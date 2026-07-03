@@ -926,6 +926,104 @@ loadDailyReward();
 
 }
 
+async function loadReadingGoal(){
+
+const response=await fetch(
+
+`${API}/api/goals/${readerUser.id}`
+
+);
+
+const goal=await response.json();
+
+document.getElementById(
+
+"readingGoal"
+
+).innerHTML=`
+
+<div class="goal-card">
+
+<h3>
+
+${goal.goal_type}
+
+</h3>
+
+<p>
+
+${goal.progress}/${goal.target}
+
+</p>
+
+<progress
+
+value="${goal.progress}"
+
+max="${goal.target}">
+
+</progress>
+
+<br><br>
+
+<button
+
+onclick="setReadingGoal()">
+
+Set Goal
+
+</button>
+
+</div>
+
+`;
+
+}
+
+async function setReadingGoal(){
+
+const target=
+
+prompt(
+
+"How many chapters do you want to read?"
+
+);
+
+if(!target)return;
+
+await fetch(
+
+`${API}/api/goals`,
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+user_id:readerUser.id,
+
+goal_type:"Chapters",
+
+target:Number(target)
+
+})
+
+}
+
+);
+
+loadReadingGoal();
+
+}
+
 loadReaderStats();
 
 loadBookmarks();
@@ -943,3 +1041,5 @@ loadReadingStreak();
 loadReadingChallenges();
 
 loadDailyReward();
+
+loadReadingGoal();
