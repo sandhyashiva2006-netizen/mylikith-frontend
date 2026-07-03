@@ -766,77 +766,7 @@ days
 
 }
 
-async function loadReadingChallenges(){
 
-const response=await fetch(
-
-`${API}/api/challenges/${readerUser.id}`
-
-);
-
-const challenges=await response.json();
-
-const container=
-
-document.getElementById(
-
-"readingChallenges"
-
-);
-
-container.innerHTML="";
-
-challenges.forEach(c=>{
-
-const progress=c.progress||0;
-
-container.innerHTML+=`
-
-<div class="challenge-card">
-
-<h3>
-
-${c.title}
-
-</h3>
-
-<p>
-
-${c.description}
-
-</p>
-
-<p>
-
-${progress}/${c.target}
-
-</p>
-
-<p>
-
-🪙 Reward: ${c.reward_coins} Coins
-
-</p>
-
-${c.completed
-
-?
-
-"<span style='color:lime'>✅ Completed</span>"
-
-:
-
-""
-
-}
-
-</div>
-
-`;
-
-});
-
-}
 
 async function loadDailyReward(){
 
@@ -1037,8 +967,6 @@ loadReaderFeed();
 loadActivity();
 
 loadReadingStreak();
-
-loadReadingChallenges();
 
 loadDailyReward();
 
