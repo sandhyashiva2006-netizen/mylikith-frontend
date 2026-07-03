@@ -1,3 +1,5 @@
+const API="https://mylikith-backend.onrender.com/api";
+
 const navbarUser =
 JSON.parse(
 localStorage.getItem("user")

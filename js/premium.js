@@ -68,22 +68,18 @@ ${plan.duration_days} Days
 </p>
 
 ${
-premium.premium
+premium.premium && premium.details.plan_id===plan.id
 
 ?
 
 `<button disabled class="active-plan">
-
 ✅ Active Plan
-
 </button>`
 
 :
 
 `<button onclick="buyPlan(${plan.id})">
-
 Buy Now
-
 </button>`
 
 }
