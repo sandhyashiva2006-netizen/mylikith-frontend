@@ -247,23 +247,23 @@ window.location =
 
 async function loadPremiumBadge(){
 
+if(!navbarUser) return;
+
 try{
 
-const res=await fetch(`https://mylikith-backend.onrender.com/api/premium/status/${user.id}`)
-
+const res=await fetch(
+`https://mylikith-backend.onrender.com/api/premium/status/${navbarUser.id}`
 );
 
 const data=await res.json();
 
 if(data.premium){
 
-const profile=document.querySelector(".profile-link");
+const profile=document.querySelector('a[href="reader-profile.html"]');
 
 if(profile){
 
-profile.innerHTML=
-
-`👑 Profile`;
+profile.innerHTML="👑 Profile";
 
 }
 
