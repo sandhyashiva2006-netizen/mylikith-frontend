@@ -281,9 +281,18 @@ console.log(err);
 
 if(welcome){
 
-welcome.innerHTML=`
+welcome.innerHTML = `
+👋 ${navbarUser.name}
 
-⭐ ${navbarUser.name}
+<span
+style="
+margin-left:8px;
+font-size:18px;
+">
+
+👑
+
+</span>
 
 <span
 style="
@@ -292,7 +301,7 @@ color:#111;
 padding:3px 10px;
 border-radius:20px;
 font-size:12px;
-margin-left:8px;
+margin-left:6px;
 font-weight:bold;
 ">
 
@@ -301,7 +310,5 @@ PREMIUM
 </span>
 
 `;
-
-}
 
 loadPremiumBadge();
