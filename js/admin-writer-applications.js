@@ -70,9 +70,9 @@ table.innerHTML+=`
 
 <tr>
 
-<td>${app.name}</td>
+<td><strong>${app.name}</strong></td>
 
-<td>${app.email}</td>
+<td style="font-size:14px;color:#bbb;">${app.email}</td>
 
 <td>${app.pen_name}</td>
 
@@ -80,7 +80,7 @@ table.innerHTML+=`
 
 <span class="status ${app.status.toLowerCase()}">
 
-${app.status}
+${app.status.charAt(0).toUpperCase()+app.status.slice(1)}
 
 </span>
 
@@ -93,6 +93,8 @@ ${app.status}
 ${status==="pending"
 
 ?`
+
+<div class="action-buttons">
 
 <button
 class="approve-btn"
@@ -110,6 +112,7 @@ onclick="reject(${app.id})">
 
 </button>
 
+</div>
 `
 
 :"-"}
