@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Novel Approvals</title>
+
+<link rel="stylesheet" href="css/admin.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<h2>MyLikith</h2>
+
+<p>Admin Panel</p>
+
+</div>
+
+<nav>
+
+<a href="admin-dashboard.html">🏠 Dashboard</a>
+
+<a href="admin-users.html">👥 Users</a>
+
+<a href="admin-writers.html">✍ Writers</a>
+
+<a href="admin-writer-applications.html">📝 Writer Applications</a>
+
+<a href="admin-novels.html">📚 Novels</a>
+
+<a href="admin-novel-approvals.html" class="active">📖 Novel Approvals</a>
+
+<a href="admin-chapters.html">📝 Chapters</a>
+
+<a href="admin-reviews.html">⭐ Reviews</a>
+
+<a href="admin-comments.html">💬 Comments</a>
+
+<a href="admin-reports.html">🚩 Reports</a>
+
+<a href="admin-analytics.html">📈 Analytics</a>
+
+<a href="admin-revenue.html">💰 Revenue</a>
+
+<a href="admin-withdrawals.html">💸 Withdrawals</a>
+
+<a href="admin-settings.html">⚙ Settings</a>
+
+<a href="admin-pages.html">📄 Site Pages</a>
+
+<a href="admin-login.html" id="logoutBtn">🚪 Logout</a>
+
+</nav>
+
+</aside>
+
+<main class="main-content">
+
+<div class="topbar">
+
+<div>
+
+<h1>
+
+Novel Approvals
+
+</h1>
+
+<p>
+
+Approve or reject first novels submitted by writers.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="dashboard-card">
+
+<table class="admin-table">
+
+<thead>
+
+<tr>
+
+<th>Novel</th>
+
+<th>Author</th>
+
+<th>Language</th>
+
+<th>Category</th>
+
+<th>Created</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="novelApprovalTable">
+
+<tr>
+
+<td colspan="6">
+
+Loading...
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</main>
+
+</div>
+
+<script src="js/admin-auth.js"></script>
+
+<script src="js/admin-novel-approvals.js"></script>
+
+</body>
+
+</html>
