@@ -18,6 +18,30 @@ document.getElementById(
 
 if(file){
 
+    const allowedTypes=[
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+    ];
+
+    if(!allowedTypes.includes(file.type)){
+
+        alert("Only JPG, PNG and WEBP images are allowed.");
+        return;
+
+    }
+
+    if(file.size>5*1024*1024){
+
+        alert("Cover image must be less than 5 MB.");
+        return;
+
+    }
+
+}
+
+if(file){
+
 const formData =
 new FormData();
 
@@ -88,7 +112,9 @@ author_id:user.id,
 title,
 description,
 language,
-category
+category,
+
+cover_url:coverUrl
 
 })
 
