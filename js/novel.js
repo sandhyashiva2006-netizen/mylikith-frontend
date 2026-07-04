@@ -80,7 +80,8 @@ formatNumber(
 novel.views || 0
 );
 
-      
+      loadSimilarNovels();
+loadAlsoRead();
 
     } catch (error) {
 
@@ -598,7 +599,7 @@ document.getElementById("authorName").textContent=
 author.name;
 
 document.getElementById("authorLink").href =
-`author.html?id=${novel.author_id}`;
+`author.html?id=${currentNovel.author_id}`;
 
 document.getElementById("authorBio").textContent=
 
@@ -900,5 +901,3 @@ ${novel.category}
 loadNovel();
 loadChapters();
 loadReviews();
-loadSimilarNovels();
-loadAlsoRead();
