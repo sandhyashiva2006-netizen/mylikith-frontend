@@ -75,6 +75,11 @@ JSON.stringify(data.user)
 
 );
 
+localStorage.setItem(
+    "token",
+    data.token
+);
+
 window.location.href=
 "admin-dashboard.html";
 

@@ -65,6 +65,7 @@ logoutBtn.onclick=(e)=>{
 e.preventDefault();
 
 localStorage.removeItem("user");
+localStorage.removeItem("token");
 
 location.href="admin-login.html";
 
