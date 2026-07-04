@@ -2,7 +2,13 @@ const API="https://mylikith-backend.onrender.com";
 
 loadNovels();
 
+/* ==========================================
+   LOAD NOVELS
+========================================== */
+
 async function loadNovels(){
+
+try{
 
 const response=await adminFetch(
 
@@ -24,7 +30,7 @@ table.innerHTML=`
 
 <td colspan="6">
 
-No pending novels.
+No pending novels found.
 
 </td>
 
@@ -74,25 +80,25 @@ ${new Date(novel.created_at).toLocaleDateString()}
 
 <td>
 
+<div class="action-buttons">
+
 <button
-
 class="approve-btn"
-
 onclick="approveNovel(${novel.id})">
 
-Approve
+✅ Approve
 
 </button>
 
 <button
-
 class="reject-btn"
-
 onclick="rejectNovel(${novel.id})">
 
-Reject
+❌ Reject
 
 </button>
+
+</div>
 
 </td>
 
@@ -102,13 +108,27 @@ Reject
 
 });
 
+}catch(err){
+
+console.log(err);
+
 }
+
+}
+
+/* ==========================================
+   APPROVE
+========================================== */
 
 async function approveNovel(id){
 
-if(!confirm("Approve this novel?")) return;
+if(!confirm("Approve this novel?")){
 
-await adminFetch(
+return;
+
+}
+
+const response=await adminFetch(
 
 `${API}/api/admin/novel-approvals/${id}/approve`,
 
@@ -120,15 +140,35 @@ method:"PUT"
 
 );
 
+const data=await response.json();
+
+if(data.success){
+
+alert(data.message);
+
 loadNovels();
+
+}else{
+
+alert(data.message||"Unable to approve.");
 
 }
 
+}
+
+/* ==========================================
+   REJECT
+========================================== */
+
 async function rejectNovel(id){
 
-if(!confirm("Reject this novel?")) return;
+if(!confirm("Reject this novel?")){
 
-await adminFetch(
+return;
+
+}
+
+const response=await adminFetch(
 
 `${API}/api/admin/novel-approvals/${id}/reject`,
 
@@ -140,6 +180,18 @@ method:"PUT"
 
 );
 
+const data=await response.json();
+
+if(data.success){
+
+alert("Novel rejected.");
+
 loadNovels();
+
+}else{
+
+alert("Unable to reject.");
+
+}
 
 }
