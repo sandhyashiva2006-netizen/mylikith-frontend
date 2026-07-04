@@ -151,6 +151,11 @@ onclick="event.stopPropagation();renameChapter(${ch.id},'${ch.title.replace(/'/g
 </button>
 
 <button
+onclick="event.stopPropagation();duplicateChapter(${ch.id})">
+📄
+</button>
+
+<button
 onclick="event.stopPropagation();deleteChapter(${ch.id})">
 🗑
 </button>
@@ -662,9 +667,9 @@ loadChapters();
 
 setInterval(()=>{
 
-if(hasChanges){
+if(hasChanges && currentChapter){
 
-saveChapter();
+    await saveChapter();
 
 }
 
@@ -809,4 +814,16 @@ document.getElementById("saveSettingsBtn").onclick = async () => {
     }
 
 };
+
+window.addEventListener("beforeunload",(e)=>{
+
+    if(hasChanges){
+
+        e.preventDefault();
+
+        e.returnValue="";
+
+    }
+
+});
 
