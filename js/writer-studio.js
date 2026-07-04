@@ -681,6 +681,106 @@ document.execCommand("insertText",false,text);
 
 document.getElementById("saveSettingsBtn").onclick=async()=>{
 
+document.getElementById("uploadCoverBtn").onclick=async()=>{
+
+const file=document.getElementById("changeCover").files[0];
+
+if(!file){
+
+alert("Select a cover image.");
+
+return;
+
+}
+
+const allowed=[
+"image/jpeg",
+"image/png",
+"image/webp"
+];
+
+if(!allowed.includes(file.type)){
+
+alert("Only JPG, PNG and WEBP are allowed.");
+
+return;
+
+}
+
+if(file.size>5*1024*1024){
+
+alert("Maximum file size is 5 MB.");
+
+return;
+
+}
+
+const formData=new FormData();
+
+formData.append("cover",file);
+
+const upload=await fetch(
+
+`${API}/api/upload-cover`,
+
+{
+
+method:"POST",
+
+body:formData
+
+}
+
+);
+
+const result=await upload.json();
+
+if(!result.success){
+
+alert(result.message);
+
+return;
+
+}
+
+const response=await fetch(
+
+`${API}/api/writers/novels/${novelId}`,
+
+{
+
+method:"PUT",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+cover_url:result.url
+
+})
+
+}
+
+);
+
+const data=await response.json();
+
+if(data.success){
+
+document.getElementById("settingsCover").src=result.url;
+
+document.getElementById("novelCover").src=result.url;
+
+alert("Cover updated successfully.");
+
+loadNovel();
+
+}
+
+};
+
 const response=await fetch(
 
 `${API}/api/writers/novels/${novelId}`,
