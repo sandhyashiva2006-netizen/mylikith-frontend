@@ -56,9 +56,8 @@ coinsSpent.textContent=data.coinsSpent;
 
 pendingWithdrawals.textContent=data.pendingWithdrawals;
 
-topNovel.textContent=data.topNovel;
-
-topWriter.textContent=data.topWriter;
+// topNovel.textContent = data.topNovel;
+// topWriter.textContent = data.topWriter;
 
 const container=
 
