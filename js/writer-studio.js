@@ -161,11 +161,26 @@ ${ch.title}
 
 <div class="chapter-meta">
 
-${ch.is_draft
+${
+ch.is_scheduled
 
-? "🟡 Draft"
+?
 
-: "🟢 Published"}
+"🕒 Scheduled"
+
+:
+
+ch.is_draft
+
+?
+
+"🟡 Draft"
+
+:
+
+"🟢 Published"
+
+}
 
 &nbsp;&nbsp;
 
@@ -206,6 +221,38 @@ chapter.is_premium||false;
 
 chapterCoins.value=
 chapter.coins_required||20;
+
+if(chapter.is_scheduled){
+
+schedulePublish.checked=true;
+
+publishAt.style.display="block";
+
+const dt=new Date(chapter.publish_at);
+
+publishAt.value=
+
+new Date(
+
+dt.getTime()
+
+-dt.getTimezoneOffset()*60000
+
+)
+
+.toISOString()
+
+.slice(0,16);
+
+}else{
+
+schedulePublish.checked=false;
+
+publishAt.style.display="none";
+
+publishAt.value="";
+
+}
 
 document.getElementById("earlyAccess").checked=
 chapter.early_access||false;
@@ -361,7 +408,7 @@ schedulePublish.checked,
 publish_at:
 schedulePublish.checked
 ?
-publishAt.value
+new Date(publishAt.value).toISOString()
 :
 null
 
@@ -408,6 +455,16 @@ return;
 }
 
 await saveChapter();
+
+if(schedulePublish.checked){
+
+alert("Chapter scheduled successfully.");
+
+loadChapters();
+
+return;
+
+}
 
 const response=await fetch(
 

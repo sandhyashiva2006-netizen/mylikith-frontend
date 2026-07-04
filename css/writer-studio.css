@@ -610,3 +610,62 @@ color:#fff;
 
 }
 
+/* Scheduled Publish */
+
+#publishAt{
+
+width:280px;
+height:52px;
+
+padding:0 50px 0 18px;
+
+background:#1d2435;
+
+border:1px solid rgba(255,255,255,.12);
+
+border-radius:14px;
+
+color:#fff;
+
+font-size:16px;
+
+outline:none;
+
+cursor:pointer;
+
+}
+
+#publishAt:focus{
+
+border-color:#7c5cff;
+
+box-shadow:0 0 12px rgba(124,92,255,.35);
+
+}
+
+#publishAt::-webkit-calendar-picker-indicator{
+
+cursor:pointer;
+
+filter:invert(1);
+
+opacity:.9;
+
+padding:6px;
+
+}
+
+#publishAt::-webkit-calendar-picker-indicator:hover{
+
+opacity:1;
+
+transform:scale(1.08);
+
+}
+
+#publishAt::-webkit-datetime-edit{
+
+color:#fff;
+
+}
+
