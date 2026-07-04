@@ -1,18 +1,20 @@
 const API="https://mylikith-backend.onrender.com";
 
-const token=localStorage.getItem("adminToken");
+const token=localStorage.getItem("token");
 
-const admin=
+const user=JSON.parse(localStorage.getItem("user"));
 
-JSON.parse(
-
-localStorage.getItem("admin")
-
-);
-
-if(!admin){
+if(!token || !user){
 
 location.href="admin-login.html";
+
+}
+
+if(user.role!=="admin"){
+
+alert("Unauthorized");
+
+location.href="login.html";
 
 }
 
