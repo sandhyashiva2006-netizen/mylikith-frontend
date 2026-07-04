@@ -737,6 +737,10 @@ document.getElementById("saveSettingsBtn").onclick=async()=>{
 
 const result=await upload.json();
 
+console.log("UPLOAD RESULT", result);
+
+console.log(result);
+
 if(!result.success){
 
 alert(result.message);
@@ -744,6 +748,12 @@ alert(result.message);
 return;
 
 }
+
+console.log("AFTER SUCCESS CHECK");
+
+console.log("Updating cover...", result.url);
+
+console.log("CALLING PUT API");
 
 const response=await fetch(
 
