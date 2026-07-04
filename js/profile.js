@@ -555,6 +555,138 @@ ${item.description}
 
 }
 
+/* --------------------------
+   Writer Application
+--------------------------- */
+
+async function checkWriterApplication(){
+
+try{
+
+const response=await fetch(
+
+`${API}/api/writers/application/${user.id}`
+
+);
+
+const data=await response.json();
+
+if(user.role==="writer"){
+
+return;
+
+}
+
+const card=
+
+document.getElementById(
+
+"becomeWriterCard"
+
+);
+
+if(!data.exists){
+
+card.style.display="block";
+
+document.getElementById(
+
+"applyWriterBtn"
+
+).onclick=showWriterApplication;
+
+return;
+
+}
+
+card.style.display="block";
+
+document.getElementById(
+
+"applyWriterBtn"
+
+).disabled=true;
+
+document.getElementById(
+
+"applyWriterBtn"
+
+).innerText=
+
+`Application ${data.application.status}`;
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
+function showWriterApplication(){
+
+const penName=
+
+prompt("Pen Name");
+
+if(!penName)return;
+
+const bio=
+
+prompt("Short Bio");
+
+if(bio===null)return;
+
+const experience=
+
+prompt(
+
+"Writing Experience (Optional)"
+
+);
+
+fetch(
+
+`${API}/api/writers/apply`,
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+user_id:user.id,
+
+pen_name:penName,
+
+bio,
+
+experience
+
+})
+
+}
+
+)
+
+.then(r=>r.json())
+
+.then(data=>{
+
+alert(data.message);
+
+location.reload();
+
+});
+
+}
+
 loadStats();
 
 loadReviews();
@@ -565,3 +697,4 @@ loadPremiumBadge();
 
 loadPremiumAchievements();
 
+checkWriterApplication();
