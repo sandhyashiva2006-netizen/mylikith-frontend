@@ -552,7 +552,7 @@ try{
 const response =
 await fetch(
 
-`https://mylikith-backend.onrender.com/api/chapters/${chapterId}`
+`https://mylikith-backend.onrender.com/api/public/chapters/${chapterId}`
 
 );
 
