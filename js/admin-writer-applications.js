@@ -88,29 +88,26 @@ ${app.status}
 
 <td>
 
-${app.status==="Pending"
+const status=app.status.toLowerCase();
 
+${status==="pending"
 ?`
-
-<button
-class="approve-btn"
+<button class="approve-btn"
 onclick="approve(${app.id})">
 
-Approve
+✅ Approve
 
 </button>
 
-<button
-class="reject-btn"
+<button class="reject-btn"
 onclick="reject(${app.id})">
 
-Reject
+❌ Reject
 
 </button>
-
 `
-
 :"-"}
+
 
 </td>
 
