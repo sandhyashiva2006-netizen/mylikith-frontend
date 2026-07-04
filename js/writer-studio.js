@@ -10,6 +10,12 @@ document.getElementById("premiumChapter");
 const chapterCoins =
 document.getElementById("chapterCoins");
 
+const schedulePublish=
+document.getElementById("schedulePublish");
+
+const publishAt=
+document.getElementById("publishAt");
+
 const novelId=params.get("novel");
 loadNovel();
 
@@ -85,6 +91,22 @@ settingsModal.classList.add("show");
 document.getElementById("closeSettingsBtn").onclick=()=>{
 
 settingsModal.classList.remove("show");
+
+};
+
+schedulePublish.onchange=()=>{
+
+publishAt.style.display=
+
+schedulePublish.checked
+
+?
+
+"block"
+
+:
+
+"none";
 
 };
 
@@ -331,7 +353,17 @@ coins_required:
 Number(chapterCoins.value),
 
 early_access:
-document.getElementById("earlyAccess").checked
+document.getElementById("earlyAccess").checked,
+
+is_scheduled:
+schedulePublish.checked,
+
+publish_at:
+schedulePublish.checked
+?
+publishAt.value
+:
+null
 
 })
 
