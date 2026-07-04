@@ -36,7 +36,6 @@ await Promise.all([
     loadAuthor(),
     loadFollowers(),
     loadRating(),
-    loadRelated(),
     checkFollowStatus()
 ]);
 
@@ -703,66 +702,6 @@ alert("Added to Library.");
 
 };
 
-async function loadRelated(){
-
-if(!currentNovel)return;
-
-const response=await fetch(
-
-`${API}/api/novels`
-
-);
-
-const novels=await response.json();
-
-const container=
-
-document.getElementById("relatedNovels");
-
-container.innerHTML="";
-
-novels
-
-.filter(n=>n.id!==currentNovel.id)
-
-.filter(n=>n.category===currentNovel.category)
-
-.slice(0,4)
-
-.forEach(novel=>{
-
-container.innerHTML+=`
-
-<div
-class="related-card"
-onclick="location.href='novel.html?id=${novel.id}'">
-
-<img
-src="${novel.cover_url||'assets/images/default-cover.png'}">
-
-<div class="related-card-body">
-
-<h3>
-
-${novel.title}
-
-</h3>
-
-<p>
-
-${novel.category}
-
-</p>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-}
 
 async function loadSimilarNovels(){
 
