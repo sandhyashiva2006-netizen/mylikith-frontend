@@ -185,6 +185,9 @@ chapter.is_premium||false;
 chapterCoins.value=
 chapter.coins_required||20;
 
+document.getElementById("earlyAccess").checked=
+chapter.early_access||false;
+
 editor.focus();
 
 calculate();
@@ -296,7 +299,7 @@ document.getElementById("previewBtn").innerHTML="👁 Preview";
 
 document.getElementById("publishBtn").onclick=publishChapter;
 
-
+document.getElementById("saveDraftBtn").onclick=saveChapter;
 
 loadChapters();
 
@@ -325,7 +328,10 @@ is_premium:
 premiumChapter.checked,
 
 coins_required:
-Number(chapterCoins.value)
+Number(chapterCoins.value),
+
+early_access:
+document.getElementById("earlyAccess").checked
 
 })
 
@@ -368,6 +374,8 @@ if(!confirm("Publish this chapter?")){
 return;
 
 }
+
+await saveChapter();
 
 const response=await fetch(
 
