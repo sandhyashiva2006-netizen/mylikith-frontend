@@ -679,8 +679,6 @@ document.execCommand("insertText",false,text);
 
 });
 
-document.getElementById("saveSettingsBtn").onclick=async()=>{
-
 document.getElementById("uploadCoverBtn").onclick=async()=>{
 
 const file=document.getElementById("changeCover").files[0];
@@ -732,6 +730,10 @@ body:formData
 }
 
 );
+
+document.getElementById("saveSettingsBtn").onclick=async()=>{
+
+
 
 const result=await upload.json();
 
