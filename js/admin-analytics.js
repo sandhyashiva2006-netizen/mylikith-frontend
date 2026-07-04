@@ -15,6 +15,17 @@ location.href="index.html";
 
 const API="https://mylikith-backend.onrender.com";
 
+const users = document.getElementById("users");
+const writers = document.getElementById("writers");
+const novels = document.getElementById("novels");
+const chapters = document.getElementById("chapters");
+const reads = document.getElementById("reads");
+const coinSales = document.getElementById("coinSales");
+const coinsSpent = document.getElementById("coinsSpent");
+const pendingWithdrawals = document.getElementById("pendingWithdrawals");
+const topNovel = document.getElementById("topNovel");
+const topWriter = document.getElementById("topWriter");
+
 async function loadAnalytics(){
 
 const response=

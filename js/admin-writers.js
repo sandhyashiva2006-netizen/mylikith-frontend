@@ -171,7 +171,7 @@ logoutBtn.onclick=(e)=>{
 e.preventDefault();
 
 localStorage.removeItem("user");
-localStorage.removeItem("token"););
+localStorage.removeItem("token");
 
 window.location.href=
 "admin-login.html";
