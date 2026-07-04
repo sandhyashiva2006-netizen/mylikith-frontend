@@ -679,9 +679,29 @@ experience
 
 .then(data=>{
 
-alert(data.message);
+if(data.success){
+
+alert(
+
+data.message ||
+
+"Application submitted successfully."
+
+);
 
 location.reload();
+
+}else{
+
+alert(
+
+data.message ||
+
+"Unable to submit application."
+
+);
+
+}
 
 });
 
