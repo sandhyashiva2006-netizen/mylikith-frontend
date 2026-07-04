@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Site Pages - MyLikith</title>
+
+<link rel="stylesheet" href="css/admin.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+<aside class="sidebar">
+
+<div class="logo">
+
+<h2>MyLikith</h2>
+
+<p>Admin Panel</p>
+
+</div>
+
+<nav>
+
+<a href="admin-dashboard.html">🏠 Dashboard</a>
+<a href="admin-users.html">👥 Users</a>
+<a href="admin-writers.html">✍ Writers</a>
+<a href="admin-novels.html">📚 Novels</a>
+<a href="admin-chapters.html">📝 Chapters</a>
+<a href="admin-reviews.html">⭐ Reviews</a>
+<a href="admin-comments.html">💬 Comments</a>
+<a href="admin-reports.html">🚩 Reports</a>
+<a href="admin-analytics.html">📈 Analytics</a>
+<a href="admin-revenue.html">💰 Revenue</a>
+<a href="admin-withdrawals.html">💸 Withdrawals</a>
+<a href="admin-settings.html">⚙ Settings</a>
+
+<a class="active" href="admin-pages.html">
+📄 Site Pages
+</a>
+
+<a href="admin-login.html">
+🚪 Logout
+</a>
+
+</nav>
+
+</aside>
+
+<main class="main-content">
+
+<h1>Site Pages</h1>
+
+<br>
+
+<select id="pageSelect" class="input">
+
+<option value="about">About Us</option>
+<option value="contact">Contact Us</option>
+<option value="help">Help Centre</option>
+<option value="privacy">Privacy Policy</option>
+<option value="terms">Terms & Conditions</option>
+<option value="writer-agreement">Writer Agreement</option>
+<option value="community-guidelines">Community Guidelines</option>
+<option value="copyright">Copyright Policy</option>
+<option value="refund-policy">Refund Policy</option>
+
+</select>
+
+<br><br>
+
+<input
+id="pageTitle"
+class="input"
+placeholder="Page Title">
+
+<br><br>
+
+<textarea
+id="pageContent"
+class="input"
+style="height:500px;"
+placeholder="Content..."></textarea>
+
+<br><br>
+
+<button
+id="savePageBtn"
+class="btn">
+
+💾 Save Page
+
+</button>
+
+</main>
+
+</div>
+
+<script src="js/admin-pages.js"></script>
+
+</body>
+
+</html>
