@@ -867,16 +867,14 @@ const response=await fetch(
 const goal=await response.json();
 
 document.getElementById(
-
 "readingGoal"
-
 ).innerHTML=`
 
 <div class="goal-card">
 
 <h3>
 
-${goal.goal_type}
+🎯 ${goal.goal_type}
 
 </h3>
 
@@ -887,20 +885,16 @@ ${goal.progress}/${goal.target}
 </p>
 
 <progress
-
 value="${goal.progress}"
-
 max="${goal.target}">
-
 </progress>
 
-<br><br>
-
 <button
-
+class="primary-btn"
+style="margin-top:20px;"
 onclick="setReadingGoal()">
 
-Set Goal
+Update Goal
 
 </button>
 
