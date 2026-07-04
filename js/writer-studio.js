@@ -292,7 +292,101 @@ window.location=`publish-novel.html?novel=${novelId}`;
 
 };
 
+document
+.getElementById(
+"saveDraftBtn"
+)
+.addEventListener(
+"click",
+saveDraft
+);
+
 loadChapters();
+
+async function saveDraft(){
+
+const user=
+JSON.parse(
+localStorage.getItem("user")
+);
+
+const body={
+
+writer_id:user.id,
+
+novel_id:selectedNovel,
+
+chapter_no:Number(
+
+document.getElementById(
+"chapterNumber"
+).value
+),
+
+title:document.getElementById(
+"chapterTitle"
+).value,
+
+content:editor.getHTML
+?editor.getHTML()
+:document.getElementById(
+"chapterContent"
+).value,
+
+coins_required:Number(
+
+document.getElementById(
+"coinsRequired"
+).value||0
+),
+
+is_premium:
+
+document.getElementById(
+"premiumChapter"
+).checked,
+
+early_access:
+
+document.getElementById(
+"earlyAccess"
+).checked,
+
+is_draft:true
+
+};
+
+const response=
+await fetch(
+
+`${API}/api/writer/chapters`,
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify(body)
+
+}
+
+);
+
+const data=
+await response.json();
+
+if(data.success){
+
+alert("Draft Saved Successfully.");
+
+}
+
+}
 
 async function saveChapter(){
 
