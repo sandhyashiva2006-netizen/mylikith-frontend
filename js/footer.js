@@ -53,9 +53,9 @@ and enjoy stories in every language.
 
 <a href="create-novel.html">Create Novel</a>
 
-<a href="writer-dashboard.html">Publishing Guide</a>
+<a href="page.html?slug=writer-agreement">Writer Agreement</a>
 
-<a href="writer-dashboard.html">Writer Rewards</a>
+<a href="page.html?slug=help">Writer Help</a>
 
 </div>
 
@@ -63,15 +63,23 @@ and enjoy stories in every language.
 
 <h3>⚙ Support</h3>
 
-<a href="contact.html">Help Center</a>
+<a href="page.html?slug=about">About Us</a>
 
-<a href="contact.html">Contact</a>
+<a href="page.html?slug=contact">Contact Us</a>
 
-<a href="privacy.html">Privacy Policy</a>
+<a href="page.html?slug=help">Help Centre</a>
 
-<a href="terms.html">Terms</a>
+<a href="page.html?slug=privacy">Privacy Policy</a>
 
-<a href="about.html">About Us</a>
+<a href="page.html?slug=terms">Terms & Conditions</a>
+
+<a href="page.html?slug=writer-agreement">Writer Agreement</a>
+
+<a href="page.html?slug=community-guidelines">Community Guidelines</a>
+
+<a href="page.html?slug=copyright">Copyright Policy</a>
+
+<a href="page.html?slug=refund-policy">Refund Policy</a>
 
 </div>
 
@@ -79,13 +87,15 @@ and enjoy stories in every language.
 
 <div class="footer-social">
 
-<a href="#">📘</a>
+<a href="https://facebook.com/YourPage" target="_blank">📘</a>
 
-<a href="#">📷</a>
+<a href="https://instagram.com/YourPage" target="_blank">📷</a>
 
-<a href="#">▶</a>
+<a href="https://youtube.com/@YourChannel" target="_blank">▶</a>
 
-<a href="#">💬</a>
+<a href="https://x.com/YourAccount" target="_blank">𝕏</a>
+
+<a href="https://linkedin.com/company/YourCompany" target="_blank">💼</a>
 
 </div>
 
