@@ -665,13 +665,13 @@ loadChapters();
 
 }
 
-setInterval(()=>{
+setInterval(async()=>{
 
-if(hasChanges && currentChapter){
+    if(hasChanges && currentChapter){
 
-    await saveChapter();
+        await saveChapter();
 
-}
+    }
 
 },20000);
 
