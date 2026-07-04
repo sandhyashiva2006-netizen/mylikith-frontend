@@ -2,6 +2,20 @@ const API="https://mylikith-backend.onrender.com";
 
 const token=localStorage.getItem("adminToken");
 
+const admin=
+
+JSON.parse(
+
+localStorage.getItem("admin")
+
+);
+
+if(!admin){
+
+location.href="admin-login.html";
+
+}
+
 loadApplications();
 
 async function loadApplications(){
@@ -26,6 +40,26 @@ const table=document.getElementById("applicationTable");
 
 table.innerHTML="";
 
+if(data.length===0){
+
+table.innerHTML=`
+
+<tr>
+
+<td colspan="6">
+
+No writer applications found.
+
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
 data.forEach(app=>{
 
 table.innerHTML+=`
@@ -38,23 +72,43 @@ table.innerHTML+=`
 
 <td>${app.pen_name}</td>
 
-<td>${app.status}</td>
+<td>
+
+<span class="status ${app.status.toLowerCase()}">
+
+${app.status}
+
+</span>
+
+</td>
 
 <td>${new Date(app.created_at).toLocaleDateString()}</td>
 
 <td>
 
-<button onclick="approve(${app.id})">
+${app.status==="Pending"
+
+?`
+
+<button
+class="approve-btn"
+onclick="approve(${app.id})">
 
 Approve
 
 </button>
 
-<button onclick="reject(${app.id})">
+<button
+class="reject-btn"
+onclick="reject(${app.id})">
 
 Reject
 
 </button>
+
+`
+
+:"-"}
 
 </td>
 
