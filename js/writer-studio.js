@@ -679,163 +679,93 @@ document.execCommand("insertText",false,text);
 
 });
 
-document.getElementById("uploadCoverBtn").onclick=async()=>{
+document.getElementById("uploadCoverBtn").onclick = async () => {
 
-const file=document.getElementById("changeCover").files[0];
+    const file = document.getElementById("changeCover").files[0];
 
-if(!file){
+    if (!file) {
+        alert("Select a cover image.");
+        return;
+    }
 
-alert("Select a cover image.");
+    const formData = new FormData();
+    formData.append("cover", file);
 
-return;
+    const upload = await fetch(`${API}/api/upload-cover`, {
+        method: "POST",
+        body: formData
+    });
 
-}
+    const result = await upload.json();
 
-const allowed=[
-"image/jpeg",
-"image/png",
-"image/webp"
-];
+    if (!result.success) {
+        alert(result.message);
+        return;
+    }
 
-if(!allowed.includes(file.type)){
+    const response = await fetch(`${API}/api/writers/novels/${novelId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            cover_url: result.url
+        })
+    });
 
-alert("Only JPG, PNG and WEBP are allowed.");
+    const data = await response.json();
 
-return;
+    if (data.success) {
 
-}
+        document.getElementById("settingsCover").src =
+            result.url + "?t=" + Date.now();
 
-if(file.size>5*1024*1024){
+        document.getElementById("novelCover").src =
+            result.url + "?t=" + Date.now();
 
-alert("Maximum file size is 5 MB.");
+        alert("Cover updated successfully.");
 
-return;
+    } else {
 
-}
+        alert("Unable to update cover.");
 
-const formData=new FormData();
-
-formData.append("cover",file);
-
-const upload=await fetch(
-
-`${API}/api/upload-cover`,
-
-{
-
-method:"POST",
-
-body:formData
-
-}
-
-);
-
-document.getElementById("saveSettingsBtn").onclick=async()=>{
-
-
-
-const result=await upload.json();
-
-console.log("UPLOAD RESULT", result);
-
-console.log(result);
-
-if(!result.success){
-
-alert(result.message);
-
-return;
-
-}
-
-console.log("AFTER SUCCESS CHECK");
-
-console.log("Updating cover...", result.url);
-
-console.log("CALLING PUT API");
-
-const response=await fetch(
-
-`${API}/api/writers/novels/${novelId}`,
-
-{
-
-method:"PUT",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-
-cover_url:result.url
-
-})
-
-}
-
-);
-
-const data=await response.json();
-
-if(data.success){
-
-document.getElementById("settingsCover").src=result.url;
-
-document.getElementById("novelCover").src=result.url;
-
-alert("Cover updated successfully.");
-
-loadNovel();
-
-}
+    }
 
 };
 
-const response=await fetch(
+document.getElementById("saveSettingsBtn").onclick = async () => {
 
-`${API}/api/writers/novels/${novelId}`,
+    const response = await fetch(`${API}/api/writers/novels/${novelId}`, {
 
-{
+        method: "PUT",
 
-method:"PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
 
-headers:{
+        body: JSON.stringify({
 
-"Content-Type":"application/json"
+            title: document.getElementById("settingTitle").value,
+            description: document.getElementById("settingDescription").value,
+            category: document.getElementById("settingCategory").value,
+            language: document.getElementById("settingLanguage").value,
+            status: document.getElementById("settingStatus").value
 
-},
+        })
 
-body:JSON.stringify({
+    });
 
-title:document.getElementById("settingTitle").value,
+    const data = await response.json();
 
-description:document.getElementById("settingDescription").value,
+    if (data.success) {
 
-category:document.getElementById("settingCategory").value,
+        settingsModal.classList.remove("show");
 
-language:document.getElementById("settingLanguage").value,
+        loadNovel();
 
-status:document.getElementById("settingStatus").value
+        alert("Novel updated successfully.");
 
-})
-
-}
-
-);
-
-const data=await response.json();
-
-if(data.success){
-
-settingsModal.classList.remove("show");
-
-loadNovel();
-
-alert("Novel updated successfully.");
-
-}
+    }
 
 };
 
