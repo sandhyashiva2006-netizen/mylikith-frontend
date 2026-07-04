@@ -218,8 +218,49 @@ method:"DELETE"
 );
 
 loadRecentSearches();
+loadTrendingSearches();
 
 };
+
+}
+
+async function loadTrendingSearches(){
+
+const response=await fetch(
+
+`${API}/api/search/trending`
+
+);
+
+const searches=await response.json();
+
+const container=document.getElementById(
+
+"trendingSearches"
+
+);
+
+if(!container)return;
+
+container.innerHTML="";
+
+searches.forEach(item=>{
+
+container.innerHTML+=`
+
+<span
+
+class="trending-search"
+
+onclick="searchAgain('${item.keyword}')">
+
+🔥 ${item.keyword}
+
+</span>
+
+`;
+
+});
 
 }
 

@@ -97,3 +97,29 @@ color:white;
 
 }
 
+.trending-search{
+
+display:inline-block;
+
+margin:6px;
+
+padding:8px 14px;
+
+border-radius:20px;
+
+background:#7C3AED;
+
+color:#fff;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.trending-search:hover{
+
+transform:scale(1.05);
+
+}
+
