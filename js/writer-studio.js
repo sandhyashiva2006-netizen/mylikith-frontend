@@ -139,7 +139,15 @@ ${ch.title}
 
 <div class="chapter-meta">
 
-❤️ ${Number(ch.likes || 0)} Likes
+${ch.is_draft
+
+? "🟡 Draft"
+
+: "🟢 Published"}
+
+&nbsp;&nbsp;
+
+❤️ ${Number(ch.likes||0)} Likes
 
 </div>
 
@@ -227,7 +235,7 @@ calculate();
 
 title.addEventListener("input",calculate);
 
-document.getElementById("saveDraftBtn").onclick=saveChapter;
+
 
 
 const chapterModal=document.getElementById("chapterModal");
@@ -286,107 +294,12 @@ document.getElementById("previewBtn").innerHTML="👁 Preview";
 
 };
 
-document.getElementById("publishBtn").onclick=()=>{
+document.getElementById("publishBtn").onclick=publishChapter;
 
-window.location=`publish-novel.html?novel=${novelId}`;
 
-};
-
-document
-.getElementById(
-"saveDraftBtn"
-)
-.addEventListener(
-"click",
-saveDraft
-);
 
 loadChapters();
 
-async function saveDraft(){
-
-const user=
-JSON.parse(
-localStorage.getItem("user")
-);
-
-const body={
-
-writer_id:user.id,
-
-novel_id:selectedNovel,
-
-chapter_no:Number(
-
-document.getElementById(
-"chapterNumber"
-).value
-),
-
-title:document.getElementById(
-"chapterTitle"
-).value,
-
-content:editor.getHTML
-?editor.getHTML()
-:document.getElementById(
-"chapterContent"
-).value,
-
-coins_required:Number(
-
-document.getElementById(
-"coinsRequired"
-).value||0
-),
-
-is_premium:
-
-document.getElementById(
-"premiumChapter"
-).checked,
-
-early_access:
-
-document.getElementById(
-"earlyAccess"
-).checked,
-
-is_draft:true
-
-};
-
-const response=
-await fetch(
-
-`${API}/api/writer/chapters`,
-
-{
-
-method:"POST",
-
-headers:{
-
-"Content-Type":"application/json"
-
-},
-
-body:JSON.stringify(body)
-
-}
-
-);
-
-const data=
-await response.json();
-
-if(data.success){
-
-alert("Draft Saved Successfully.");
-
-}
-
-}
 
 async function saveChapter(){
 
@@ -437,6 +350,50 @@ saveStatus.textContent="🟢 Saved";
 document.getElementById("lastSaved").textContent=
 
 new Date().toLocaleTimeString();
+
+}
+
+async function publishChapter(){
+
+if(!currentChapter){
+
+alert("Open a chapter first.");
+
+return;
+
+}
+
+if(!confirm("Publish this chapter?")){
+
+return;
+
+}
+
+const response=await fetch(
+
+`${API}/api/writers/chapters/${currentChapter}/publish`,
+
+{
+
+method:"PUT"
+
+}
+
+);
+
+const data=await response.json();
+
+if(data.success){
+
+alert("Chapter published successfully.");
+
+loadChapters();
+
+}else{
+
+alert("Unable to publish chapter.");
+
+}
 
 }
 
