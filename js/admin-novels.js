@@ -21,7 +21,7 @@ let novels=[];
 async function loadNovels(){
 
 const response=
-await fetch(`${API}/api/admin/novels`);
+await adminFetch(`${API}/api/admin/novels`);
 
 novels=
 await response.json();
@@ -130,7 +130,7 @@ async function deleteNovel(id){
 if(!confirm("Delete novel?"))
 return;
 
-await fetch(
+await adminFetch(
 
 `${API}/api/admin/novels/${id}`,
 
@@ -148,7 +148,7 @@ loadNovels();
 
 async function featureNovel(id){
 
-await fetch(
+await adminFetch(
 
 `${API}/api/admin/novels/${id}/feature`,
 

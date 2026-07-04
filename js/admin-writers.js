@@ -20,7 +20,7 @@ let writers=[];
 async function loadWriters(){
 
 const response=
-await fetch(`${API}/api/admin/writers`);
+await adminFetch(`${API}/api/admin/writers`);
 
 writers=
 await response.json();
@@ -123,7 +123,7 @@ async function removeWriter(id){
 if(!confirm("Remove writer role?"))
 return;
 
-await fetch(
+await adminFetch(
 
 `${API}/api/admin/writers/${id}`,
 

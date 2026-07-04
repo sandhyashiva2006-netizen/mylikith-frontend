@@ -21,7 +21,7 @@ let chapters=[];
 async function loadChapters(){
 
 const response=
-await fetch(`${API}/api/admin/chapters`);
+await adminFetch(`${API}/api/admin/chapters`);
 
 chapters=
 await response.json();
@@ -141,7 +141,7 @@ async function deleteChapter(id){
 if(!confirm("Delete chapter?"))
 return;
 
-await fetch(
+await adminFetch(
 
 `${API}/api/admin/chapters/${id}`,
 

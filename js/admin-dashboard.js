@@ -23,7 +23,7 @@ async function loadDashboard(){
 try{
 
 const response =
-await fetch(`${API}/api/admin/dashboard`);
+await adminFetch(`${API}/api/admin/dashboard`);
 
 const data =
 await response.json();
@@ -75,7 +75,7 @@ async function loadRecentUsers(){
 try{
 
 const response =
-await fetch(`${API}/api/admin/recent-users`);
+await adminFetch(`${API}/api/admin/recent-users`);
 
 const users =
 await response.json();
@@ -135,7 +135,7 @@ async function loadRecentNovels(){
 try{
 
 const response =
-await fetch(`${API}/api/admin/recent-novels`);
+await adminFetch(`${API}/api/admin/recent-novels`);
 
 const novels =
 await response.json();

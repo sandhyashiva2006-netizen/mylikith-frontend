@@ -20,7 +20,7 @@ async function loadSettings(){
 
 const response=
 
-await fetch(
+await adminFetch(
 
 `${API}/api/admin/settings`
 
@@ -45,7 +45,7 @@ saveSettings.onclick=
 
 async()=>{
 
-await fetch(
+await adminFetch(
 
 `${API}/api/admin/settings`,
 

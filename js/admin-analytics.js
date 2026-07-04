@@ -19,7 +19,7 @@ async function loadAnalytics(){
 
 const response=
 
-await fetch(
+await adminFetch(
 
 `${API}/api/admin/analytics`
 

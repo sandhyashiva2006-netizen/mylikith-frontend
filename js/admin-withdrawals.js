@@ -25,7 +25,7 @@ async function loadWithdrawals(){
 try{
 
 const response=
-await fetch(
+await adminFetch(
 
 `${API}/admin/withdrawals`
 
@@ -405,7 +405,7 @@ return;
 
 const response=
 
-await fetch(
+await adminFetch(
 
 `${API}/admin/withdrawals/${id}/approve`,
 
@@ -449,7 +449,7 @@ return;
 
 const response=
 
-await fetch(
+await adminFetch(
 
 `${API}/admin/withdrawals/${id}/reject`,
 

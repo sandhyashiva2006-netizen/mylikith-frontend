@@ -19,7 +19,7 @@ async function loadRevenue(){
 
 const response=
 
-await fetch(
+await adminFetch(
 
 `${API}/api/admin/revenue`
 

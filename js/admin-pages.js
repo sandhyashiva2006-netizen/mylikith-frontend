@@ -10,7 +10,7 @@ pageSelect.onchange = loadPage;
 
 async function loadPage(){
 
-    const res = await fetch(
+    const res = await adminFetch(
 
         `${API}/pages/${pageSelect.value}`
 
@@ -25,7 +25,7 @@ async function loadPage(){
 
 document.getElementById("savePageBtn").onclick = async()=>{
 
-    const res = await fetch(
+    const res = await adminFetch(
 
         `${API}/pages/${pageSelect.value}`,
 

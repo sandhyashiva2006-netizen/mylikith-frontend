@@ -20,7 +20,7 @@ let reviews=[];
 async function loadReviews(){
 
 const response=
-await fetch(`${API}/api/admin/reviews`);
+await adminFetch(`${API}/api/admin/reviews`);
 
 reviews=
 await response.json();
@@ -123,7 +123,7 @@ async function deleteReview(id){
 if(!confirm("Delete review?"))
 return;
 
-await fetch(
+await adminFetch(
 
 `${API}/api/admin/reviews/${id}`,
 

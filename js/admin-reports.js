@@ -20,7 +20,7 @@ async function loadReports(){
 
 const response=
 
-await fetch(`${API}/api/admin/reports`);
+await adminFetch(`${API}/api/admin/reports`);
 
 const reports=
 
@@ -108,7 +108,7 @@ Delete
 
 async function resolveReport(id){
 
-await fetch(
+await adminFetch(
 
 `${API}/api/admin/reports/${id}/resolve`,
 
@@ -126,7 +126,7 @@ loadReports();
 
 async function deleteReport(id){
 
-await fetch(
+await adminFetch(
 
 `${API}/api/admin/reports/${id}`,
 

@@ -21,7 +21,7 @@ async function loadComments(){
 
 const response=
 
-await fetch(`${API}/api/admin/comments`);
+await adminFetch(`${API}/api/admin/comments`);
 
 comments=
 
@@ -122,7 +122,7 @@ async function deleteComment(id){
 if(!confirm("Delete comment?"))
 return;
 
-await fetch(
+await adminFetch(
 
 `${API}/api/admin/comments/${id}`,
 

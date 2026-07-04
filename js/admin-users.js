@@ -22,7 +22,7 @@ async function loadUsers(){
 
 try{
 
-const response=await fetch(
+const response=await adminFetch(
 `${API}/api/admin/users`
 );
 
@@ -141,7 +141,7 @@ async function changeRole(id,role){
 if(!confirm(`Make this user ${role}?`))
 return;
 
-await fetch(
+await adminFetch(
 
 `${API}/api/admin/users/${id}/role`,
 
@@ -174,7 +174,7 @@ async function deleteUser(id){
 if(!confirm("Delete this user?"))
 return;
 
-await fetch(
+await adminFetch(
 
 `${API}/api/admin/users/${id}`,
 
