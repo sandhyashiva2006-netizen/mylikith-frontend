@@ -363,21 +363,11 @@ writerStudioBtn.onclick=(e)=>{
 
 e.preventDefault();
 
-fetch(`${API}/api/writers/my-novels/${dashboardUser.id}`)
-.then(res=>res.json())
-.then(novels=>{
+alert("Please select a novel and click 'Writer Studio'.");
 
-if(novels.length===0){
+document.getElementById("novelsGrid").scrollIntoView({
 
-alert("Please create a novel first.");
-
-window.location="create-novel.html";
-
-return;
-
-}
-
-window.location=`writer-studio.html?novel=${novels[0].id}`;
+behavior:"smooth"
 
 });
 
