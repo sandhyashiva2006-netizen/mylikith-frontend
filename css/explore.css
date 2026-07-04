@@ -123,3 +123,15 @@ transform:scale(1.05);
 
 }
 
+.search-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:15px;
+
+}
+

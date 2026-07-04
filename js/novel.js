@@ -597,6 +597,9 @@ document.getElementById("authorName").textContent=
 
 author.name;
 
+document.getElementById("authorLink").href =
+`author.html?id=${novel.author_id}`;
+
 document.getElementById("authorBio").textContent=
 
 author.bio||"Writer";

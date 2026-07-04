@@ -184,6 +184,10 @@ ${item.keyword}
 
 loadNovels();
 
+loadRecentSearches();
+
+loadTrendingSearches();
+
 function searchAgain(keyword){
 
 document.getElementById(
@@ -218,7 +222,7 @@ method:"DELETE"
 );
 
 loadRecentSearches();
-loadTrendingSearches();
+
 
 };
 
