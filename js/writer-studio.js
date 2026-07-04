@@ -136,17 +136,23 @@ Chapter ${ch.chapter_no}
 <div class="chapter-actions">
 
 <button
+onclick="event.stopPropagation();moveChapter(${ch.id},'up')">
+⬆
+</button>
+
+<button
+onclick="event.stopPropagation();moveChapter(${ch.id},'down')">
+⬇
+</button>
+
+<button
 onclick="event.stopPropagation();renameChapter(${ch.id},'${ch.title.replace(/'/g,"\\'")}')">
-
 ✏
-
 </button>
 
 <button
 onclick="event.stopPropagation();deleteChapter(${ch.id})">
-
 🗑
-
 </button>
 
 </div>
@@ -193,6 +199,41 @@ ch.is_draft
 `;
 
 });
+
+}
+
+async function moveChapter(id, direction){
+
+    const response = await fetch(
+
+        `${API}/api/writers/chapters/${id}/move`,
+
+        {
+            method:"PUT",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+                direction
+            })
+
+        }
+
+    );
+
+    const data = await response.json();
+
+    if(data.success){
+
+        loadChapters();
+
+    }else{
+
+        alert("Unable to move chapter.");
+
+    }
 
 }
 
