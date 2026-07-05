@@ -25,9 +25,16 @@ headers:{
 },
 
 body:JSON.stringify({
+
 name,
+
 email,
-password
+
+password,
+
+referral_code:
+document.getElementById("referralCode").value.trim()
+
 })
 
 }
