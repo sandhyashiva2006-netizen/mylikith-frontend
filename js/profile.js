@@ -6,6 +6,9 @@ JSON.parse(
 localStorage.getItem("user")
 );
 
+document.getElementById("myReferralCode").value =
+user.referral_code || "";
+
 loadPremiumStatus();
 
 if(!user){
@@ -704,6 +707,25 @@ data.message ||
 }
 
 });
+
+}
+
+const copyBtn =
+document.getElementById("copyReferralBtn");
+
+if(copyBtn){
+
+copyBtn.onclick=()=>{
+
+navigator.clipboard.writeText(
+
+document.getElementById("myReferralCode").value
+
+);
+
+alert("Referral code copied.");
+
+};
 
 }
 
