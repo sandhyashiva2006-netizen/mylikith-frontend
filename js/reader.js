@@ -1622,6 +1622,18 @@ alert(
 
 );
 
+const btn=
+
+document.getElementById(
+
+"watchAdsBtn"
+
+);
+
+btn.disabled=true;
+
+btn.innerHTML="Watching Ad...";
+
 const response=await fetch(
 
 `${API}/api/locked/ad/viewed`,
@@ -1648,9 +1660,17 @@ chapter_id:chapterId
 
 );
 
+btn.disabled=false;
+
+btn.innerHTML="🎬 Watch 2 Ads";
+
 const data=await response.json();
 
-adsCompleted++;
+adsCompleted=data.completed
+
+?2
+
+:adsCompleted+1;
 
 document.getElementById(
 
