@@ -18,25 +18,7 @@ window.location =
 
 }
 
-const stats=await fetch(
 
-API+
-
-"/api/referrals/"+
-
-user.id
-
-);
-
-const data=await stats.json();
-
-document.getElementById("totalReferrals").textContent=
-
-data.total_referrals;
-
-document.getElementById("coinsEarned").textContent=
-
-data.coins_earned;
 
 document.getElementById(
 "profileName"
@@ -164,6 +146,34 @@ data.rating;
 
 }
 catch(err){
+
+console.log(err);
+
+}
+
+}
+
+async function loadReferralStats(){
+
+try{
+
+const response=await fetch(
+
+`${API}/api/referrals/${user.id}`
+
+);
+
+const data=await response.json();
+
+document.getElementById("totalReferrals").textContent=
+
+data.total_referrals;
+
+document.getElementById("coinsEarned").textContent=
+
+data.coins_earned;
+
+}catch(err){
 
 console.log(err);
 
@@ -791,3 +801,5 @@ loadPremiumBadge();
 loadPremiumAchievements();
 
 checkWriterApplication();
+
+loadReferralStats();
