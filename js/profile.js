@@ -710,24 +710,55 @@ data.message ||
 
 }
 
-const copyBtn =
-document.getElementById("copyReferralBtn");
+const user=JSON.parse(localStorage.getItem("user"));
 
-if(copyBtn){
+document.getElementById("myReferralCode").textContent=user.referral_code;
 
-copyBtn.onclick=()=>{
+document
+.getElementById("copyReferralBtn")
+.onclick=()=>{
 
-navigator.clipboard.writeText(
-
-document.getElementById("myReferralCode").value
-
-);
+navigator.clipboard.writeText(user.referral_code);
 
 alert("Referral code copied.");
 
 };
 
+document
+.getElementById("shareReferralBtn")
+.onclick=()=>{
+
+const link=
+
+window.location.origin+
+
+"/signup?ref="+
+
+user.referral_code;
+
+if(navigator.share){
+
+navigator.share({
+
+title:"Join MyLikith",
+
+text:"Read amazing novels with me!",
+
+url:link
+
+});
+
+}else{
+
+navigator.clipboard.writeText(link);
+
+alert("Referral link copied.");
+
 }
+
+};
+
+
 
 loadStats();
 

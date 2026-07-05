@@ -54,32 +54,67 @@ id="writerBadge">
 
 </div>
 
-<div class="profile-card">
+<div class="profile-card referral-card">
 
-<h3>🎁 Refer & Earn</h3>
+    <div class="referral-header">
 
-<div class="profile-row">
+        <div class="referral-icon">🎁</div>
 
-<label>Your Referral Code</label>
+        <div>
 
-<div style="display:flex;gap:10px;align-items:center;">
+            <h3>Refer & Earn</h3>
 
-<input
-id="myReferralCode"
-class="input"
-readonly>
+            <p>Invite friends and both of you earn <b>20 Coins</b>.</p>
 
-<button
-id="copyReferralBtn"
-class="chapter-btn">
+        </div>
 
-Copy
+    </div>
 
-</button>
+    <div class="referral-code-box">
 
-</div>
+        <label>Your Referral Code</label>
 
-</div>
+        <div class="referral-code" id="myReferralCode">
+            Loading...
+        </div>
+
+    </div>
+
+    <div class="referral-buttons">
+
+        <button id="copyReferralBtn" class="primary-btn">
+
+            📋 Copy Code
+
+        </button>
+
+        <button id="shareReferralBtn" class="primary-btn">
+
+            📤 Share Link
+
+        </button>
+
+    </div>
+
+    <div class="referral-stats">
+
+        <div>
+
+            <h4 id="totalReferrals">0</h4>
+
+            <span>Total Referrals</span>
+
+        </div>
+
+        <div>
+
+            <h4 id="coinsEarned">0</h4>
+
+            <span>Coins Earned</span>
+
+        </div>
+
+    </div>
 
 </div>
 

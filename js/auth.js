@@ -33,13 +33,15 @@ email,
 password,
 
 referral_code:
-document.getElementById("referralCode").value.trim()
+(document.getElementById("referralCode")?.value || "").trim()
 
 })
 
 }
 
 );
+
+
 
 const data =
 await response.json();
@@ -113,6 +115,22 @@ window.location =
 alert(
 data.message
 );
+
+}
+
+}
+
+const params=new URLSearchParams(window.location.search);
+
+const ref=params.get("ref");
+
+if(ref){
+
+const input=document.getElementById("referralCode");
+
+if(input){
+
+input.value=ref;
 
 }
 
