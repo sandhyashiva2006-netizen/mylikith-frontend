@@ -18,6 +18,26 @@ window.location =
 
 }
 
+const stats=await fetch(
+
+API+
+
+"/api/referrals/"+
+
+user.id
+
+);
+
+const data=await stats.json();
+
+document.getElementById("totalReferrals").textContent=
+
+data.total_referrals;
+
+document.getElementById("coinsEarned").textContent=
+
+data.coins_earned;
+
 document.getElementById(
 "profileName"
 ).textContent =
