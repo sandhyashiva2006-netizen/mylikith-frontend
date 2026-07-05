@@ -348,12 +348,33 @@ Coins
 
 </button>
 
-<button
-id="buyCoinsBtn">
+<button id="watchAdsBtn">
+
+🎬 Watch 2 Ads
+
+</button>
+
+<button id="buyCoinsBtn">
 
 ➕ Buy Coins
 
 </button>
+
+<div
+id="adProgress"
+style="margin-top:15px;font-weight:bold;">
+
+0 / 2 Ads Completed
+
+</div>
+
+<div
+id="dailyAdStatus"
+style="margin-top:10px;font-size:14px;opacity:.8;">
+
+Loading...
+
+</div>
 
 </div>
 
@@ -371,6 +392,13 @@ location.href=
 };
 
 loadWalletCoins();
+
+loadRewardedStatus();
+
+document.getElementById(
+"watchAdsBtn"
+).onclick=
+watchRewardedAds;
 
 document.getElementById("chapterContent").style.display="none";
 
@@ -1511,6 +1539,138 @@ document.body.offsetHeight-100
 }
 
 );
+
+}
+
+let adsCompleted=0;
+
+async function loadRewardedStatus(){
+
+const response=await fetch(
+
+`${API}/api/locked/ad/status/${readerUser.id}`
+
+);
+
+const data=await response.json();
+
+document.getElementById(
+
+"dailyAdStatus"
+
+).innerHTML=
+
+`Free Unlocks Left Today : <b>${data.remaining}</b>`;
+
+if(!data.eligible){
+
+document.getElementById(
+
+"watchAdsBtn"
+
+).disabled=true;
+
+document.getElementById(
+
+"watchAdsBtn"
+
+).innerHTML=
+
+"Daily Limit Reached";
+
+}
+
+}
+
+async function watchRewardedAds(){
+
+if(adsCompleted===0){
+
+await fetch(
+
+`${API}/api/locked/ad/start`,
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+user_id:readerUser.id,
+
+chapter_id:chapterId
+
+})
+
+}
+
+);
+
+}
+
+/* TEMPORARY */
+
+alert(
+
+"Rewarded Ad Simulation\n\n(Real AdMob will be connected later)"
+
+);
+
+const response=await fetch(
+
+`${API}/api/locked/ad/viewed`,
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+user_id:readerUser.id,
+
+chapter_id:chapterId
+
+})
+
+}
+
+);
+
+const data=await response.json();
+
+adsCompleted++;
+
+document.getElementById(
+
+"adProgress"
+
+).innerHTML=
+
+`${adsCompleted} / 2 Ads Completed`;
+
+if(data.completed){
+
+alert(
+
+"🎉 Chapter Unlocked!"
+
+);
+
+location.reload();
+
+}
 
 }
 
