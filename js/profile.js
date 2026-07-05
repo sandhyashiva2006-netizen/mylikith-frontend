@@ -710,7 +710,7 @@ data.message ||
 
 }
 
-const user=JSON.parse(localStorage.getItem("user"));
+
 
 document.getElementById("myReferralCode").textContent=user.referral_code;
 
