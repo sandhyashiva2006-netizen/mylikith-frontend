@@ -1584,6 +1584,12 @@ document.getElementById(
 
 async function watchRewardedAds(){
 
+if(adsCompleted>=2){
+
+return;
+
+}
+
 if(adsCompleted===0){
 
 await fetch(
@@ -1664,22 +1670,22 @@ btn.disabled=false;
 
 btn.innerHTML="🎬 Watch 2 Ads";
 
-const data=await response.json();
+const data = await response.json();
 
-adsCompleted=data.completed
+if(!data.success){
 
-?2
+alert(data.message || "Unable to unlock chapter.");
 
-:adsCompleted+1;
+return;
 
-document.getElementById(
+}
 
-"adProgress"
+adsCompleted = data.completed
+? 2
+: (2 - data.remaining);
 
-).innerHTML=
-
-`${adsCompleted} / 2 Ads Completed`;
-
+document.getElementById("adProgress").innerHTML =
+`${adsCompleted}/2 Ads Completed`;
 if(data.completed){
 
 alert(
