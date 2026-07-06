@@ -361,13 +361,23 @@ async function loadNotifications(){
 
 const user=
 
-JSON.parse(localStorage.getItem("user"));
+JSON.parse(
+
+localStorage.getItem("user")
+
+);
 
 if(!user)return;
 
-const response=await fetch(`${API}/api/writers/notifications/${user.id}`);
+const response=
 
-const notifications=
+await fetch(
+
+`${API}/api/writers/notifications/${user.id}`
+
+);
+
+const list=
 
 await response.json();
 
@@ -375,49 +385,45 @@ const container=
 
 document.getElementById(
 
-"notificationsContainer"
+"notificationList"
 
 );
 
-if(!container)return;
-
 container.innerHTML="";
 
-if(notifications.length===0){
+if(list.length===0){
 
-container.innerHTML=`
+container.innerHTML=
 
-<p>
-
-No notifications yet.
-
-</p>
-
-`;
+"<div class='notification-item'>No notifications.</div>";
 
 return;
 
 }
 
-notifications.forEach(notification=>{
+list.forEach(n=>{
 
 container.innerHTML+=`
 
-<div class="notification-card">
+<div class="notification-item">
 
-<div>
+<div
+class="notification-item"
+onclick="openNotification('${n.type}',${n.reference_id})">
 
-<div class="notification-title">
+${n.title}
 
-${notification.title}
+</div>
+
+<div class="notification-message">
+
+${n.message||""}
 
 </div>
 
 <div class="notification-time">
 
-${notification.created_at}
-
-</div>
+${new Date(n.created_at).toLocaleString()}
 
 </div>
 
@@ -426,6 +432,176 @@ ${notification.created_at}
 `;
 
 });
+
+}
+
+document
+
+.getElementById(
+
+"notificationBell"
+
+)
+
+.onclick=()=>{
+
+const drop=
+
+document.getElementById(
+
+"notificationDropdown"
+
+);
+
+drop.style.display=
+
+drop.style.display==="block"
+
+?"none"
+
+:"block";
+
+};
+
+document
+
+.getElementById(
+
+"markNotificationsRead"
+
+)
+
+.onclick=async()=>{
+
+const user=
+
+JSON.parse(
+
+localStorage.getItem("user")
+
+);
+
+await fetch(
+
+`${API}/api/writers/notifications/${user.id}/read`,
+
+{
+
+method:"PUT"
+
+}
+
+);
+
+
+loadNotifications();
+
+};
+
+document
+
+.getElementById(
+
+"clearNotifications"
+
+)
+
+.onclick=async()=>{
+
+const user=
+
+JSON.parse(
+
+localStorage.getItem("user")
+
+);
+
+await fetch(
+
+`${API}/api/writers/notifications/${user.id}`,
+
+{
+
+method:"DELETE"
+
+}
+
+);
+
+
+loadNotifications();
+
+};
+
+function openNotification(type,id){
+
+fetch(
+
+`${API}/api/writers/notifications/read/${id}`,
+
+{
+
+method:"PUT"
+
+}
+
+);
+
+switch(type){
+
+case "chapter":
+
+window.location.href=
+
+`reader.html?chapter=${id}`;
+
+break;
+
+case "novel":
+
+window.location.href=
+
+`novel.html?id=${id}`;
+
+break;
+
+case "writer":
+
+window.location.href=
+
+"profile.html";
+
+break;
+
+case "wallet":
+
+window.location.href=
+
+"wallet.html";
+
+break;
+
+case "premium":
+
+window.location.href=
+
+"premium.html";
+
+break;
+
+case "referral":
+
+window.location.href=
+
+"profile.html";
+
+break;
+
+default:
+
+break;
+
+}
 
 }
 

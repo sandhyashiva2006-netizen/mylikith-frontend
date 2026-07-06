@@ -279,4 +279,43 @@ console.log(err);
 
 }
 
+async function loadNotificationCount(){
+
+try{
+
+const user=JSON.parse(localStorage.getItem("user"));
+
+if(!user)return;
+
+const response=await fetch(
+
+`${API}/api/writers/notifications/${user.id}/unread`
+
+);
+
+const data=await response.json();
+
+const badge=document.getElementById("notificationCount");
+
+if(!badge)return;
+
+badge.innerHTML=data.unread;
+
+badge.style.display=
+
+data.unread>0
+
+?"flex"
+
+:"none";
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
 loadPremiumBadge();
+loadNotificationCount();

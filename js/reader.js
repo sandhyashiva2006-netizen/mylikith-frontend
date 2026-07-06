@@ -289,8 +289,6 @@ return false;
 
 }
 
-console.log("LOCK STATUS:", data);
-
 if(!data.locked){
 
 return false;
