@@ -8,6 +8,7 @@
   <title>Mylikith</title>
 
   <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/common.css">
   <link rel="stylesheet" href="css/home.css">
 </head>
 
@@ -15,36 +16,7 @@
 
   <!-- NAVBAR -->
 
-  <nav class="navbar">
-
-    <div class="logo">
-    <img src="images/logo.png" alt="MyLikith Logo">
-    <span>MYLIKITH</span>
-</div>
-
-    <ul class="nav-links">
-      <li><a href="#">Home</a></li>
-      <li><a href="explore.html">Explore</a></li>
-      <li><a href="#">Languages</a></li>
-      <li><a href="writer-dashboard.html">Writers</a></li>
-      <li><a href="#">Premium</a></li>
-    </ul>
-
-    <div class="auth-buttons">
-      <a href="login.html">
-<button class="login-btn">
-Login
-</button>
-</a>
-
-<a href="signup.html">
-<button class="signup-btn">
-Sign Up
-</button>
-</a>
-    </div>
-
-  </nav>
+  <nav id="navbar" class="navbar"></nav>
 
   <!-- HERO -->
 
@@ -91,9 +63,9 @@ Become a Writer
   <div class="hero-right">
 
 <img
-src="images/hero-book.webp"
+src="images/hero-illustration.webp"
 class="hero-image"
-alt="MyLikith">
+alt="MyLikith Illustration">
 
 </div>
 
@@ -283,22 +255,12 @@ Publish novels, build a loyal audience, unlock premium readers and earn from eve
 
   <!-- FOOTER -->
 
-  <footer>
+<div id="footer"></div>
 
-<h3>MYLIKITH</h3>
-
-<p>
-Read. Write. Translate. Earn.
-</p>
-
-<p style="margin-top:15px;font-size:14px;opacity:.7;">
-© 2026 MyLikith. All Rights Reserved.
-</p>
-
-</footer>
-
-  <script src="js/home.js"></script>
+<script src="js/home.js"></script>
 <script src="js/session.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/footer.js"></script>
 
 </body>
 </html>

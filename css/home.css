@@ -1,89 +1,3 @@
-.navbar{
-
-position:fixed;
-
-top:0;
-
-left:0;
-
-width:100%;
-
-height:80px;
-
-display:flex;
-
-align-items:center;
-
-justify-content:space-between;
-
-padding:15px 25px;
-
-background:rgba(10,15,30,.85);
-
-backdrop-filter:blur(20px);
-
-z-index:9999;
-
-box-sizing:border-box;
-
-}
-
-.logo{
-
-display:flex;
-
-align-items:center;
-
-white-space:nowrap;
-
-font-size:32px;
-
-font-weight:800;
-
-flex-shrink:0;
-
-}
-
-.nav-links{
-
-display:flex;
-
-align-items:center;
-
-gap:18px;
-
-list-style:none;
-
-margin:0;
-
-padding:0;
-
-white-space:nowrap;
-
-}
-
-.nav-links li{
-
-list-style:none;
-
-}
-
-.nav-links a{
-text-decoration:none;
-color:white;
-}
-
-.auth-buttons{
-
-display:flex;
-
-align-items:center;
-
-gap:10px;
-
-white-space:nowrap;
-
-}
 
 .login-btn{
 padding:10px 20px;
@@ -110,19 +24,7 @@ padding:80px;
 
 min-height:90vh;
 
-background:
-
-linear-gradient(
-
-90deg,
-
-rgba(18,20,38,.96),
-
-rgba(18,20,38,.93)
-
-),
-
-url("../images/dashboard-bg.jpg");
+background:transparent;
 
 background-size:cover;
 
@@ -364,9 +266,19 @@ border-color:#7C3AED;
 }
 
 .writer-cta{
+
 padding:100px 20px;
+
 text-align:center;
-background:#111827;
+
+background:rgba(18,26,46,.72);
+
+backdrop-filter:blur(18px);
+
+border-top:1px solid rgba(255,255,255,.08);
+
+border-bottom:1px solid rgba(255,255,255,.08);
+
 }
 
 .writer-cta h2{
@@ -374,10 +286,6 @@ font-size:40px;
 margin-bottom:20px;
 }
 
-footer{
-text-align:center;
-padding:50px;
-}
 
 .logo{
 font-size:32px;
@@ -456,13 +364,7 @@ color:#cbd5e1;
 
 padding:90px 80px;
 
-background:
-
-url("../images/dashboard-bg.jpg");
-
-background-size:cover;
-
-background-position:center;
+background:transparent;
 
 }
 
