@@ -803,3 +803,67 @@ loadPremiumAchievements();
 checkWriterApplication();
 
 loadReferralStats();
+
+async function changePassword(){
+
+try{
+
+const response=await fetch(
+
+`${API}/api/profile/change-password`,
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+user_id:user.id,
+
+current_password:
+
+document.getElementById("currentPassword").value,
+
+new_password:
+
+document.getElementById("newPassword").value,
+
+confirm_password:
+
+document.getElementById("confirmPassword").value
+
+})
+
+}
+
+);
+
+const data=await response.json();
+
+alert(data.message);
+
+if(data.success){
+
+document.getElementById("currentPassword").value="";
+
+document.getElementById("newPassword").value="";
+
+document.getElementById("confirmPassword").value="";
+
+}
+
+}catch(err){
+
+console.log(err);
+
+alert("Unable to change password.");
+
+}
+
+}
