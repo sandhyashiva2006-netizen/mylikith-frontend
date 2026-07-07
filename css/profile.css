@@ -621,3 +621,51 @@ margin-bottom:8px;
 
 }
 
+.change-password-card{
+
+    max-width:520px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.change-password-card label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+    color:#ddd;
+
+}
+
+.change-password-card input{
+
+    width:100%;
+
+    height:48px;
+
+    border-radius:10px;
+
+    padding:0 16px;
+
+    font-size:15px;
+
+    box-sizing:border-box;
+
+}
+
+.change-password-card .primary-btn{
+
+    width:220px;
+
+    margin-top:10px;
+
+}
+
