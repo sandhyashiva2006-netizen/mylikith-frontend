@@ -99,13 +99,39 @@ color:white;
 }
 
 .hero{
+
 display:flex;
+
 align-items:center;
+
 justify-content:space-between;
-padding:100px 80px;
+
+padding:130px 90px 80px;
+
+min-height:92vh;
+
 position:relative;
+
 overflow:hidden;
-min-height:85vh;
+
+background:
+
+linear-gradient(
+
+rgba(7,10,22,.88),
+
+rgba(7,10,22,.88)
+
+),
+
+url("../images/dashboard-bg.jpg");
+
+background-size:cover;
+
+background-position:center;
+
+background-attachment:fixed;
+
 }
 
 .hero::before{
@@ -162,18 +188,46 @@ align-items:center;
 flex:1;
 }
 
-.hero-circle{
-width:500px;
-height:500px;
-border-radius:50%;
-background:linear-gradient(
-135deg,
-#7C3AED,
-#4F46E5,
-#22D3EE
+.hero-image{
+
+width:720px;
+
+max-width:100%;
+
+animation:floatHero 6s ease-in-out infinite;
+
+filter:
+
+drop-shadow(
+
+0 30px 80px
+
+rgba(124,58,237,.45)
+
 );
-filter:blur(20px);
-opacity:0.8;
+
+}
+
+@keyframes floatHero{
+
+0%{
+
+transform:translateY(0px);
+
+}
+
+50%{
+
+transform:translateY(-15px);
+
+}
+
+100%{
+
+transform:translateY(0px);
+
+}
+
 }
 
 .language-chips{
@@ -234,9 +288,40 @@ gap:20px;
 
 .novel-card,
 .writer-card{
-background:#111827;
+
+background:
+
+rgba(18,20,38,.82);
+
+backdrop-filter:blur(18px);
+
+border:
+
+1px solid
+
+rgba(255,255,255,.08);
+
 padding:30px;
-border-radius:15px;
+
+border-radius:20px;
+
+transition:.35s;
+
+box-shadow:
+
+0 10px 35px
+
+rgba(0,0,0,.35);
+
+}
+
+.novel-card:hover,
+.writer-card:hover{
+
+transform:translateY(-8px);
+
+border-color:#7C3AED;
+
 }
 
 .writer-cta{
@@ -273,16 +358,52 @@ background:linear-gradient(
 }
 
 .stats{
-display:flex;
-justify-content:center;
-gap:80px;
-padding:60px 20px;
+
+display:grid;
+
+grid-template-columns:
+
+repeat(4,1fr);
+
+gap:25px;
+
+padding:40px 80px;
+
+background:transparent;
+
 }
 
 .stat{
+
+background:
+
+rgba(20,22,42,.88);
+
+padding:35px;
+
+border-radius:20px;
+
+backdrop-filter:blur(15px);
+
+border:
+
+1px solid
+
+rgba(255,255,255,.08);
+
 text-align:center;
+
+transition:.3s;
+
 }
 
+.stat:hover{
+
+transform:translateY(-6px);
+
+border-color:#7C3AED;
+
+}
 .stat h2{
 font-size:40px;
 color:#22D3EE;
@@ -293,7 +414,17 @@ color:#cbd5e1;
 }
 
 .section{
-padding:100px 80px;
+
+padding:90px 80px;
+
+background:
+
+url("../images/dashboard-bg.jpg");
+
+background-size:cover;
+
+background-position:center;
+
 }
 
 .section-title{
