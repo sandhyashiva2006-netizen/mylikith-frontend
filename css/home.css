@@ -16,7 +16,7 @@ color:white;
 
 display:grid;
 
-grid-template-columns:45% 55%;
+grid-template-columns:50% 50%;
 
 align-items:center;
 
@@ -85,7 +85,17 @@ pointer-events:none;
 }
 
 .hero-left{
-max-width:650px;
+
+background:rgba(12,18,32,.45);
+
+backdrop-filter:blur(18px);
+
+padding:50px;
+
+border-radius:30px;
+
+border:1px solid rgba(255,255,255,.08);
+
 }
 
 .hero-left h1{
@@ -117,7 +127,7 @@ flex:0 0 55%;
 
 display:flex;
 
-justify-content:center;
+justify-content:flex-end;
 
 align-items:center;
 
@@ -131,7 +141,7 @@ overflow:hidden;
 
 .hero-image{
 
-width:950px;
+width:700px;
 
 max-width:none;
 
@@ -146,6 +156,9 @@ drop-shadow(0 30px 80px rgba(124,58,237,.45));
 animation:floatHero 6s ease-in-out infinite;
 
 z-index:2;
+
+opacity:1;
+    filter:drop-shadow(0 25px 60px rgba(124,58,237,.55));
 
 }
 
@@ -313,6 +326,12 @@ grid-template-columns:
 repeat(4,1fr);
 
 gap:25px;
+
+margin-top:-80px;
+
+position:relative;
+
+z-index:20;
 
 padding:40px 80px;
 
