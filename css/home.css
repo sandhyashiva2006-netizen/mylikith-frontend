@@ -426,20 +426,35 @@ gap:28px;
 
 }
 
-.novel-card,
-.writer-card{
+.novel-card{
 
-background:
+width:220px;
 
-rgba(18,20,38,.82);
+background:rgba(18,20,38,.82);
 
 backdrop-filter:blur(18px);
 
-border:
+border:1px solid rgba(255,255,255,.08);
 
-1px solid
+border-radius:18px;
 
-rgba(255,255,255,.08);
+overflow:hidden;
+
+padding:0;
+
+transition:.35s;
+
+box-shadow:0 10px 35px rgba(0,0,0,.35);
+
+}
+
+.writer-card{
+
+background:rgba(18,20,38,.82);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.08);
 
 padding:30px;
 
@@ -447,11 +462,55 @@ border-radius:20px;
 
 transition:.35s;
 
-box-shadow:
+box-shadow:0 10px 35px rgba(0,0,0,.35);
 
-0 10px 35px
+}
 
-rgba(0,0,0,.35);
+.novel-card img{
+
+width:100%;
+
+height:300px;
+
+object-fit:cover;
+
+display:block;
+
+}
+
+.novel-card-content{
+
+padding:18px;
+
+}
+
+.novel-card h3{
+
+font-size:18px;
+
+margin-bottom:8px;
+
+}
+
+.novel-card p{
+
+font-size:14px;
+
+color:#CBD5E1;
+
+margin-bottom:12px;
+
+}
+
+.novel-card .meta{
+
+display:flex;
+
+justify-content:space-between;
+
+font-size:13px;
+
+color:#22D3EE;
 
 }
 
@@ -569,11 +628,11 @@ margin-bottom:40px;
 
 display:grid;
 
-grid-template-columns:repeat(4,minmax(260px,1fr));
-
-gap:28px;
+grid-template-columns:repeat(auto-fill,minmax(220px,220px));
 
 justify-content:center;
+
+gap:24px;
 
 }
 
