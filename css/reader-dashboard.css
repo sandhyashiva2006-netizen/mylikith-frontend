@@ -1,3 +1,29 @@
+.hero-bg{
+
+min-height:100vh;
+
+background:
+linear-gradient(rgba(7,10,20,.72),rgba(7,10,20,.78)),
+url("../assets/images/profile-bg.webp");
+
+background-size:cover;
+
+background-position:center;
+
+background-attachment:fixed;
+
+background-repeat:no-repeat;
+
+}
+
+.hero-overlay{
+
+min-height:100vh;
+
+backdrop-filter:blur(2px);
+
+}
+
 /* ==========================================================
    MyLikith Reader Dashboard
    ========================================================== */
