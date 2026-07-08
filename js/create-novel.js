@@ -143,3 +143,27 @@ alert(
 }
 
 }
+
+const coverInput=document.getElementById("cover");
+
+const coverPreview=document.getElementById("coverPreview");
+
+coverInput.addEventListener("change",e=>{
+
+const file=e.target.files[0];
+
+if(!file)return;
+
+const reader=new FileReader();
+
+reader.onload=function(event){
+
+coverPreview.src=event.target.result;
+
+document.querySelector(".cover-overlay").style.background="rgba(0,0,0,.15)";
+
+};
+
+reader.readAsDataURL(file);
+
+});

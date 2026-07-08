@@ -102,21 +102,60 @@ Create Novel
 
 <div class="form-group">
 
-<label>
+<label>Novel Cover</label>
 
-Novel Cover
-
-</label>
+<div id="coverUpload" class="cover-upload">
 
 <input
-
 type="file"
-
 id="cover"
+accept="image/*"
+hidden>
 
-accept="image/*">
+<img
+id="coverPreview"
+src="assets/images/default-cover.png"
+class="cover-preview">
+
+<div class="cover-overlay">
+
+<div class="cover-icon">
+
+📖
 
 </div>
+
+<h3>
+
+Click to Upload Cover
+
+</h3>
+
+<p>
+
+JPG • PNG • WEBP
+
+<br>
+
+Recommended 600 × 900
+
+</p>
+
+<button
+type="button"
+class="upload-btn"
+onclick="document.getElementById('cover').click()">
+
+Choose Cover
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
 <div id="footer"></div>
 
 <script src="js/create-novel.js"></script>
