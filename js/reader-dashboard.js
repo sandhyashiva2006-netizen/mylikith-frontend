@@ -1126,63 +1126,60 @@ loadReadingGoal();
 
 async function loadRecommendations(){
 
-const response=await fetch(
+    const response = await fetch(
+        `${API}/api/recommendations/${readerUser.id}`
+    );
 
-`${API}/api/recommendations/${readerUser.id}`
+    const novels = await response.json();
 
-);
+    const container = document.getElementById("recommendedNovels");
 
-const novels=await response.json();
+    if(!container) return;
 
-const container=
+    container.innerHTML = "";
 
-document.getElementById(
+    if(novels.length===0){
 
-"recommendedNovels"
+        container.innerHTML="<p>No recommendations yet.</p>";
 
-);
+        return;
 
-if(!container)return;
+    }
 
-container.innerHTML="";
+    container.style.display="grid";
+    container.style.gridTemplateColumns="repeat(auto-fit,minmax(220px,220px))";
+    container.style.justifyContent="center";
+    container.style.gap="24px";
 
-if(novels.length===0){
+    novels.forEach(novel=>{
 
-container.innerHTML=
+        container.innerHTML += `
 
-"<p>No recommendations yet.</p>";
+        <div class="common-novel-card"
+             onclick="location.href='novel.html?id=${novel.id}'">
 
-return;
+            <img
+                class="common-novel-cover"
+                src="${novel.cover_url || 'https://placehold.co/300x450'}"
+                onerror="this.src='https://placehold.co/300x450'">
 
-}
+            <div class="common-novel-body">
 
-novels.forEach(novel=>{
+                <h3>${novel.title}</h3>
 
-container.innerHTML+=`
+                <p>${novel.category}</p>
 
-<div class="novel-card"
+                <button class="btn btn-primary">
+                    Read Now
+                </button>
 
-onclick="location.href='novel.html?id=${novel.id}'">
+            </div>
 
-<img src="${novel.cover_url}">
+        </div>
 
-<h3>
+        `;
 
-${novel.title}
-
-</h3>
-
-<p>
-
-${novel.category}
-
-</p>
-
-</div>
-
-`;
-
-});
+    });
 
 }
 
