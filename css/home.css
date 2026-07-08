@@ -1313,6 +1313,15 @@ display:flex;
 
 }
 
+.dashboard-container{
+
+max-width:1400px;
+
+margin:40px auto 0;
+
+padding:0 30px 60px;
+
+}
 
 .goal-card{
 
