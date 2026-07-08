@@ -200,7 +200,7 @@ width:100%;
 
 max-width:620px;
 
-margin-left:40px;
+margin-left:80px;
 
 z-index:5;
 
@@ -311,10 +311,9 @@ backdrop-filter:blur(10px);
 
 
 .hero-image{
-
-filter:none;
-
-mix-blend-mode:screen;
+    width:1200px;
+    max-width:none;
+    transform:translateX(220px) translateY(20px);
 
 opacity:.95;
 
