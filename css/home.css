@@ -148,7 +148,7 @@ display:flex;
 
 align-items:center;
 
-padding:0 7% 100px;
+padding:25px 0 100px;
 
 margin:0;
 
@@ -178,25 +178,15 @@ margin:0 auto;
 
 padding:0 70px;
 
-display:grid;
-
-grid-template-columns:44% 56%;
-
-align-items:center;
-
-gap:0;
+display:block;
 
 }
 
 .hero-left{
 
-width:100%;
+width:620px;
 
-max-width:620px;
-
-margin:0;
-
-z-index:5;
+padding-top:35px;
 
 }
 
