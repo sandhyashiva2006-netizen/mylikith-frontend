@@ -1696,3 +1696,111 @@ cursor:pointer;
 
 }
 
+/* ==========================
+   Categories
+========================== */
+
+.category-grid{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:28px;
+
+margin-top:40px;
+
+}
+
+.category-card{
+
+background:rgba(18,20,38,.82);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:24px;
+
+padding:35px 28px;
+
+text-decoration:none;
+
+color:#fff;
+
+transition:.35s;
+
+backdrop-filter:blur(18px);
+
+box-shadow:0 12px 35px rgba(0,0,0,.25);
+
+}
+
+.category-card:hover{
+
+transform:translateY(-8px);
+
+border-color:#7C3AED;
+
+box-shadow:0 20px 45px rgba(124,58,237,.20);
+
+}
+
+.category-icon{
+
+width:72px;
+
+height:72px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+border-radius:18px;
+
+background:linear-gradient(135deg,#7C3AED,#22D3EE);
+
+font-size:34px;
+
+margin-bottom:22px;
+
+}
+
+.category-card h3{
+
+font-size:24px;
+
+margin-bottom:12px;
+
+}
+
+.category-card p{
+
+font-size:15px;
+
+line-height:1.8;
+
+color:#CBD5E1;
+
+}
+
+@media(max-width:1100px){
+
+.category-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:650px){
+
+.category-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
