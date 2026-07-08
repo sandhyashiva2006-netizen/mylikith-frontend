@@ -24,6 +24,14 @@ alt="MyLikith">
 
 </div>
 
+<button
+class="menu-toggle"
+id="menuToggle">
+
+☰
+
+</button>
+
 <ul class="nav-links">
 
 `;
@@ -218,6 +226,35 @@ html += `
 
 navbar.innerHTML = html;
 
+const menuToggle=document.getElementById("menuToggle");
+
+const navLinks=document.querySelector(".nav-links");
+
+if(menuToggle){
+
+menuToggle.onclick=()=>{
+
+navLinks.classList.toggle("active");
+
+menuToggle.innerHTML=
+
+navLinks.classList.contains("active")
+
+?
+
+"✕
+
+"
+
+:
+
+"☰";
+
+};
+
+}
+
+
 const logoutBtn =
 document.getElementById(
 "logoutBtn"
@@ -311,6 +348,7 @@ console.log(err);
 }
 
 }
+
 
 loadPremiumBadge();
 loadNotificationCount();
