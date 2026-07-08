@@ -141,10 +141,16 @@ color:#fff;
 
 .hero{
     position:relative;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    padding:35px 7% 100px;
+
+min-height:calc(100vh - 82px);
+
+display:flex;
+
+align-items:center;
+
+padding:0 7% 100px;
+
+margin:0;
 
     background:
         linear-gradient(
@@ -189,6 +195,8 @@ width:100%;
 max-width:620px;
 
 margin:0;
+
+padding-top:60px;
 
 z-index:5;
 
