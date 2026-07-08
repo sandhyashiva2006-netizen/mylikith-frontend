@@ -20,7 +20,7 @@ src="assets/images/logo.png"
 class="logo-img"
 alt="MyLikith">
 
-<span>MYLIKITH</span>
+<span>MyLikith</span>
 
 </div>
 
