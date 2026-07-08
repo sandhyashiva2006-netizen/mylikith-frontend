@@ -24,7 +24,7 @@ align-items:center;
 
 justify-content:center;
 
-padding:140px 7% 70px;
+padding:170px 7% 120px;
 
 overflow:hidden;
 
@@ -60,19 +60,17 @@ pointer-events:none;
 
 width:100%;
 
-max-width:1500px;
+max-width:1400px;
+
+margin:auto;
 
 display:grid;
 
-grid-template-columns:46% 54%;
+grid-template-columns:1fr 1fr;
 
 align-items:center;
 
-gap:40px;
-
-position:relative;
-
-z-index:2;
+gap:80px;
 
 }
 
@@ -85,6 +83,10 @@ backdrop-filter:blur(22px);
 border:1px solid rgba(255,255,255,.08);
 
 border-radius:30px;
+
+max-width:640px;
+
+margin:auto;
 
 padding:60px;
 
@@ -198,23 +200,27 @@ backdrop-filter:blur(10px);
 
 display:flex;
 
-justify-content:flex-end;
+justify-content:center;
 
 align-items:center;
 
 position:relative;
 
+overflow:visible;
+
 }
 
 .hero-image{
 
-width:900px;
+width:100%;
 
-max-width:none;
+max-width:760px;
 
-animation:floatHero 6s ease-in-out infinite;
+height:auto;
 
-filter:drop-shadow(0 40px 90px rgba(124,58,237,.45));
+display:block;
+
+object-fit:contain;
 
 }
 
