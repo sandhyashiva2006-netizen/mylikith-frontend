@@ -910,15 +910,13 @@ const response=await fetch(
 
 const streak=await response.json();
 
-document.getElementById(
-
-"readingStreak"
-
-).innerHTML=`
+document.getElementById("readingStreak").innerHTML=`
 
 <div class="streak-card">
 
-🔥 Current Streak
+<h2>🔥 Reading Streak</h2>
+
+
 
 <h1>
 
@@ -962,7 +960,7 @@ document.getElementById(
 
 <div class="reward-card">
 
-🔥 Daily Streak
+<h2>🎁 Daily Reward</h2>
 
 <b>
 
