@@ -132,21 +132,23 @@ color:#fff;
 
 .hero{
 
-position:relative;
+background:
 
-min-height:100vh;
+linear-gradient(
+90deg,
+rgba(8,10,24,.92) 0%,
+rgba(8,10,24,.55) 45%,
+rgba(8,10,24,.15) 70%,
+rgba(8,10,24,.05) 100%
+),
 
-display:flex;
+url("..assets/images/hero-background.webp");
 
-align-items:center;
+background-size:cover;
 
-justify-content:center;
+background-position:center;
 
-padding:170px 7% 120px;
-
-overflow:hidden;
-
-background:transparent;
+background-repeat:no-repeat;
 
 }
 
@@ -306,31 +308,15 @@ backdrop-filter:blur(10px);
 
 }
 
-.hero-right{
 
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-position:relative;
-
-min-height:700px;
-
-}
 
 .hero-image{
 
-width:1050px;
+filter:none;
 
-max-width:none;
+mix-blend-mode:screen;
 
-transform:translateX(120px);
-
-animation:floatHero 6s ease-in-out infinite;
-
-filter:drop-shadow(0 40px 100px rgba(124,58,237,.45));
+opacity:.95;
 
 }
 
@@ -338,7 +324,7 @@ filter:drop-shadow(0 40px 100px rgba(124,58,237,.45));
 
 0%{
 
-transform:translateY(0px);
+transform:translateX(40px) scale(1.08);
 
 }
 
