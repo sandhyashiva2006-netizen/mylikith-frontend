@@ -135,7 +135,7 @@ color:#fff;
     min-height:100vh;
     display:flex;
     align-items:center;
-    padding:75px 7% 120px;
+    padding:55px 7% 120px;
 
     background:
         linear-gradient(
@@ -334,9 +334,9 @@ white-space:nowrap;
 
 .logo-img{
 
-width:182px;
+width:112px;
 
-height:182px;
+height:112px;
 
 display:block;
 
