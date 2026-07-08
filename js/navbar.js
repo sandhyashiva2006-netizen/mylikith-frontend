@@ -16,7 +16,7 @@ let html = `
 <div class="logo">
 
 <img
-src="images/logo.png"
+src="assets/images/logo.png"
 class="logo-img"
 alt="MyLikith">
 

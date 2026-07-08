@@ -135,7 +135,7 @@ color:#fff;
     min-height:100vh;
     display:flex;
     align-items:center;
-    padding:160px 7% 120px;
+    padding:95px 7% 120px;
 
     background:
         linear-gradient(
@@ -324,27 +324,37 @@ display:flex;
 
 align-items:center;
 
-gap:14px;
+gap:12px;
+
+text-decoration:none;
+
+white-space:nowrap;
 
 }
 
 .logo-img{
 
-width:46px;
+width:42px;
 
-height:46px;
+height:42px;
+
+display:block;
 
 object-fit:contain;
+
+flex-shrink:0;
 
 }
 
 .logo span{
 
-font-size:34px;
+font-size:24px;
 
 font-weight:800;
 
-background:linear-gradient(90deg,#fff,#c4b5fd,#22D3EE);
+letter-spacing:.5px;
+
+background:linear-gradient(90deg,#ffffff,#c9b6ff,#35d7ff);
 
 -webkit-background-clip:text;
 
