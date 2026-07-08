@@ -14,13 +14,15 @@ MYLIKITH GLOBAL BACKGROUND
 
 body{
 
-background:
+margin:0;
 
+padding-top:82px;
+
+background:
 linear-gradient(
 rgba(6,10,28,.82),
 rgba(10,15,35,.86)
 ),
-
 url("../assets/images/profile-bg.jpg");
 
 background-size:cover;
@@ -356,29 +358,6 @@ margin-top:20px;
 
 }
 
-/* ==========================================
-   FIXED NAVBAR SPACING
-========================================== */
-
-body{
-    padding-top:82px;
-}
-
-.dashboard,
-.profile-container,
-.library-container,
-.home-container,
-.reader-container{
-
-padding-top:25px;
-
-}
-
-.dashboard-hero{
-
-margin-top:20px;
-
-}
 
 /*==========================================
 GLOBAL GLASS EFFECT
