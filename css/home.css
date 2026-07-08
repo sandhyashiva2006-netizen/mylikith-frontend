@@ -1066,67 +1066,146 @@ transform:translateY(-2px);
 
 }
 
-.streak-card{
+.streak-card,
+.reward-card{
 
-background:linear-gradient(
+height:320px;
 
-135deg,
+display:flex;
 
-#F97316,
+flex-direction:column;
 
-#EA580C
+justify-content:center;
 
+align-items:center;
+
+padding:40px;
+
+border-radius:24px;
+
+background:
+linear-gradient(
+145deg,
+rgba(34,25,74,.92),
+rgba(18,22,44,.92)
 );
 
-padding:25px;
+border:1px solid rgba(139,92,246,.35);
 
-border-radius:18px;
+box-shadow:
+0 12px 40px rgba(0,0,0,.35),
+0 0 30px rgba(124,58,237,.15);
 
-color:#fff;
+backdrop-filter:blur(20px);
 
 text-align:center;
 
-font-weight:bold;
-
-box-shadow:0 12px 30px rgba(249,115,22,.3);
+transition:.35s;
 
 }
 
+.streak-card:hover,
+.reward-card:hover{
+
+transform:translateY(-6px);
+
+border-color:#8b5cf6;
+
+box-shadow:
+0 20px 50px rgba(124,58,237,.25);
+
+}
+
+.streak-card h1{
+
+font-size:72px;
+
+font-weight:800;
+
+margin:20px 0;
+
+background:linear-gradient(90deg,#c084fc,#60a5fa);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+}
+
+.streak-card,
 .reward-card{
 
-background:linear-gradient(
-135deg,
-#059669,
-#10B981
-);
+color:#ffffff;
 
-padding:24px;
+font-size:22px;
 
-border-radius:18px;
+font-weight:600;
 
-text-align:center;
-
-color:white;
-
-font-weight:bold;
+line-height:1.8;
 
 }
 
 .reward-card button{
 
-margin-top:15px;
+margin-top:35px;
 
-padding:10px 20px;
+padding:16px 38px;
 
 border:none;
 
-border-radius:10px;
+border-radius:14px;
+
+background:linear-gradient(90deg,#7c3aed,#9333ea);
+
+color:#fff;
+
+font-size:16px;
+
+font-weight:700;
 
 cursor:pointer;
 
-font-weight:bold;
+transition:.3s;
 
 }
+
+.reward-card button:hover{
+
+transform:translateY(-3px);
+
+box-shadow:0 10px 30px rgba(124,58,237,.4);
+
+}
+
+.top-dashboard-grid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:30px;
+
+align-items:stretch;
+
+}
+
+.top-dashboard-grid section{
+
+display:flex;
+
+flex-direction:column;
+
+}
+
+#readingStreak,
+#dailyRewardCard{
+
+flex:1;
+
+display:flex;
+
+}
+
 
 .goal-card{
 
