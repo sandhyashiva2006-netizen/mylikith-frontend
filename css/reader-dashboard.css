@@ -1,0 +1,255 @@
+/* ==========================================================
+   MyLikith Reader Dashboard
+   ========================================================== */
+
+.dashboard{
+
+max-width:1400px;
+
+margin:0 auto;
+
+padding:30px 20px 80px;
+
+position:relative;
+
+z-index:2;
+
+}
+
+.dashboard section{
+
+margin-bottom:55px;
+
+}
+
+.dashboard h2{
+
+font-size:30px;
+
+font-weight:700;
+
+margin-bottom:25px;
+
+color:#fff;
+
+}
+
+.dashboard-section{
+
+margin-bottom:55px;
+
+}
+
+/* ===========================
+   Reading Streak
+=========================== */
+
+#readingStreak{
+
+background:rgba(20,27,45,.72);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:20px;
+
+padding:28px;
+
+backdrop-filter:blur(18px);
+
+}
+
+/* ===========================
+   Daily Reward
+=========================== */
+
+#dailyRewardCard{
+
+background:rgba(20,27,45,.72);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:20px;
+
+padding:28px;
+
+backdrop-filter:blur(18px);
+
+}
+
+/* ===========================
+   Reading Goal
+=========================== */
+
+#readingGoal{
+
+background:rgba(20,27,45,.72);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:20px;
+
+padding:28px;
+
+}
+
+/* ===========================
+   Recent Activity
+=========================== */
+
+#readerActivity{
+
+display:flex;
+
+flex-direction:column;
+
+gap:18px;
+
+}
+
+/* ===========================
+   Feed
+=========================== */
+
+#readerFeed{
+
+display:flex;
+
+flex-direction:column;
+
+gap:20px;
+
+}
+
+/* ===========================
+   Recommended
+=========================== */
+
+#recommendedNovels{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+
+gap:24px;
+
+}
+
+/* ===========================
+   Discover
+=========================== */
+
+.discover-grid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:24px;
+
+}
+
+.discover-card{
+
+background:rgba(20,27,45,.72);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:20px;
+
+padding:24px;
+
+}
+
+/* ===========================
+   Achievements
+=========================== */
+
+.reading-achievements{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:24px;
+
+}
+
+.achievement-card{
+
+background:rgba(20,27,45,.72);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:20px;
+
+padding:24px;
+
+text-align:center;
+
+}
+
+/* ===========================
+   Bookmarks
+=========================== */
+
+.bookmarks-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+
+gap:24px;
+
+}
+
+.empty-card{
+
+padding:40px;
+
+border-radius:18px;
+
+background:rgba(20,27,45,.72);
+
+border:1px dashed rgba(255,255,255,.12);
+
+text-align:center;
+
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media(max-width:900px){
+
+.discover-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.reading-achievements{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:650px){
+
+.reading-achievements{
+
+grid-template-columns:1fr;
+
+}
+
+#recommendedNovels,
+
+.bookmarks-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
