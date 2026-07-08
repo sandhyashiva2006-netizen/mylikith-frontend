@@ -15,17 +15,12 @@ let html = `
 
 <div class="logo">
 
-<a href="${
-navbarUser
-?
-"reader-dashboard.html"
-:
-"index.html"
-}">
+<img
+src="images/logo.png"
+class="logo-img"
+alt="MyLikith">
 
-✨ MYLIKITH
-
-</a>
+<span>MYLIKITH</span>
 
 </div>
 

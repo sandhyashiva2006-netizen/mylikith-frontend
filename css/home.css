@@ -356,6 +356,40 @@ transform:translateY(0px);
 
 }
 
+.logo{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+}
+
+.logo-img{
+
+width:46px;
+
+height:46px;
+
+object-fit:contain;
+
+}
+
+.logo span{
+
+font-size:34px;
+
+font-weight:800;
+
+background:linear-gradient(90deg,#fff,#c4b5fd,#22D3EE);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+}
+
 .language-chips{
 display:flex;
 justify-content:center;
