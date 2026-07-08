@@ -131,49 +131,26 @@ color:#fff;
 }
 
 .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding:160px 7% 120px;
 
-background:
+    background:
+        linear-gradient(
+            90deg,
+            rgba(8,10,22,.88) 0%,
+            rgba(8,10,22,.72) 30%,
+            rgba(8,10,22,.38) 55%,
+            rgba(8,10,22,.10) 75%,
+            rgba(8,10,22,.05) 100%
+        ),
+        url("../assets/images/hero-background.webp");
 
-linear-gradient(
-90deg,
-rgba(8,10,24,.92) 0%,
-rgba(8,10,24,.55) 45%,
-rgba(8,10,24,.15) 70%,
-rgba(8,10,24,.05) 100%
-),
-
-url("..assets/images/hero-background.webp");
-
-background-size:cover;
-
-background-position:center;
-
-background-repeat:no-repeat;
-
-}
-
-.hero::before{
-
-content:"";
-
-position:absolute;
-
-width:900px;
-
-height:900px;
-
-right:-250px;
-
-top:-250px;
-
-background:radial-gradient(circle,
-rgba(124,58,237,.28),
-transparent 70%);
-
-filter:blur(60px);
-
-pointer-events:none;
-
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
 }
 
 .hero-content{
