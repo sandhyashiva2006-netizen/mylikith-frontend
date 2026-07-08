@@ -324,7 +324,7 @@ display:flex;
 
 align-items:center;
 
-gap:12px;
+gap:10px;
 
 text-decoration:none;
 
@@ -334,9 +334,9 @@ white-space:nowrap;
 
 .logo-img{
 
-width:112px;
+width:102px;
 
-height:112px;
+height:102px;
 
 display:block;
 
