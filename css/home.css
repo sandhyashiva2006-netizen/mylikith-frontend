@@ -53,6 +53,12 @@ white-space:nowrap;
 
 }
 
+.navbar{
+
+height:82px;
+
+}
+
 .nav-links{
 
 display:flex;
@@ -140,7 +146,8 @@ color:#fff;
 }
 
 .hero{
-    position:relative;
+
+position:relative;
 
 min-height:calc(100vh - 82px);
 
@@ -148,24 +155,27 @@ display:flex;
 
 align-items:center;
 
-padding:25px 0 100px;
+padding:120px 0 100px;
 
 margin:0;
 
-    background:
-        linear-gradient(
-            90deg,
-            rgba(8,10,22,.88) 0%,
-            rgba(8,10,22,.72) 30%,
-            rgba(8,10,22,.38) 55%,
-            rgba(8,10,22,.10) 75%,
-            rgba(8,10,22,.05) 100%
-        ),
-        url("../assets/images/hero-background.webp");
+background:
+linear-gradient(
+90deg,
+rgba(8,10,22,.88) 0%,
+rgba(8,10,22,.72) 30%,
+rgba(8,10,22,.38) 55%,
+rgba(8,10,22,.10) 75%,
+rgba(8,10,22,.05) 100%
+),
+url("../assets/images/hero-background.webp");
 
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
+background-size:cover;
+
+background-position:center;
+
+background-repeat:no-repeat;
+
 }
 
 .hero-content{
@@ -176,9 +186,13 @@ max-width:1500px;
 
 margin:0 auto;
 
-padding:0 70px;
+padding:0 60px;
 
-display:block;
+display:flex;
+
+align-items:center;
+
+justify-content:flex-start;
 
 }
 
@@ -186,7 +200,9 @@ display:block;
 
 width:620px;
 
-padding-top:35px;
+padding:0;
+
+margin:0;
 
 }
 
