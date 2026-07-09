@@ -226,15 +226,21 @@ html += `
 
 navbar.innerHTML = html;
 
-if(menuToggle){
+const menuToggle = document.getElementById("menuToggle");
+
+if (menuToggle) {
 
     menuToggle.onclick = () => {
 
+        const navLinks = document.querySelector(".nav-links");
+
+        if (!navLinks) return;
+
         navLinks.classList.toggle("active");
 
-        if(navLinks.classList.contains("active")){
-            menuToggle.textContent = "X";
-        }else{
+        if (navLinks.classList.contains("active")) {
+            menuToggle.textContent = "✕";
+        } else {
             menuToggle.textContent = "☰";
         }
 
