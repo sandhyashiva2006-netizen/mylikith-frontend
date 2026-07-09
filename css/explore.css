@@ -173,3 +173,86 @@ background:#5B21B6;
 
 }
 
+.explore-search{
+
+display:flex;
+
+gap:15px;
+
+margin:35px 0;
+
+}
+
+.explore-search input{
+
+flex:1;
+
+padding:16px 20px;
+
+border-radius:14px;
+
+border:1px solid rgba(255,255,255,.08);
+
+background:#13172A;
+
+color:#fff;
+
+font-size:17px;
+
+}
+
+.explore-search button{
+
+padding:16px 28px;
+
+border:none;
+
+border-radius:14px;
+
+background:#7C3AED;
+
+color:#fff;
+
+font-weight:700;
+
+cursor:pointer;
+
+}
+
+.filter-chips{
+
+display:flex;
+
+gap:12px;
+
+flex-wrap:wrap;
+
+margin-bottom:35px;
+
+}
+
+.chip{
+
+padding:12px 22px;
+
+border:none;
+
+border-radius:999px;
+
+background:#1A1E33;
+
+color:#fff;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.chip:hover,
+.chip.active{
+
+background:#7C3AED;
+
+}
+

@@ -33,15 +33,47 @@ Discover novels from around the world.
 
 </section>
 
+<section class="search-section">
+
+<div class="explore-search">
+
+<input
+id="searchInput"
+type="text"
+placeholder="🔍 Search novels, authors, genres..."
+onkeyup="searchNovels()">
+
+<button id="searchBtn">
+
+Search
+
+</button>
+
+</div>
+
+</section>
+
 <section class="filters">
 
-<button class="filter active">All</button>
-<button class="filter">Romance</button>
-<button class="filter">Fantasy</button>
-<button class="filter">Adventure</button>
-<button class="filter">Mystery</button>
-<button class="filter">Horror</button>
-<button class="filter">Sci-Fi</button>
+<div class="filter-chips">
+
+<button class="chip active">All</button>
+
+<button class="chip">Fantasy</button>
+
+<button class="chip">Romance</button>
+
+<button class="chip">Mystery</button>
+
+<button class="chip">Sci-Fi</button>
+
+<button class="chip">Adventure</button>
+
+<button class="chip">Horror</button>
+
+<button class="chip">Thriller</button>
+
+</div>
 
 </section>
 
@@ -74,6 +106,8 @@ Clear
 <div id="recentSearches"></div>
 
 </div>
+</div>
+
 
 <div class="trending-search-section">
 
@@ -91,15 +125,31 @@ Loading...
 
 </div>
 
-<section class="search-section">
 
-<input
-type="text"
-id="searchInput"
-placeholder="🔍 Search novels..."
-onkeyup="searchNovels()">
 
-</section>
+<div class="explore-topbar">
+
+<h2>
+
+Trending Novels
+
+</h2>
+
+<select id="sortNovels">
+
+<option>Trending</option>
+
+<option>Newest</option>
+
+<option>Most Read</option>
+
+<option>Highest Rated</option>
+
+<option>Completed</option>
+
+</select>
+
+</div>
 
 <div id="novelsGrid" class="novels-grid"></div>
 <div id="footer"></div>
