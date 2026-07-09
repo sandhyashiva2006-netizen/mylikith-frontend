@@ -33,6 +33,14 @@ border-radius:15px;
 
 }
 
+.novel-cover,
+.novel-info{
+
+position:relative;
+z-index:2;
+
+}
+
 .hero-right{
 
 display:flex;
@@ -494,7 +502,7 @@ rgba(5,7,18,.75)
 );
 
 pointer-events:none;
-
+z-index:0;
 }
 
 .novel-cover img{
@@ -612,6 +620,77 @@ font-size:18px;
 font-weight:700;
 
 }
+
+}
+
+#novelTitle{
+
+font-size:clamp(42px,5vw,68px);
+
+font-weight:900;
+
+line-height:1.05;
+
+margin-bottom:12px;
+
+color:#ffffff;
+
+text-shadow:
+0 4px 18px rgba(124,58,237,.45);
+
+background:linear-gradient(
+90deg,
+#ffffff,
+#d8b4fe,
+#8be9ff
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+}
+
+.text-btn{
+
+margin-top:18px;
+
+padding:10px 20px;
+
+border:none;
+
+border-radius:999px;
+
+background:linear-gradient(
+135deg,
+#7C3AED,
+#9333EA
+);
+
+color:#fff;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.text-btn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:0 10px 25px rgba(124,58,237,.35);
+
+}
+
+.novel-actions button:disabled{
+
+opacity:.45;
+
+cursor:not-allowed;
+
+filter:grayscale(.4);
 
 }
 

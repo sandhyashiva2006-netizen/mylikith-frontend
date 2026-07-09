@@ -39,11 +39,13 @@ await Promise.all([
     checkFollowStatus()
 ]);
 
-document.querySelector(".novel-cover").innerHTML=`
-<img
-src="${novel.cover_url||'assets/images/default-cover.png'}"
-style="width:100%;height:100%;object-fit:cover;border-radius:20px;">
-`;
+const cover=document.getElementById("novelCover");
+
+if(cover){
+
+cover.src=novel.cover_url || "assets/images/default-cover.png";
+
+}
 
 
 if (!novel || !novel.id) {
@@ -118,14 +120,17 @@ container.innerHTML = "";
 
 if(chapters.length > 0){
 
-document
-.getElementById("startReadingBtn")
-.onclick = () => {
+const startBtn=document.getElementById("startReadingBtn");
 
-window.location.href =
-`reader.html?chapter=${chapters[0].id}`;
+if(startBtn){
+
+startBtn.onclick=()=>{
+
+window.location.href=`reader.html?chapter=${chapters[0].id}`;
 
 };
+
+}
 
 }
 
@@ -624,7 +629,15 @@ author.rating||0;
 
 }
 
-document.getElementById("shareBtn").onclick=async()=>{
+const shareBtn=document.getElementById("shareBtn");
+
+if(shareBtn){
+
+shareBtn.onclick=async()=>{
+
+};
+
+}
 
 if(navigator.share){
 
@@ -648,13 +661,25 @@ alert("Novel link copied.");
 
 };
 
-document.getElementById("reportBtn").onclick=()=>{
+const reportBtn=document.getElementById("reportBtn");
+
+if(reportBtn){
+
+reportBtn.onclick=reportNovel;
+
+}
 
 alert("Report feature will be available soon.");
 
 };
 
-document.getElementById("libraryBtn").onclick=async()=>{
+const libraryBtn=document.getElementById("libraryBtn");
+
+if(libraryBtn){
+
+libraryBtn.onclick=async()=>{
+};
+}
 
 const user=JSON.parse(localStorage.getItem("user"));
 
@@ -844,6 +869,36 @@ if(mobileReadBtn){
 mobileReadBtn.onclick=()=>{
 
 document.getElementById("startReadingBtn").click();
+
+};
+
+}
+
+const toggleBtn=document.getElementById("toggleDescription");
+const description=document.getElementById("novelDescription");
+
+if(toggleBtn && description){
+
+description.style.maxHeight="120px";
+description.style.overflow="hidden";
+
+let expanded=false;
+
+toggleBtn.onclick=()=>{
+
+expanded=!expanded;
+
+if(expanded){
+
+description.style.maxHeight="none";
+toggleBtn.textContent="Show Less";
+
+}else{
+
+description.style.maxHeight="120px";
+toggleBtn.textContent="Show More";
+
+}
 
 };
 
