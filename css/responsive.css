@@ -1,3 +1,13 @@
+
+html,
+body{
+
+width:100%;
+
+overflow-x:hidden;
+
+}
+
 .menu-toggle{
     display:none;
 }
@@ -43,9 +53,23 @@ img{
 .dashboard-container,
 .section{
 
-width:min(1400px,95%);
+max-width:1400px;
+
+width:100%;
 
 margin:auto;
+
+padding-left:16px;
+
+padding-right:16px;
+
+}
+
+*,
+*::before,
+*::after{
+
+max-width:100%;
 
 }
 
@@ -289,9 +313,11 @@ cursor:pointer;
 
 .navbar{
 
-padding:15px 20px;
+padding:0 16px;
 
-position:relative;
+height:70px;
+
+overflow:hidden;
 
 }
 
@@ -299,39 +325,41 @@ position:relative;
 
 position:fixed;
 
-top:82px;
+top:70px;
 
 right:-100%;
 
-width:300px;
+width:280px;
 
-height:calc(100vh - 82px);
+max-width:80vw;
+
+height:calc(100vh - 70px);
+
+overflow-y:auto;
+
+overflow-x:hidden;
 
 background:rgba(10,12,25,.97);
 
 backdrop-filter:blur(25px);
 
+transition:right .35s;
+
+padding:20px;
+
 display:flex;
 
 flex-direction:column;
 
-align-items:flex-start;
-
-padding:30px;
-
-gap:6px;
-
-transition:.35s;
-
-z-index:99999;
-
-border-left:1px solid rgba(255,255,255,.08);
+gap:10px;
 
 }
 
 .nav-links.active{
 
 right:0;
+
+}
 
 }
 
