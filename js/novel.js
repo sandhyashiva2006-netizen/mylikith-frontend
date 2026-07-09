@@ -741,11 +741,27 @@ ${novel.title}
 
 </h3>
 
-<p>
+<div class="card-meta">
 
-${novel.category}
+<span>
 
-</p>
+📚 ${novel.category}
+
+</span>
+
+<span>
+
+🌐 ${novel.language||"English"}
+
+</span>
+
+</div>
+
+<button class="mini-read">
+
+Read →
+
+</button>
 
 </a>
 
