@@ -133,6 +133,20 @@ let scrolled =
 
 const badge=document.getElementById("readingProgress");
 
+const completed=document.getElementById("chapterCompleted");
+
+if(
+
+window.innerHeight + window.scrollY >=
+
+document.body.offsetHeight - 100
+
+){
+
+completed.classList.add("show");
+
+}
+
 if(badge){
 
 badge.textContent=Math.round(scrolled)+"%";
@@ -1835,3 +1849,40 @@ loadChapter();
 
 }
 
+const completedLikeBtn=document.getElementById("completedLikeBtn");
+
+if(completedLikeBtn){
+
+completedLikeBtn.onclick=toggleLike;
+
+}
+
+const completedCommentBtn=document.getElementById("completedCommentBtn");
+
+if(completedCommentBtn){
+
+completedCommentBtn.onclick=()=>{
+
+document.getElementById("commentText").scrollIntoView({
+
+behavior:"smooth"
+
+});
+
+document.getElementById("commentText").focus();
+
+};
+
+}
+
+const completedNextBtn=document.getElementById("completedNextBtn");
+
+if(completedNextBtn){
+
+completedNextBtn.onclick=()=>{
+
+document.getElementById("nextChapterBtn").click();
+
+};
+
+}

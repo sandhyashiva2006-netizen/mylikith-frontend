@@ -964,3 +964,139 @@ width:100%;
 
 }
 
+/* ==========================================
+   Chapter Completed
+========================================== */
+
+.chapter-completed{
+
+display:none;
+
+margin:60px auto;
+
+max-width:700px;
+
+padding:40px;
+
+text-align:center;
+
+border-radius:22px;
+
+background:rgba(20,22,40,.88);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:0 20px 45px rgba(0,0,0,.35);
+
+}
+
+.chapter-completed.show{
+
+display:block;
+
+animation:fadeUp .5s ease;
+
+}
+
+.completed-icon{
+
+font-size:60px;
+
+margin-bottom:20px;
+
+}
+
+.chapter-completed h2{
+
+margin-bottom:12px;
+
+font-size:34px;
+
+color:#fff;
+
+}
+
+.chapter-completed p{
+
+color:#C7CBD8;
+
+margin-bottom:30px;
+
+}
+
+.completed-actions{
+
+display:flex;
+
+justify-content:center;
+
+gap:15px;
+
+flex-wrap:wrap;
+
+}
+
+.completed-actions button{
+
+padding:14px 26px;
+
+border:none;
+
+border-radius:12px;
+
+background:linear-gradient(135deg,#7C3AED,#9333EA);
+
+color:#fff;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.completed-actions button:hover{
+
+transform:translateY(-3px);
+
+}
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(30px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+@media(max-width:768px){
+
+.completed-actions{
+
+flex-direction:column;
+
+}
+
+.completed-actions button{
+
+width:100%;
+
+}
+
+}
+
