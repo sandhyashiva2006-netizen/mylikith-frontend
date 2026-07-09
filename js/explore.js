@@ -65,6 +65,66 @@ await fetch(API_URL);
 const novels =
 await response.json();
 
+const sort = document.getElementById("sortNovels")?.value;
+
+if(sort==="Newest"){
+
+    novels.sort((a,b)=>
+
+        new Date(b.created_at)-new Date(a.created_at)
+
+    );
+
+}
+
+else if(sort==="Most Read"){
+
+    novels.sort((a,b)=>
+
+        (b.views||0)-(a.views||0)
+
+    );
+
+}
+
+else if(sort==="Highest Rated"){
+
+    novels.sort((a,b)=>
+
+        (b.rating||0)-(a.rating||0)
+
+    );
+
+}
+
+else if(sort==="Completed"){
+
+    novels.sort((a,b)=>{
+
+        if((a.status||"").toLowerCase()==="completed" &&
+           (b.status||"").toLowerCase()!=="completed") return -1;
+
+        if((a.status||"").toLowerCase()!=="completed" &&
+           (b.status||"").toLowerCase()==="completed") return 1;
+
+        return 0;
+
+    });
+
+}
+
+else{
+
+    // Trending (default)
+
+    novels.sort((a,b)=>
+
+        (b.likes||0)-(a.likes||0)
+
+    );
+
+}
+
 renderNovels(
 novels
 );
@@ -91,6 +151,8 @@ loadNovels();
 return;
 
 }
+
+
 
 if(readerUser && query.trim()!==""){
 
@@ -187,6 +249,18 @@ loadNovels();
 loadRecentSearches();
 
 loadTrendingSearches();
+
+const sortSelect = document.getElementById("sortNovels");
+
+if(sortSelect){
+
+    sortSelect.addEventListener("change", () => {
+
+        loadNovels();
+
+    });
+
+}
 
 function searchAgain(keyword){
 
