@@ -120,3 +120,61 @@ Version 1.0.0
 `;
 
 }
+
+if(!document.getElementById("scrollTopBtn")){
+
+document.body.insertAdjacentHTML(
+
+"beforeend",
+
+`
+<button
+id="scrollTopBtn"
+class="scroll-top-btn"
+aria-label="Scroll to top">
+
+⬆
+
+</button>
+
+`
+
+);
+
+}
+
+/* ===============================
+   Scroll To Top
+=============================== */
+
+const scrollBtn = document.getElementById("scrollTopBtn");
+
+if(scrollBtn){
+
+window.onscroll = () => {
+
+if(window.scrollY>300){
+
+scrollBtn.classList.add("show");
+
+}else{
+
+scrollBtn.classList.remove("show");
+
+}
+
+};
+
+scrollBtn.onclick = () => {
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+};
+
+}
