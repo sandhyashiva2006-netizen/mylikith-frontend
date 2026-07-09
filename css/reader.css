@@ -629,3 +629,50 @@ z-index:999;
 
 }
 
+@media(max-width:768px){
+
+.reader-toolbar{
+
+flex-direction:column;
+
+gap:15px;
+
+}
+
+.reader-quick-actions{
+
+width:100%;
+
+justify-content:center;
+
+flex-wrap:wrap;
+
+}
+
+.reader-settings{
+
+grid-template-columns:1fr;
+
+}
+
+.reader-settings button,
+.reader-settings select{
+
+width:100%;
+
+}
+
+.reading-progress{
+
+width:55px;
+
+height:55px;
+
+right:15px;
+
+font-size:18px;
+
+}
+
+}
+
