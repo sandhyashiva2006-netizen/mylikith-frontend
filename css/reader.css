@@ -676,3 +676,117 @@ font-size:18px;
 
 }
 
+/* ==========================================
+   Premium Chapter Header
+========================================== */
+
+.chapter-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+gap:25px;
+
+margin:35px 0;
+
+padding:25px;
+
+border-radius:18px;
+
+background:rgba(18,20,38,.85);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.08);
+
+}
+
+.chapter-header h1{
+
+margin:0;
+
+font-size:34px;
+
+font-weight:800;
+
+color:#fff;
+
+}
+
+#chapterMeta{
+
+margin-top:8px;
+
+font-size:15px;
+
+color:#9CA3AF;
+
+}
+
+.chapter-actions{
+
+display:flex;
+
+gap:12px;
+
+}
+
+.chapter-nav-btn{
+
+padding:12px 22px;
+
+border:none;
+
+border-radius:12px;
+
+background:linear-gradient(135deg,#7C3AED,#9333EA);
+
+color:#fff;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.chapter-nav-btn:hover{
+
+transform:translateY(-3px);
+
+box-shadow:0 12px 25px rgba(124,58,237,.35);
+
+}
+
+@media(max-width:768px){
+
+.chapter-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+}
+
+.chapter-actions{
+
+width:100%;
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+}
+
+.chapter-nav-btn{
+
+width:100%;
+
+}
+
+}
+
