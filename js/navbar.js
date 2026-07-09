@@ -226,31 +226,19 @@ html += `
 
 navbar.innerHTML = html;
 
-const menuToggle=document.getElementById("menuToggle");
-
-const navLinks=document.querySelector(".nav-links");
-
 if(menuToggle){
 
-menuToggle.onclick=()=>{
+    menuToggle.onclick = () => {
 
-navLinks.classList.toggle("active");
+        navLinks.classList.toggle("active");
 
-menuToggle.innerHTML=
+        if(navLinks.classList.contains("active")){
+            menuToggle.textContent = "X";
+        }else{
+            menuToggle.textContent = "☰";
+        }
 
-navLinks.classList.contains("active")
-
-?
-
-"✕
-
-"
-
-:
-
-"☰";
-
-};
+    };
 
 }
 
