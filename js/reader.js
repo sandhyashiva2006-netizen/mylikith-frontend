@@ -1100,7 +1100,17 @@ container.innerHTML+=`
 
 <div class="comment-card">
 
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+
 <strong>${comment.name}</strong>
+
+<span style="opacity:.6;font-size:13px;">
+
+💬 Reader
+
+</span>
+
+</div>
 
 <p>${comment.comment}</p>
 
