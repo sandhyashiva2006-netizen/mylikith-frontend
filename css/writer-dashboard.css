@@ -309,7 +309,7 @@ box-shadow:0 20px 50px rgba(124,58,237,.18);
 }
 
 
-.novel-cover img{
+.novel-manage-card .novel-cover img{
 
 width:140px;
 
@@ -323,7 +323,7 @@ flex-shrink:0;
 
 }
 
-.novel-info{
+.novel-manage-card .novel-info{
 
 flex:1;
 
@@ -337,7 +337,7 @@ min-width:0;
 
 }
 
-.novel-info h2{
+.novel-manage-card .novel-info h2{
 
 margin:0 0 15px;
 
@@ -355,7 +355,7 @@ word-break:break-word;
 
 }
 
-.novel-info p{
+.novel-manage-card .novel-info p{
 
 font-size:18px;
 
@@ -365,7 +365,7 @@ color:#d1d5db;
 
 }
 
-.novel-stats{
+.novel-manage-card .novel-stats{
 
 display:flex;
 
@@ -381,7 +381,7 @@ color:#22d3ee;
 
 }
 
-.novel-actions{
+.novel-manage-card .novel-actions{
 
 display:flex;
 
@@ -743,5 +743,21 @@ font-size:34px;
 
 color:#7c3aed;
 
+}
+
+.novel-manage-card .novel-info{
+    width:100%;
+    min-width:0;
+    overflow:hidden;
+}
+
+.novel-manage-card .novel-info h2{
+    writing-mode:horizontal-tb;
+    white-space:normal;
+    word-break:break-word;
+}
+
+.novel-manage-card .novel-actions{
+    justify-content:flex-start;
 }
 

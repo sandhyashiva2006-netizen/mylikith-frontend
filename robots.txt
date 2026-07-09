@@ -3,7 +3,6 @@ User-agent: *
 Allow: /
 
 Disallow: /admin.html
-Disallow: /admin-dashboard.html
 Disallow: /writer-dashboard.html
 Disallow: /writer-studio.html
 Disallow: /reader-dashboard.html
