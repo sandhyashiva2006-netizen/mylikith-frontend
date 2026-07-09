@@ -677,15 +677,6 @@ document.getElementById(
 ).textContent =
 `Chapter ${chapter.chapter_no} - ${chapter.title}`;
 
-const meta=document.getElementById("chapterMeta");
-
-if(meta){
-
-meta.textContent=
-
-`Chapter ${chapter.chapter_number} • ${chapter.language || ""}`;
-
-}
 
 const locked =
 await checkLockedChapter();
