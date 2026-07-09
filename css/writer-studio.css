@@ -720,6 +720,15 @@ color:#fff;
     margin:0;
 }
 
+.sidebar-top h2{
+    font-size:30px;
+    text-align:center;
+}
+
+.sidebar-top p{
+    text-align:center;
+}
+
     .studio-stats{
         justify-content:center;
         flex-wrap:wrap;
@@ -791,12 +800,22 @@ color:#fff;
     width:100%;
 }
 
+.studio-stats span{
+    flex:1 1 45%;
+    text-align:center;
+}
+
     .chapter-editor,
-    .chapter-preview{
-        min-height:350px;
+.chapter-preview{
+    min-height:55vh;
         font-size:16px;
         padding:18px;
     }
+
+.editor-header h2{
+    font-size:34px;
+    text-align:center;
+}
 
     .editor-footer{
         flex-direction:column;
@@ -807,6 +826,37 @@ color:#fff;
     .editor-footer span{
         margin-right:0;
     }
+
+.editor-toolbar{
+    overflow:hidden;
+}
+
+.editor-toolbar button{
+    min-width:0;
+    font-size:15px;
+}
+
+.editor-footer>div{
+    width:100%;
+}
+
+.editor-footer>div:first-child{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    text-align:center;
+}
+
+.editor-footer>div:last-child{
+    text-align:center;
+}
+
+input,
+select,
+textarea,
+button{
+    min-height:48px;
+}
 
     .modal{
         padding:15px;
