@@ -116,38 +116,6 @@ document.getElementById(
 "chaptersList"
 );
 
-container.innerHTML = "";
-
-if(chapters.length > 0){
-
-const startBtn=document.getElementById("startReadingBtn");
-
-if(startBtn){
-
-startBtn.onclick=()=>{
-
-window.location.href=`reader.html?chapter=${chapters[0].id}`;
-
-};
-
-}
-
-}
-
-if(chapters.length === 0){
-
-container.innerHTML =
-"<p>No chapters yet</p>";
-
-return;
-
-}
-
-chapters.forEach(chapter => {
-
-const premium =
-chapter.is_premium;
-
 container.innerHTML += `
 
 <a
@@ -156,44 +124,41 @@ class="chapter-card">
 
 <div class="chapter-left">
 
-<div class="chapter-title">
+<div class="chapter-top">
+
+<h3>
 
 Chapter ${chapter.chapter_no}
 
+</h3>
+
 ${chapter.early_access
-? `<span class="premium-badge">
-⭐ Early Access
-</span>`
-:
-premium
-? `<span class="premium-badge">
-🔒 Premium
-</span>`
-: ""}
+? `<span class="early-access">⭐ Early Access</span>`
+: premium
+? `<span class="premium-badge">🔒 Premium</span>`
+: `<span class="free-badge">FREE</span>`}
 
 </div>
 
-<div>
+<p class="chapter-name">
 
 ${chapter.title}
 
-</div>
+</p>
 
-<div class="chapter-meta">
-
-${premium
-? `Unlock for ${chapter.coins_required} Coins`
-: `Ready to read`}
-
-</div>
-
-</div>
-
-<div class="chapter-right">
+<p class="chapter-meta">
 
 ${premium
-? `🪙 Unlock →`
-: `📖 Read →`}
+? `🪙 ${chapter.coins_required} Coins`
+: `📖 Free to Read`}
+
+</p>
+
+</div>
+
+<div class="chapter-arrow">
+
+➜
 
 </div>
 
@@ -500,15 +465,13 @@ return;
 
 }
 
-container.innerHTML = "";
-
-reviews.forEach(review=>{
-
 container.innerHTML+=`
 
 <div class="review-card">
 
 <div class="review-header">
+
+<div>
 
 <strong>
 
@@ -516,11 +479,19 @@ ${review.name}
 
 </strong>
 
-<span>
+<p class="review-role">
+
+📖 Reader
+
+</p>
+
+</div>
+
+<div class="review-stars">
 
 ${"⭐".repeat(review.rating)}
 
-</span>
+</div>
 
 </div>
 
