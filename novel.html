@@ -26,45 +26,124 @@ class="navbar">
 
 <section class="novel-hero">
 
-<div class="novel-cover"></div>
+<div class="hero-overlay"></div>
+
+<div class="novel-cover">
+
+<img
+id="novelCover"
+src="assets/images/default-cover.png"
+alt="Novel Cover">
+
+</div>
 
 <div class="novel-info">
 
-<h1 id="novelTitle">Loading...</h1>
+<h1 id="novelTitle">
+
+Loading...
+
+</h1>
 
 <div class="badges">
 
-<span id="novelCategory">Loading...</span>
-<span id="novelLanguage">Loading...</span>
-<span id="novelStatus">Loading...</span>
+<span id="novelCategory">
+
+Loading...
+
+</span>
+
+<span id="novelLanguage">
+
+Loading...
+
+</span>
+
+<span id="novelStatus">
+
+Loading...
+
+</span>
 
 </div>
 
+<div class="description-card">
+
+<h3>
+
+📖 About this Novel
+
+</h3>
+
 <p id="novelDescription">
+
 Loading...
+
 </p>
 
+<button
+id="toggleDescription"
+class="text-btn">
+
+Show More
+
+</button>
+
+</div>
 
 <div class="novel-stats">
 
-<div>
-<span id="novelReads">0</span>
-<p>Reads</p>
+<div class="stat-card">
+
+<span id="novelReads">
+
+0
+
+</span>
+
+<p>
+
+👁 Reads
+
+</p>
+
 </div>
 
-<div>
-<span id="novelFollowers">0</span>
-<p>Followers</p>
+<div class="stat-card">
+
+<span id="novelFollowers">
+
+0
+
+</span>
+
+<p>
+
+❤️ Followers
+
+</p>
+
 </div>
 
-<div>
-<h3 id="novelRating">0</h3>
-<p>Rating</p>
-</div>
+<div class="stat-card">
+
+<h3 id="novelRating">
+
+0
+
+</h3>
+
+<p>
+
+⭐ Rating
+
+</p>
 
 </div>
 
-<div class="novel-actions">
+</div>
+
+<div class="novel-actions glass-actions">
 
 <button
 class="start-btn"
@@ -108,7 +187,6 @@ id="reportBtn">
 
 </div>
 
-
 </div>
 
 </section>
@@ -131,7 +209,9 @@ id="reportBtn">
 
 </div>
 
-<div id="chaptersList" class="chapters-list">
+<div
+id="chaptersList"
+class="chapters-list">
 
 </div>
 
@@ -148,17 +228,14 @@ id="reportBtn">
 <div class="author-card">
 
 <img
-
 id="authorAvatar"
-
 class="author-avatar"
-
-src="assets/images/default-avatar.png">
+src="assets/images/default-avatar.png"
+alt="Author">
 
 <div class="author-info">
 
-<a
-id="authorLink">
+<a id="authorLink">
 
 <span id="authorName">
 
@@ -233,7 +310,9 @@ Rating
 <section class="reviews-section">
 
 <h2>
+
 ⭐ Ratings & Reviews
+
 </h2>
 
 <div class="review-form">
@@ -252,15 +331,35 @@ Rating
 id="ratingSelect"
 class="input">
 
-<option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+<option value="5">
 
-<option value="4">⭐⭐⭐⭐ Very Good</option>
+⭐⭐⭐⭐⭐ Excellent
 
-<option value="3">⭐⭐⭐ Good</option>
+</option>
 
-<option value="2">⭐⭐ Fair</option>
+<option value="4">
 
-<option value="1">⭐ Poor</option>
+⭐⭐⭐⭐ Very Good
+
+</option>
+
+<option value="3">
+
+⭐⭐⭐ Good
+
+</option>
+
+<option value="2">
+
+⭐⭐ Fair
+
+</option>
+
+<option value="1">
+
+⭐ Poor
+
+</option>
 
 </select>
 
@@ -277,11 +376,8 @@ Your Review
 </label>
 
 <textarea
-
 id="reviewText"
-
 class="review-textarea"
-
 placeholder="Share your thoughts about this novel...">
 
 </textarea>
@@ -291,9 +387,7 @@ placeholder="Share your thoughts about this novel...">
 <div class="review-actions">
 
 <button
-
 id="submitReviewBtn"
-
 class="chapter-btn">
 
 ⭐ Submit Review
@@ -309,7 +403,6 @@ class="chapter-btn">
 Loading reviews...
 
 </div>
-
 
 </section>
 
@@ -350,6 +443,17 @@ class="novels-grid">
 </div>
 
 </section>
+
+<div class="mobile-read">
+
+<button
+id="mobileReadBtn">
+
+📖 Read Now
+
+</button>
+
+</div>
 
 <div id="footer"></div>
 
