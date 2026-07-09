@@ -1,8 +1,9 @@
+const API="https://mylikith-backend.onrender.com";
+
 const params = new URLSearchParams(window.location.search);
 
 const novelId = params.get("id");
 
-const API="https://mylikith-backend.onrender.com";
 
 let currentNovel = null;
 
@@ -462,71 +463,61 @@ submitReview
 
 async function loadReviews(){
 
-const response =
-await fetch(
+    const response=await fetch(
 
-`https://mylikith-backend.onrender.com/api/reviews/${novelId}`
+        `${API}/api/reviews/${novelId}`
 
-);
+    );
 
-const reviews =
-await response.json();
+    const reviews=await response.json();
 
-const container =
-document.getElementById(
-"reviewsList"
-);
+    const container=document.getElementById("reviewsList");
 
-if(reviews.length===0){
+    if(reviews.length===0){
 
-container.innerHTML =
-"<p>No reviews yet</p>";
+        container.innerHTML="<p>No reviews yet</p>";
 
-return;
+        return;
 
-}
+    }
 
-container.innerHTML+=`
+    container.innerHTML="";
 
-<div class="review-card">
+    reviews.forEach(review=>{
 
-<div class="review-header">
+        container.innerHTML+=`
 
-<div>
+        <div class="review-card">
 
-<strong>
+            <div class="review-header">
 
-${review.name}
+                <div>
 
-</strong>
+                    <strong>${review.name}</strong>
 
-<p class="review-role">
+                    <p class="review-role">
 
-📖 Reader
+                        📖 Reader
 
-</p>
+                    </p>
 
-</div>
+                </div>
 
-<div class="review-stars">
+                <div class="review-stars">
 
-${"⭐".repeat(review.rating)}
+                    ${"⭐".repeat(review.rating)}
 
-</div>
+                </div>
 
-</div>
+            </div>
 
-<p>
+            <p>${review.review}</p>
 
-${review.review}
+        </div>
 
-</p>
+        `;
 
-</div>
-
-`;
-
-});
+    });
 
 }
 
