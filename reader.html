@@ -28,119 +28,67 @@ class="navbar">
 <div id="progressBar"></div>
 </div>
 
+<div id="readingProgress" class="reading-progress">
+
+0%
+
+</div>
+
 <section class="reader-container">
 
 <h1 id="chapterTitle">
 Loading...
 </h1>
 
-<div class="reader-tools">
+<div class="reader-toolbar">
 
-<button id="decreaseFont">A-</button>
+<button id="settingsToggle" class="reader-main-btn">
 
-<button id="increaseFont">A+</button>
-
-<button id="themeBtn">
-
-🌙 Theme
+📖 Reader Settings
 
 </button>
 
-<button id="premiumThemeBtn">
+<div class="reader-quick-actions">
 
-✨ Premium Theme
+<button id="bookmarkBtn">🔖</button>
 
-</button>
-
-<select id="fontSelector">
-
-<option value="default">
-
-Default
-
-</option>
-
-<option value="serif">
-
-Classic Serif ⭐
-
-</option>
-
-<option value="literata">
-
-Literata ⭐
-
-</option>
-
-<option value="garamond">
-
-Garamond ⭐
-
-</option>
-
-</select>
-
-<button id="readAloudBtn">
-
-🎧 Listen
-
-</button>
-
-<button id="pauseSpeechBtn">
-
-⏸ Pause
-
-</button>
-
-<button id="stopSpeechBtn">
-
-⏹ Stop
-
-</button>
-
-<select id="speechRate">
-
-<option value="0.75">0.75x</option>
-
-<option value="1" selected>1x</option>
-
-<option value="1.25">1.25x</option>
-
-<option value="1.5">1.5x</option>
-
-<option value="2">2x</option>
-
-</select>
-
-<button id="fullscreenBtn">
-
-⛶ Fullscreen
-
-</button>
-
-<button id="bookmarkBtn">
-
-🔖 Bookmark
-
-</button>
-
-<button id="translateBtn">
-
-🌍 Translate
-
-</button>
+<button id="translateBtn">🌍</button>
 
 <button id="likeBtn" class="reader-action-btn">
 
 🤍 Like
 
-<span id="likeCount">
-
-0
-
-</span>
+<span id="likeCount">0</span>
 
 </button>
+
+</div>
+
+</div>
+
+<div id="readerSettings" class="reader-settings">
+
+<!-- MOVE ALL THESE INSIDE -->
+
+A-
+
+A+
+
+Theme
+
+Premium Theme
+
+Font Selector
+
+Listen
+
+Pause
+
+Stop
+
+Speech Rate
+
+Fullscreen
 
 </div>
 

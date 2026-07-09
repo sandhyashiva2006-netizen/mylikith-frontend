@@ -13,6 +13,22 @@ likeBtn.onclick=toggleLike;
 const chapterContent =
 document.getElementById("chapterContent");
 
+const settingsToggle =
+document.getElementById("settingsToggle");
+
+const readerSettings =
+document.getElementById("readerSettings");
+
+if(settingsToggle){
+
+settingsToggle.onclick=()=>{
+
+readerSettings.classList.toggle("open");
+
+};
+
+}
+
 let speech = null;
 
 const readBtn =
@@ -114,6 +130,14 @@ document.documentElement.clientHeight;
 
 let scrolled =
 (winScroll / height) * 100;
+
+const badge=document.getElementById("readingProgress");
+
+if(badge){
+
+badge.textContent=Math.round(scrolled)+"%";
+
+}
 
 document.getElementById(
 "progressBar"
