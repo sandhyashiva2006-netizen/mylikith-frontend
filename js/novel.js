@@ -629,101 +629,77 @@ author.rating||0;
 
 }
 
-const shareBtn=document.getElementById("shareBtn");
+document.getElementById("shareBtn").onclick = async () => {
 
-if(shareBtn){
+    if(navigator.share){
 
-shareBtn.onclick=async()=>{
+        await navigator.share({
 
-};
+            title: currentNovel.title,
 
-}
+            text: currentNovel.description,
 
-if(navigator.share){
+            url: window.location.href
 
-await navigator.share({
+        });
 
-title:currentNovel.title,
+    }else{
 
-text:currentNovel.description,
+        navigator.clipboard.writeText(window.location.href);
 
-url:window.location.href
+        alert("Novel link copied.");
 
-});
-
-}else{
-
-navigator.clipboard.writeText(window.location.href);
-
-alert("Novel link copied.");
-
-}
+    }
 
 };
 
-const reportBtn=document.getElementById("reportBtn");
+document.getElementById("reportBtn").onclick = reportNovel;
 
-if(reportBtn){
+document.getElementById("libraryBtn").onclick = async()=>{
 
-reportBtn.onclick=reportNovel;
+    const user=JSON.parse(localStorage.getItem("user"));
 
-}
+    if(!user){
 
-alert("Report feature will be available soon.");
+        alert("Please login first.");
 
-};
+        return;
 
-const libraryBtn=document.getElementById("libraryBtn");
+    }
 
-if(libraryBtn){
+    const res=await fetch(
 
-libraryBtn.onclick=async()=>{
-};
-}
+        `${API}/api/library`,
 
-const user=JSON.parse(localStorage.getItem("user"));
+        {
 
-if(!user){
+            method:"POST",
 
-alert("Please login first.");
+            headers:{
 
-return;
+                "Content-Type":"application/json"
 
-}
+            },
 
-const res=await fetch(
+            body:JSON.stringify({
 
-`${API}/api/library`,
+                user_id:user.id,
 
-{
+                novel_id:novelId
 
-method:"POST",
+            })
 
-headers:{
+        }
 
-"Content-Type":"application/json"
+    );
 
-},
+    const data=await res.json();
 
-body:JSON.stringify({
+    if(data.success){
 
-user_id:user.id,
+        alert("Added to Library.");
 
-novel_id:novelId
-
-})
-
-}
-
-);
-
-const data=await res.json();
-
-if(data.success){
-
-alert("Added to Library.");
-
-}
+    }
 
 };
 
