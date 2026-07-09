@@ -97,26 +97,46 @@ loadAlsoRead();
 
 async function loadChapters(){
 
-try {
+try{
 
-const response =
-await fetch(
-`https://mylikith-backend.onrender.com/api/novels/${novelId}/chapters`
+const response=await fetch(
+`${API}/api/novels/${novelId}/chapters`
 );
 
-const chapters =
-await response.json();
+const chapters=await response.json();
 
 document.getElementById("chapterCount").textContent=
-
 `${chapters.length} Chapter${chapters.length===1?"":"s"}`;
 
-const container =
-document.getElementById(
-"chaptersList"
-);
+const container=document.getElementById("chaptersList");
 
-container.innerHTML += `
+container.innerHTML="";
+
+if(chapters.length===0){
+
+container.innerHTML="<p>No chapters yet</p>";
+
+return;
+
+}
+
+const startBtn=document.getElementById("startReadingBtn");
+
+if(startBtn){
+
+startBtn.onclick=()=>{
+
+window.location.href=`reader.html?chapter=${chapters[0].id}`;
+
+};
+
+}
+
+chapters.forEach(chapter=>{
+
+const premium=chapter.is_premium;
+
+container.innerHTML+=`
 
 <a
 href="reader.html?chapter=${chapter.id}"
@@ -132,11 +152,13 @@ Chapter ${chapter.chapter_no}
 
 </h3>
 
-${chapter.early_access
+${
+chapter.early_access
 ? `<span class="early-access">⭐ Early Access</span>`
 : premium
 ? `<span class="premium-badge">🔒 Premium</span>`
-: `<span class="free-badge">FREE</span>`}
+: `<span class="free-badge">FREE</span>`
+}
 
 </div>
 
@@ -148,9 +170,11 @@ ${chapter.title}
 
 <p class="chapter-meta">
 
-${premium
+${
+premium
 ? `🪙 ${chapter.coins_required} Coins`
-: `📖 Free to Read`}
+: `📖 Free to Read`
+}
 
 </p>
 
@@ -168,14 +192,11 @@ ${premium
 
 });
 
-}
-catch(error){
+}catch(error){
 
 console.error(error);
 
-document.getElementById(
-"chaptersList"
-).innerHTML =
+document.getElementById("chaptersList").innerHTML=
 "<p>Failed to load chapters</p>";
 
 }
