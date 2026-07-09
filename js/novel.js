@@ -837,6 +837,18 @@ ${novel.category}
 
 }
 
+const mobileReadBtn=document.getElementById("mobileReadBtn");
+
+if(mobileReadBtn){
+
+mobileReadBtn.onclick=()=>{
+
+document.getElementById("startReadingBtn").click();
+
+};
+
+}
+
 loadNovel();
 loadChapters();
 loadReviews();
