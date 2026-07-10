@@ -411,15 +411,9 @@ z-index:100001;
 }
 
 .auth-buttons{
-    display:none;
-}
 
-.auth-buttons.active{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    padding:20px;
-    width:100%;
+display:none;
+
 }
 
 .logo{
@@ -739,6 +733,37 @@ padding-left:18px;
 
 padding-right:18px;
 
+}
+
+}
+
+.mobile-auth{
+    display:none;
+}
+
+@media (max-width:768px){
+
+.mobile-auth{
+    display:block;
+}
+
+.auth-buttons{
+    display:none !important;
+}
+
+.mobile-divider{
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid rgba(255,255,255,.12);
+}
+
+.mobile-auth a{
+    display:block;
+    width:100%;
+}
+
+.mobile-auth button{
+    width:100%;
 }
 
 }

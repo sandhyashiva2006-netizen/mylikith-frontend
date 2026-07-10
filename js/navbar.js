@@ -164,9 +164,7 @@ Premium
 
 html += `
 
-</ul>
-
-<div class="auth-buttons">
+<li class="mobile-auth mobile-divider"></li>
 
 `;
 
@@ -174,11 +172,17 @@ if(navbarUser){
 
 html += `
 
+<li class="mobile-auth">
+
 <span class="welcome">
 
 👋 ${navbarUser.name}
 
 </span>
+
+</li>
+
+<li class="mobile-auth">
 
 <button
 id="logoutBtn"
@@ -188,11 +192,15 @@ Logout
 
 </button>
 
+</li>
+
 `;
 
 }else{
 
 html += `
+
+<li class="mobile-auth">
 
 <a href="login.html">
 
@@ -204,6 +212,10 @@ Login
 
 </a>
 
+</li>
+
+<li class="mobile-auth">
+
 <a href="signup.html">
 
 <button class="signup-btn">
@@ -214,13 +226,17 @@ Sign Up
 
 </a>
 
+</li>
+
 `;
 
 }
 
 html += `
 
-</div>
+</ul>
+
+<div class="auth-buttons">
 
 `;
 
@@ -233,20 +249,16 @@ if (menuToggle) {
     menuToggle.onclick = () => {
 
         const navLinks = document.querySelector(".nav-links");
-const authButtons = document.querySelector(".auth-buttons");
 
-if (!navLinks) return;
+        if (!navLinks) return;
 
-navLinks.classList.toggle("active");
+        navLinks.classList.toggle("active");
 
-if(authButtons){
-    authButtons.classList.toggle("active");
-}
-
-        menuToggle.textContent =
-navLinks.classList.contains("active")
-? "✕"
-: "☰";
+        if (navLinks.classList.contains("active")) {
+            menuToggle.textContent = "✕";
+        } else {
+            menuToggle.textContent = "☰";
+        }
 
     };
 
