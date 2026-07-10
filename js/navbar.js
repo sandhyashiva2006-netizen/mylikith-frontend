@@ -233,16 +233,20 @@ if (menuToggle) {
     menuToggle.onclick = () => {
 
         const navLinks = document.querySelector(".nav-links");
+const authButtons = document.querySelector(".auth-buttons");
 
-        if (!navLinks) return;
+if (!navLinks) return;
 
-        navLinks.classList.toggle("active");
+navLinks.classList.toggle("active");
 
-        if (navLinks.classList.contains("active")) {
-            menuToggle.textContent = "✕";
-        } else {
-            menuToggle.textContent = "☰";
-        }
+if(authButtons){
+    authButtons.classList.toggle("active");
+}
+
+        menuToggle.textContent =
+navLinks.classList.contains("active")
+? "✕"
+: "☰";
 
     };
 
