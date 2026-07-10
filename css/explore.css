@@ -516,6 +516,10 @@ font-weight:600;
 
 }
 
+.mobile-filters{
+    display:none;
+}
+
 @media(max-width:768px){
 
 .explore-topbar{
