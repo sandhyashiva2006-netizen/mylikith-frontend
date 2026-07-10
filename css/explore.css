@@ -256,3 +256,27 @@ background:#7C3AED;
 
 }
 
+.filter-heading{
+
+margin:25px 0 15px;
+
+font-size:22px;
+
+font-weight:700;
+
+color:#fff;
+
+}
+
+.language-chips{
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:12px;
+
+margin-bottom:25px;
+
+}
+

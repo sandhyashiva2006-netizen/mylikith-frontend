@@ -9,6 +9,9 @@ JSON.parse(
 localStorage.getItem("user")
 );
 
+let allNovels = [];
+let selectedLanguage = "All";
+
 function renderNovels(novels){
 
 const novelsGrid =
@@ -64,6 +67,8 @@ await fetch(API_URL);
 
 const novels =
 await response.json();
+
+allNovels = novels;
 
 const sort = document.getElementById("sortNovels")?.value;
 
@@ -341,4 +346,41 @@ onclick="searchAgain('${item.keyword}')">
 });
 
 }
+
+document.querySelectorAll(".language-chip").forEach(chip=>{
+
+chip.onclick=()=>{
+
+document.querySelectorAll(".language-chip")
+.forEach(c=>c.classList.remove("active"));
+
+chip.classList.add("active");
+
+selectedLanguage=
+chip.dataset.language;
+
+if(selectedLanguage==="All"){
+
+renderNovels(allNovels);
+
+return;
+
+}
+
+renderNovels(
+
+allNovels.filter(novel=>
+
+(novel.language||"")
+.toLowerCase()===
+
+selectedLanguage.toLowerCase()
+
+)
+
+);
+
+};
+
+});
 
