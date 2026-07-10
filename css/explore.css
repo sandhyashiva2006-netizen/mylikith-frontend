@@ -299,14 +299,16 @@ margin:0;
 .explore-topbar{
 
 display:flex;
+
 justify-content:space-between;
+
 align-items:center;
+
+gap:20px;
 
 margin:35px 0 25px;
 
-gap:25px;
-
-flex-wrap:nowrap;
+padding:0 20px;
 
 }
 
