@@ -258,7 +258,7 @@ background:#7C3AED;
 
 .filter-heading{
 
-margin:25px 0 15px;
+margin:12px 0 10px;
 
 font-size:22px;
 
@@ -276,7 +276,55 @@ flex-wrap:wrap;
 
 gap:12px;
 
-margin-bottom:25px;
+margin-bottom:10px;
+
+}
+
+.mobile-filters{
+
+display:none;
+
+}
+
+@media(max-width:768px){
+
+.filters{
+
+display:none;
+
+}
+
+.mobile-filters{
+
+display:flex;
+
+flex-direction:column;
+
+gap:15px;
+
+padding:20px;
+
+}
+
+.mobile-filters select{
+
+width:100%;
+
+height:56px;
+
+border:none;
+
+border-radius:14px;
+
+background:#1A1E33;
+
+color:#fff;
+
+font-size:16px;
+
+padding:0 16px;
+
+}
 
 }
 

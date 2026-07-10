@@ -384,3 +384,75 @@ selectedLanguage.toLowerCase()
 
 });
 
+const mobileLanguage=document.getElementById("mobileLanguage");
+
+if(mobileLanguage){
+
+mobileLanguage.addEventListener("change",()=>{
+
+selectedLanguage=mobileLanguage.value;
+
+if(selectedLanguage==="All"){
+
+renderNovels(allNovels);
+
+return;
+
+}
+
+renderNovels(
+
+allNovels.filter(novel=>
+
+(novel.language||"").toLowerCase()===
+
+selectedLanguage.toLowerCase()
+
+)
+
+);
+
+});
+
+}
+
+const mobileGenre=document.getElementById("mobileGenre");
+
+if(mobileGenre){
+
+mobileGenre.addEventListener("change",()=>{
+
+const genre=mobileGenre.value;
+
+let filtered=allNovels;
+
+if(genre!=="All"){
+
+filtered=filtered.filter(novel=>
+
+(novel.category||"").toLowerCase()===
+
+genre.toLowerCase()
+
+);
+
+}
+
+if(selectedLanguage!=="All"){
+
+filtered=filtered.filter(novel=>
+
+(novel.language||"").toLowerCase()===
+
+selectedLanguage.toLowerCase()
+
+);
+
+}
+
+renderNovels(filtered);
+
+});
+
+}
+
