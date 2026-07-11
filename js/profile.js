@@ -1251,17 +1251,15 @@ const container=
 
 document.getElementById("followersList");
 
-document.getElementById(
+const totalElement =
+document.getElementById("followersTotal");
 
-"followersTotal"
+if(totalElement){
 
-).textContent=
+totalElement.textContent =
+Number(data.totalFollowers).toLocaleString();
 
-Number(
-
-data.totalFollowers
-
-).toLocaleString();
+}
 
 if(!loadMore){
 
