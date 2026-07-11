@@ -81,6 +81,8 @@ latestUser.profile_image+
 
 },50);
 
+console.log("Profile IMG:", profileImage.src);
+
 }catch(err){
 
 profileImage.src =
