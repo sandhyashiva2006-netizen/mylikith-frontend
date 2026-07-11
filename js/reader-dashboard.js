@@ -785,7 +785,7 @@ Unlimited Premium Chapters
 
 let feedPage=1;
 
-const FEEDS_PER_PAGE=10;
+const FEEDS_PER_PAGE=5;
 
 let allFeeds=[];
 
