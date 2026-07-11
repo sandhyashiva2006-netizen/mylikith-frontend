@@ -1,4 +1,4 @@
-const API="https://mylikith-backend.onrender.com/api";
+
 
 const cashfree=Cashfree({
 mode:"sandbox"

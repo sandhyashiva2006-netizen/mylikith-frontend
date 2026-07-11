@@ -99,12 +99,6 @@ Writer Dashboard
 </a>
 </li>
 
-<li>
-<a href="writer-studio.html">
-Writer Studio
-</a>
-</li>
-
 `;
 
 }
