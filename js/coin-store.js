@@ -77,25 +77,11 @@ pkg.bonus_coins>0
 
 }
 
-<div style="display:flex;gap:10px;margin-top:15px;">
-
 <button
 
 class="buy-btn"
 
-style="flex:1"
-
-onclick="buyPackage(${pkg.id})">
-
-Pay Online
-
-</button>
-
-<button
-
-class="buy-btn"
-
-style="flex:1;background:#00b894;"
+style="width:100%;margin-top:15px;"
 
 onclick="manualPayment(
 
@@ -107,11 +93,9 @@ ${pkg.coins+pkg.bonus_coins}
 
 )">
 
-Manual UPI
+Buy Coins
 
 </button>
-
-</div>
 
 </div>
 
