@@ -60,9 +60,6 @@ const status=await fetch(
 
 const premium=await status.json();
 
-const container=
-
-document.getElementById("plans");
 
 container.innerHTML="";
 
