@@ -240,9 +240,9 @@ if(menuToggle){
 
 menuToggle.onclick=()=>{
 
-sidebar.classList.add("show");
+sidebar.classList.toggle("show");
 
-overlay.classList.add("show");
+overlay.classList.toggle("show");
 
 };
 
@@ -250,11 +250,11 @@ overlay.classList.add("show");
 
 if(overlay){
 
-overlay.onclick=()=>{
+menuToggle.onclick=()=>{
 
-sidebar.classList.remove("show");
+sidebar.classList.toggle("show");
 
-overlay.classList.remove("show");
+overlay.classList.toggle("show");
 
 };
 
