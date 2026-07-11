@@ -550,3 +550,103 @@ align-items:center;
 
 }
 
+/* ==========================================
+   Analytics Dashboard
+========================================== */
+
+.analytics-card{
+
+background:rgba(18,26,46,.72);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:22px;
+
+padding:28px;
+
+transition:.3s;
+
+display:flex;
+
+flex-direction:column;
+
+gap:18px;
+
+}
+
+.analytics-card:hover{
+
+transform:translateY(-6px);
+
+border-color:#7C3AED;
+
+box-shadow:0 16px 35px rgba(124,58,237,.25);
+
+}
+
+.analytics-icon{
+
+width:58px;
+
+height:58px;
+
+border-radius:16px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:28px;
+
+background:linear-gradient(135deg,#7C3AED,#22D3EE);
+
+}
+
+.analytics-card h3{
+
+margin:0;
+
+font-size:24px;
+
+}
+
+.analytics-item{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:12px 0;
+
+border-top:1px solid rgba(255,255,255,.08);
+
+}
+
+.analytics-item:first-of-type{
+
+border-top:none;
+
+}
+
+.analytics-item span{
+
+color:#CBD5E1;
+
+font-size:15px;
+
+}
+
+.analytics-item strong{
+
+font-size:20px;
+
+color:#fff;
+
+}
+
