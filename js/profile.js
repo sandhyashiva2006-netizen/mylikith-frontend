@@ -172,6 +172,46 @@ console.log(err);
 
 }
 
+async function loadAuthorProfile(){
+
+if(user.role!=="writer") return;
+
+try{
+
+const response=await fetch(
+
+`${API}/api/users/${user.id}`
+
+);
+
+const data=await response.json();
+
+document.getElementById("authorBioInput").value=
+data.bio||"";
+
+document.getElementById("authorWebsite").value=
+data.website||"";
+
+document.getElementById("authorInstagram").value=
+data.instagram||"";
+
+document.getElementById("authorFacebook").value=
+data.facebook||"";
+
+document.getElementById("authorX").value=
+data.x||"";
+
+document.getElementById("authorYoutube").value=
+data.youtube||"";
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
 /* --------------------------
    Writer Stats
 --------------------------- */
@@ -870,6 +910,8 @@ checkWriterApplication();
 
 loadReferralStats();
 
+loadAuthorProfile();
+
 async function changePassword(){
 
 try{
@@ -1134,6 +1176,58 @@ type:"image/jpeg"
 reader.readAsDataURL(file);
 
 });
+
+}
+
+async function saveAuthorProfile(){
+
+try{
+
+const response=await fetch(
+
+`${API}/api/users/${user.id}`,
+
+{
+
+method:"PUT",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+bio:document.getElementById("authorBioInput").value.trim(),
+
+website:document.getElementById("authorWebsite").value.trim(),
+
+instagram:document.getElementById("authorInstagram").value.trim(),
+
+facebook:document.getElementById("authorFacebook").value.trim(),
+
+x:document.getElementById("authorX").value.trim(),
+
+youtube:document.getElementById("authorYoutube").value.trim()
+
+})
+
+}
+
+);
+
+const data=await response.json();
+
+alert(data.message||"Author profile updated.");
+
+}catch(err){
+
+console.log(err);
+
+alert("Unable to update profile.");
+
+}
 
 }
 
