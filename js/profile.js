@@ -58,6 +58,9 @@ const response = await fetch(
 
 const latestUser = await response.json();
 
+console.log(latestUser);
+console.log(latestUser.profile_image);
+
 user.profile_image = latestUser.profile_image;
 
 localStorage.setItem(
