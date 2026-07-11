@@ -392,6 +392,20 @@ right:0;
 
 }
 
+.nav-links a.active{
+
+color:#A855F7;
+
+font-weight:700;
+
+}
+
+.nav-links a.active::after{
+
+width:100%;
+
+}
+
 .menu-toggle{
 
 display:block;

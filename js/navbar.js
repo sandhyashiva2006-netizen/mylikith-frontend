@@ -1,24 +1,23 @@
+const API = "https://mylikith-backend.onrender.com";
 
+const navbarUser = JSON.parse(localStorage.getItem("user"));
 
-const navbarUser =
-JSON.parse(
-localStorage.getItem("user")
-);
+const navbar = document.getElementById("navbar");
 
-
-const navbar =
-document.getElementById("navbar");
-
-if(navbar){
+if (navbar) {
 
 let html = `
 
 <div class="logo">
 
+<a href="${navbarUser ? "reader-dashboard.html" : "index.html"}">
+
 <img
 src="assets/images/logo.png"
 class="logo-img"
 alt="MyLikith">
+
+</a>
 
 <span>MyLikith</span>
 
@@ -36,54 +35,90 @@ id="menuToggle">
 
 `;
 
-if(navbarUser){
+/* =====================================
+   Navigation
+===================================== */
+
+if (!navbarUser) {
 
 html += `
 
 <li>
+<a href="index.html">Home</a>
+</li>
 
+<li>
+<a href="explore.html">Explore</a>
+</li>
+
+<li>
+<a href="languages.html">Languages</a>
+</li>
+
+<li>
+<a href="premium.html">Premium</a>
+</li>
+
+`;
+
+} else {
+
+/* Reader */
+
+html += `
+
+<li>
 <a href="reader-dashboard.html">
-
 Home
-
 </a>
-
 </li>
 
 <li>
-
 <a href="explore.html">
-
 Explore
-
 </a>
-
 </li>
 
 <li>
-
 <a href="library.html">
-
 Library
-
 </a>
-
 </li>
 
 `;
 
-if(navbarUser.role==="writer"){
+/* Writer */
+
+if (navbarUser.role === "writer") {
 
 html += `
 
 <li>
-
 <a href="writer-dashboard.html">
+Writer Dashboard
+</a>
+</li>
 
+<li>
+<a href="writer-studio.html">
 Writer Studio
-
 </a>
+</li>
 
+`;
+
+}
+
+/* Admin */
+
+if (navbarUser.role === "admin") {
+
+html += `
+
+<li>
+<a href="admin.html">
+Admin
+</a>
 </li>
 
 `;
@@ -93,74 +128,24 @@ Writer Studio
 html += `
 
 <li>
-
 <a href="wallet.html">
-
 Wallet
-
 </a>
-
 </li>
 
 <li>
-
 <a href="reader-profile.html">
-
 Profile
-
 </a>
-
-</li>
-
-`;
-
-}else{
-
-html += `
-
-<li>
-
-<a href="index.html">
-
-Home
-
-</a>
-
-</li>
-
-<li>
-
-<a href="explore.html">
-
-Explore
-
-</a>
-
-</li>
-
-<li>
-
-<a href="languages.html">
-
-Languages
-
-</a>
-
-</li>
-
-<li>
-
-<a href="premium.html">
-
-Premium
-
-</a>
-
 </li>
 
 `;
 
 }
+
+/* =====================================
+   Mobile Authentication
+===================================== */
 
 html += `
 
@@ -168,7 +153,7 @@ html += `
 
 `;
 
-if(navbarUser){
+if (navbarUser) {
 
 html += `
 
@@ -196,7 +181,7 @@ Logout
 
 `;
 
-}else{
+} else {
 
 html += `
 
@@ -232,6 +217,10 @@ Sign Up
 
 }
 
+/* =====================================
+   Close Navigation
+===================================== */
+
 html += `
 
 </ul>
@@ -240,52 +229,124 @@ html += `
 
 `;
 
-navbar.innerHTML = html;
+/* =====================================
+   Desktop Authentication
+===================================== */
 
-const menuToggle = document.getElementById("menuToggle");
+if (navbarUser) {
 
-if (menuToggle) {
+html += `
 
-    menuToggle.onclick = () => {
+<span class="welcome">
 
-        const navLinks = document.querySelector(".nav-links");
+👋 ${navbarUser.name}
 
-        if (!navLinks) return;
+</span>
 
-        navLinks.classList.toggle("active");
+<button
+id="logoutBtnDesktop"
+class="login-btn">
 
-        if (navLinks.classList.contains("active")) {
-            menuToggle.textContent = "✕";
-        } else {
-            menuToggle.textContent = "☰";
-        }
+Logout
 
-    };
+</button>
+
+`;
+
+} else {
+
+html += `
+
+<a href="login.html">
+
+<button class="login-btn">
+
+Login
+
+</button>
+
+</a>
+
+<a href="signup.html">
+
+<button class="signup-btn">
+
+Sign Up
+
+</button>
+
+</a>
+
+`;
 
 }
 
+html += `
 
-const logoutBtn =
-document.getElementById(
-"logoutBtn"
-);
+</div>
 
-if(logoutBtn){
+`;
 
-logoutBtn.onclick = ()=>{
+navbar.innerHTML = html;
 
-localStorage.removeItem("token");
+/* =====================================
+   Mobile Menu Toggle
+===================================== */
 
-localStorage.removeItem("user");
+const menuToggle =
+document.getElementById("menuToggle");
 
-window.location =
-"login.html";
+if(menuToggle){
+
+menuToggle.onclick=()=>{
+
+const navLinks=
+document.querySelector(".nav-links");
+
+if(!navLinks) return;
+
+navLinks.classList.toggle("active");
+
+menuToggle.textContent=
+
+navLinks.classList.contains("active")
+
+? "✕"
+
+: "☰";
 
 };
 
 }
 
+/* =====================================
+   Logout
+===================================== */
+
+["logoutBtn","logoutBtnDesktop"].forEach(id=>{
+
+const btn=document.getElementById(id);
+
+if(btn){
+
+btn.onclick=()=>{
+
+localStorage.removeItem("token");
+localStorage.removeItem("user");
+
+window.location="login.html";
+
+};
+
 }
+
+});
+
+}
+
+/* =====================================
+   Premium Badge
+===================================== */
 
 async function loadPremiumBadge(){
 
@@ -294,16 +355,20 @@ if(!navbarUser) return;
 try{
 
 const res=await fetch(
-`https://mylikith-backend.onrender.com/api/premium/status/${navbarUser.id}`
+
+`${API}/api/premium/status/${navbarUser.id}`
+
 );
 
 const data=await res.json();
 
 if(!data.premium) return;
 
-if(data.premium){
+const profile=document.querySelector(
 
-const profile=document.querySelector('a[href="reader-profile.html"]');
+'a[href="reader-profile.html"]'
+
+);
 
 if(profile){
 
@@ -311,8 +376,6 @@ profile.innerHTML="👑 Profile";
 
 }
 
-}
-
 }catch(err){
 
 console.log(err);
@@ -321,17 +384,19 @@ console.log(err);
 
 }
 
+/* =====================================
+   Notification Count
+===================================== */
+
 async function loadNotificationCount(){
+
+if(!navbarUser) return;
 
 try{
 
-const user=JSON.parse(localStorage.getItem("user"));
-
-if(!user)return;
-
 const response=await fetch(
 
-`${API}/api/writers/notifications/${user.id}/unread`
+`${API}/api/writers/notifications/${navbarUser.id}/unread`
 
 );
 
@@ -339,7 +404,7 @@ const data=await response.json();
 
 const badge=document.getElementById("notificationCount");
 
-if(!badge)return;
+if(!badge) return;
 
 badge.innerHTML=data.unread;
 
@@ -347,9 +412,9 @@ badge.style.display=
 
 data.unread>0
 
-?"flex"
+? "flex"
 
-:"none";
+: "none";
 
 }catch(err){
 
@@ -359,6 +424,55 @@ console.log(err);
 
 }
 
+/* =====================================
+   Mobile UX Improvements
+===================================== */
+
+document.querySelectorAll(".nav-links a").forEach(link=>{
+
+link.addEventListener("click",()=>{
+
+const navLinks=document.querySelector(".nav-links");
+const menuToggle=document.getElementById("menuToggle");
+
+if(navLinks){
+
+navLinks.classList.remove("active");
+
+}
+
+if(menuToggle){
+
+menuToggle.textContent="☰";
+
+}
+
+});
+
+});
+
+/* =====================================
+   Active Navigation Link
+===================================== */
+
+const currentPage=
+window.location.pathname.split("/").pop();
+
+document.querySelectorAll(".nav-links a").forEach(link=>{
+
+const href=link.getAttribute("href");
+
+if(href===currentPage){
+
+link.classList.add("active");
+
+}
+
+});
+
+/* =====================================
+   Initialize
+===================================== */
 
 loadPremiumBadge();
 loadNotificationCount();
