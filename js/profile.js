@@ -6,7 +6,7 @@ JSON.parse(
 localStorage.getItem("user")
 );
 
-
+let followerPage=1;
 
 document.getElementById("myReferralCode").value =
 user.referral_code || "";
@@ -1233,7 +1233,7 @@ alert("Unable to update profile.");
 
 }
 
-let followerPage=1;
+
 
 async function loadFollowers(loadMore=false){
 
