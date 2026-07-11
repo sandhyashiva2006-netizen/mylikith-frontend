@@ -242,7 +242,9 @@ margin-bottom:25px;
 
 }
 
-#followAuthorBtn{
+#followAuthorBtn,
+#shareAuthorBtn,
+#contactAuthorBtn{
 
 width:100%;
 

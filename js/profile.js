@@ -912,6 +912,8 @@ loadReferralStats();
 
 loadAuthorProfile();
 
+loadFollowers();
+
 async function changePassword(){
 
 try{
@@ -1228,6 +1230,62 @@ console.log(err);
 alert("Unable to update profile.");
 
 }
+
+}
+
+async function loadFollowers(){
+
+if(user.role!=="writer") return;
+
+const response=await fetch(
+
+`${API}/api/authors/${user.id}/followers`
+
+);
+
+const followers=await response.json();
+
+const container=document.getElementById("followersList");
+
+if(!container)return;
+
+container.innerHTML="";
+
+if(followers.length===0){
+
+container.innerHTML="<p>No followers yet.</p>";
+
+return;
+
+}
+
+followers.forEach(item=>{
+
+container.innerHTML+=`
+
+<div class="follower-card">
+
+<img
+
+src="${
+item.profile_image ||
+
+"assets/images/default-avatar.png"
+}"
+
+class="follower-avatar">
+
+<span>
+
+${item.name}
+
+</span>
+
+</div>
+
+`;
+
+});
 
 }
 

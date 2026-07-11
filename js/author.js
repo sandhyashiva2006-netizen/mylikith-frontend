@@ -304,3 +304,106 @@ document
     loadFollowStatus();
 
 };
+
+const shareBtn=document.getElementById("shareAuthorBtn");
+
+if(shareBtn){
+
+shareBtn.onclick=async()=>{
+
+const shareUrl=
+`${window.location.origin}/author.html?id=${authorId}`;
+
+try{
+
+if(navigator.share){
+
+await navigator.share({
+
+title:
+document.getElementById("authorName").textContent,
+
+text:
+"Check out this amazing author on MyLikith!",
+
+url:shareUrl
+
+});
+
+}else{
+
+await navigator.clipboard.writeText(shareUrl);
+
+alert("Author profile link copied.");
+
+}
+
+}catch(err){
+
+console.log(err);
+
+}
+
+};
+
+}
+
+const contactBtn=
+document.getElementById("contactAuthorBtn");
+
+if(contactBtn){
+
+contactBtn.onclick=async()=>{
+
+if(!user){
+
+location.href="login.html";
+
+return;
+
+}
+
+const message=
+
+prompt("Write your message to the author:");
+
+if(!message)return;
+
+const response=
+
+await fetch(
+
+`${API}/authors/${authorId}/contact`,
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+user_id:user.id,
+
+message
+
+})
+
+}
+
+);
+
+const data=
+
+await response.json();
+
+alert(data.message);
+
+};
+
+}
+
