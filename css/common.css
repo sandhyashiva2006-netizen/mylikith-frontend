@@ -47,12 +47,7 @@ overflow-x:hidden;
 
 body{
 
-background:
-linear-gradient(
-rgba(6,10,28,.30),
-rgba(10,15,35,.40)
-),
-url("../assets/images/profile-bg-mobile.jpg");
+background-image:url("../assets/images/profile-bg-mobile.jpg");
 
 background-size:cover;
 
