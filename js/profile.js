@@ -33,6 +33,26 @@ document.getElementById(
 ).textContent =
 user.email;
 
+const profileImage=
+document.getElementById("profileImage");
+
+if(user.profile_image){
+
+profileImage.src=user.profile_image;
+
+}
+
+document.getElementById(
+"profileAvatar"
+).onclick=()=>{
+
+document
+.getElementById(
+"profilePhotoInput"
+).click();
+
+};
+
 /* --------------------------
    Writer Badge
 --------------------------- */
@@ -867,3 +887,86 @@ alert("Unable to change password.");
 }
 
 }
+
+document
+.getElementById("profilePhotoInput")
+.addEventListener(
+"change",
+uploadProfilePhoto
+);
+
+async function uploadProfilePhoto(e){
+
+const file=e.target.files[0];
+
+if(!file)return;
+
+const formData=
+new FormData();
+
+formData.append(
+"photo",
+file
+);
+
+formData.append(
+"user_id",
+user.id
+);
+
+try{
+
+const response=
+await fetch(
+
+`${API}/api/profile/upload`,
+
+{
+
+method:"POST",
+
+body:formData
+
+}
+
+);
+
+const data=
+await response.json();
+
+if(!data.success){
+
+alert(data.message);
+
+return;
+
+}
+
+profileImage.src=data.url;
+
+user.profile_image=data.url;
+
+localStorage.setItem(
+
+"user",
+
+JSON.stringify(user)
+
+);
+
+alert(
+"Profile photo updated."
+);
+
+}catch(err){
+
+console.log(err);
+
+alert(
+"Upload failed."
+);
+
+}
+
+}
+
