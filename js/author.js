@@ -1,4 +1,4 @@
-const API = "https://mylikith-backend.onrender.com";
+const API = "https://mylikith-backend.onrender.com/api";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
