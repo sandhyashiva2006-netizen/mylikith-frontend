@@ -76,12 +76,10 @@ profileImage.removeAttribute("src");
 setTimeout(()=>{
 
 profileImage.src =
-latestUser.profile_image+
-"?t="+Date.now();
+latestUser.profile_image ||
+"assets/images/default-avatar.png";
 
-},50);
 
-console.log("Profile IMG:", profileImage.src);
 
 }catch(err){
 

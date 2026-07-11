@@ -20,16 +20,18 @@ padding-top:82px;
 
 background:
 linear-gradient(
-rgba(6,10,28,.65),
-rgba(10,15,35,.72)
+rgba(6,10,28,.82),
+rgba(10,15,35,.86)
 ),
 url("../assets/images/profile-bg.jpg");
 
 background-size:cover;
 
-background-position:center top;
+background-position:center;
 
 background-repeat:no-repeat;
+
+background-attachment:fixed;
 
 background-color:#081020;
 
