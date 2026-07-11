@@ -73,6 +73,10 @@ and enjoy stories in every language.
 
 <a href="page.html?slug=terms">Terms & Conditions</a>
 
+<a href="page.html?slug=cookies">Cookies Policy</a>
+
+<a href="page.html?slug=dmca">DMCA Policy</a>
+
 <a href="page.html?slug=writer-agreement">Writer Agreement</a>
 
 <a href="page.html?slug=community-guidelines">Community Guidelines</a>
@@ -87,15 +91,13 @@ and enjoy stories in every language.
 
 <div class="footer-social">
 
-<a href="https://facebook.com/YourPage" target="_blank">📘</a>
+<a href="https://facebook.com/MyLikith" target="_blank">📘</a>
 
-<a href="https://instagram.com/YourPage" target="_blank">📷</a>
+<a href="https://instagram.com/MyLikith" target="_blank">📷</a>
 
-<a href="https://youtube.com/@YourChannel" target="_blank">▶</a>
+<a href="https://x.com/MyLikith" target="_blank">𝕏</a>
 
-<a href="https://x.com/YourAccount" target="_blank">𝕏</a>
-
-<a href="https://linkedin.com/company/YourCompany" target="_blank">💼</a>
+<a href="https://linkedin.com/company/MyLikith" target="_blank">💼</a>
 
 </div>
 
