@@ -69,11 +69,7 @@ JSON.stringify(user)
 
 );
 
-await loadProfileImage();
 
-profileImage.removeAttribute("src");
-
-setTimeout(()=>{
 
 profileImage.src =
 latestUser.profile_image ||
