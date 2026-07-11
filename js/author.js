@@ -53,8 +53,67 @@ meta.content =
         document.getElementById("authorName").textContent =
             data.author.name;
 
+const badge =
+document.querySelector(".author-badge");
+
+const badges = [];
+
+badges.push("✍️ Verified MyLikith Author");
+
+if(Number(data.stats.rating) >= 4.8){
+    badges.push("⭐ Top Rated");
+}
+
+if(Number(data.stats.followers) >= 100){
+    badges.push("🔥 Trending");
+}
+
+if(Number(data.stats.views) >= 10000){
+    badges.push("🏆 Bestseller");
+}
+
+badge.innerHTML = badges.join(" &nbsp; ");
+
         document.getElementById("authorBio").textContent =
             data.author.bio || "No bio available.";
+
+const socialContainer =
+document.getElementById("authorSocialLinks");
+
+const socialLinks = [];
+
+if(data.author.website){
+socialLinks.push(
+`<a href="${data.author.website}" target="_blank">🌐 Website</a>`
+);
+}
+
+if(data.author.instagram){
+socialLinks.push(
+`<a href="${data.author.instagram}" target="_blank">📷 Instagram</a>`
+);
+}
+
+if(data.author.facebook){
+socialLinks.push(
+`<a href="${data.author.facebook}" target="_blank">📘 Facebook</a>`
+);
+}
+
+if(data.author.x){
+socialLinks.push(
+`<a href="${data.author.x}" target="_blank">𝕏 X</a>`
+);
+}
+
+if(data.author.youtube){
+socialLinks.push(
+`<a href="${data.author.youtube}" target="_blank">▶️ YouTube</a>`
+);
+}
+
+socialContainer.innerHTML =
+socialLinks.join("");
 
         document.getElementById("authorNovelCount").textContent =
             data.stats.novels;
@@ -67,6 +126,15 @@ meta.content =
 
 document.getElementById("authorFollowers").textContent =
 Number(data.stats.followers || 0).toLocaleString();
+
+document.getElementById("authorChapters").textContent =
+Number(data.stats.chapters || 0).toLocaleString();
+
+document.getElementById("authorLikes").textContent =
+Number(data.stats.likes || 0).toLocaleString();
+
+document.getElementById("authorAverageViews").textContent =
+Number(data.stats.average_views || 0).toLocaleString();
 
 document.getElementById("authorHeaderRating").textContent =
 data.stats.rating || "0";
