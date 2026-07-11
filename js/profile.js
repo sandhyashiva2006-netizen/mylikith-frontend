@@ -6,6 +6,8 @@ JSON.parse(
 localStorage.getItem("user")
 );
 
+
+
 document.getElementById("myReferralCode").value =
 user.referral_code || "";
 
@@ -897,9 +899,25 @@ uploadProfilePhoto
 
 async function uploadProfilePhoto(e){
 
-const file=e.target.files[0];
+let file=e.target.files[0];
 
 if(!file)return;
+
+file=await compressProfileImage(file);
+
+// Save old image
+const oldImage=profileImage.src;
+
+// Show preview
+const preview=URL.createObjectURL(file);
+
+profileImage.src=preview;
+
+profileImage.style.opacity=".6";
+
+profileImage.style.pointerEvents="none";
+
+
 
 const formData=
 new FormData();
@@ -946,6 +964,11 @@ profileImage.src=data.url;
 
 user.profile_image=data.url;
 
+URL.revokeObjectURL(preview);
+
+profileImage.style.opacity = "1";
+profileImage.style.pointerEvents = "auto";
+
 localStorage.setItem(
 
 "user",
@@ -966,11 +989,107 @@ alert(
 
 console.log(err);
 
-alert(
-"Upload failed."
-);
+// Restore old image
+profileImage.src = oldImage;
+
+profileImage.style.opacity = "1";
+profileImage.style.pointerEvents = "auto";
+
+alert("Upload failed.");
 
 }
+
+}
+
+async function compressProfileImage(file){
+
+return new Promise((resolve)=>{
+
+const img=new Image();
+
+const reader=new FileReader();
+
+reader.onload=e=>{
+
+img.src=e.target.result;
+
+};
+
+img.onload=()=>{
+
+const canvas=document.createElement("canvas");
+
+const MAX=600;
+
+let width=img.width;
+
+let height=img.height;
+
+if(width>height){
+
+if(width>MAX){
+
+height*=MAX/width;
+
+width=MAX;
+
+}
+
+}else{
+
+if(height>MAX){
+
+width*=MAX/height;
+
+height=MAX;
+
+}
+
+}
+
+canvas.width=width;
+
+canvas.height=height;
+
+const ctx=canvas.getContext("2d");
+
+ctx.drawImage(img,0,0,width,height);
+
+canvas.toBlob(
+
+(blob)=>{
+
+resolve(
+
+new File(
+
+[blob],
+
+file.name,
+
+{
+
+type:"image/jpeg"
+
+}
+
+)
+
+);
+
+},
+
+"image/jpeg",
+
+0.8
+
+);
+
+};
+
+reader.readAsDataURL(file);
+
+});
 
 }
 
