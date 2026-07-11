@@ -456,3 +456,68 @@ renderNovels(filtered);
 
 }
 
+const urlParams=new URLSearchParams(window.location.search);
+
+const language=urlParams.get("language");
+
+if(language){
+
+selectedLanguage=language;
+
+const chip=document.querySelector(
+
+`.language-chip[data-language="${language}"]`
+
+);
+
+if(chip){
+
+document.querySelectorAll(".language-chip")
+.forEach(c=>c.classList.remove("active"));
+
+chip.classList.add("active");
+
+}
+
+if(typeof allNovels!=="undefined" && allNovels.length){
+
+renderNovels(
+
+allNovels.filter(novel=>
+
+(novel.language||"").toLowerCase()===
+
+language.toLowerCase()
+
+)
+
+);
+
+}else{
+
+const wait=setInterval(()=>{
+
+if(allNovels.length){
+
+clearInterval(wait);
+
+renderNovels(
+
+allNovels.filter(novel=>
+
+(novel.language||"").toLowerCase()===
+
+language.toLowerCase()
+
+)
+
+);
+
+}
+
+},100);
+
+}
+
+}
+
