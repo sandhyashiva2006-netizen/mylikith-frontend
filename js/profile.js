@@ -73,15 +73,22 @@ JSON.stringify(user)
 
 await loadProfileImage();
 
+profileImage.removeAttribute("src");
+
+setTimeout(()=>{
+
 profileImage.src =
-latestUser.profile_image ||
-"assets/images/default-avatar.png";
+latestUser.profile_image+
+"?t="+Date.now();
+
+},50);
 
 }catch(err){
 
 profileImage.src =
-user.profile_image ||
-"assets/images/default-avatar.png";
+user.profile_image
+? user.profile_image+"?t="+Date.now()
+: "assets/images/default-avatar.png";
 
 }
 
