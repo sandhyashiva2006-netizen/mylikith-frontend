@@ -236,6 +236,9 @@ document.getElementById("sidebar");
 const overlay=
 document.getElementById("sidebarOverlay");
 
+const closeSidebar=
+document.getElementById("closeSidebar");
+
 if(menuToggle){
 
 menuToggle.onclick=()=>{
@@ -248,15 +251,23 @@ overlay.classList.toggle("show");
 
 }
 
+function closeMenu(){
+
+sidebar.classList.remove("show");
+
+overlay.classList.remove("show");
+
+}
+
 if(overlay){
 
-menuToggle.onclick=()=>{
+overlay.onclick=closeMenu;
 
-sidebar.classList.toggle("show");
+}
 
-overlay.classList.toggle("show");
+if(closeSidebar){
 
-};
+closeSidebar.onclick=closeMenu;
 
 }
 
