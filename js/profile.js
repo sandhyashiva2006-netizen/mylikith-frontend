@@ -35,12 +35,52 @@ document.getElementById(
 ).textContent =
 user.email;
 
-const profileImage=
+const profileImage =
 document.getElementById("profileImage");
 
-if(user.profile_image){
+profileImage.onerror=function(){
 
-profileImage.src=user.profile_image;
+this.src="assets/images/default-avatar.png";
+
+};
+
+loadProfileImage();
+
+async function loadProfileImage(){
+
+try{
+
+const response = await fetch(
+
+`${API}/api/users/${user.id}`
+
+);
+
+const latestUser = await response.json();
+
+user.profile_image = latestUser.profile_image;
+
+localStorage.setItem(
+
+"user",
+
+JSON.stringify(user)
+
+);
+
+await loadProfileImage();
+
+profileImage.src =
+latestUser.profile_image ||
+"assets/images/default-avatar.png";
+
+}catch(err){
+
+profileImage.src =
+user.profile_image ||
+"assets/images/default-avatar.png";
+
+}
 
 }
 

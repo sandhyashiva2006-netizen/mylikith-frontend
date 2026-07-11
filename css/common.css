@@ -20,24 +20,38 @@ padding-top:82px;
 
 background:
 linear-gradient(
-rgba(6,10,28,.82),
-rgba(10,15,35,.86)
+rgba(6,10,28,.65),
+rgba(10,15,35,.72)
 ),
 url("../assets/images/profile-bg.jpg");
 
 background-size:cover;
 
-background-position:center;
+background-position:center top;
 
 background-repeat:no-repeat;
 
-background-attachment:fixed;
+background-color:#081020;
 
 color:#fff;
 
 min-height:100vh;
 
 overflow-x:hidden;
+
+}
+
+@media(max-width:768px){
+
+body{
+
+background-attachment:scroll;
+
+background-position:center top;
+
+background-size:cover;
+
+}
 
 }
 
