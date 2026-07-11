@@ -991,3 +991,22 @@ justify-content:center;
 
 }
 
+html,
+body{
+
+overflow-x:hidden;
+
+}
+
+.main-content{
+
+overflow-x:hidden;
+
+}
+
+.dashboard-card{
+
+overflow-x:auto;
+
+}
+
