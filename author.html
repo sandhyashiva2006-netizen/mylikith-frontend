@@ -1,20 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Author Profile - MyLikith</title>
+
+<meta name="description"
+content="Discover author profiles, published novels and follow your favourite writers on MyLikith.">
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/author.css">
+<link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body>
+
+<nav id="navbar" class="navbar"></nav>
+
+<section class="author-container">
+
 <div class="author-header">
 
-<img
-id="authorImage">
+<div class="author-avatar">
 
-<div>
+<img
+id="authorImage"
+src="assets/images/default-avatar.png"
+alt="Author">
+
+</div>
+
+<div class="author-details">
 
 <h1 id="authorName">
+
+Loading...
 
 </h1>
 
 <p id="authorBio">
 
+Loading author information...
+
 </p>
 
 <button
-id="followAuthorBtn">
+id="followAuthorBtn"
+class="btn-primary">
 
 Follow
 
@@ -26,7 +64,7 @@ Follow
 
 <div class="author-stats">
 
-<div>
+<div class="stat-card">
 
 <h2 id="authorNovelCount">
 
@@ -34,15 +72,11 @@ Follow
 
 </h2>
 
-<p>
-
-Novels
-
-</p>
+<p>Novels</p>
 
 </div>
 
-<div>
+<div class="stat-card">
 
 <h2 id="authorViews">
 
@@ -50,36 +84,46 @@ Novels
 
 </h2>
 
-<p>
-
-Views
-
-</p>
+<p>Views</p>
 
 </div>
 
-<div>
+<div class="stat-card">
 
 <h2 id="authorRating">
 
-0
+0</h2>
+
+<p>Rating</p>
+
+</div>
+
+</div>
+
+<section class="author-books">
+
+<h2>
+
+📚 Published Novels
 
 </h2>
 
-<p>
-
-Rating
-
-</p>
-
-</div>
-
-</div>
-
 <div
-
 id="authorBooks"
-
 class="novels-grid">
 
 </div>
+
+</section>
+
+</section>
+
+<div id="footer"></div>
+
+<script src="js/navbar.js"></script>
+<script src="js/author.js"></script>
+<script src="js/footer.js"></script>
+
+</body>
+
+</html>

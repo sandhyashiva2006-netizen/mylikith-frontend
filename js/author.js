@@ -1,123 +1,179 @@
-const API="https://mylikith-backend.onrender.com";
+const API = "https://mylikith-backend.onrender.com/api";
 
-const params=
+const user = JSON.parse(localStorage.getItem("user"));
 
-new URLSearchParams(
+const params = new URLSearchParams(window.location.search);
 
-window.location.search
+const authorId = params.get("id");
 
-);
-
-const authorId=params.get("id");
+if (!authorId) {
+    window.location = "explore.html";
+}
 
 loadAuthor();
 
-async function loadAuthor(){
+async function loadAuthor() {
 
-const response=await fetch(
+    try {
 
-`${API}/api/authors/${authorId}`
+        const res = await fetch(`${API}/authors/${authorId}`);
 
-);
+        const data = await res.json();
 
-const data=await response.json();
+        if (!data.author) {
 
-document.getElementById(
+            document.querySelector(".author-container").innerHTML = `
+                <h2 style="text-align:center">
+                    Author not found.
+                </h2>
+            `;
 
-"authorName"
+            return;
+        }
 
-).textContent=
+        document.getElementById("authorImage").src =
+            data.author.profile_image ||
+            "assets/images/default-avatar.png";
 
-data.author.name;
+        document.getElementById("authorName").textContent =
+            data.author.name;
 
-document.getElementById(
+        document.getElementById("authorBio").textContent =
+            data.author.bio || "No bio available.";
 
-"authorBio"
+        document.getElementById("authorNovelCount").textContent =
+            data.stats.novels;
 
-).textContent=
+        document.getElementById("authorViews").textContent =
+            Number(data.stats.views).toLocaleString();
 
-data.author.bio||"";
+        document.getElementById("authorRating").textContent =
+            data.stats.rating || "0";
 
-document.getElementById(
+        renderBooks(data.novels);
 
-"authorImage"
+        loadFollowStatus();
 
-).src=
+    } catch (err) {
 
-data.author.profile_image||
+        console.error(err);
 
-"assets/images/default-user.png";
+    }
 
-document.getElementById(
+}
 
-"authorNovelCount"
+function renderBooks(books) {
 
-).textContent=
+    const container = document.getElementById("authorBooks");
 
-data.stats.novels;
+    if (!books.length) {
 
-document.getElementById(
+        container.innerHTML = `
+            <p>No published novels yet.</p>
+        `;
 
-"authorViews"
+        return;
+    }
 
-).textContent=
+    container.innerHTML = books.map(book => `
 
-Number(
-
-data.stats.views
-
-).toLocaleString();
-
-document.getElementById(
-
-"authorRating"
-
-).textContent=
-
-data.stats.rating||0;
-
-const container=
-
-document.getElementById(
-
-"authorBooks"
-
-);
-
-container.innerHTML="";
-
-data.novels.forEach(book=>{
-
-container.innerHTML+=`
-
-<a
-
-href="novel.html?id=${book.id}"
-
-class="novel-card">
+<div class="common-novel-card">
 
 <img
-
+class="common-novel-cover"
 src="${book.cover_url}"
+alt="${book.title}">
 
-class="cover">
+<div class="common-novel-body">
 
-<h3>
+<h2>${book.title}</h2>
 
-${book.title}
+<div class="common-novel-meta">
 
-</h3>
+<span>${book.category}</span>
 
-<p>
+<span>${book.language}</span>
 
-${book.category}
+</div>
 
-</p>
+<a
+href="novel.html?id=${book.id}"
+class="btn btn-primary w-100">
+
+Read Now
 
 </a>
 
-`;
+</div>
 
-});
+</div>
+
+`).join("");
 
 }
+
+async function loadFollowStatus() {
+
+    if (!user) return;
+
+    try {
+
+        const res = await fetch(
+
+`${API}/follow-status?user_id=${user.id}&author_id=${authorId}`
+
+        );
+
+        const data = await res.json();
+
+        const btn =
+            document.getElementById("followAuthorBtn");
+
+        btn.textContent =
+            data.following
+                ? "Following"
+                : "Follow";
+
+    } catch (err) {
+
+        console.log(err);
+
+    }
+
+}
+
+document
+.getElementById("followAuthorBtn")
+.onclick = async () => {
+
+    if (!user) {
+
+        window.location = "login.html";
+
+        return;
+
+    }
+
+    await fetch(`${API}/follow`, {
+
+        method: "POST",
+
+        headers: {
+
+            "Content-Type": "application/json"
+
+        },
+
+        body: JSON.stringify({
+
+            user_id: user.id,
+
+            author_id: authorId
+
+        })
+
+    });
+
+    loadFollowStatus();
+
+};

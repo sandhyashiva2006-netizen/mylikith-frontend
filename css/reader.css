@@ -674,6 +674,23 @@ font-size:18px;
 
 }
 
+.chapter-navigation{
+
+flex-direction:column;
+
+gap:15px;
+
+}
+
+.chapter-navigation button{
+
+width:100%;
+
+min-width:0;
+
+}
+
+
 }
 
 /* ==========================================
