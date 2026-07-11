@@ -45,24 +45,19 @@ overflow-x:hidden;
 
 /* Mobile Background */
 
-@media(max-width:768px){
+@media (max-width:768px){
 
 body{
 
-background:
-linear-gradient(
-rgba(6,10,28,.82),
-rgba(10,15,35,.86)
-),
-url("../assets/images/profile-bg-mobile.jpg");
+background-image:url("../assets/images/profile-bg-mobile.jpg") !important;
 
-background-size:100% 100%;
+background-size:cover !important;
 
-background-position:center center;
+background-position:center center !important;
 
-background-repeat:no-repeat;
+background-repeat:no-repeat !important;
 
-background-attachment:scroll;
+background-attachment:scroll !important;
 
 }
 
