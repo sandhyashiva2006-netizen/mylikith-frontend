@@ -47,16 +47,20 @@ overflow-x:hidden;
 
 body{
 
-background-image:
+background:
 linear-gradient(
-rgba(6,10,28,.82),
-rgba(10,15,35,.86)
+rgba(6,10,28,.30),
+rgba(10,15,35,.40)
 ),
 url("../assets/images/profile-bg-mobile.jpg");
 
-background-attachment:scroll;
+background-size:cover;
 
 background-position:center center;
+
+background-repeat:no-repeat;
+
+background-attachment:scroll;
 
 }
 
