@@ -18,7 +18,7 @@ margin:0;
 
 padding-top:82px;
 
-background:
+background-image:
 linear-gradient(
 rgba(6,10,28,.82),
 rgba(10,15,35,.86)
@@ -47,7 +47,16 @@ overflow-x:hidden;
 
 body{
 
-background:red !important;
+background-image:
+linear-gradient(
+rgba(6,10,28,.82),
+rgba(10,15,35,.86)
+),
+url("../assets/images/profile-bg-mobile.jpg");
+
+background-attachment:scroll;
+
+background-position:center center;
 
 }
 
