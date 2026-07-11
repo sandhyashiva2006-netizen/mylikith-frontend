@@ -9,6 +9,38 @@ JSON.parse(localStorage.getItem("user"));
 
 async function loadPlans(){
 
+const container = document.getElementById("plans");
+
+if(!user){
+
+container.innerHTML = `
+
+<div class="login-required">
+
+<h2>🔒 Login Required</h2>
+
+<p>
+
+Please login to purchase Premium Membership.
+
+</p>
+
+<a href="login.html" class="btn-primary">
+
+Login
+
+</a>
+
+</div>
+
+`;
+
+return;
+
+} 
+
+async function loadPlans(){
+
 const res=
 
 await fetch(
