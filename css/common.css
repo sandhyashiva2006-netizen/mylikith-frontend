@@ -43,27 +43,11 @@ overflow-x:hidden;
 
 }
 
-/* Mobile Background */
-
 @media (max-width:768px){
 
-html,
 body{
 
-background:
-linear-gradient(
-rgba(6,10,28,.82),
-rgba(10,15,35,.86)
-),
-url("../assets/images/profile-bg-mobile.jpg") !important;
-
-background-size:cover !important;
-
-background-position:center center !important;
-
-background-repeat:no-repeat !important;
-
-background-attachment:scroll !important;
+background:red !important;
 
 }
 
