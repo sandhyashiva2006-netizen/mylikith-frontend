@@ -1,24 +1,17 @@
 <!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>My Profile</title>
-
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/common.css">
-<link rel="stylesheet" href="css/home.css">
-<link rel="stylesheet" href="css/profile.css">
-<link rel="stylesheet" href="css/responsive.css">
-
-
+<link href="css/style.css" rel="stylesheet"/>
+<link href="css/common.css" rel="stylesheet"/>
+<link href="css/home.css" rel="stylesheet"/>
+<link href="css/profile.css" rel="stylesheet"/>
+<link href="css/responsive.css" rel="stylesheet"/>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-GMVCZLKBXV"></script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-GMVCZLKBXV"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -26,555 +19,236 @@ content="width=device-width, initial-scale=1.0">
 
   gtag('config', 'G-GMVCZLKBXV');
 </script>
-
 </head>
-
 <body>
-
-<nav
-id="navbar"
-class="navbar">
-
+<nav class="navbar" id="navbar">
 </nav>
-
 <div class="profile-container">
-
 <div class="profile-header">
-
-<div
-class="avatar"
-id="profileAvatar">
-
-<img
-id="profileImage"
-src=""
-alt="Profile"
-crossorigin="anonymous">
-
+<div class="avatar" id="profileAvatar">
+<img alt="Profile" crossorigin="anonymous" id="profileImage" src=""/>
 <div class="avatar-overlay">
 
 📷
 
 </div>
-
-<input
-type="file"
-id="profilePhotoInput"
-accept="image/*"
-hidden>
-
+<input accept="image/*" hidden="" id="profilePhotoInput" type="file"/>
 </div>
-
 <div class="avatar-text">
 
 Tap to change photo
 
 </div>
-
-<h1
-id="profileName">
+<h1 id="profileName">
 
 Loading...
 
 </h1>
-
-<p
-id="profileEmail">
+<p id="profileEmail">
 
 Loading...
 
 </p>
-
-<div
-id="writerBadge">
-
+<div id="writerBadge">
 </div>
-
 <div class="profile-card referral-card">
-
-    <div class="referral-header">
-
-        <div class="referral-icon">🎁</div>
-
-        <div>
-
-            <h3>Refer & Earn</h3>
-
-            <p>Invite friends and both of you earn <b>20 Coins</b>.</p>
-
-        </div>
-
-    </div>
-
-    <div class="referral-code-box">
-
-        <label>Your Referral Code</label>
-
-        <div class="referral-code" id="myReferralCode">
+<div class="referral-header">
+<div class="referral-icon">🎁</div>
+<div>
+<h3>Refer &amp; Earn</h3>
+<p>Invite friends and both of you earn <b>20 Coins</b>.</p>
+</div>
+</div>
+<div class="referral-code-box">
+<label>Your Referral Code</label>
+<div class="referral-code" id="myReferralCode">
             Loading...
         </div>
-
-    </div>
-
-    <div class="referral-buttons">
-
-        <button id="copyReferralBtn" class="primary-btn">
+</div>
+<div class="referral-buttons">
+<button class="primary-btn" id="copyReferralBtn">
 
             📋 Copy Code
 
         </button>
-
-        <button id="shareReferralBtn" class="primary-btn">
+<button class="primary-btn" id="shareReferralBtn">
 
             📤 Share Link
 
         </button>
-
-    </div>
-
-    <div class="referral-stats">
-
-        <div>
-
-            <h4 id="totalReferrals">0</h4>
-
-            <span>Total Referrals</span>
-
-        </div>
-
-        <div>
-
-            <h4 id="coinsEarned">0</h4>
-
-            <span>Coins Earned</span>
-
-        </div>
-
-    </div>
-
 </div>
-
-
+<div class="referral-stats">
+<div>
+<h4 id="totalReferrals">0</h4>
+<span>Total Referrals</span>
+</div>
+<div>
+<h4 id="coinsEarned">0</h4>
+<span>Coins Earned</span>
+</div>
+</div>
+</div>
 <h2>
 
 🏆 Premium Achievements
 
 </h2>
-
 <div id="premiumAchievements">
 
 Loading...
 
 </div>
-
-<div
-id="premiumBadge">
-
+<div id="premiumBadge">
 </div>
-
 <h2>
 
 📊 Premium Reading
 
 </h2>
-
 <div id="premiumReadingStats">
 
 Loading...
 
 </div>
-
 </div>
-
 <div class="profile-stats">
-
 <div class="stat-card">
-
-<h2
-id="bookmarkCount">
+<h2 id="bookmarkCount">
 
 0
 
 </h2>
-
 <p>
 
 📚 Bookmarks
 
 </p>
-
 </div>
-
 <div class="stat-card">
-
-<h2
-id="followCount">
+<h2 id="followCount">
 
 0
 
 </h2>
-
 <p>
 
 ❤️ Following
 
 </p>
-
 </div>
-
 <div class="stat-card">
-
-<h2
-id="reviewCount">
+<h2 id="reviewCount">
 
 0
 
 </h2>
-
 <p>
 
 ⭐ Reviews
 
 </p>
-
 </div>
-
 <div class="stat-card">
-
-<h2
-id="commentCount">
+<h2 id="commentCount">
 
 0
 
 </h2>
-
 <p>
 
 💬 Comments
 
 </p>
-
 </div>
-
 </div>
-
 <!-- Become Writer -->
-
-<div
-id="becomeWriterCard"
-
-class="profile-card"
-
-style="display:none;">
-
+<div class="profile-card" id="becomeWriterCard" style="display:none;">
 <h3>
 
 Become a Writer
 
 </h3>
-
 <p>
 
 Publish your own novels and earn money from readers.
 
 </p>
-
-<button
-id="applyWriterBtn"
-
-class="primary-btn">
+<button class="primary-btn" id="applyWriterBtn">
 
 Apply Now
 
 </button>
-
 </div>
-
-<div
-id="writerSection"
-class="section"
-style="display:none;">
-
-<h2>
-
-✍️ Writer Statistics
-
-</h2>
-
-<div class="profile-stats">
-
-<div class="stat-card">
-
-<h2
-id="writerNovels">
-
-0
-
-</h2>
-
-<p>
-
-📚 Novels
-
-</p>
-
-<h2>🌐 Author Profile</h2>
-
-<div class="profile-card author-profile-card">
-
-<div class="form-group">
-
-<label>Author Bio</label>
-
-<textarea
-id="authorBioInput"
-rows="5"
-placeholder="Tell readers about yourself..."></textarea>
-
-<h2>❤️ My Followers</h2>
-
-<div
-id="followersList"
-class="profile-list">
-
-Loading...
-
-</div>
-
-</div>
-
-<div class="form-group">
-
-<label>Website</label>
-
-<input
-type="url"
-id="authorWebsite"
-placeholder="https://yourwebsite.com">
-
-</div>
-
-<div class="form-group">
-
-<label>Instagram</label>
-
-<input
-type="url"
-id="authorInstagram"
-placeholder="https://instagram.com/username">
-
-</div>
-
-<div class="form-group">
-
-<label>Facebook</label>
-
-<input
-type="url"
-id="authorFacebook"
-placeholder="https://facebook.com/username">
-
-</div>
-
-<div class="form-group">
-
-<label>X (Twitter)</label>
-
-<input
-type="url"
-id="authorX"
-placeholder="https://x.com/username">
-
-</div>
-
-<div class="form-group">
-
-<label>YouTube</label>
-
-<input
-type="url"
-id="authorYoutube"
-placeholder="https://youtube.com/@channel">
-
-</div>
-
-<button
-class="primary-btn"
-onclick="saveAuthorProfile()">
-
-💾 Save Author Profile
-
-</button>
-
-</div>
-
-</div>
-
-<div class="stat-card">
-
-<h2
-id="writerReads">
-
-0
-
-</h2>
-
-<p>
-
-👁 Reads
-
-</p>
-
-</div>
-
-<div class="stat-card">
-
-<h2
-id="writerFollowers">
-
-0
-
-</h2>
-
-<p>
-
-❤️ Followers
-
-</p>
-
-</div>
-
-<div class="stat-card">
-
-<h2
-id="writerRating">
-
-0
-
-</h2>
-
-<p>
-
-⭐ Rating
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
+<div class="section" id="writerSection" style="display:none;"><h2>✍️ Writer Statistics</h2><div class="profile-stats"><div class="stat-card"><h2 id="writerNovels">0</h2><p>📚 Novels</p></div><div class="stat-card"><h2 id="writerReads">0</h2><p>👁 Reads</p></div><div class="stat-card"><h2 id="writerFollowers">0</h2><p>❤️ Followers</p></div><div class="stat-card"><h2 id="writerRating">0</h2><p>⭐ Rating</p></div></div><div class="section"><h2>🌐 Author Profile</h2><div class="profile-card author-profile-card"><div class="form-group"><label>Author Bio</label><textarea id="authorBioInput" placeholder="Tell readers about yourself..." rows="5"></textarea></div><div class="form-group"><label>Website</label><input id="authorWebsite" placeholder="https://yourwebsite.com" type="url"/></div><div class="form-group"><label>Instagram</label><input id="authorInstagram" placeholder="https://instagram.com/username" type="url"/></div><div class="form-group"><label>Facebook</label><input id="authorFacebook" placeholder="https://facebook.com/username" type="url"/></div><div class="form-group"><label>X (Twitter)</label><input id="authorX" placeholder="https://x.com/username" type="url"/></div><div class="form-group"><label>YouTube</label><input id="authorYoutube" placeholder="https://youtube.com/@channel" type="url"/></div><button class="primary-btn" onclick="saveAuthorProfile()">💾 Save Author Profile</button></div></div><div class="section"><h2>❤️ My Followers</h2><div class="profile-list" id="followersList">Loading...</div></div></div>
 <div class="section">
-
 <h2>
 
 🔒 Change Password
 
 </h2>
-
 <div class="profile-card change-password-card">
-
-    <div class="form-group">
-        <label>Current Password</label>
-        <input
-            type="password"
-            id="currentPassword"
-            placeholder="Enter current password">
-    </div>
-
-    <div class="form-group">
-        <label>New Password</label>
-        <input
-            type="password"
-            id="newPassword"
-            placeholder="Enter new password">
-    </div>
-
-    <div class="form-group">
-        <label>Confirm New Password</label>
-        <input
-            type="password"
-            id="confirmPassword"
-            placeholder="Confirm new password">
-    </div>
-
-    <button
-        class="primary-btn"
-        onclick="changePassword()">
+<div class="form-group">
+<label>Current Password</label>
+<input id="currentPassword" placeholder="Enter current password" type="password"/>
+</div>
+<div class="form-group">
+<label>New Password</label>
+<input id="newPassword" placeholder="Enter new password" type="password"/>
+</div>
+<div class="form-group">
+<label>Confirm New Password</label>
+<input id="confirmPassword" placeholder="Confirm new password" type="password"/>
+</div>
+<button class="primary-btn" onclick="changePassword()">
 
         Update Password
 
     </button>
-
 </div>
 </div>
-
 <div class="section">
-
 <h2>Quick Actions</h2>
-
 <div class="profile-actions">
-
 <a class="action-btn" href="wallet.html">
 🪙 Wallet
 </a>
-
 <a class="action-btn" href="earnings.html">
 💰 Earnings
 </a>
-
 <a class="action-btn" href="premium.html">
 👑 Premium Membership
 </a>
-
 </div>
-
 </div>
-
 <div class="section">
-
 <h2>
 
 ⭐ My Reviews
 
 </h2>
-
-<div
-id="reviewsList">
+<div id="reviewsList">
 
 Loading...
 
 </div>
-
 </div>
-
 <div class="section">
-
 <h2>
 
 💬 My Comments
 
 </h2>
-
-<div
-id="commentsList">
+<div id="commentsList">
 
 Loading...
 
 </div>
-
 </div>
-
 </div>
-
 <div id="footer"></div>
-
 <script src="js/session.js"></script>
 <script src="js/profile.js"></script>
 <script src="js/navbar.js"></script>
 <script src="js/footer.js"></script>
-
 </body>
-
 </html>
