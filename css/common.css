@@ -47,9 +47,15 @@ overflow-x:hidden;
 
 @media (max-width:768px){
 
+html,
 body{
 
-background-image:url("../assets/images/profile-bg-mobile.jpg") !important;
+background:
+linear-gradient(
+rgba(6,10,28,.82),
+rgba(10,15,35,.86)
+),
+url("../assets/images/profile-bg-mobile.jpg") !important;
 
 background-size:cover !important;
 
