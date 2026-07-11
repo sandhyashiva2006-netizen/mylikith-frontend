@@ -227,6 +227,39 @@ window.location.href="admin-login.html";
 
 }
 
+const menuToggle=
+document.getElementById("menuToggle");
+
+const sidebar=
+document.getElementById("sidebar");
+
+const overlay=
+document.getElementById("sidebarOverlay");
+
+if(menuToggle){
+
+menuToggle.onclick=()=>{
+
+sidebar.classList.add("show");
+
+overlay.classList.add("show");
+
+};
+
+}
+
+if(overlay){
+
+overlay.onclick=()=>{
+
+sidebar.classList.remove("show");
+
+overlay.classList.remove("show");
+
+};
+
+}
+
 loadDashboard();
 
 loadRecentUsers();
