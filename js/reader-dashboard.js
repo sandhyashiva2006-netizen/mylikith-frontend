@@ -783,35 +783,49 @@ Unlimited Premium Chapters
 
 }
 
+let feedPage=1;
+
+const FEEDS_PER_PAGE=10;
+
+let allFeeds=[];
+
 async function loadReaderFeed(){
 
-const response=await fetch(`${API}/api/feed/${readerUser.id}`);
+const response=
+await fetch(`${API}/api/feed/${readerUser.id}`);
 
-const feed=await response.json();
+allFeeds=
+await response.json();
+
+feedPage=1;
+
+renderFeed();
+
+}
+
+function renderFeed(){
 
 const container=
-
-document.getElementById(
-
-"readerFeed"
-
-);
-
-if(!container)return;
+document.getElementById("readerFeed");
 
 container.innerHTML="";
 
-if(feed.length===0){
+if(allFeeds.length===0){
 
-container.innerHTML=
-
-"<p>No updates yet.</p>";
+container.innerHTML="<p>No updates yet.</p>";
 
 return;
 
 }
 
-feed.forEach(item=>{
+const feeds=
+
+allFeeds.slice(
+0,
+feedPage*FEEDS_PER_PAGE
+);
+
+feeds.forEach(item=>{
 
 container.innerHTML+=`
 
@@ -841,6 +855,49 @@ Read Now →
 `;
 
 });
+
+if(feeds.length<allFeeds.length){
+
+container.innerHTML+=`
+
+<div style="text-align:center;margin-top:25px;">
+
+<button
+class="primary-btn"
+onclick="loadMoreFeeds()">
+
+Load More
+
+</button>
+
+</div>
+
+`;
+
+}else{
+
+container.innerHTML+=`
+
+<p
+style="text-align:center;
+margin-top:25px;
+opacity:.8;">
+
+🎉 You're all caught up!
+
+</p>
+
+`;
+
+}
+
+}
+
+function loadMoreFeeds(){
+
+feedPage++;
+
+renderFeed();
 
 }
 
