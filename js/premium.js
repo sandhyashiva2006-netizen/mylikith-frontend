@@ -39,7 +39,6 @@ return;
 
 } 
 
-async function loadPlans(){
 
 const res=
 
