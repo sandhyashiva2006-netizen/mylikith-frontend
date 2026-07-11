@@ -50,6 +50,89 @@ Loading...
 
 </div>
 
+<!-- Manual Payment Modal -->
+
+<div id="manualPaymentModal" class="manual-payment-modal">
+
+<div class="manual-payment-box">
+
+<h2>Manual UPI Payment</h2>
+
+<p>
+
+Scan the QR code or pay using the UPI ID below.
+
+</p>
+
+<img
+id="upiQr"
+src="images/upi-qr.png"
+class="upi-qr">
+
+<h3 id="merchantName">
+
+MyLikith
+
+</h3>
+
+<div class="upi-id">
+
+UPI ID :
+
+<span id="upiId">
+
+mylikith@upi
+
+</span>
+
+</div>
+
+<div class="payment-amount">
+
+Amount :
+
+₹<span id="manualAmount">
+
+0
+
+</span>
+
+</div>
+
+<input
+id="manualTransactionId"
+type="text"
+placeholder="Enter UPI Transaction ID">
+
+<input
+id="manualScreenshot"
+type="file"
+accept="image/*">
+
+<div class="manual-buttons">
+
+<button
+id="submitManualPayment"
+class="buy-btn">
+
+Submit Payment
+
+</button>
+
+<button
+id="closeManualPayment"
+class="buy-btn cancel-btn">
+
+Cancel
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
 <div id="footer"></div>
 
 <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>

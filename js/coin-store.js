@@ -77,14 +77,41 @@ pkg.bonus_coins>0
 
 }
 
+<div style="display:flex;gap:10px;margin-top:15px;">
+
 <button
+
 class="buy-btn"
+
+style="flex:1"
 
 onclick="buyPackage(${pkg.id})">
 
-Buy Now
+Pay Online
 
 </button>
+
+<button
+
+class="buy-btn"
+
+style="flex:1;background:#00b894;"
+
+onclick="manualPayment(
+
+${pkg.id},
+
+${pkg.price},
+
+${pkg.coins+pkg.bonus_coins}
+
+)">
+
+Manual UPI
+
+</button>
+
+</div>
 
 </div>
 
@@ -170,3 +197,213 @@ alert("Payment initialization failed.");
 }
 
 }
+
+let selectedPackage=null;
+
+function manualPayment(
+packageId,
+amount,
+coins
+){
+
+selectedPackage={
+
+packageId,
+amount,
+coins
+
+};
+
+document.getElementById(
+"manualAmount"
+).innerText=amount;
+
+document.getElementById(
+"manualPaymentModal"
+).style.display="flex";
+
+}
+
+document.getElementById(
+
+"closeManualPayment"
+
+).onclick=()=>{
+
+document.getElementById(
+
+"manualPaymentModal"
+
+).style.display="none";
+
+};
+
+document.getElementById(
+
+"submitManualPayment"
+
+).onclick=
+
+async()=>{
+
+const transactionId=
+
+document.getElementById(
+
+"manualTransactionId"
+
+).value.trim();
+
+if(!transactionId){
+
+alert(
+
+"Please enter UPI Transaction ID."
+
+);
+
+return;
+
+}
+
+if(transactionId.length<8){
+
+alert(
+
+"Please enter a valid UPI Transaction ID."
+
+);
+
+return;
+
+}
+
+let screenshot=null;
+
+const file=document.getElementById(
+"manualScreenshot"
+).files[0];
+
+if(!file){
+
+alert(
+
+"Please upload the payment screenshot."
+
+);
+
+return;
+
+}
+
+if(file){
+
+const formData=new FormData();
+
+formData.append(
+"payment",
+file
+);
+
+const uploadResponse=
+
+await fetch(
+
+`${API}/payment/upload`,
+
+{
+
+method:"POST",
+
+body:formData
+
+}
+
+);
+
+const uploadData=
+
+await uploadResponse.json();
+
+if(!uploadData.success){
+
+alert(
+
+uploadData.message||
+
+"Unable to upload screenshot."
+
+);
+
+return;
+
+}
+
+screenshot=uploadData.url;
+
+}
+
+const response=
+
+await fetch(
+
+`${API}/manual-payments/submit`,
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json",
+
+Authorization:
+
+"Bearer "+
+
+localStorage.getItem("token")
+
+},
+
+body:JSON.stringify({
+
+payment_type:"coin",
+
+package_id:selectedPackage.packageId,
+
+transaction_id:transactionId,
+
+screenshot
+
+})
+
+}
+
+);
+
+const data=
+
+await response.json();
+
+alert(data.message);
+
+if(data.success){
+
+document.getElementById(
+"manualTransactionId"
+).value="";
+
+document.getElementById(
+"manualScreenshot"
+).value="";
+
+document.getElementById(
+"manualPaymentModal"
+).style.display="none";
+
+selectedPackage=null;
+
+}
+
+};
+
