@@ -97,7 +97,7 @@ and enjoy stories in every language.
 
 <a href="https://x.com/MyLikith" target="_blank">𝕏</a>
 
-<a href="https://linkedin.com/company/MyLikith" target="_blank">💼</a>
+<a href="https://linkedin.com/company/mylikith" target="_blank">💼</a>
 
 </div>
 
