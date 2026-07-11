@@ -31,6 +31,21 @@ async function loadAuthor() {
             return;
         }
 
+document.title =
+`${data.author.name} - MyLikith`;
+
+const meta =
+document.querySelector(
+'meta[name="description"]'
+);
+
+if(meta){
+
+meta.content =
+`Read novels by ${data.author.name} on MyLikith.`;
+
+}
+
         document.getElementById("authorImage").src =
             data.author.profile_image ||
             "assets/images/default-avatar.png";
@@ -50,6 +65,18 @@ async function loadAuthor() {
         document.getElementById("authorRating").textContent =
             data.stats.rating || "0";
 
+document.getElementById("authorFollowers").textContent =
+Number(data.stats.followers || 0).toLocaleString();
+
+document.getElementById("authorHeaderRating").textContent =
+data.stats.rating || "0";
+
+document.getElementById("authorHeaderFollowers").textContent =
+Number(data.stats.followers || 0).toLocaleString();
+
+document.getElementById("authorHeaderBooks").textContent =
+data.stats.novels;
+
         renderBooks(data.novels);
 
         loadFollowStatus();
@@ -62,33 +89,50 @@ async function loadAuthor() {
 
 }
 
-function renderBooks(books) {
+function renderBooks(books){
 
-    const container = document.getElementById("authorBooks");
+const container=document.getElementById("authorBooks");
 
-    if (!books.length) {
+if(!books.length){
 
-        container.innerHTML = `
-            <p>No published novels yet.</p>
-        `;
+container.innerHTML=`
 
-        return;
-    }
+<div class="empty-state">
 
-    container.innerHTML = books.map(book => `
+📚
 
-<div class="common-novel-card">
+<h3>No Published Novels Yet</h3>
+
+<p>
+
+This author hasn't published any novels yet.
+
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+container.innerHTML=books.map(book=>`
+
+<div
+class="novel-card"
+onclick="location.href='novel.html?id=${book.id}'">
 
 <img
-class="common-novel-cover"
+class="novel-cover"
 src="${book.cover_url}"
 alt="${book.title}">
 
-<div class="common-novel-body">
+<div class="novel-info">
 
-<h2>${book.title}</h2>
+<h3>${book.title}</h3>
 
-<div class="common-novel-meta">
+<div class="novel-meta">
 
 <span>${book.category}</span>
 
@@ -96,9 +140,15 @@ alt="${book.title}">
 
 </div>
 
+<div class="novel-stats">
+
+<span>👀 ${Number(book.views).toLocaleString()}</span>
+
+</div>
+
 <a
 href="novel.html?id=${book.id}"
-class="btn btn-primary w-100">
+class="start-btn">
 
 Read Now
 
@@ -129,10 +179,19 @@ async function loadFollowStatus() {
         const btn =
             document.getElementById("followAuthorBtn");
 
-        btn.textContent =
-            data.following
-                ? "Following"
-                : "Follow";
+        if(data.following){
+
+btn.innerHTML="❤️ Following";
+
+btn.classList.add("following");
+
+}else{
+
+btn.innerHTML="🤍 Follow Author";
+
+btn.classList.remove("following");
+
+}
 
     } catch (err) {
 
