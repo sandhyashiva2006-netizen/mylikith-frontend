@@ -954,6 +954,10 @@ JSON.stringify(user)
 
 );
 
+window.dispatchEvent(
+new Event("profileUpdated")
+);
+
 alert(
 "Profile photo updated."
 );

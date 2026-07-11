@@ -231,6 +231,14 @@ if (navbarUser) {
 
 html += `
 
+<div class="navbar-user">
+
+<img
+id="navbarAvatar"
+class="navbar-avatar"
+src="${navbarUser.profile_image || "assets/images/default-avatar.png"}"
+alt="Profile">
+
 <span class="welcome">
 
 👋 ${navbarUser.name}
@@ -244,6 +252,8 @@ class="login-btn">
 Logout
 
 </button>
+
+</div>
 
 `;
 
@@ -470,3 +480,19 @@ link.classList.add("active");
 
 loadPremiumBadge();
 loadNotificationCount();
+
+window.addEventListener("profileUpdated",()=>{
+
+const updatedUser=
+JSON.parse(localStorage.getItem("user"));
+
+const avatar=
+document.getElementById("navbarAvatar");
+
+if(avatar && updatedUser?.profile_image){
+
+avatar.src=updatedUser.profile_image;
+
+}
+
+});
