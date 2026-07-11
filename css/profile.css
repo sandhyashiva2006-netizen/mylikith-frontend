@@ -823,43 +823,83 @@ width:100%;
 
 .profile-list{
 
-display:flex;
+display:grid;
 
-flex-direction:column;
+grid-template-columns:
 
-gap:15px;
+repeat(auto-fit,minmax(180px,1fr));
 
-margin-top:20px;
+gap:22px;
+
+margin-top:25px;
 
 }
 
 .follower-card{
 
-display:flex;
+padding:25px;
 
-align-items:center;
-
-gap:15px;
-
-padding:15px;
-
-border-radius:16px;
+border-radius:18px;
 
 background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+text-align:center;
+
+transition:.3s;
+
+cursor:pointer;
+
+}
+
+.follower-card:hover{
+
+transform:translateY(-5px);
+
+border-color:#7C3AED;
 
 }
 
 .follower-avatar{
 
-width:55px;
+width:82px;
 
-height:55px;
+height:82px;
 
 border-radius:50%;
 
 object-fit:cover;
 
-border:2px solid #7C3AED;
+margin:auto;
+
+margin-bottom:15px;
+
+border:3px solid #7C3AED;
+
+}
+
+.follower-card h4{
+
+margin:10px 0 6px;
+
+}
+
+.follower-card p{
+
+opacity:.75;
+
+font-size:14px;
+
+}
+
+.followers-load{
+
+grid-column:1/-1;
+
+text-align:center;
+
+margin-top:20px;
 
 }
 

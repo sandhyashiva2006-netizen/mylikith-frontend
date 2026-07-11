@@ -1233,59 +1233,136 @@ alert("Unable to update profile.");
 
 }
 
-async function loadFollowers(){
+let followerPage=1;
+
+async function loadFollowers(loadMore=false){
 
 if(user.role!=="writer") return;
 
 const response=await fetch(
 
-`${API}/api/authors/${user.id}/followers`
+`${API}/api/authors/${user.id}/followers?page=${followerPage}`
 
 );
 
-const followers=await response.json();
+const data=await response.json();
 
-const container=document.getElementById("followersList");
+const container=
 
-if(!container)return;
+document.getElementById("followersList");
+
+document.getElementById(
+
+"followersTotal"
+
+).textContent=
+
+Number(
+
+data.totalFollowers
+
+).toLocaleString();
+
+if(!loadMore){
 
 container.innerHTML="";
 
-if(followers.length===0){
-
-container.innerHTML="<p>No followers yet.</p>";
-
-return;
-
 }
 
-followers.forEach(item=>{
+data.followers.forEach(item=>{
 
 container.innerHTML+=`
 
-<div class="follower-card">
+<div
+
+class="follower-card">
 
 <img
 
 src="${
-item.profile_image ||
+item.profile_image||
 
 "assets/images/default-avatar.png"
 }"
 
 class="follower-avatar">
 
-<span>
+<h4>
 
 ${item.name}
 
-</span>
+</h4>
+
+<p>
+
+${
+item.role==="writer"
+
+?"✍️ Writer"
+
+:item.role==="admin"
+
+?"⭐ Admin"
+
+:"📖 Reader"
+
+}
+
+</p>
 
 </div>
 
 `;
 
 });
+
+let btn=
+
+document.getElementById(
+
+"loadFollowersBtn"
+
+);
+
+if(btn){
+
+btn.remove();
+
+}
+
+if(data.hasMore){
+
+container.innerHTML+=`
+
+<div class="followers-load">
+
+<button
+
+id="loadFollowersBtn"
+
+class="primary-btn">
+
+Load More
+
+</button>
+
+</div>
+
+`;
+
+document.getElementById(
+
+"loadFollowersBtn"
+
+).onclick=()=>{
+
+followerPage++;
+
+loadFollowers(true);
+
+};
+
+}
 
 }
 
