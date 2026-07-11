@@ -43,15 +43,26 @@ overflow-x:hidden;
 
 }
 
+/* Mobile Background */
+
 @media(max-width:768px){
 
 body{
 
-background-attachment:scroll;
-
-background-position:center top;
+background:
+linear-gradient(
+rgba(6,10,28,.82),
+rgba(10,15,35,.86)
+),
+url("../assets/images/profile-bg-mobile.jpg");
 
 background-size:cover;
+
+background-position:center center;
+
+background-repeat:no-repeat;
+
+background-attachment:scroll;
 
 }
 
