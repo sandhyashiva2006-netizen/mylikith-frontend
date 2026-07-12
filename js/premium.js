@@ -1,8 +1,5 @@
 const API="https://mylikith-backend.onrender.com/api";
 
-const cashfree=Cashfree({
-mode:"sandbox"
-});
 
 const user=
 JSON.parse(localStorage.getItem("user"));
@@ -106,8 +103,18 @@ premium.premium && premium.details.plan_id===plan.id
 
 :
 
-`<button onclick="buyPlan(${plan.id})">
+`<button onclick="manualPremiumPayment(
+
+${plan.id},
+
+${plan.price},
+
+${plan.coins}
+
+)">
+
 Buy Now
+
 </button>`
 
 }
@@ -183,3 +190,202 @@ alert("Payment initialization failed.");
 }
 
 loadPlans();
+
+let selectedPremiumPlan=null;
+
+function manualPremiumPayment(
+
+planId,
+
+amount,
+
+coins
+
+){
+
+selectedPremiumPlan={
+
+planId,
+
+amount,
+
+coins
+
+};
+
+document.getElementById(
+
+"manualAmount"
+
+).innerText=amount;
+
+document.getElementById(
+
+"manualPaymentModal"
+
+).style.display="flex";
+
+}
+
+document.getElementById(
+
+"submitManualPayment"
+
+).onclick=
+
+async()=>{
+
+const transactionId=
+
+document.getElementById(
+
+"manualTransactionId"
+
+).value.trim();
+
+if(!transactionId){
+
+alert(
+
+"Please enter UPI Transaction ID."
+
+);
+
+return;
+
+}
+
+const file=
+
+document.getElementById(
+
+"manualScreenshot"
+
+).files[0];
+
+if(!file){
+
+alert(
+
+"Please upload payment screenshot."
+
+);
+
+return;
+
+}
+
+const formData=
+
+new FormData();
+
+formData.append(
+
+"payment",
+
+file
+
+);
+
+const upload=
+
+await fetch(
+
+`${API}/payment/upload`,
+
+{
+
+method:"POST",
+
+body:formData
+
+}
+
+);
+
+const uploadData=
+
+await upload.json();
+
+if(!uploadData.success){
+
+alert(
+
+uploadData.message
+
+);
+
+return;
+
+}
+
+const response=
+
+await fetch(
+
+`${API}/manual-payments/submit`,
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json",
+
+Authorization:
+
+"Bearer "+
+
+localStorage.getItem("token")
+
+},
+
+body:JSON.stringify({
+
+payment_type:"premium",
+
+plan_id:selectedPremiumPlan.planId,
+
+transaction_id:transactionId,
+
+screenshot:uploadData.url
+
+})
+
+}
+
+);
+
+const data=
+
+await response.json();
+
+alert(data.message);
+
+if(data.success){
+
+document.getElementById(
+
+"manualPaymentModal"
+
+).style.display="none";
+
+document.getElementById(
+
+"manualTransactionId"
+
+).value="";
+
+document.getElementById(
+
+"manualScreenshot"
+
+).value="";
+
+selectedPremiumPlan=null;
+
+}
+
+};
+
