@@ -302,9 +302,7 @@ const upload = await fetch(
     }
 );
 
-const uploadData=
-
-await uploadResponse.json();
+const uploadData = await upload.json();
 
 if(!uploadData.success){
 
