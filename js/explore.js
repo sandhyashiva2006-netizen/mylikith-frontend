@@ -10,7 +10,16 @@ localStorage.getItem("user")
 );
 
 let allNovels = [];
-let selectedLanguage = "All";
+let filteredNovels=[];
+
+let selectedGenre="All";
+
+let selectedLanguage="All";
+
+let searchText="";
+
+let currentSort="Trending";
+
 
 function renderNovels(novels){
 
@@ -58,6 +67,98 @@ ${novel.language}
 
 }
 
+function applyFilters(){
+
+filteredNovels=[...allNovels];
+
+if(searchText){
+
+const q=searchText.toLowerCase();
+
+filteredNovels=filteredNovels.filter(novel=>
+
+(novel.title||"").toLowerCase().includes(q)
+
+||
+
+(novel.language||"").toLowerCase().includes(q)
+
+||
+
+(novel.category||"").toLowerCase().includes(q)
+
+);
+
+}
+
+if(selectedGenre!=="All"){
+
+filteredNovels=filteredNovels.filter(novel=>
+
+(novel.category||"").toLowerCase()===
+
+selectedGenre.toLowerCase()
+
+);
+
+}
+
+if(selectedLanguage!=="All"){
+
+filteredNovels=filteredNovels.filter(novel=>
+
+(novel.language||"").toLowerCase()===
+
+selectedLanguage.toLowerCase()
+
+);
+
+}
+
+switch(currentSort){
+
+case "Newest":
+
+filteredNovels.sort((a,b)=>b.id-a.id);
+
+break;
+
+case "Most Read":
+
+filteredNovels.sort((a,b)=>
+
+(b.views||0)-(a.views||0)
+
+);
+
+break;
+
+case "Highest Rated":
+
+filteredNovels.sort((a,b)=>
+
+(parseFloat(b.rating)||0)-
+
+(parseFloat(a.rating)||0)
+
+);
+
+break;
+
+default:
+
+filteredNovels.sort((a,b)=>
+
+(b.views||0)-(a.views||0)
+
+);
+
+}
+
+renderNovels(filteredNovels);
+
+}
+
 async function loadNovels() {
 
 try {
@@ -86,9 +187,8 @@ else if(sort==="Most Read"){
 
     novels.sort((a,b)=>
 
-        (b.views||0)-(a.views||0)
-
-    );
+(b.views||0)-(a.views||0)
+);
 
 }
 
@@ -120,19 +220,17 @@ else if(sort==="Completed"){
 
 else{
 
-    // Trending (default)
+  // Trending (default)
 
-    novels.sort((a,b)=>
+novels.sort((a,b)=>
 
-        (b.likes||0)-(a.likes||0)
+(b.views||0)-(a.views||0)
 
-    );
+);
 
 }
 
-renderNovels(
-novels
-);
+applyFilters();
 
 }
 catch(error){
@@ -150,9 +248,12 @@ document.getElementById(
 "searchInput"
 ).value;
 
-if(query.trim() === ""){
+if(query.trim()===""){
 
-loadNovels();
+searchText="";
+
+applyFilters();
+
 return;
 
 }
@@ -189,19 +290,9 @@ keyword:query
 
 }
 
-const response =
-await fetch(
+searchText=query;
 
-`https://mylikith-backend.onrender.com/api/search?q=${query}`
-
-);
-
-const novels =
-await response.json();
-
-renderNovels(
-novels
-);
+applyFilters();
 
 loadRecentSearches();
 
@@ -259,11 +350,13 @@ const sortSelect = document.getElementById("sortNovels");
 
 if(sortSelect){
 
-    sortSelect.addEventListener("change", () => {
+    sortSelect.addEventListener("change",()=>{
 
-        loadNovels();
+currentSort=sortSelect.value;
 
-    });
+applyFilters();
+
+});
 
 }
 
@@ -359,32 +452,13 @@ chip.classList.add("active");
 selectedLanguage=
 chip.dataset.language;
 
-if(selectedLanguage==="All"){
-
-renderNovels(allNovels);
-
-return;
-
-}
-
-renderNovels(
-
-allNovels.filter(novel=>
-
-(novel.language||"")
-.toLowerCase()===
-
-selectedLanguage.toLowerCase()
-
-)
-
-);
+applyFilters();
 
 };
 
 });
 
-let selectedGenre="All";
+
 
 document.querySelectorAll(".genre-chip").forEach(chip=>{
 
@@ -397,33 +471,7 @@ chip.classList.add("active");
 
 selectedGenre=chip.dataset.genre;
 
-let filtered=allNovels;
-
-if(selectedGenre!=="All"){
-
-filtered=filtered.filter(novel=>
-
-(novel.category||"").toLowerCase()===
-
-selectedGenre.toLowerCase()
-
-);
-
-}
-
-if(selectedLanguage!=="All"){
-
-filtered=filtered.filter(novel=>
-
-(novel.language||"").toLowerCase()===
-
-selectedLanguage.toLowerCase()
-
-);
-
-}
-
-renderNovels(filtered);
+applyFilters();
 
 };
 
@@ -437,25 +485,7 @@ mobileLanguage.addEventListener("change",()=>{
 
 selectedLanguage=mobileLanguage.value;
 
-if(selectedLanguage==="All"){
-
-renderNovels(allNovels);
-
-return;
-
-}
-
-renderNovels(
-
-allNovels.filter(novel=>
-
-(novel.language||"").toLowerCase()===
-
-selectedLanguage.toLowerCase()
-
-)
-
-);
+applyFilters();
 
 });
 
@@ -467,35 +497,9 @@ if(mobileGenre){
 
 mobileGenre.addEventListener("change",()=>{
 
-const genre=mobileGenre.value;
+selectedGenre=mobileGenre.value;
 
-let filtered=allNovels;
-
-if(genre!=="All"){
-
-filtered=filtered.filter(novel=>
-
-(novel.category||"").toLowerCase()===
-
-genre.toLowerCase()
-
-);
-
-}
-
-if(selectedLanguage!=="All"){
-
-filtered=filtered.filter(novel=>
-
-(novel.language||"").toLowerCase()===
-
-selectedLanguage.toLowerCase()
-
-);
-
-}
-
-renderNovels(filtered);
+applyFilters();
 
 });
 
@@ -526,17 +530,9 @@ chip.classList.add("active");
 
 if(typeof allNovels!=="undefined" && allNovels.length){
 
-renderNovels(
+applyFilters();
 
-allNovels.filter(novel=>
-
-(novel.language||"").toLowerCase()===
-
-language.toLowerCase()
-
-)
-
-);
+}
 
 }else{
 
@@ -546,17 +542,7 @@ if(allNovels.length){
 
 clearInterval(wait);
 
-renderNovels(
-
-allNovels.filter(novel=>
-
-(novel.language||"").toLowerCase()===
-
-language.toLowerCase()
-
-)
-
-);
+applyFilters();
 
 }
 
