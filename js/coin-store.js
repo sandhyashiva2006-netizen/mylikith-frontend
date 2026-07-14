@@ -289,20 +289,17 @@ formData.append(
 file
 );
 
-const uploadResponse=
+const upload = await fetch(
+    `${API}/payment/upload`,
+    {
+        method: "POST",
 
-await fetch(
+        headers: {
+            Authorization: "Bearer " + localStorage.getItem("token")
+        },
 
-`${API}/payment/upload`,
-
-{
-
-method:"POST",
-
-body:formData
-
-}
-
+        body: formData
+    }
 );
 
 const uploadData=

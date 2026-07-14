@@ -168,6 +168,10 @@ justify-content:center;
 
 align-items:center;
 
+overflow-y:auto;
+
+padding:20px;
+
 }
 
 .manual-payment-box{
@@ -175,6 +179,10 @@ align-items:center;
 width:420px;
 
 max-width:95%;
+
+max-height:90vh;
+
+overflow-y:auto;
 
 background:#171726;
 
