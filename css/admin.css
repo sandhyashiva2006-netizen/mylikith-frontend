@@ -1065,7 +1065,7 @@ word-break:break-word;
 
 }
 
-#manualPayments a{
+#manualPayments a:not(.admin-link){
 
 color:#8f5cff;
 
@@ -1083,27 +1083,45 @@ flex:1;
 
 .admin-link{
 
-display:inline-block;
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:8px;
 
 margin-top:10px;
 
-padding:8px 14px;
+padding:10px 16px;
 
-background:#6c5ce7;
+background:#6c5ce7 !important;
 
-color:#fff;
+color:#ffffff !important;
 
 border-radius:8px;
 
-text-decoration:none;
+text-decoration:none !important;
 
-font-weight:bold;
+font-weight:600;
+
+font-size:14px;
+
+border:none;
+
+cursor:pointer;
+
+transition:.25s;
 
 }
 
 .admin-link:hover{
 
-opacity:.9;
+background:#7c6cff !important;
+
+color:#ffffff !important;
+
+opacity:1;
 
 }
 
