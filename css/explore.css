@@ -229,6 +229,10 @@ flex-wrap:wrap;
 
 margin-bottom:35px;
 
+position:relative;
+
+z-index:20;
+
 }
 
 .chip{
@@ -279,6 +283,10 @@ flex-wrap:wrap;
 gap:12px;
 
 margin:0;
+
+position:relative;
+
+z-index:20;
 
 }
 
