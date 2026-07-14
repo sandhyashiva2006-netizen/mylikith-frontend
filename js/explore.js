@@ -384,6 +384,51 @@ selectedLanguage.toLowerCase()
 
 });
 
+let selectedGenre="All";
+
+document.querySelectorAll(".genre-chip").forEach(chip=>{
+
+chip.onclick=()=>{
+
+document.querySelectorAll(".genre-chip")
+.forEach(c=>c.classList.remove("active"));
+
+chip.classList.add("active");
+
+selectedGenre=chip.dataset.genre;
+
+let filtered=allNovels;
+
+if(selectedGenre!=="All"){
+
+filtered=filtered.filter(novel=>
+
+(novel.category||"").toLowerCase()===
+
+selectedGenre.toLowerCase()
+
+);
+
+}
+
+if(selectedLanguage!=="All"){
+
+filtered=filtered.filter(novel=>
+
+(novel.language||"").toLowerCase()===
+
+selectedLanguage.toLowerCase()
+
+);
+
+}
+
+renderNovels(filtered);
+
+};
+
+});
+
 const mobileLanguage=document.getElementById("mobileLanguage");
 
 if(mobileLanguage){

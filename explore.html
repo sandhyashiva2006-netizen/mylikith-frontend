@@ -53,7 +53,13 @@ type="text"
 placeholder="🔍 Search novels, authors, genres..."
 onkeyup="searchNovels()">
 
-<button id="searchBtn">
+<button
+id="searchBtn"
+onclick="searchNovels()">
+
+Search
+
+</button>
 
 Search
 
@@ -101,21 +107,21 @@ Search
 
 <div class="filter-chips">
 
-<button class="chip active">All</button>
+<button class="chip genre-chip active" data-genre="All">All</button>
 
-<button class="chip">Fantasy</button>
+<button class="chip genre-chip" data-genre="Fantasy">Fantasy</button>
 
-<button class="chip">Romance</button>
+<button class="chip genre-chip" data-genre="Romance">Romance</button>
 
-<button class="chip">Mystery</button>
+<button class="chip genre-chip" data-genre="Mystery">Mystery</button>
 
-<button class="chip">Sci-Fi</button>
+<button class="chip genre-chip" data-genre="Sci-Fi">Sci-Fi</button>
 
-<button class="chip">Adventure</button>
+<button class="chip genre-chip" data-genre="Adventure">Adventure</button>
 
-<button class="chip">Horror</button>
+<button class="chip genre-chip" data-genre="Horror">Horror</button>
 
-<button class="chip">Thriller</button>
+<button class="chip genre-chip" data-genre="Thriller">Thriller</button>
 
 </div>
 
