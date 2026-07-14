@@ -48,29 +48,21 @@ async function loadPayments() {
                 <p><b>Status:</b> ${payment.status}</p>
 
                 ${
-                    payment.screenshot
-                    ?
-                    `
-                    <p>
-                        <a
-
+payment.screenshot
+?
+`
+<p>
+<a
 href="${payment.screenshot}"
-
 target="_blank"
-
 class="admin-link">
-
 📷 View Payment Proof
-
 </a>
-                           target="_blank">
-                           View Screenshot
-                        </a>
-                    </p>
-                    `
-                    :
-                    ""
-                }
+</p>
+`
+:
+""
+}
 
                 <div
                 style="display:flex;gap:10px;margin-top:15px;">
