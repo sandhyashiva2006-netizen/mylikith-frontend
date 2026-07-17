@@ -20,6 +20,20 @@ let searchText="";
 
 let currentSort="Trending";
 
+function formatNumber(num){
+
+    num = Number(num) || 0;
+
+    if(num >= 1000000){
+        return (num/1000000).toFixed(1) + "M";
+    }
+
+    if(num >= 1000){
+        return (num/1000).toFixed(1) + "K";
+    }
+
+    return num;
+}
 
 function renderNovels(novels){
 
@@ -53,11 +67,21 @@ src="${novel.cover_url || 'assets/images/default-cover.png'}">
 
 <h3>${novel.title}</h3>
 
-<p>
-${novel.category}
-•
-${novel.language}
-</p>
+<div class="common-novel-meta">
+
+    <span>
+        👁 ${formatNumber(novel.views || 0)}
+    </span>
+
+    <span>
+        ❤️ ${formatNumber(novel.likes || 0)}
+    </span>
+
+    <span>
+        ⭐ ${Number(novel.rating || 0).toFixed(1)}
+    </span>
+
+</div>
 
 </a>
 

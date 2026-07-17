@@ -67,17 +67,17 @@ ${novel.language}
 
 <div class="common-novel-meta">
 
-<span>
+    <span>
+        👁 ${formatNumber(novel.views || 0)}
+    </span>
 
-👁 ${formatNumber(novel.views)}
+    <span>
+        ❤️ ${formatNumber(novel.likes || 0)}
+    </span>
 
-</span>
-
-<span>
-
-❤️ ${formatNumber(novel.followers)}
-
-</span>
+    <span>
+        ⭐ ${Number(novel.rating || 0).toFixed(1)}
+    </span>
 
 </div>
 
@@ -1222,11 +1222,25 @@ async function loadRecommendations(){
 
                 <h3>${novel.title}</h3>
 
-                <p>${novel.category}</p>
+<div class="common-novel-meta">
 
-                <button class="btn btn-primary">
-                    Read Now
-                </button>
+    <span>
+        👁 ${formatNumber(novel.views || 0)}
+    </span>
+
+    <span>
+        ❤️ ${formatNumber(novel.likes || 0)}
+    </span>
+
+    <span>
+        ⭐ ${Number(novel.rating || 0).toFixed(1)}
+    </span>
+
+</div>
+
+<button class="btn btn-primary">
+    Read Now
+</button>
 
             </div>
 
