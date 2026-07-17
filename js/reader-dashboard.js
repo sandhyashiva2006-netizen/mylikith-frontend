@@ -1222,6 +1222,10 @@ async function loadRecommendations(){
 
                 <h3>${novel.title}</h3>
 
+<p class="common-novel-category">
+    ${novel.category} • ${novel.language}
+</p>
+
 <div class="common-novel-meta">
 
     <span>
