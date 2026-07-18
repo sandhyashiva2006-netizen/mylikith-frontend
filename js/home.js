@@ -96,7 +96,7 @@ async function loadFeaturedWriters() {
     try {
 
         const response = await fetch(
-            `${API_BASE}/api/admin/writers`
+            `${API_BASE}/api/writers/featured`
         );
 
         const writers = await response.json();
