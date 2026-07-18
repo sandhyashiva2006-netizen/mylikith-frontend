@@ -89,6 +89,20 @@ Read Now →
 
 }
 
+function formatCount(num) {
+    num = Number(num) || 0;
+
+    if (num >= 1000000) {
+        return (num / 1000000).toFixed(1).replace(".0", "") + "M";
+    }
+
+    if (num >= 1000) {
+        return (num / 1000).toFixed(1).replace(".0", "") + "K";
+    }
+
+    return num.toString();
+}
+
 async function loadFeaturedWriters() {
 
     try {
@@ -139,7 +153,7 @@ ${avatar}
 
 <h3>${writer.name}</h3>
 
-<p>${writer.followers || 0} Followers • ${writer.novels} Novels</p>
+<p>${formatCount(writer.followers)} Followers • ${writer.novels} Novels</p>
 
 </a>
 
@@ -158,4 +172,5 @@ ${avatar}
     }
 
 }
+
 
