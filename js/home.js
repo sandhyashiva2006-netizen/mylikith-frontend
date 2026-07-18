@@ -60,9 +60,9 @@ onerror="this.src='assets/images/default-cover.jpg'">
 <p>${novel.category} • ${novel.language}</p>
 
 <div class="novel-meta">
-    <span><i class="fas fa-star"></i> ${Number(novel.rating).toFixed(1)}</span>
-    <span><i class="fas fa-heart"></i> ${Number(novel.likes).toLocaleString()}</span>
-    <span><i class="fas fa-eye"></i> ${Number(novel.views).toLocaleString()}</span>
+    <span>⭐ ${Number(novel.rating).toFixed(1)}</span>
+    <span>❤️ ${Number(novel.likes).toLocaleString()}</span>
+    <span>👁 ${Number(novel.views).toLocaleString()}</span>
 </div>
 
 <div class="read-btn">
