@@ -2,7 +2,11 @@ const API_BASE =
     "https://mylikith-backend.onrender.com";
 
 document.addEventListener("DOMContentLoaded", () => {
+
     loadTrendingNovels();
+
+    loadFeaturedWriters();
+
 });
 
 async function loadTrendingNovels() {
@@ -86,3 +90,74 @@ Read Now →
     }
 
 }
+
+async function loadFeaturedWriters() {
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE}/api/admin/writers`
+        );
+
+        const writers = await response.json();
+
+        const container =
+            document.getElementById("featuredWriters");
+
+        if (!container) return;
+
+        container.innerHTML = "";
+
+        if (!Array.isArray(writers) || writers.length === 0) {
+
+            container.innerHTML =
+                "<p>No writers available.</p>";
+
+            return;
+
+        }
+
+        let html = "";
+
+        writers.slice(0,4).forEach(writer => {
+
+    const initial = (writer.name || "?")
+        .charAt(0)
+        .toUpperCase();
+
+    const avatar = writer.profile_image
+        ? `<img src="${writer.profile_image}" alt="${writer.name}">`
+        : initial;
+
+    html += `
+
+<a href="author.html?id=${writer.id}" class="writer-card">
+
+<div class="writer-avatar">
+
+${avatar}
+
+</div>
+
+<h3>${writer.name}</h3>
+
+<p>${writer.followers || 0} Followers • ${writer.novels} Novels</p>
+
+</a>
+
+`;
+
+});
+
+        container.innerHTML = html;
+
+    }
+
+    catch(err){
+
+        console.error(err);
+
+    }
+
+}
+
