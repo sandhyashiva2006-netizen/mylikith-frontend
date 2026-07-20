@@ -53,15 +53,28 @@ async function loadContinueReading(){
 
 try{
 
-const response =
-await fetch(
-
+const response = await fetch(
 `${API}/api/writers/reading-progress/${libraryUser.id}`
-
 );
 
-const chapter =
-await response.json();
+if (!response.ok) {
+    throw new Error("Unable to load reading progress.");
+}
+
+const text = await response.text();
+
+if (!text.trim()) {
+
+    document.getElementById("continueReading").innerHTML = `
+        <div class="empty-card">
+            No books in progress.
+        </div>
+    `;
+
+    return;
+}
+
+const chapter = JSON.parse(text);
 
 const container =
 document.getElementById(

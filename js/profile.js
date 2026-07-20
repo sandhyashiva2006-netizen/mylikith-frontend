@@ -38,9 +38,11 @@ user.email;
 const profileImage =
 document.getElementById("profileImage");
 
-profileImage.onerror=function(){
+profileImage.onerror = function () {
 
-this.src="assets/images/default-avatar.png";
+    this.onerror = null;
+
+    this.src = "assets/images/default-avatar.png";
 
 };
 
@@ -71,9 +73,15 @@ JSON.stringify(user)
 
 
 
-profileImage.src =
-latestUser.profile_image ||
-"assets/images/default-avatar.png";
+if (
+    latestUser.profile_image &&
+    latestUser.profile_image.trim() !== ""
+) {
+    profileImage.src = latestUser.profile_image;
+} else {
+    profileImage.onerror = null;
+    profileImage.src = "assets/images/default-avatar.png";
+}
 
 
 
