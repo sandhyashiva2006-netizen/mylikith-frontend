@@ -700,65 +700,21 @@ ${item.description}
 
 async function checkWriterApplication(){
 
-try{
+    const card=document.getElementById("becomeWriterCard");
 
-const response=await fetch(
+    if(!card) return;
 
-`${API}/api/writers/application/${user.id}`
+    if(user.role==="writer"){
 
-);
+        card.style.display="none";
+        return;
 
-const data=await response.json();
+    }
 
-if(user.role==="writer"){
+    card.style.display="block";
 
-return;
-
-}
-
-const card=
-
-document.getElementById(
-
-"becomeWriterCard"
-
-);
-
-if(!data.exists){
-
-card.style.display="block";
-
-document.getElementById(
-
-"applyWriterBtn"
-
-).onclick=showWriterApplication;
-
-return;
-
-}
-
-card.style.display="block";
-
-document.getElementById(
-
-"applyWriterBtn"
-
-).disabled=true;
-
-document.getElementById(
-
-"applyWriterBtn"
-
-).innerText=
-
-`Application ${data.application.status}`;
-
-}catch(err){
-
-console.log(err);
-
-}
+    document.getElementById("applyWriterBtn").onclick =
+    showWriterApplication;
 
 }
 
@@ -786,7 +742,7 @@ prompt(
 
 fetch(
 
-`${API}/api/writers/apply`,
+`${API}/api/writers/become-writer`,
 
 {
 
@@ -820,15 +776,16 @@ experience
 
 if(data.success){
 
-alert(
+    user.role = "writer";
 
-data.message ||
+    localStorage.setItem(
+        "user",
+        JSON.stringify(user)
+    );
 
-"Application submitted successfully."
+    alert("🎉 Welcome to MyLikith Writers!");
 
-);
-
-location.reload();
+    window.location.href = "writer-dashboard.html";
 
 }else{
 
