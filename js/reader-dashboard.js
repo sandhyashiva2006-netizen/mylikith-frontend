@@ -6,6 +6,77 @@ JSON.parse(
 localStorage.getItem("user")
 );
 
+if(readerUser.role==="writer"){
+
+    const section=document.getElementById(
+        "becomeWriterSection"
+    );
+
+    if(section){
+        section.remove();
+    }
+
+}
+
+const becomeWriterBtn =
+document.getElementById("becomeWriterBtn");
+
+if(becomeWriterBtn){
+
+becomeWriterBtn.onclick=async()=>{
+
+const penName=
+prompt("Enter your Pen Name");
+
+if(!penName)return;
+
+const response=
+await fetch(
+`${API}/api/writers/become-writer`,
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+user_id:readerUser.id,
+pen_name:penName,
+bio:"",
+experience:""
+})
+});
+
+const data=
+await response.json();
+
+if(data.success){
+
+readerUser.role="writer";
+
+localStorage.setItem(
+"user",
+JSON.stringify(readerUser)
+);
+
+alert(
+"🎉 Welcome to MyLikith Writers!"
+);
+
+location.href=
+"writer-dashboard.html";
+
+}else{
+
+alert(
+data.message||
+"Unable to become writer."
+);
+
+}
+
+};
+
+}
 
 
 function formatNumber(num){
