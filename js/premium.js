@@ -86,11 +86,7 @@ ${plan.duration_days} Days
 
 </p>
 
-<p>
 
-🎁 ${plan.coins} Bonus Coins
-
-</p>
 
 ${
 premium.premium && premium.details.plan_id===plan.id
@@ -104,13 +100,8 @@ premium.premium && premium.details.plan_id===plan.id
 :
 
 `<button onclick="manualPremiumPayment(
-
-${plan.id},
-
-${plan.price},
-
-${plan.coins}
-
+    ${plan.id},
+    ${plan.price}
 )">
 
 Buy Now
