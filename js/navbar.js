@@ -59,6 +59,9 @@ html += `
 <a href="premium.html">Premium</a>
 </li>
 
+<li>
+<a href="contest.html">🏆 Contests</a>
+</li>
 `;
 
 } else {
@@ -77,6 +80,12 @@ Home
 <a href="explore.html">
 Explore
 </a>
+</li>
+
+<li>
+    <a href="contest.html">
+        🏆 Contests
+    </a>
 </li>
 
 <li>
