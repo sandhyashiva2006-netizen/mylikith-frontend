@@ -102,7 +102,17 @@ async function loadActiveContest() {
 
     try {
 
-        const contest = await api("/contests/active");
+        const response = await api("/contests/active");
+
+if (!response.success || !response.contest) {
+
+    if (contestTitle)
+        contestTitle.textContent = "No Active Contest";
+
+    return;
+}
+
+const contest = response.contest;
 
         if (!contest || contest.error) {
 
