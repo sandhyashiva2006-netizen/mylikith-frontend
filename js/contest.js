@@ -17,6 +17,10 @@ const contestTitle = document.getElementById("contestTitle");
 const contestDescription = document.getElementById("contestDescription");
 const contestPrize = document.getElementById("contestPrize");
 
+const contestStart = document.getElementById("contestStart");
+const contestEnd = document.getElementById("contestEnd");
+const registrationEnd = document.getElementById("registrationEnd");
+
 const days = document.getElementById("days");
 const hours = document.getElementById("hours");
 const minutes = document.getElementById("minutes");
@@ -140,6 +144,24 @@ console.log("Contest ID:", contest.id);
             contestPrize.textContent =
                 contest.prize_pool || contest.prize || "-";
 
+if (contestStart)
+    contestStart.textContent =
+        contest.start_date
+            ? new Date(contest.start_date).toLocaleDateString("en-IN")
+            : "-";
+
+if (contestEnd)
+    contestEnd.textContent =
+        contest.end_date
+            ? new Date(contest.end_date).toLocaleDateString("en-IN")
+            : "-";
+
+if (registrationEnd)
+    registrationEnd.textContent =
+        contest.registration_end
+            ? new Date(contest.registration_end).toLocaleDateString("en-IN")
+            : "-";
+
         if (contest.end_date)
             startCountdown(contest.end_date);
 
@@ -229,15 +251,11 @@ async function loadCategories() {
 
 async function loadEligibleNovels() {
 
-console.log("Token:", token);
-
     if (!contestUser || !token || !novelSelect) return;
 
     try {
 
         const novels = await api("/contests/eligible-novels");
-
-console.log(novels);
 
         novelSelect.innerHTML =
             '<option value="">Select Novel</option>';
@@ -331,7 +349,7 @@ async function registerContest() {
 ===================================== */
 
 const contestRegisterBtn =
-    document.getElementById("contestRegisterBtn");
+    document.getElementById("registerContestBtn");
 
 if (contestRegisterBtn) {
 
