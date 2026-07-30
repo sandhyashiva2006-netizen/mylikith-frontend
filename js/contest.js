@@ -1,4 +1,5 @@
-const API = window.API_BASE || "https://mylikith-backend.onrender.com/api";
+const API =
+"https://mylikith-backend.onrender.com";
 
 let activeContest = null;
 let countdownInterval = null;
@@ -31,7 +32,7 @@ function getToken() {
 
 async function api(url, options = {}) {
 
-    const response = await fetch(API + url, {
+    const response = await fetch(`${API}/api${url}`, {
 
         headers: {
 
