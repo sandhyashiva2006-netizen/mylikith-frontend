@@ -2,6 +2,20 @@ const API = "https://mylikith-backend.onrender.com";
 
 const admin = JSON.parse(localStorage.getItem("user"));
 
+const contestModal = document.getElementById("contestModal");
+
+const createContestBtn = document.getElementById("createContestBtn");
+
+const closeContestModal = document.getElementById("closeContestModal");
+
+const cancelContestBtn = document.getElementById("cancelContestBtn");
+
+const addCategoryBtn = document.getElementById("addCategoryBtn");
+
+const categoryContainer = document.getElementById("categoryContainer");
+
+const contestForm = document.getElementById("contestForm");
+
 if (!admin) {
     window.location.href = "admin-login.html";
 }
@@ -19,13 +33,13 @@ async function loadDashboard() {
         const contests = await response.json();
 
         document.getElementById("activeContests").textContent =
-            contests.filter(c => c.status === "active").length;
+            contests.filter(c => (c.status || "").toLowerCase() === "active").length;
 
         document.getElementById("draftContests").textContent =
-            contests.filter(c => c.status === "draft").length;
+            contests.filter(c => (c.status || "").toLowerCase() === "draft").length;
 
         document.getElementById("completedContests").textContent =
-            contests.filter(c => c.status === "completed").length;
+            contests.filter(c => (c.status || "").toLowerCase() === "completed").length;
 
         document.getElementById("totalEntries").textContent =
             contests.reduce((sum, c) => sum + (c.entries || 0), 0);
@@ -124,9 +138,9 @@ async function deleteContest(id) {
 
 }
 
-document.getElementById("createContestBtn").onclick = () => {
+createContestBtn.onclick = () => {
 
-    alert("Contest form will be added in the next step.");
+    contestModal.classList.remove("hidden");
 
 };
 
@@ -172,5 +186,39 @@ function closeMenu() {
 
 if (overlay) overlay.onclick = closeMenu;
 if (closeSidebar) closeSidebar.onclick = closeMenu;
+
+closeContestModal.addEventListener("click", closeContest);
+
+cancelContestBtn.addEventListener("click", closeContest);
+
+function closeContest() {
+
+    contestModal.classList.add("hidden");
+
+}
+
+window.addEventListener("click", (e) => {
+
+    if (e.target === contestModal) {
+
+        closeContest();
+
+    }
+
+});
+
+addCategoryBtn.addEventListener("click", () => {
+
+    const input = document.createElement("input");
+
+    input.type = "text";
+
+    input.className = "contest-category";
+
+    input.placeholder = "Category";
+
+    categoryContainer.appendChild(input);
+
+});
 
 loadDashboard();

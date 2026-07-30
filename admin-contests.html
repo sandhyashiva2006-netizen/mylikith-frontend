@@ -149,6 +149,179 @@
 
 </div>
 
+<!-- ==========================
+     Create Contest Modal
+========================== -->
+<div id="contestModal" class="modal hidden">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2>Create Contest</h2>
+
+            <button
+                type="button"
+                id="closeContestModal"
+                class="modal-close">
+                &times;
+            </button>
+        </div>
+
+        <form id="contestForm">
+
+            <div class="form-group">
+                <label>Contest Title *</label>
+                <input
+                    type="text"
+                    id="contestTitle"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label>Description *</label>
+                <textarea
+                    id="contestDescription"
+                    rows="4"
+                    required></textarea>
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label>Language *</label>
+
+                    <select id="contestLanguage" required>
+
+                        <option value="">Select</option>
+
+                        <option>English</option>
+                        <option>Telugu</option>
+                        <option>Hindi</option>
+                        <option>Tamil</option>
+
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Prize Pool (₹)</label>
+
+                    <input
+                        type="number"
+                        id="contestPrize"
+                        min="0"
+                        value="0">
+                </div>
+
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label>Registration Ends *</label>
+
+                    <input
+                        type="datetime-local"
+                        id="registrationEnd"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label>Contest Starts *</label>
+
+                    <input
+                        type="datetime-local"
+                        id="contestStart"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label>Contest Ends *</label>
+
+                    <input
+                        type="datetime-local"
+                        id="contestEnd"
+                        required>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Status</label>
+
+                <select id="contestStatus">
+
+                    <option value="Draft">Draft</option>
+                    <option value="Active">Active</option>
+                    <option value="Completed">Completed</option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Banner URL (Optional)</label>
+
+                <input
+                    type="text"
+                    id="contestBanner">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Rules</label>
+
+                <textarea
+                    id="contestRules"
+                    rows="5"></textarea>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Categories</label>
+
+                <div id="categoryContainer">
+
+                    <input
+                        type="text"
+                        class="contest-category"
+                        placeholder="Fantasy">
+
+                </div>
+
+                <button
+                    type="button"
+                    id="addCategoryBtn">
+                    + Add Category
+                </button>
+
+            </div>
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    id="cancelContestBtn">
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    id="saveContestBtn">
+                    Create Contest
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
 <script src="js/admin-auth.js"></script>
 <script src="js/admin-contests.js"></script>
 
