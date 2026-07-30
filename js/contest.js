@@ -323,14 +323,15 @@ async function registerContest() {
             }
         );
 
-        if (result.error) {
+        if (!result.success) {
 
-            alert(result.error);
+    alert(result.message || "Registration failed.");
 
-            return;
-        }
+    return;
 
-        alert("Novel registered successfully!");
+}
+
+alert(result.message || "Novel registered successfully!");
 
         loadLeaderboard();
 
