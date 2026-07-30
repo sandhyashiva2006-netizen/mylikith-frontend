@@ -183,7 +183,7 @@ async function loadCategories() {
 
                     categoryGrid.innerHTML += `
                         <div class="contest-category-card">
-                            <h3>${category.name}</h3>
+                            <h3>${category.category}</h3>
                             <p>${category.description || ""}</p>
                         </div>
                     `;
@@ -205,7 +205,7 @@ async function loadCategories() {
 
                     categorySelect.innerHTML += `
                         <option value="${category.id}">
-                            ${category.name}
+                            ${category.category}
                         </option>
                     `;
 
@@ -229,11 +229,15 @@ async function loadCategories() {
 
 async function loadEligibleNovels() {
 
+console.log("Token:", token);
+
     if (!contestUser || !token || !novelSelect) return;
 
     try {
 
         const novels = await api("/contests/eligible-novels");
+
+console.log(novels);
 
         novelSelect.innerHTML =
             '<option value="">Select Novel</option>';
