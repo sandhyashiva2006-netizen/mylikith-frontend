@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contest Management - MyLikith</title>
+
+    <link rel="stylesheet" href="css/admin.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<button id="menuToggle" class="menu-toggle">☰</button>
+
+<div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+<div class="admin-layout">
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+            <button id="closeSidebar" class="close-sidebar">✕</button>
+        </div>
+
+        <div class="logo">
+            <h2>MyLikith</h2>
+            <p>Admin Panel</p>
+        </div>
+
+        <nav>
+
+            <a href="admin-dashboard.html">🏠 Dashboard</a>
+            <a href="admin-users.html">👥 Users</a>
+            <a href="admin-writers.html">✍ Writers</a>
+            <a href="admin-writer-applications.html">📝 Writer Applications</a>
+            <a href="admin-manual-payments.html">💳 Manual Payments</a>
+            <a href="admin-novels.html">📚 Novels</a>
+
+            <a href="admin-contests.html" class="active">
+                🏆 Contests
+            </a>
+
+            <a href="admin-novel-approvals.html">📖 Novel Approvals</a>
+            <a href="admin-chapters.html">📝 Chapters</a>
+            <a href="admin-reviews.html">⭐ Reviews</a>
+            <a href="admin-comments.html">💬 Comments</a>
+            <a href="admin-reports.html">🚩 Reports</a>
+            <a href="admin-analytics.html">📈 Analytics</a>
+            <a href="admin-revenue.html">💰 Revenue</a>
+            <a href="admin-withdrawals.html">💸 Withdrawals</a>
+            <a href="admin-settings.html">⚙ Settings</a>
+            <a href="admin-pages.html">📄 Site Pages</a>
+            <a href="admin-login.html" id="logoutBtn">🚪 Logout</a>
+
+        </nav>
+
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <h1>Contest Management</h1>
+                <p>Create and manage writing contests</p>
+            </div>
+
+            <button
+                id="createContestBtn"
+                class="primary-btn">
+                + Create Contest
+            </button>
+
+        </header>
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <h3>Active Contests</h3>
+                <h2 id="activeContests">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <h3>Draft Contests</h3>
+                <h2 id="draftContests">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <h3>Completed</h3>
+                <h2 id="completedContests">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <h3>Total Entries</h3>
+                <h2 id="totalEntries">0</h2>
+            </div>
+
+        </section>
+
+        <section class="dashboard-card">
+
+            <h2>Contest List</h2>
+
+            <div style="overflow:auto">
+
+                <table class="admin-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Contest</th>
+                            <th>Language</th>
+                            <th>Prize</th>
+                            <th>Entries</th>
+                            <th>Status</th>
+                            <th>Registration Ends</th>
+                            <th>Contest Ends</th>
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="contestTable">
+
+                        <tr>
+
+                            <td colspan="8" class="loading">
+                                Loading contests...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="js/admin-auth.js"></script>
+<script src="js/admin-contests.js"></script>
+
+</body>
+</html>
