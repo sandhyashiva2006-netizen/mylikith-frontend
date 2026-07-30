@@ -2,7 +2,7 @@
    Contest System
 ===================================== */
 
-const API = "https://mylikith-backend.onrender.com";
+
 
 const contestUser = JSON.parse(localStorage.getItem("user"));
 const token = localStorage.getItem("token");
@@ -104,6 +104,8 @@ async function loadActiveContest() {
 
         const response = await api("/contests/active");
 
+console.log("Active Contest Response:", response);
+
 if (!response.success || !response.contest) {
 
     if (contestTitle)
@@ -113,6 +115,9 @@ if (!response.success || !response.contest) {
 }
 
 const contest = response.contest;
+
+console.log("Contest:", contest);
+console.log("Contest ID:", contest.id);
 
         if (!contest || contest.error) {
 
