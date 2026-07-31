@@ -140,9 +140,11 @@ async function deleteContest(id) {
 
 createContestBtn.onclick = () => {
 
-    console.log("Create button clicked");
+    console.log("Before:", contestModal.className);
 
     contestModal.classList.remove("hidden");
+
+    console.log("After:", contestModal.className);
 
 };
 
