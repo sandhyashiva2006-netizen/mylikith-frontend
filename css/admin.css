@@ -1253,3 +1253,39 @@ opacity:1;
     margin-bottom:10px;
 }
 
+.contest-actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.edit-btn{
+    background:#8b5cf6;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:8px 14px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+}
+
+.edit-btn:hover{
+    background:#7c3aed;
+}
+
+.delete-btn{
+    background:#dc2626;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:8px 14px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+}
+
+.delete-btn:hover{
+    background:#b91c1c;
+}
+

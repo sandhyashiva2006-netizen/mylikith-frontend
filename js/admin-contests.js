@@ -16,6 +16,12 @@ const categoryContainer = document.getElementById("categoryContainer");
 
 const contestForm = document.getElementById("contestForm");
 
+let editingContestId = null;
+
+const modalTitle = document.querySelector("#contestModal .modal-header h2");
+
+const saveContestBtn = document.getElementById("saveContestBtn");
+
 if (!admin) {
     window.location.href = "admin-login.html";
 }
@@ -93,22 +99,114 @@ function renderContestTable(contests) {
 
                 <td>${new Date(contest.end_date).toLocaleDateString()}</td>
 
-                <td>
+                <td class="contest-actions">
 
-                    <button onclick="editContest(${contest.id})">
-                        Edit
-                    </button>
+    <button
+        class="edit-btn"
+        onclick="editContest(${contest.id})">
+        ✏️ Edit
+    </button>
 
-                    <button onclick="deleteContest(${contest.id})">
-                        Delete
-                    </button>
+    <button
+        class="delete-btn"
+        onclick="deleteContest(${contest.id})">
+        🗑 Delete
+    </button>
 
-                </td>
+</td>
 
             </tr>
         `;
 
     });
+
+}
+
+async function editContest(id) {
+
+    try {
+
+        const response = await adminFetch(
+            `${API}/api/admin/contests/${id}`
+        );
+
+        const contest = await response.json();
+
+        editingContestId = contest.id;
+
+        modalTitle.textContent = "Edit Contest";
+
+        saveContestBtn.textContent = "Update Contest";
+
+        document.getElementById("contestTitle").value =
+            contest.title || "";
+
+        document.getElementById("contestDescription").value =
+            contest.description || "";
+
+        document.getElementById("contestLanguage").value =
+            contest.language || "";
+
+        document.getElementById("contestPrize").value =
+            contest.prize_pool || 0;
+
+        document.getElementById("registrationEnd").value =
+            contest.registration_end
+                ? contest.registration_end.substring(0,16)
+                : "";
+
+        document.getElementById("contestStart").value =
+            contest.start_date
+                ? contest.start_date.substring(0,16)
+                : "";
+
+        document.getElementById("contestEnd").value =
+            contest.end_date
+                ? contest.end_date.substring(0,16)
+                : "";
+
+        document.getElementById("contestStatus").value =
+            contest.status || "Draft";
+
+        document.getElementById("contestBanner").value =
+            contest.banner_url || "";
+
+        document.getElementById("contestRules").value =
+            contest.rules || "";
+
+        categoryContainer.innerHTML = "";
+
+        (contest.categories || []).forEach(category => {
+
+            categoryContainer.innerHTML += `
+                <input
+                    type="text"
+                    class="contest-category"
+                    value="${category.category}">
+            `;
+
+        });
+
+        if (!contest.categories || contest.categories.length === 0) {
+
+            categoryContainer.innerHTML = `
+                <input
+                    type="text"
+                    class="contest-category"
+                    placeholder="Fantasy">
+            `;
+
+        }
+
+        contestModal.classList.remove("hidden");
+
+    } catch (err) {
+
+        console.error(err);
+
+        alert("Unable to load contest.");
+
+    }
 
 }
 
@@ -140,11 +238,22 @@ async function deleteContest(id) {
 
 createContestBtn.onclick = () => {
 
-    console.log("Before:", contestModal.className);
+    editingContestId = null;
+
+    contestForm.reset();
+
+    categoryContainer.innerHTML = `
+        <input
+            type="text"
+            class="contest-category"
+            placeholder="Fantasy">
+    `;
+
+    modalTitle.textContent = "Create Contest";
+
+    saveContestBtn.textContent = "Create Contest";
 
     contestModal.classList.remove("hidden");
-
-    console.log("After:", contestModal.className);
 
 };
 
@@ -261,17 +370,25 @@ contestForm.addEventListener("submit", async (e) => {
 
         };
 
-        const response = await adminFetch(`${API}/api/admin/contests`, {
+        const url = editingContestId
+    ? `${API}/api/admin/contests/${editingContestId}`
+    : `${API}/api/admin/contests`;
 
-            method: "POST",
+const method = editingContestId
+    ? "PUT"
+    : "POST";
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+const response = await adminFetch(url, {
 
-            body: JSON.stringify(payload)
+    method,
 
-        });
+    headers: {
+        "Content-Type": "application/json"
+    },
+
+    body: JSON.stringify(payload)
+
+});
 
         const result = await response.json();
 
@@ -283,9 +400,19 @@ contestForm.addEventListener("submit", async (e) => {
 
         }
 
-        alert("Contest created successfully.");
+        alert(
+    editingContestId
+        ? "Contest updated successfully."
+        : "Contest created successfully."
+);
 
         contestForm.reset();
+
+editingContestId = null;
+
+modalTitle.textContent = "Create Contest";
+
+saveContestBtn.textContent = "Create Contest";
 
         categoryContainer.innerHTML = `
             <input
