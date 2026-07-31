@@ -225,4 +225,12 @@ addCategoryBtn.addEventListener("click", () => {
 
 });
 
+contestForm.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    console.log("Form submit intercepted");
+
+});
+
 loadDashboard();
