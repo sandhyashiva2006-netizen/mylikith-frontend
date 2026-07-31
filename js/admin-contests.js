@@ -84,7 +84,9 @@ function renderContestTable(contests) {
 
     contests.forEach(contest => {
 
-        tbody.innerHTML += `
+    console.log("Rendering:", contest);
+
+    tbody.innerHTML += `
             <tr>
 
                 <td>${contest.title}</td>
