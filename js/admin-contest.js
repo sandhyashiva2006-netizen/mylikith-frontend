@@ -1,4 +1,18 @@
-const API = window.API;
+const API = "https://mylikith-backend.onrender.com";
+
+const admin = JSON.parse(localStorage.getItem("user"));
+
+if (!admin) {
+
+    window.location.href = "admin-login.html";
+
+}
+
+if (admin.role !== "admin") {
+
+    window.location.href = "index.html";
+
+}
 
 const params = new URLSearchParams(window.location.search);
 
@@ -126,7 +140,7 @@ async function removeEntry(id) {
 
         const response = await adminFetch(
 
-            ``${API}/api/admin/contests/contest-entries/${id}`,
+            `${API}/api/admin/contests/contest-entries/${id}`,
 
             {
                 method: "DELETE"
