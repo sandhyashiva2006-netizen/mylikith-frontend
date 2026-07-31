@@ -2,7 +2,7 @@
    Contest System
 ===================================== */
 
-
+const API = "https://mylikith-backend.onrender.com";
 
 const contestUser = JSON.parse(localStorage.getItem("user"));
 const token = localStorage.getItem("token");
