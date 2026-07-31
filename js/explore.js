@@ -1,7 +1,7 @@
 const API_URL =
 "https://mylikith-backend.onrender.com/api/novels";
 
-
+const API = "https://mylikith-backend.onrender.com";
 
 const readerUser =
 JSON.parse(
