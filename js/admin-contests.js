@@ -374,6 +374,8 @@ contestForm.addEventListener("submit", async (e) => {
 
         };
 
+console.log("editingContestId =", editingContestId);
+
         const url = editingContestId
     ? `${API}/api/admin/contests/${editingContestId}`
     : `${API}/api/admin/contests`;
