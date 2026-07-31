@@ -38,6 +38,8 @@ async function loadDashboard() {
 
         const contests = await response.json();
 
+console.log("Contests:", contests);
+
         document.getElementById("activeContests").textContent =
             contests.filter(c => (c.status || "").toLowerCase() === "active").length;
 
