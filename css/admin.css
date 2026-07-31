@@ -1289,3 +1289,18 @@ opacity:1;
     background:#b91c1c;
 }
 
+.entries-btn{
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:8px 14px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+}
+
+.entries-btn:hover{
+    background:#1d4ed8;
+}
+

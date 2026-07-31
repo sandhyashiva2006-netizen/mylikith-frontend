@@ -105,17 +105,23 @@ function renderContestTable(contests) {
 
                 <td class="contest-actions">
 
-    <button
-        class="edit-btn"
-        onclick="editContest(${contest.id})">
-        ✏️ Edit
-    </button>
+<button
+    class="entries-btn"
+    onclick="openContest(${contest.id})">
+    👁 Entries
+</button>
 
-    <button
-        class="delete-btn"
-        onclick="deleteContest(${contest.id})">
-        🗑 Delete
-    </button>
+<button
+    class="edit-btn"
+    onclick="editContest(${contest.id})">
+    ✏️ Edit
+</button>
+
+<button
+    class="delete-btn"
+    onclick="deleteContest(${contest.id})">
+    🗑 Delete
+</button>
 
 </td>
 
@@ -498,5 +504,12 @@ saveContestBtn.textContent = "Create Contest";
     }
 
 });
+
+function openContest(id){
+
+    window.location.href =
+        `admin-contest.html?id=${id}`;
+
+}
 
 loadDashboard();
