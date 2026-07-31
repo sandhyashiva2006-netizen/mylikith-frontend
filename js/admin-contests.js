@@ -229,7 +229,82 @@ contestForm.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
-    console.log("Form submit intercepted");
+    try {
+
+        const categories = [...document.querySelectorAll(".contest-category")]
+            .map(input => input.value.trim())
+            .filter(value => value);
+
+        const payload = {
+
+            title: document.getElementById("contestTitle").value.trim(),
+
+            description: document.getElementById("contestDescription").value.trim(),
+
+            language: document.getElementById("contestLanguage").value,
+
+            prize_pool: Number(document.getElementById("contestPrize").value) || 0,
+
+            registration_end: document.getElementById("registrationEnd").value,
+
+            start_date: document.getElementById("contestStart").value,
+
+            end_date: document.getElementById("contestEnd").value,
+
+            status: document.getElementById("contestStatus").value,
+
+            banner_url: document.getElementById("contestBanner").value.trim(),
+
+            rules: document.getElementById("contestRules").value.trim(),
+
+            categories
+
+        };
+
+        const response = await adminFetch(`${API}/api/admin/contests`, {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(payload)
+
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+
+            alert(result.message || "Failed to create contest.");
+
+            return;
+
+        }
+
+        alert("Contest created successfully.");
+
+        contestForm.reset();
+
+        categoryContainer.innerHTML = `
+            <input
+                type="text"
+                class="contest-category"
+                placeholder="Fantasy">
+        `;
+
+        closeContest();
+
+        loadDashboard();
+
+    } catch (err) {
+
+        console.error(err);
+
+        alert("Something went wrong while creating the contest.");
+
+    }
 
 });
 
