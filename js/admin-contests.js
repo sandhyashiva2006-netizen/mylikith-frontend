@@ -140,6 +140,8 @@ async function deleteContest(id) {
 
 createContestBtn.onclick = () => {
 
+    console.log("Create button clicked");
+
     contestModal.classList.remove("hidden");
 
 };
