@@ -222,6 +222,53 @@ function editContest(id) {
 
 async function deleteContest(id) {
 
+    const confirmed = confirm(
+        "Are you sure you want to delete this contest?\n\n" +
+        "This will permanently remove:\n" +
+        "• Contest\n" +
+        "• Categories\n" +
+        "• Entries\n" +
+        "• Votes\n" +
+        "• Winners"
+    );
+
+    if (!confirmed) return;
+
+    try {
+
+        const response = await adminFetch(
+            `${API}/api/admin/contests/${id}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+
+            alert(result.message || "Failed to delete contest.");
+
+            return;
+
+        }
+
+        alert("Contest deleted successfully.");
+
+        loadDashboard();
+
+    } catch (err) {
+
+        console.error(err);
+
+        alert("Something went wrong.");
+
+    }
+
+}
+
+async function deleteContest(id) {
+
     if (!confirm("Delete this contest?")) return;
 
     try {
@@ -309,6 +356,21 @@ closeContestModal.addEventListener("click", closeContest);
 cancelContestBtn.addEventListener("click", closeContest);
 
 function closeContest() {
+
+    editingContestId = null;
+
+    contestForm.reset();
+
+    categoryContainer.innerHTML = `
+        <input
+            type="text"
+            class="contest-category"
+            placeholder="Fantasy">
+    `;
+
+    modalTitle.textContent = "Create Contest";
+
+    saveContestBtn.textContent = "Create Contest";
 
     contestModal.classList.add("hidden");
 
