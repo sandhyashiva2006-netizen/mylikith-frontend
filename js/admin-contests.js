@@ -214,11 +214,7 @@ async function editContest(id) {
 
 }
 
-function editContest(id) {
 
-    alert("Edit Contest: " + id);
-
-}
 
 async function deleteContest(id) {
 
