@@ -6,6 +6,8 @@ const novelId = params.get("id");
 
 
 let currentNovel = null;
+let currentPage = 0;
+let allChapters = [];
 
 function formatNumber(num){
 
@@ -132,7 +134,7 @@ async function loadChapters(){
 
         }
 
-        window.allChapters = chapters;
+        allChapters = chapters;
 
         renderChapterPage(0);
 
@@ -175,9 +177,7 @@ if(reportButton){
 
 function renderChapterPage(page){
 
-    currentPage = page;
-
-    const container =
+      const container =
         document.getElementById("chaptersList");
 
     const ranges =
