@@ -54,9 +54,9 @@ async function loadEntries() {
 
     try {
 
-        const response = await adminFetch(
-            `${API}/api/contests/${contestId}/leaderboard`
-        );
+ const response = await adminFetch(
+    `${API}/api/admin/contests/${contestId}/entries`
+);
 
         const entries = await response.json();
 
