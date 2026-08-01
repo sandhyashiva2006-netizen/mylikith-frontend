@@ -83,12 +83,6 @@ plans.forEach(plan=>{
 
 <p>
 
-${plan.description}
-
-</p>
-
-<p>
-
 ${plan.duration_days} Days Premium Access
 
 </p>
