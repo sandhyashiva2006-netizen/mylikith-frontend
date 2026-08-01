@@ -148,8 +148,8 @@ async function loadEligibleNovels() {
     try {
 
         const novels = await api(
-            `/contests/${contestId}/eligible-novels`
-        );
+    `/contests/eligible-novels?contest_id=${contestId}`
+);
 
         const select =
             document.getElementById("novelSelect");
