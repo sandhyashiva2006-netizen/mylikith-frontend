@@ -67,7 +67,21 @@ async function loadContest() {
         document.getElementById("contestPrize").textContent =
             Number(contest.prize_pool || 0).toLocaleString();
 
-const prizePool = Number(contest.prize_pool || 0);
+const prizePool = parseFloat(contest.prize_pool || 0);
+
+document.getElementById("contestPrize").textContent =
+    prizePool.toLocaleString("en-IN");
+
+document.getElementById("firstPrize").textContent =
+    `₹${Math.round(prizePool * 0.60).toLocaleString("en-IN")}`;
+
+document.getElementById("secondPrize").textContent =
+    `₹${Math.round(prizePool * 0.30).toLocaleString("en-IN")}`;
+
+document.getElementById("thirdPrize").textContent =
+    `₹${Math.round(prizePool * 0.10).toLocaleString("en-IN")}`;
+
+console.log("Prize Pool:", prizePool);
 
 document.getElementById("firstPrize").textContent =
     `₹${Math.round(prizePool * 0.60).toLocaleString()}`;

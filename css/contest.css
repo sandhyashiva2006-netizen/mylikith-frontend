@@ -1111,3 +1111,65 @@
     animation:fadeUp .5s ease;
 
 }
+
+.share-buttons{
+
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+    margin-top:20px;
+
+}
+
+.share-btn{
+
+    flex:1;
+    min-width:170px;
+    height:52px;
+
+    border:none;
+    border-radius:12px;
+
+    font-size:15px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.share-btn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+.copy-btn{
+
+    background:#7c3aed;
+    color:#fff;
+
+}
+
+.whatsapp-btn{
+
+    background:#25D366;
+    color:#fff;
+
+}
+
+.telegram-btn{
+
+    background:#229ED9;
+    color:#fff;
+
+}
+
+.x-btn{
+
+    background:#111827;
+    color:#fff;
+
+}
+

@@ -35,7 +35,10 @@
 
 <body>
 
-<nav id="navbar"></nav>
+<nav
+    id="navbar"
+    class="navbar">
+</nav>
 
 <main class="contest-page">
 
@@ -421,13 +424,23 @@
 
             <div class="share-buttons">
 
-                <button id="copyContestLink">🔗 Copy Link</button>
+<button id="copyContestLink" class="share-btn copy-btn">
+    🔗 Copy Link
+</button>
 
-                <button id="shareWhatsapp">💬 WhatsApp</button>
+<button id="shareWhatsapp" class="share-btn whatsapp-btn">
+    <i class="fab fa-whatsapp"></i>
+    WhatsApp
+</button>
 
-                <button id="shareTelegram">✈ Telegram</button>
+<button id="shareTelegram" class="share-btn telegram-btn">
+    <i class="fab fa-telegram-plane"></i>
+    Telegram
+</button>
 
-                <button id="shareX">𝕏 X</button>
+<button id="shareX" class="share-btn x-btn">
+    𝕏 X
+</button>
 
             </div>
 
@@ -464,11 +477,10 @@
 
 <div id="footer"></div>
 
-<script src="js/navbar.js"></script>
-
-<script src="js/footer.js"></script>
-
 <script src="js/contest-details.js"></script>
+<script src="js/session.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/footer.js"></script>
 
 </body>
 
