@@ -90,9 +90,9 @@
 
     overflow:hidden;
 
-    padding:120px 20px 100px;
+    min-height:85vh;
 
-    text-align:center;
+    padding:140px 20px 80px;
 
 }
 
@@ -177,25 +177,25 @@
 
     text-align:left;
 
-    font-size:1.18rem;
+    font-size:1.2rem;
 
-    line-height:1.9;
+    line-height:1.8;
+
+    color:rgba(255,255,255,.9);
 
 }
 
 .hero-badge{
 
-    justify-self:center;
+    display:inline-flex;
+
+    font-size:.8rem;
+
+    padding:8px 16px;
 
 }
 
-.hero-buttons{
 
-    justify-content:flex-start;
-
-    margin-top:25px;
-
-}
 
 .hero-buttons{
 
@@ -1074,29 +1074,55 @@
 
         font-size:1.5rem;
 
-    }
+    }@media(max-width:768px){
 
-    .contest-prize{
+    .contest-hero{
 
-        font-size:1.6rem;
+        min-height:80vh;
 
-    }
+        padding:120px 20px 70px;
 
-    .prize-card{
+        display:flex;
 
-        padding:28px 20px;
-
-    }
-
-    .prize-amount{
-
-        font-size:1.7rem;
+        align-items:center;
 
     }
 
-    .winner-medal{
+    .hero-content{
 
-        font-size:3rem;
+        display:flex;
+
+        flex-direction:column;
+
+        align-items:center;
+
+        justify-content:center;
+
+        gap:30px;
+
+    }
+
+    .hero-content h1{
+
+        text-align:center;
+
+        font-size:clamp(2.5rem,9vw,3.2rem);
+
+        line-height:1.15;
+
+        margin:0;
+
+    }
+
+    .hero-content p{
+
+        max-width:360px;
+
+        text-align:center;
+
+        font-size:1.25rem;
+
+        line-height:1.9;
 
     }
 
