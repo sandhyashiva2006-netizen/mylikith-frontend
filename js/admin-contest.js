@@ -60,6 +60,8 @@ async function loadEntries() {
 
         const entries = await response.json();
 
+console.log("Entries:", entries);
+
         document.getElementById("contestEntries").textContent =
             entries.length;
 
@@ -120,15 +122,27 @@ async function loadEntries() {
 
         });
 
-const option = `
-<option value="${entry.id}">
-${entry.novel_title} — ${entry.writer_name}
-</option>
-`;
+const winner1 = document.getElementById("winner1");
+const winner2 = document.getElementById("winner2");
+const winner3 = document.getElementById("winner3");
 
-document.getElementById("winner1").innerHTML += option;
-document.getElementById("winner2").innerHTML += option;
-document.getElementById("winner3").innerHTML += option;
+winner1.innerHTML = `<option value="">Select Entry</option>`;
+winner2.innerHTML = `<option value="">Select Entry</option>`;
+winner3.innerHTML = `<option value="">Select Entry</option>`;
+
+entries.forEach(entry => {
+
+    const option = `
+        <option value="${entry.id}">
+            ${entry.novel_title} (${entry.category_name})
+        </option>
+    `;
+
+    winner1.insertAdjacentHTML("beforeend", option);
+    winner2.insertAdjacentHTML("beforeend", option);
+    winner3.insertAdjacentHTML("beforeend", option);
+
+});
 
     } catch (err) {
 
