@@ -62,9 +62,16 @@ container.innerHTML="";
 
 plans.forEach(plan=>{
 
-container.innerHTML+=`
+    const badge =
+        plan.duration_days === 365
+            ? `<div class="premium-badge">⭐ Best Value</div>`
+            : "";
+
+    container.innerHTML+=`
 
 <div class="plan">
+
+    ${badge}
 
 <h2>${plan.name}</h2>
 
@@ -82,7 +89,7 @@ ${plan.description}
 
 <p>
 
-${plan.duration_days} Days
+${plan.duration_days} Days Premium Access
 
 </p>
 
@@ -94,7 +101,7 @@ premium.premium && premium.details.plan_id===plan.id
 ?
 
 `<button disabled class="active-plan">
-✅ Active Plan
+👑 Current Plan
 </button>`
 
 :
@@ -104,7 +111,7 @@ premium.premium && premium.details.plan_id===plan.id
     ${plan.price}
 )">
 
-Buy Now
+Subscribe Now
 
 </button>`
 
@@ -186,11 +193,9 @@ let selectedPremiumPlan=null;
 
 function manualPremiumPayment(
 
-planId,
+    planId,
 
-amount,
-
-coins
+    amount
 
 ){
 
@@ -198,9 +203,7 @@ selectedPremiumPlan={
 
 planId,
 
-amount,
-
-coins
+amount
 
 };
 

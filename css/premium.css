@@ -265,3 +265,39 @@ margin-top:20px;
 background:#555;
 
 }
+
+.premium-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.premium-badge{
+
+    position:absolute;
+
+    top:18px;
+
+    right:-38px;
+
+    background:linear-gradient(135deg,#8b5cf6,#a855f7);
+
+    color:#fff;
+
+    padding:8px 50px;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    transform:rotate(45deg);
+
+    text-transform:uppercase;
+
+    letter-spacing:.5px;
+
+    box-shadow:0 8px 20px rgba(139,92,246,.35);
+
+}
