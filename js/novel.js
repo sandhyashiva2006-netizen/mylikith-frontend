@@ -204,7 +204,7 @@ function renderChapterPage(page){
 
         const start=i*20+1;
 
-        const end=Math.min(start+19,allChapters.length);
+        const end=Math.min(start+19,novelChapters.length);
 
         btn.textContent=`${start}-${end}`;
 
