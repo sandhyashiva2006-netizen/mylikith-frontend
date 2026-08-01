@@ -272,11 +272,13 @@ async function registerNovel() {
 
             body: JSON.stringify({
 
-                novel_id: novelId,
+    user_id: user.id,
 
-                category_id: categoryId
+    novel_id: novelId,
 
-            })
+    category_id: categoryId
+
+})
 
         }
 
