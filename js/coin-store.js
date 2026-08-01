@@ -59,9 +59,27 @@ ${pkg.name}
 
 <div class="coin-total">
 
-🪙 ${pkg.coins+pkg.bonus_coins} Coins
+🪙 ${pkg.coins} Coins
 
 </div>
+
+${
+    pkg.bonus_coins > 0
+        ? `
+        <p style="color:#00e676;">
+            +${pkg.bonus_coins} Bonus Coins
+        </p>
+
+        <p style="font-size:13px;opacity:.8;">
+            Total: ${pkg.coins + pkg.bonus_coins} Coins
+        </p>
+        `
+        : `
+        <p style="font-size:13px;opacity:.8;">
+            Total: ${pkg.coins} Coins
+        </p>
+        `
+}
 
 ${
 pkg.bonus_coins>0
