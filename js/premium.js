@@ -41,7 +41,7 @@ const res=
 
 await fetch(
 
-`${API}/premium/plans`
+`${API}/api/premium/plans`
 
 );
 
@@ -51,7 +51,7 @@ await res.json();
 
 const status=await fetch(
 
-`${API}/premium/status/${user.id}`
+`${API}/api/premium/status/${user.id}`
 
 );
 
@@ -124,7 +124,7 @@ try{
 
 const res=await fetch(
 
-`${API}/premium/create-order`,
+`${API}/api/premium/create-order`,
 
 {
 
