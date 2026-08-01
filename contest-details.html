@@ -73,57 +73,107 @@
 
     </section>
 
-    <section class="section">
+<section class="section">
 
-        <div class="container">
+    <div class="container">
 
-            <div class="contest-card glass-card">
+        <div class="contest-stats">
 
-                <div class="contest-info">
+            <div class="stat-card glass-card">
 
-                    <div>
+                <span class="stat-icon">🌐</span>
 
-                        <label>Language</label>
+                <small>Language</small>
 
-                        <span id="contestLanguage">-</span>
+                <h3 id="contestLanguage">-</h3>
 
-                    </div>
+            </div>
 
-                    <div>
+            <div class="stat-card glass-card">
 
-                        <label>Prize Pool</label>
+                <span class="stat-icon">💰</span>
 
-                        <span>
+                <small>Prize Pool</small>
 
-                            ₹<span id="contestPrize">0</span>
+                <h3>₹<span id="contestPrize">0</span></h3>
 
-                        </span>
+            </div>
 
-                    </div>
+            <div class="stat-card glass-card">
 
-                    <div>
+                <span class="stat-icon">📅</span>
 
-                        <label>Starts</label>
+                <small>Starts</small>
 
-                        <span id="contestStart">-</span>
+                <h3 id="contestStart">-</h3>
 
-                    </div>
+            </div>
 
-                    <div>
+            <div class="stat-card glass-card">
 
-                        <label>Ends</label>
+                <span class="stat-icon">⏰</span>
 
-                        <span id="contestEnd">-</span>
+                <small>Registration</small>
 
-                    </div>
+                <h3 id="registrationEnd">-</h3>
 
-                    <div>
+            </div>
 
-                        <label>Registration Ends</label>
+            <div class="stat-card glass-card">
 
-                        <span id="registrationEnd">-</span>
+                <span class="stat-icon">🏁</span>
 
-                    </div>
+                <small>Ends</small>
+
+                <h3 id="contestEnd">-</h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="glass-card countdown-card">
+
+            <h2>Registration Ends In</h2>
+
+            <div class="countdown">
+
+                <div class="time-box">
+
+                    <span id="days">00</span>
+
+                    <small>Days</small>
+
+                </div>
+
+                <div class="time-box">
+
+                    <span id="hours">00</span>
+
+                    <small>Hours</small>
+
+                </div>
+
+                <div class="time-box">
+
+                    <span id="minutes">00</span>
+
+                    <small>Minutes</small>
+
+                </div>
+
+                <div class="time-box">
+
+                    <span id="seconds">00</span>
+
+                    <small>Seconds</small>
 
                 </div>
 
@@ -131,7 +181,57 @@
 
         </div>
 
-    </section>
+    </div>
+
+</section>
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Prize Distribution</h2>
+
+        </div>
+
+        <div class="prize-grid">
+
+            <div class="prize-card first">
+
+                <div class="prize-rank">🥇</div>
+
+                <h3>1st Place</h3>
+
+                <p class="prize-amount" id="firstPrize">₹0</p>
+
+            </div>
+
+            <div class="prize-card second">
+
+                <div class="prize-rank">🥈</div>
+
+                <h3>2nd Place</h3>
+
+                <p class="prize-amount" id="secondPrize">₹0</p>
+
+            </div>
+
+            <div class="prize-card third">
+
+                <div class="prize-rank">🥉</div>
+
+                <h3>3rd Place</h3>
+
+                <p class="prize-amount" id="thirdPrize">₹0</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
     <section class="section">
 
@@ -156,6 +256,26 @@
         </div>
 
     </section>
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="glass-card rules-card">
+
+            <h2>Contest Rules</h2>
+
+            <div id="contestRules">
+
+                Loading rules...
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
     <section class="section">
 
@@ -291,6 +411,55 @@
 
     </section>
 
+<section class="section">
+
+    <div class="container">
+
+        <div class="glass-card share-card">
+
+            <h2>Share This Contest</h2>
+
+            <div class="share-buttons">
+
+                <button id="copyContestLink">🔗 Copy Link</button>
+
+                <button id="shareWhatsapp">💬 WhatsApp</button>
+
+                <button id="shareTelegram">✈ Telegram</button>
+
+                <button id="shareX">𝕏 X</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section
+    class="section"
+    id="previousWinnersSection"
+    style="display:none;">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Previous Winners</h2>
+
+        </div>
+
+        <div
+            id="previousWinners"
+            class="winners-grid">
+
+        </div>
+
+    </div>
+
+</section>
+	
 </main>
 
 <div id="footer"></div>

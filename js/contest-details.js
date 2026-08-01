@@ -67,6 +67,17 @@ async function loadContest() {
         document.getElementById("contestPrize").textContent =
             Number(contest.prize_pool || 0).toLocaleString();
 
+const prizePool = Number(contest.prize_pool || 0);
+
+document.getElementById("firstPrize").textContent =
+    `₹${Math.round(prizePool * 0.60).toLocaleString()}`;
+
+document.getElementById("secondPrize").textContent =
+    `₹${Math.round(prizePool * 0.30).toLocaleString()}`;
+
+document.getElementById("thirdPrize").textContent =
+    `₹${Math.round(prizePool * 0.10).toLocaleString()}`;
+
         document.getElementById("contestStart").textContent =
             contest.start_date
                 ? new Date(contest.start_date)
@@ -84,6 +95,19 @@ async function loadContest() {
                 ? new Date(contest.registration_end)
                     .toLocaleDateString("en-IN")
                 : "-";
+
+if (contest.rules) {
+
+    document.getElementById("contestRules").innerHTML =
+        contest.rules.replace(/\n/g, "<br>");
+
+}
+
+if (contest.registration_end) {
+
+    startCountdown(contest.registration_end);
+
+}
 
         loadCategories();
 
@@ -297,6 +321,66 @@ async function registerNovel() {
         loadLeaderboard();
 
     }
+
+}
+
+document.getElementById("copyContestLink")?.onclick = async () => {
+
+    await navigator.clipboard.writeText(window.location.href);
+
+    alert("Contest link copied.");
+
+};
+
+document.getElementById("shareWhatsapp")?.onclick = () => {
+
+    window.open(
+        `https://wa.me/?text=${encodeURIComponent(window.location.href)}`
+    );
+
+};
+
+document.getElementById("shareTelegram")?.onclick = () => {
+
+    window.open(
+        `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}`
+    );
+
+};
+
+document.getElementById("shareX")?.onclick = () => {
+
+    window.open(
+        `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}`
+    );
+
+};
+
+function startCountdown(endDate) {
+
+    function update() {
+
+        const diff = new Date(endDate) - new Date();
+
+        if (diff <= 0) return;
+
+        document.getElementById("days").textContent =
+            String(Math.floor(diff / 86400000)).padStart(2, "0");
+
+        document.getElementById("hours").textContent =
+            String(Math.floor(diff / 3600000) % 24).padStart(2, "0");
+
+        document.getElementById("minutes").textContent =
+            String(Math.floor(diff / 60000) % 60).padStart(2, "0");
+
+        document.getElementById("seconds").textContent =
+            String(Math.floor(diff / 1000) % 60).padStart(2, "0");
+
+    }
+
+    update();
+
+    setInterval(update, 1000);
 
 }
 
