@@ -17,7 +17,9 @@ let contest = null;
 async function api(url, options = {}) {
 
     const response = await fetch(
-        API + url,
+
+        API + "/api" + url,
+
         {
             ...options,
             headers: {
@@ -26,11 +28,12 @@ async function api(url, options = {}) {
                 ...(options.headers || {})
             }
         }
+
     );
 
     return response.json();
 
-}
+}	
 
 async function loadContest() {
 
