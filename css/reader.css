@@ -1405,11 +1405,7 @@ width:100%;
 
 .reader-back-container{
 
-    max-width:1000px;
-
-    margin:120px auto 0;
-
-    padding:0 40px;
+    margin-bottom:25px;
 
 }
 
@@ -1439,15 +1435,13 @@ width:100%;
 
     transition:.3s;
 
-    box-shadow:0 12px 25px rgba(124,58,237,.25);
-
 }
 
 .reader-back-btn:hover{
 
     transform:translateY(-2px);
 
-    box-shadow:0 15px 35px rgba(124,58,237,.4);
+    box-shadow:0 12px 25px rgba(124,58,237,.35);
 
 }
 
