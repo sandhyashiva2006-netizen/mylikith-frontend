@@ -11,17 +11,23 @@ padding:20px;
 
 .novel-hero{
 
-display:grid;
+    display:grid;
 
-grid-template-columns:320px 1fr;
+    grid-template-columns:320px 1fr;
 
-gap:40px;
+    gap:40px;
 
-background:#111827;
+    padding:35px;
 
-padding:30px;
+    border-radius:24px;
 
-border-radius:20px;
+    background:rgba(20,22,40,.82);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:0 20px 45px rgba(0,0,0,.35);
 
 }
 
@@ -93,7 +99,11 @@ margin-top:30px;
 
 padding:25px;
 
-background:#111827;
+background:rgba(20,22,40,.82);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.08);
 
 border-radius:20px;
 
@@ -117,7 +127,11 @@ object-fit:cover;
 
 margin-top:35px;
 
-background:#111827;
+background:rgba(20,22,40,.82);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.08);
 
 padding:25px;
 
@@ -391,7 +405,11 @@ color:#fff;
 
 margin-top:35px;
 
-background:#111827;
+background:rgba(20,22,40,.82);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(255,255,255,.08);
 
 padding:30px;
 

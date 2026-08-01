@@ -164,13 +164,18 @@ console.log(err);
 }
 
 
-document.getElementById("addMoneyBtn")
-.addEventListener(
-"click",
-()=>{
-location.href = "coin-store.html";
+const addMoneyBtn =
+    document.getElementById("addMoneyBtn");
+
+if(addMoneyBtn){
+
+    addMoneyBtn.addEventListener("click",()=>{
+
+        location.href = "coin-store.html";
+
+    });
+
 }
-);
 
 const withdrawBtn = document.getElementById("submitWithdraw");
 
