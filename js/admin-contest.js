@@ -252,52 +252,5 @@ if (announceBtn) {
 
 }
 
-    const winners = [
-
-        document.getElementById("winner1").value,
-
-        document.getElementById("winner2").value,
-
-        document.getElementById("winner3").value
-
-    ];
-
-    if (winners.includes("")) {
-
-        alert("Please select all winners.");
-
-        return;
-
-    }
-
-    const response = await adminFetch(
-
-        `${API}/api/admin/contests/${contestId}/winners`,
-
-        {
-
-            method: "POST",
-
-            headers: {
-
-                "Content-Type":"application/json"
-
-            },
-
-            body: JSON.stringify({
-
-                winners
-
-            })
-
-        }
-
-    );
-
-    const result = await response.json();
-
-    alert(result.message);
-
-};
 
 loadContest();
