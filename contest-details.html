@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Contest Details | MyLikith</title>
+
+    <meta
+        name="description"
+        content="Participate in MyLikith Writing Contest">
+
+    <link
+        rel="icon"
+        href="assets/images/favicon.ico">
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
+    <link
+        rel="stylesheet"
+        href="css/common.css">
+
+    <link
+        rel="stylesheet"
+        href="css/contest.css">
+
+</head>
+
+<body>
+
+<nav id="navbar"></nav>
+
+<main class="contest-page">
+
+    <section class="contest-hero">
+
+        <div class="contest-overlay"></div>
+
+        <div class="container">
+
+            <div class="hero-content">
+
+                <span
+                    class="hero-badge"
+                    id="contestStatus">
+
+                    ACTIVE
+
+                </span>
+
+                <h1 id="contestTitle">
+
+                    Loading...
+
+                </h1>
+
+                <p id="contestDescription">
+
+                    Loading contest...
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="section">
+
+        <div class="container">
+
+            <div class="contest-card glass-card">
+
+                <div class="contest-info">
+
+                    <div>
+
+                        <label>Language</label>
+
+                        <span id="contestLanguage">-</span>
+
+                    </div>
+
+                    <div>
+
+                        <label>Prize Pool</label>
+
+                        <span>
+
+                            ₹<span id="contestPrize">0</span>
+
+                        </span>
+
+                    </div>
+
+                    <div>
+
+                        <label>Starts</label>
+
+                        <span id="contestStart">-</span>
+
+                    </div>
+
+                    <div>
+
+                        <label>Ends</label>
+
+                        <span id="contestEnd">-</span>
+
+                    </div>
+
+                    <div>
+
+                        <label>Registration Ends</label>
+
+                        <span id="registrationEnd">-</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="section">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <h2>
+
+                    Categories
+
+                </h2>
+
+            </div>
+
+            <div
+                class="category-grid"
+                id="categoryGrid">
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="section">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <h2>
+
+                    Register Your Novel
+
+                </h2>
+
+            </div>
+
+            <div class="glass-card register-card">
+
+                <div class="register-grid">
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Select Novel
+
+                        </label>
+
+                        <select id="novelSelect">
+
+                            <option value="">
+
+                                Loading...
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Category
+
+                        </label>
+
+                        <select id="categorySelect">
+
+                            <option value="">
+
+                                Select Category
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <button
+                    id="registerContestBtn"
+                    class="btn-primary">
+
+                    Register Novel
+
+                </button>
+
+                <div
+                    id="registrationStatus"
+                    class="registration-status">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="section">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <h2>
+
+                    Live Leaderboard
+
+                </h2>
+
+            </div>
+
+            <div class="glass-card">
+
+                <table class="leaderboard-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>#</th>
+                            <th>Novel</th>
+                            <th>Writer</th>
+                            <th>Category</th>
+                            <th>Votes</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="leaderboardBody">
+
+                        <tr>
+
+                            <td colspan="5">
+
+                                Loading...
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<div id="footer"></div>
+
+<script src="js/navbar.js"></script>
+
+<script src="js/footer.js"></script>
+
+<script src="js/contest-details.js"></script>
+
+</body>
+
+</html>

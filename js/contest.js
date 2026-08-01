@@ -108,70 +108,153 @@ async function loadActiveContest() {
 
         const response = await api("/contests/active");
 
-console.log("Active Contest Response:", response);
+        const contestList = document.getElementById("contestList");
 
-if (!response.success || !response.contest) {
+        if (
+            !response.success ||
+            !Array.isArray(response.contests)
+        ) {
 
-    if (contestTitle)
-        contestTitle.textContent = "No Active Contest";
+            if (contestList) {
 
-    return;
-}
+                contestList.innerHTML = `
+                    <div class="glass-card">
+                        No Active Contests
+                    </div>
+                `;
 
-const contest = response.contest;
-
-console.log("Contest:", contest);
-console.log("Contest ID:", contest.id);
-
-        if (!contest || contest.error) {
-
-            if (contestTitle)
-                contestTitle.textContent = "No Active Contest";
+            }
 
             return;
+
         }
 
-        activeContest = contest;
+        const contests = response.contests;
 
-        if (contestTitle)
-            contestTitle.textContent = contest.title;
+        if (contestList) {
 
-        if (contestDescription)
-            contestDescription.textContent =
-                contest.description || "";
+            contestList.innerHTML = "";
 
-        if (contestPrize)
-            contestPrize.textContent =
-                contest.prize_pool || contest.prize || "-";
+            contests.forEach(contest => {
 
-if (contestStart)
-    contestStart.textContent =
-        contest.start_date
-            ? new Date(contest.start_date).toLocaleDateString("en-IN")
-            : "-";
+                contestList.innerHTML += `
 
-if (contestEnd)
-    contestEnd.textContent =
-        contest.end_date
-            ? new Date(contest.end_date).toLocaleDateString("en-IN")
-            : "-";
+                    <div class="contest-card glass-card">
 
-if (registrationEnd)
-    registrationEnd.textContent =
-        contest.registration_end
-            ? new Date(contest.registration_end).toLocaleDateString("en-IN")
-            : "-";
+                        <div class="contest-header">
 
-        if (contest.end_date)
-            startCountdown(contest.end_date);
+                            <div>
+
+                                <span class="contest-status active">
+
+                                    LIVE
+
+                                </span>
+
+                                <h3>
+
+                                    ${contest.title}
+
+                                </h3>
+
+                            </div>
+
+                            <div class="contest-prize">
+
+                                ₹${Number(
+                                    contest.prize_pool || 0
+                                ).toLocaleString()}
+
+                            </div>
+
+                        </div>
+
+                        <p class="contest-description">
+
+                            ${contest.description || ""}
+
+                        </p>
+
+                        <div class="contest-info">
+
+                            <div>
+
+                                <label>Language</label>
+
+                                <span>
+
+                                    ${contest.language}
+
+                                </span>
+
+                            </div>
+
+                            <div>
+
+                                <label>Starts</label>
+
+                                <span>
+
+                                    ${
+                                        contest.start_date
+                                        ? new Date(
+                                            contest.start_date
+                                        ).toLocaleDateString("en-IN")
+                                        : "-"
+                                    }
+
+                                </span>
+
+                            </div>
+
+                            <div>
+
+                                <label>Ends</label>
+
+                                <span>
+
+                                    ${
+                                        contest.end_date
+                                        ? new Date(
+                                            contest.end_date
+                                        ).toLocaleDateString("en-IN")
+                                        : "-"
+                                    }
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div
+                            style="
+                                margin-top:20px;
+                                text-align:right;
+                            ">
+
+                            <a
+                                href="contest-details.html?id=${contest.id}"
+                                class="btn-primary">
+
+                                View Contest
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            });
+
+        }
 
     } catch (err) {
 
         console.error(err);
 
-        if (contestTitle)
-            contestTitle.textContent =
-                "Unable to load contest.";
     }
 
 }
