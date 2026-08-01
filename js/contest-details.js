@@ -114,7 +114,9 @@ if (contest.registration_end) {
 
         loadEligibleNovels();
 
-        loadLeaderboard();
+       await loadLeaderboard();
+
+await loadWinners();
 
     } catch (err) {
 
@@ -441,6 +443,66 @@ if (tableWrapper) {
         dragging = false;
 
     });
+
+}
+
+async function loadWinners() {
+
+    try {
+
+        const winners = await api(
+            `/contests/${contestId}/winners`
+        );
+
+        const grid =
+            document.getElementById("winnersGrid");
+
+        if (!Array.isArray(winners) || !winners.length) {
+
+            grid.innerHTML = `
+                <p class="loading">
+                    Winners will be announced after the contest ends.
+                </p>
+            `;
+
+            return;
+
+        }
+
+        grid.innerHTML = "";
+
+        winners.forEach(winner => {
+
+            const emoji =
+                winner.position === 1 ? "🥇" :
+                winner.position === 2 ? "🥈" :
+                "🥉";
+
+            grid.innerHTML += `
+                <div class="winner-card">
+
+                    <div class="badge">
+                        ${emoji} ${winner.badge}
+                    </div>
+
+                    <h3>${winner.novel_title}</h3>
+
+                    <p>${winner.writer_name}</p>
+
+                    <div class="prize">
+                        ₹${Number(winner.prize_amount).toLocaleString("en-IN")}
+                    </div>
+
+                </div>
+            `;
+
+        });
+
+    } catch (err) {
+
+        console.error(err);
+
+    }
 
 }
 

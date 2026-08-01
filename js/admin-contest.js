@@ -120,6 +120,16 @@ async function loadEntries() {
 
         });
 
+const option = `
+<option value="${entry.id}">
+${entry.novel_title} — ${entry.writer_name}
+</option>
+`;
+
+document.getElementById("winner1").innerHTML += option;
+document.getElementById("winner2").innerHTML += option;
+document.getElementById("winner3").innerHTML += option;
+
     } catch (err) {
 
         console.error(err);
@@ -167,5 +177,55 @@ async function removeEntry(id) {
     }
 
 }
+
+document.getElementById("announceWinners").onclick = async () => {
+
+    const winners = [
+
+        document.getElementById("winner1").value,
+
+        document.getElementById("winner2").value,
+
+        document.getElementById("winner3").value
+
+    ];
+
+    if (winners.includes("")) {
+
+        alert("Please select all winners.");
+
+        return;
+
+    }
+
+    const response = await adminFetch(
+
+        `${API}/api/admin/contests/${contestId}/winners`,
+
+        {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type":"application/json"
+
+            },
+
+            body: JSON.stringify({
+
+                winners
+
+            })
+
+        }
+
+    );
+
+    const result = await response.json();
+
+    alert(result.message);
+
+};
 
 loadContest();
