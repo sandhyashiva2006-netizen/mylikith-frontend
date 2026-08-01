@@ -910,10 +910,16 @@
 
 .x-btn{
 
-    background:#111827;
+    background:#000;
 
-    color:#ffffff;
+    color:#fff;
 
-    font-size:18px;
+    border:1px solid rgba(255,255,255,.15);
+
+}
+
+.x-btn:hover{
+
+    background:#1a1a1a;
 
 }

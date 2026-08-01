@@ -154,3 +154,23 @@
 
 }
 
+.overview-card strong span{
+
+    font-size:inherit;
+
+    font-weight:inherit;
+
+    color:inherit;
+
+}
+
+.overview-card strong{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    color:#fff;
+
+}
+
