@@ -266,7 +266,7 @@ premiumChapter.checked=
 chapter.is_premium||false;
 
 chapterCoins.value=
-chapter.coins_required||20;
+chapter.coins_required||10;
 
 if(chapter.is_scheduled){
 
