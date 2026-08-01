@@ -934,13 +934,27 @@
 
 }
 
+.contest-page-header{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    gap:30px;
+
+    padding:70px 60px;
+
+}
+
 .contest-page-header-left{
 
     width:100%;
-
-    max-width:900px;
-
-    margin:0 auto;
 
     display:flex;
 
@@ -956,9 +970,7 @@
 
 .contest-page-header h1{
 
-    width:100%;
-
-    margin:0 auto 20px;
+    margin:0;
 
     text-align:center;
 
@@ -966,9 +978,9 @@
 
 .contest-page-header p{
 
-    max-width:760px;
+    max-width:720px;
 
-    margin:0 auto 30px;
+    margin:20px auto 0;
 
     text-align:center;
 
@@ -979,6 +991,24 @@
     margin:0 auto;
 
     display:inline-flex;
+
+}
+
+.contest-page-header .btn-primary{
+
+    margin:0 auto;
+
+}
+
+.page-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-bottom:18px;
 
 }
 
