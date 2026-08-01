@@ -98,115 +98,52 @@ loadAlsoRead();
 
 async function loadChapters(){
 
-try{
+    try{
 
-const response=await fetch(
-`${API}/api/novels/${novelId}/chapters`
-);
+        const response = await fetch(
+            `${API}/api/novels/${novelId}/chapters`
+        );
 
-const chapters=await response.json();
+        const chapters = await response.json();
 
-document.getElementById("chapterCount").textContent=
-`${chapters.length} Chapter${chapters.length===1?"":"s"}`;
+        document.getElementById("chapterCount").textContent =
+            `${chapters.length} Chapter${chapters.length===1?"":"s"}`;
 
-const container=document.getElementById("chaptersList");
+        if(chapters.length===0){
 
-container.innerHTML="";
+            document.getElementById("chaptersList").innerHTML =
+                "<p>No chapters yet</p>";
 
-if(chapters.length===0){
+            return;
 
-container.innerHTML="<p>No chapters yet</p>";
+        }
 
-return;
+        const startBtn =
+            document.getElementById("startReadingBtn");
 
-}
+        if(startBtn){
 
-const startBtn=document.getElementById("startReadingBtn");
+            startBtn.onclick = ()=>{
 
-if(startBtn){
+                window.location.href =
+                    `reader.html?chapter=${chapters[0].id}`;
 
-startBtn.onclick=()=>{
+            };
 
-window.location.href=`reader.html?chapter=${chapters[0].id}`;
+        }
 
-};
+        window.allChapters = chapters;
 
-}
+        renderChapterPage(0);
 
-const pageSize = 20;
+    }catch(error){
 
-let currentPage = 0;
+        console.error(error);
 
-window.allChapters = chapters;
+        document.getElementById("chaptersList").innerHTML =
+            "<p>Failed to load chapters</p>";
 
-renderChapterPage(0);
-
-const premium=chapter.is_premium;
-
-container.innerHTML+=`
-
-<a
-href="reader.html?chapter=${chapter.id}"
-class="chapter-card">
-
-<div class="chapter-left">
-
-<div class="chapter-top">
-
-<h3>
-
-Chapter ${chapter.chapter_no}
-
-</h3>
-
-${
-chapter.early_access
-? `<span class="early-access">⭐ Early Access</span>`
-: premium
-? `<span class="premium-badge">🔒 Premium</span>`
-: `<span class="free-badge">FREE</span>`
-}
-
-</div>
-
-<p class="chapter-name">
-
-${chapter.title}
-
-</p>
-
-<p class="chapter-meta">
-
-${
-premium
-? `🪙 ${chapter.coins_required} Coins`
-: `📖 Free to Read`
-}
-
-</p>
-
-</div>
-
-<div class="chapter-arrow">
-
-➜
-
-</div>
-
-</a>
-
-`;
-
-});
-
-}catch(error){
-
-console.error(error);
-
-document.getElementById("chaptersList").innerHTML=
-"<p>Failed to load chapters</p>";
-
-}
+    }
 
 }
 
@@ -259,15 +196,15 @@ function renderChapterPage(page){
 
         btn.className="range-btn";
 
-        if(i===page)
+        if(i===page){
+
             btn.classList.add("active");
+
+        }
 
         const start=i*20+1;
 
-        const end=Math.min(
-            start+19,
-            allChapters.length
-        );
+        const end=Math.min(start+19,allChapters.length);
 
         btn.textContent=`${start}-${end}`;
 
@@ -277,29 +214,35 @@ function renderChapterPage(page){
 
     }
 
-    const list=
+    const list =
         allChapters.slice(page*20,page*20+20);
 
     list.forEach(chapter=>{
 
-        const premium=chapter.is_premium;
+        const premium = chapter.is_premium;
 
-        container.innerHTML+=`
+        container.innerHTML += `
 
-<a href="reader.html?chapter=${chapter.id}" class="chapter-card">
+<a
+href="reader.html?chapter=${chapter.id}"
+class="chapter-card">
 
 <div class="chapter-left">
 
 <div class="chapter-top">
 
-<h3>Chapter ${chapter.chapter_no}</h3>
+<h3>
+
+Chapter ${chapter.chapter_no}
+
+</h3>
 
 ${
 chapter.early_access
-?'<span class="early-access">⭐ Early Access</span>'
-:premium
-?'<span class="premium-badge">🔒 Premium</span>'
-:'<span class="free-badge">FREE</span>'
+? `<span class="early-access">⭐ Early Access</span>`
+: premium
+? `<span class="premium-badge">🔒 Premium</span>`
+: `<span class="free-badge">FREE</span>`
 }
 
 </div>
@@ -314,9 +257,8 @@ ${chapter.title}
 
 ${
 premium
-?`🪙 ${chapter.coins_required} Coins`
-:`📖 Free`
-
+? `🪙 ${chapter.coins_required} Coins`
+: `📖 Free to Read`
 }
 
 </p>
