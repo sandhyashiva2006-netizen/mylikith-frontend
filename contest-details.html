@@ -36,39 +36,77 @@
 
 <main class="contest-page">
 
-    <section class="contest-hero">
+    <section class="page-header">
 
-        <div class="contest-overlay"></div>
+    <div class="container">
 
-        <div class="container">
+        <div class="glass-card contest-header-card">
 
-            <div class="hero-content">
+            <div class="contest-header-top">
 
-                <span
-                    class="hero-badge"
-                    id="contestStatus">
+                <div>
 
-                    ACTIVE
+                    <span
+                        id="contestStatus"
+                        class="status-badge">
+                        Active
+                    </span>
 
-                </span>
+                    <h1 id="contestTitle">
+                        Loading...
+                    </h1>
 
-                <h1 id="contestTitle">
+                    <p id="contestDescription"></p>
 
-                    Loading...
+                </div>
 
-                </h1>
+            </div>
 
-                <p id="contestDescription">
+            <div class="contest-overview">
 
-                    Loading contest...
+                <div class="overview-card">
 
-                </p>
+                    <span>🌐</span>
+
+                    <label>Language</label>
+
+                    <strong id="contestLanguage">
+                        -
+                    </strong>
+
+                </div>
+
+                <div class="overview-card">
+
+                    <span>💰</span>
+
+                    <label>Prize Pool</label>
+
+                    <strong>
+                        ₹<span id="contestPrize">0</span>
+                    </strong>
+
+                </div>
+
+                <div class="overview-card">
+
+                    <span>📅</span>
+
+                    <label>Registration Ends</label>
+
+                    <strong id="registrationEnd">
+                        -
+                    </strong>
+
+                </div>
 
             </div>
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 <section class="section">
 
