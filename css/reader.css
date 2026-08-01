@@ -1399,3 +1399,74 @@ width:100%;
 
 }
 
+/*=========================================
+  Back Button
+=========================================*/
+
+.reader-back-container{
+
+    max-width:1000px;
+
+    margin:120px auto 0;
+
+    padding:0 40px;
+
+}
+
+.reader-back-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:12px 22px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:linear-gradient(135deg,#7C3AED,#9333EA);
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:0 12px 25px rgba(124,58,237,.25);
+
+}
+
+.reader-back-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 15px 35px rgba(124,58,237,.4);
+
+}
+
+@media(max-width:768px){
+
+    .reader-back-container{
+
+        padding:0 20px;
+
+        margin:110px auto 0;
+
+    }
+
+    .reader-back-btn{
+
+        width:100%;
+
+        justify-content:center;
+
+    }
+
+}

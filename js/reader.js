@@ -280,6 +280,9 @@ JSON.parse(localStorage.getItem("user"));
 
 let currentNovelId = null;
 
+const backToNovelBtn =
+    document.getElementById("backToNovelBtn");
+
 let chapterList = [];
 
 let currentIndex = -1;
@@ -688,6 +691,17 @@ if(locked){
 }
 
 currentNovelId = chapter.novel_id;
+
+if(backToNovelBtn){
+
+    backToNovelBtn.onclick = () => {
+
+        location.href =
+            `novel.html?id=${currentNovelId}`;
+
+    };
+
+}
 
 readingStarted = Date.now();
 
