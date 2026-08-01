@@ -401,4 +401,39 @@ function startCountdown(endDate) {
 
 }
 
+const tableWrapper = document.querySelector(".leaderboard-table-wrapper");
+
+if (tableWrapper) {
+
+    let startX = 0;
+    let scrollLeft = 0;
+    let dragging = false;
+
+    tableWrapper.addEventListener("touchstart", e => {
+
+        dragging = true;
+        startX = e.touches[0].pageX;
+        scrollLeft = tableWrapper.scrollLeft;
+
+    });
+
+    tableWrapper.addEventListener("touchmove", e => {
+
+        if (!dragging) return;
+
+        const x = e.touches[0].pageX;
+
+        tableWrapper.scrollLeft =
+            scrollLeft - (x - startX);
+
+    });
+
+    tableWrapper.addEventListener("touchend", () => {
+
+        dragging = false;
+
+    });
+
+}
+
 loadContest();

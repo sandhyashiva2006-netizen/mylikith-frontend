@@ -208,17 +208,61 @@
 
 .leaderboard-table-wrapper{
 
+    width:100%;
+
     overflow-x:auto;
+
+    overflow-y:hidden;
 
     -webkit-overflow-scrolling:touch;
 
-    border-radius:20px;
+    scrollbar-width:thin;
+
+    scrollbar-color:#8b5cf6 transparent;
+
+    cursor:grab;
+
+}
+
+.leaderboard-table-wrapper:active{
+
+    cursor:grabbing;
 
 }
 
 .leaderboard-table{
 
     min-width:700px;
+
+    width:max-content;
+
+}
+
+.leaderboard-table{
+
+    min-width:700px;
+
+}
+
+.rules-content{
+
+    line-height:2;
+
+    font-size:1rem;
+
+    color:#CBD5E1;
+
+}
+
+.rules-content ul{
+
+    margin:20px 0 20px 25px;
+
+}
+
+.rules-content li{
+
+    margin-bottom:12px;
 
 }
 
