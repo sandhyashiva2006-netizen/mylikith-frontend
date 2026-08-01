@@ -6,8 +6,8 @@ const novelId = params.get("id");
 
 
 let currentNovel = null;
-let currentPage = 0;
-let allChapters = [];
+let chapterPage = 0;
+let novelChapters = [];
 
 function formatNumber(num){
 
@@ -134,7 +134,7 @@ async function loadChapters(){
 
         }
 
-        allChapters = chapters;
+        novelChapters = chapters;
 
         renderChapterPage(0);
 
@@ -188,7 +188,7 @@ function renderChapterPage(page){
     ranges.innerHTML = "";
 
     const totalPages =
-        Math.ceil(allChapters.length / 20);
+        Math.ceil(novelChapters.length / 20);
 
     for(let i=0;i<totalPages;i++){
 
@@ -215,7 +215,7 @@ function renderChapterPage(page){
     }
 
     const list =
-        allChapters.slice(page*20,page*20+20);
+        novelChapters.slice(page*20,page*20+20);
 
     list.forEach(chapter=>{
 
