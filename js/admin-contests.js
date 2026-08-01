@@ -269,26 +269,7 @@ async function deleteContest(id) {
 
 }
 
-async function deleteContest(id) {
-
-    if (!confirm("Delete this contest?")) return;
-
-    try {
-
-        await adminFetch(`${API}/api/admin/contests/${id}`, {
-            method: "DELETE"
-        });
-
-        loadDashboard();
-
-    } catch (err) {
-
-        console.error(err);
-
-    }
-
-}
-
+	
 createContestBtn.onclick = () => {
 
     editingContestId = null;
