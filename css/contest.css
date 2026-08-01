@@ -181,6 +181,7 @@
 
 }
 
+
 .contest-status{
 
     display:inline-block;
@@ -911,5 +912,8 @@
 
     background:#111827;
 
-}
+    color:#ffffff;
 
+    font-size:18px;
+
+}
