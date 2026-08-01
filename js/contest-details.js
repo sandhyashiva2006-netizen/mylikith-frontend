@@ -23,10 +23,9 @@ async function api(url, options = {}) {
         {
             ...options,
             headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${user.token}`,
-                ...(options.headers || {})
-            }
+    "Content-Type": "application/json",
+    ...(options.headers || {})
+}
         }
 
     );
@@ -147,8 +146,8 @@ async function loadEligibleNovels() {
 
     try {
 
-        const novels = await api(
-    `/contests/eligible-novels?contest_id=${contestId}`
+ const novels = await api(
+    `/contests/eligible-novels?contest_id=${contestId}&user_id=${user.id}`
 );
 
         const select =
@@ -157,7 +156,15 @@ async function loadEligibleNovels() {
         select.innerHTML =
             `<option value="">Select Novel</option>`;
 
-        novels.forEach(novel => {
+        if (!Array.isArray(novels)) {
+
+    console.log(novels);
+
+    return;
+
+}
+
+novels.forEach(novel => {
 
             select.innerHTML += `
                 <option value="${novel.id}">
