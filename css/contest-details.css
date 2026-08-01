@@ -210,17 +210,13 @@
 
     width:100%;
 
+    display:flex;
+
+    justify-content:center;
+
     overflow-x:auto;
 
     overflow-y:hidden;
-
-    -webkit-overflow-scrolling:touch;
-
-    scrollbar-width:thin;
-
-    scrollbar-color:#8b5cf6 transparent;
-
-    cursor:grab;
 
 }
 
@@ -234,7 +230,9 @@
 
     min-width:700px;
 
-    width:max-content;
+    width:700px;
+
+    margin:0 auto;
 
 }
 
@@ -263,6 +261,26 @@
 .rules-content li{
 
     margin-bottom:12px;
+
+}
+
+@media(max-width:768px){
+
+    .leaderboard-table-wrapper{
+
+        display:block;
+
+    }
+
+    .leaderboard-table{
+
+        width:max-content;
+
+        min-width:700px;
+
+        margin:0;
+
+    }
 
 }
 

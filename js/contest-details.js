@@ -89,10 +89,18 @@ document.getElementById("thirdPrize").textContent =
                     .toLocaleDateString("en-IN")
                 : "-";
 
-if (contest.rules) {
+const rulesElement = document.getElementById("contestRules");
 
-    document.getElementById("contestRules").innerHTML =
+if (contest.rules && contest.rules.trim()) {
+
+    rulesElement.innerHTML =
         contest.rules.replace(/\n/g, "<br>");
+
+} else {
+
+    rulesElement.innerHTML = `
+        <p>No rules have been added for this contest yet.</p>
+    `;
 
 }
 
