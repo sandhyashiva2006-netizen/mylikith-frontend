@@ -171,13 +171,15 @@
 
 .hero-content p{
 
-    max-width:320px;
+    max-width:380px;
 
-    margin:0 auto;
+    margin:0;
 
-    text-align:center;
+    text-align:left;
 
-    line-height:1.8;
+    font-size:1.18rem;
+
+    line-height:1.9;
 
 }
 
@@ -1036,7 +1038,7 @@
 
     min-height:70vh;
 
-    padding:110px 20px 70px;
+    padding:160px 20px 80px;
 
     display:flex;
 
