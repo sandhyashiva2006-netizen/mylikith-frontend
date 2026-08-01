@@ -639,6 +639,46 @@ font-weight:700;
 
 }
 
+    .scroll-top-btn{
+
+        right:18px;
+
+        bottom:95px;
+
+    }
+
+}
+
+@media (max-width:768px){
+
+    .novel-hero{
+
+        display:flex;
+
+        flex-direction:column;
+
+        align-items:center;
+
+        text-align:center;
+
+        padding:90px 20px 120px;
+
+        gap:25px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .novel-cover{
+
+        width:220px;
+
+        margin:auto;
+
+    }
+
 }
 
 #novelTitle{
@@ -1271,3 +1311,22 @@ Tabs
     transform:scale(.98);
 
 }
+
+.scroll-top-btn{
+
+    position:fixed;
+
+    right:20px;
+
+    bottom:95px;
+
+    width:56px;
+
+    height:56px;
+
+    border-radius:50%;
+
+    z-index:10000;
+
+}
+
