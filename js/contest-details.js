@@ -64,8 +64,6 @@ async function loadContest() {
         document.getElementById("contestLanguage").textContent =
             contest.language;
 
-        document.getElementById("contestPrize").textContent =
-            Number(contest.prize_pool || 0).toLocaleString();
 
 const prizePool = parseFloat(contest.prize_pool || 0);
 
@@ -81,28 +79,9 @@ document.getElementById("secondPrize").textContent =
 document.getElementById("thirdPrize").textContent =
     `₹${Math.round(prizePool * 0.10).toLocaleString("en-IN")}`;
 
-console.log("Prize Pool:", prizePool);
 
-document.getElementById("firstPrize").textContent =
-    `₹${Math.round(prizePool * 0.60).toLocaleString()}`;
 
-document.getElementById("secondPrize").textContent =
-    `₹${Math.round(prizePool * 0.30).toLocaleString()}`;
 
-document.getElementById("thirdPrize").textContent =
-    `₹${Math.round(prizePool * 0.10).toLocaleString()}`;
-
-        document.getElementById("contestStart").textContent =
-            contest.start_date
-                ? new Date(contest.start_date)
-                    .toLocaleDateString("en-IN")
-                : "-";
-
-        document.getElementById("contestEnd").textContent =
-            contest.end_date
-                ? new Date(contest.end_date)
-                    .toLocaleDateString("en-IN")
-                : "-";
 
         document.getElementById("registrationEnd").textContent =
             contest.registration_end
