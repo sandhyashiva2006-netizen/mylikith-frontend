@@ -1109,3 +1109,96 @@ font-size:14px;
 }
 
 }
+
+/*=========================================
+Tabs
+=========================================*/
+
+.novel-tabs{
+
+    display:flex;
+
+    gap:15px;
+
+    margin-bottom:25px;
+
+}
+
+.tab-btn{
+
+    padding:14px 26px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#1f2937;
+
+    color:#fff;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+    transition:.3s;
+
+}
+
+.tab-btn.active{
+
+    background:linear-gradient(135deg,#7C3AED,#9333EA);
+
+}
+
+.tab-btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.tab-content{
+
+    display:none;
+
+}
+
+.tab-content.active{
+
+    display:block;
+
+}
+
+.chapter-ranges{
+
+    display:flex;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:25px;
+
+}
+
+.range-btn{
+
+    padding:10px 18px;
+
+    border:none;
+
+    border-radius:999px;
+
+    background:#1f2937;
+
+    color:#fff;
+
+    cursor:pointer;
+
+}
+
+.range-btn.active{
+
+    background:#7C3AED;
+
+}
+

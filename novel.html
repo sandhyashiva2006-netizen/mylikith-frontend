@@ -205,27 +205,105 @@ id="reportBtn">
 
 <section class="chapters-section">
 
-<div class="section-header">
+    <div class="novel-tabs">
 
-<h2>
+        <button
+            class="tab-btn active"
+            data-tab="chaptersTab">
 
-📚 Chapters
+            📚 Chapters
+            <span id="chapterCount">0 Chapters</span>
 
-</h2>
+        </button>
 
-<span id="chapterCount">
+        <button
+            class="tab-btn"
+            data-tab="reviewsTab">
 
-0 Chapters
+            ⭐ Reviews
 
-</span>
+        </button>
 
-</div>
+    </div>
 
-<div
-id="chaptersList"
-class="chapters-list">
+    <div
+        id="chaptersTab"
+        class="tab-content active">
 
-</div>
+        <div
+            id="chapterRanges"
+            class="chapter-ranges">
+
+        </div>
+
+        <div
+            id="chaptersList"
+            class="chapters-list">
+
+        </div>
+
+    </div>
+
+    <div
+        id="reviewsTab"
+        class="tab-content">
+
+        <div class="review-form">
+
+            <div class="review-top">
+
+                <div class="review-field">
+
+                    <label>Rating</label>
+
+                    <select
+                        id="ratingSelect"
+                        class="input">
+
+                        <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                        <option value="4">⭐⭐⭐⭐ Very Good</option>
+                        <option value="3">⭐⭐⭐ Good</option>
+                        <option value="2">⭐⭐ Fair</option>
+                        <option value="1">⭐ Poor</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="review-field">
+
+                <label>Your Review</label>
+
+                <textarea
+                    id="reviewText"
+                    class="review-textarea"
+                    placeholder="Share your thoughts..."></textarea>
+
+            </div>
+
+            <div class="review-actions">
+
+                <button
+                    id="submitReviewBtn"
+                    class="chapter-btn">
+
+                    ⭐ Submit Review
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <div id="reviewsList">
+
+            Loading...
+
+        </div>
+
+    </div>
 
 </section>
 
@@ -319,114 +397,6 @@ Rating
 
 </section>
 
-<section class="reviews-section">
-
-<div class="section-header">
-
-<h2>
-
-⭐ Ratings & Reviews
-
-</h2>
-
-<span>
-
-Share your experience
-
-</span>
-
-</div>
-
-<div class="review-form">
-
-<div class="review-top">
-
-<div class="review-field">
-
-<label>
-
-Rating
-
-</label>
-
-<select
-id="ratingSelect"
-class="input">
-
-<option value="5">
-
-⭐⭐⭐⭐⭐ Excellent
-
-</option>
-
-<option value="4">
-
-⭐⭐⭐⭐ Very Good
-
-</option>
-
-<option value="3">
-
-⭐⭐⭐ Good
-
-</option>
-
-<option value="2">
-
-⭐⭐ Fair
-
-</option>
-
-<option value="1">
-
-⭐ Poor
-
-</option>
-
-</select>
-
-</div>
-
-</div>
-
-<div class="review-field">
-
-<label>
-
-Your Review
-
-</label>
-
-<textarea
-id="reviewText"
-class="review-textarea"
-placeholder="Share your thoughts about this novel...">
-
-</textarea>
-
-</div>
-
-<div class="review-actions">
-
-<button
-id="submitReviewBtn"
-class="chapter-btn">
-
-⭐ Submit Review
-
-</button>
-
-</div>
-
-</div>
-
-<div id="reviewsList">
-
-Loading reviews...
-
-</div>
-
-</section>
 
 <section class="related-section">
 

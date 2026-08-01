@@ -133,7 +133,13 @@ window.location.href=`reader.html?chapter=${chapters[0].id}`;
 
 }
 
-chapters.forEach(chapter=>{
+const pageSize = 20;
+
+let currentPage = 0;
+
+window.allChapters = chapters;
+
+renderChapterPage(0);
 
 const premium=chapter.is_premium;
 
@@ -227,6 +233,107 @@ if(reportButton){
         alert("Report feature will be available soon.");
 
     };
+
+}
+
+function renderChapterPage(page){
+
+    currentPage = page;
+
+    const container =
+        document.getElementById("chaptersList");
+
+    const ranges =
+        document.getElementById("chapterRanges");
+
+    container.innerHTML = "";
+
+    ranges.innerHTML = "";
+
+    const totalPages =
+        Math.ceil(allChapters.length / 20);
+
+    for(let i=0;i<totalPages;i++){
+
+        const btn=document.createElement("button");
+
+        btn.className="range-btn";
+
+        if(i===page)
+            btn.classList.add("active");
+
+        const start=i*20+1;
+
+        const end=Math.min(
+            start+19,
+            allChapters.length
+        );
+
+        btn.textContent=`${start}-${end}`;
+
+        btn.onclick=()=>renderChapterPage(i);
+
+        ranges.appendChild(btn);
+
+    }
+
+    const list=
+        allChapters.slice(page*20,page*20+20);
+
+    list.forEach(chapter=>{
+
+        const premium=chapter.is_premium;
+
+        container.innerHTML+=`
+
+<a href="reader.html?chapter=${chapter.id}" class="chapter-card">
+
+<div class="chapter-left">
+
+<div class="chapter-top">
+
+<h3>Chapter ${chapter.chapter_no}</h3>
+
+${
+chapter.early_access
+?'<span class="early-access">⭐ Early Access</span>'
+:premium
+?'<span class="premium-badge">🔒 Premium</span>'
+:'<span class="free-badge">FREE</span>'
+}
+
+</div>
+
+<p class="chapter-name">
+
+${chapter.title}
+
+</p>
+
+<p class="chapter-meta">
+
+${
+premium
+?`🪙 ${chapter.coins_required} Coins`
+:`📖 Free`
+
+}
+
+</p>
+
+</div>
+
+<div class="chapter-arrow">
+
+➜
+
+</div>
+
+</a>
+
+`;
+
+    });
 
 }
 
@@ -878,6 +985,27 @@ toggleBtn.textContent="Show More";
 };
 
 }
+
+document.addEventListener("click",e=>{
+
+    if(!e.target.classList.contains("tab-btn"))
+        return;
+
+    document.querySelectorAll(".tab-btn")
+    .forEach(btn=>btn.classList.remove("active"));
+
+    document.querySelectorAll(".tab-content")
+    .forEach(tab=>tab.classList.remove("active"));
+
+    e.target.classList.add("active");
+
+    document
+        .getElementById(
+            e.target.dataset.tab
+        )
+        .classList.add("active");
+
+});
 
 loadNovel();
 loadChapters();
