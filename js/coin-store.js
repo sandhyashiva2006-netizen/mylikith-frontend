@@ -81,19 +81,6 @@ ${
         `
 }
 
-${
-pkg.bonus_coins>0
-?
-
-`<p style="color:#00e676;">
-+${pkg.bonus_coins} Bonus Coins
-</p>`
-
-:
-
-""
-
-}
 
 <button
 
