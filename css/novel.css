@@ -365,7 +365,7 @@ display:flex;
 
 justify-content:flex-end;
 
-margin-top:25px;
+margin-top:20px;
 
 }
 
@@ -1202,3 +1202,54 @@ Tabs
 
 }
 
+#submitReviewBtn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    width:auto;
+
+    min-width:220px;
+
+    height:52px;
+
+    padding:0 28px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:linear-gradient(135deg,#7C3AED,#9333EA);
+
+    color:#fff;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:0 10px 25px rgba(124,58,237,.25);
+
+}
+
+#submitReviewBtn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 15px 35px rgba(124,58,237,.4);
+
+}
+
+#submitReviewBtn:active{
+
+    transform:scale(.98);
+
+}
