@@ -284,3 +284,14 @@
 
 }
 
+.page-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-bottom:18px;
+
+}
