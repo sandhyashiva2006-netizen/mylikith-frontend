@@ -130,19 +130,25 @@ winner1.innerHTML = `<option value="">Select Entry</option>`;
 winner2.innerHTML = `<option value="">Select Entry</option>`;
 winner3.innerHTML = `<option value="">Select Entry</option>`;
 
+console.log("Winner selects:", winner1, winner2, winner3);
+console.log("Entries received:", entries);
+
 entries.forEach(entry => {
 
-    const option = `
-        <option value="${entry.id}">
-            ${entry.novel_title} (${entry.category_name})
-        </option>
-    `;
+    console.log("Adding:", entry);
 
-    winner1.insertAdjacentHTML("beforeend", option);
-    winner2.insertAdjacentHTML("beforeend", option);
-    winner3.insertAdjacentHTML("beforeend", option);
+    const option = document.createElement("option");
+
+    option.value = entry.id;
+    option.textContent = `${entry.novel_title} (${entry.category_name})`;
+
+    winner1.appendChild(option.cloneNode(true));
+    winner2.appendChild(option.cloneNode(true));
+    winner3.appendChild(option.cloneNode(true));
 
 });
+
+console.log("Winner1 options:", winner1.options.length);
 
     } catch (err) {
 
