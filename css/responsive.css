@@ -552,17 +552,19 @@ box-shadow:0 15px 35px rgba(124,58,237,.35);
 
 .novel-hero{
 
-display:flex;
+    display:flex;
 
-flex-direction:column;
+    flex-direction:column;
 
-align-items:center;
+    align-items:center;
 
-padding:100px 18px 35px;
+    justify-content:flex-start;
 
-gap:25px;
+    padding:90px 18px 120px;
 
-text-align:center;
+    gap:20px;
+
+    min-height:auto;
 
 }
 
@@ -572,7 +574,7 @@ width:220px;
 
 height:320px;
 
-margin:auto;
+margin:0 auto;
 
 }
 
