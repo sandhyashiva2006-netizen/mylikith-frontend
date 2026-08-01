@@ -338,37 +338,61 @@ async function registerNovel() {
 
 }
 
-document.getElementById("copyContestLink")?.onclick = async () => {
+const copyContestLink = document.getElementById("copyContestLink");
 
-    await navigator.clipboard.writeText(window.location.href);
+if (copyContestLink) {
 
-    alert("Contest link copied.");
+    copyContestLink.onclick = async () => {
 
-};
+        await navigator.clipboard.writeText(window.location.href);
 
-document.getElementById("shareWhatsapp")?.onclick = () => {
+        alert("Contest link copied.");
 
-    window.open(
-        `https://wa.me/?text=${encodeURIComponent(window.location.href)}`
-    );
+    };
 
-};
+}
 
-document.getElementById("shareTelegram")?.onclick = () => {
+const shareWhatsapp = document.getElementById("shareWhatsapp");
 
-    window.open(
-        `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}`
-    );
+if (shareWhatsapp) {
 
-};
+    shareWhatsapp.onclick = () => {
 
-document.getElementById("shareX")?.onclick = () => {
+        window.open(
+            `https://wa.me/?text=${encodeURIComponent(window.location.href)}`
+        );
 
-    window.open(
-        `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}`
-    );
+    };
 
-};
+}
+
+const shareTelegram = document.getElementById("shareTelegram");
+
+if (shareTelegram) {
+
+    shareTelegram.onclick = () => {
+
+        window.open(
+            `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}`
+        );
+
+    };
+
+}
+
+const shareX = document.getElementById("shareX");
+
+if (shareX) {
+
+    shareX.onclick = () => {
+
+        window.open(
+            `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}`
+        );
+
+    };
+
+}
 
 function startCountdown(endDate) {
 
