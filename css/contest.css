@@ -923,3 +923,13 @@
     background:#1a1a1a;
 
 }
+
+@media(max-width:768px){
+
+    .share-buttons{
+
+        grid-template-columns:1fr;
+
+    }
+
+}

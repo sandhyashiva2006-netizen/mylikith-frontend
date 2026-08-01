@@ -50,15 +50,19 @@
 
     display:grid;
 
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    grid-template-columns:repeat(3,minmax(0,1fr));
 
-    gap:20px;
+    gap:24px;
 
-    margin-top:35px;
+    margin-top:40px;
 
 }
 
 .overview-card{
+
+    min-width:0;
+
+    width:100%;
 
     display:flex;
 
@@ -136,7 +140,9 @@
 
     .contest-header-top h1{
 
-        font-size:34px;
+        font-size:2.5rem;
+
+        line-height:1.15;
 
     }
 
@@ -146,11 +152,37 @@
 
     }
 
-    .contest-overview{
+.contest-overview{
 
-        grid-template-columns:1fr;
+    display:flex;
 
-    }
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.overview-card{
+
+    width:100%;
+
+}
+
+.overview-card span{
+
+    width:48px;
+
+    height:48px;
+
+    font-size:22px;
+
+}
+
+.overview-card strong{
+
+    font-size:1.2rem;
+
+}
 
 }
 
@@ -171,6 +203,22 @@
     font-weight:700;
 
     color:#fff;
+
+}
+
+.leaderboard-table-wrapper{
+
+    overflow-x:auto;
+
+    -webkit-overflow-scrolling:touch;
+
+    border-radius:20px;
+
+}
+
+.leaderboard-table{
+
+    min-width:700px;
 
 }
 
