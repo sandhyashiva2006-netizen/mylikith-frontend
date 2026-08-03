@@ -788,54 +788,51 @@ document.getElementById("uploadCoverBtn").onclick = async () => {
 
 document.getElementById("saveSettingsBtn").onclick = async () => {
 
+    const categories = [
+        ...document.querySelectorAll("#categoryContainer input:checked")
+    ].map(c => c.value);
+
+    if (categories.length === 0) {
+
+        alert("Select at least one category.");
+
+        return;
+
+    }
+
+    if (categories.length > 5) {
+
+        alert("Maximum 5 categories allowed.");
+
+        return;
+
+    }
+
     const response = await fetch(`${API}/api/writers/novels/${novelId}`, {
 
         method: "PUT",
 
         headers: {
+
             "Content-Type": "application/json"
+
         },
 
-const categories =
-[
-...document.querySelectorAll(
-'#categoryContainer input:checked'
-)
-].map(
-c=>c.value
-);
+        body: JSON.stringify({
 
-if(categories.length===0){
+            title: document.getElementById("settingTitle").value,
 
-alert("Select at least one category.");
+            description: document.getElementById("settingDescription").value,
 
-return;
+            category: categories[0],
 
-}
+            categories: categories,
 
-if(categories.length>5){
+            language: document.getElementById("settingLanguage").value,
 
-alert("Maximum 5 categories allowed.");
+            status: document.getElementById("settingStatus").value
 
-return;
-
-}
-
-body: JSON.stringify({
-
-title: document.getElementById("settingTitle").value,
-
-description: document.getElementById("settingDescription").value,
-
-category: categories[0],
-
-categories,
-
-language: document.getElementById("settingLanguage").value,
-
-status: document.getElementById("settingStatus").value
-
-})
+        })
 
     });
 
