@@ -305,7 +305,7 @@ const response=
 
 await fetch(
 
-`${API}/manual-payments/submit`,
+`${API}/api/manual-payments/submit`,
 
 {
 
