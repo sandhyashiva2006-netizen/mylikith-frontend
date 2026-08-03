@@ -301,3 +301,75 @@ background:#555;
     box-shadow:0 8px 20px rgba(139,92,246,.35);
 
 }
+
+.payment-actions{
+
+    display:flex;
+
+    gap:14px;
+
+    margin-top:24px;
+
+}
+
+.submit-payment-btn{
+
+    flex:1;
+
+    height:52px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:linear-gradient(135deg,#7C3AED,#9333EA);
+
+    color:#fff;
+
+    font-size:17px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.submit-payment-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 10px 25px rgba(124,58,237,.35);
+
+}
+
+.cancel-payment-btn{
+
+    flex:1;
+
+    height:52px;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:14px;
+
+    background:#2B3145;
+
+    color:#fff;
+
+    font-size:17px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.cancel-payment-btn:hover{
+
+    background:#3A4158;
+
+}
