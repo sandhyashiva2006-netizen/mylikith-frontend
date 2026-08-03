@@ -239,13 +239,6 @@ onerror="this.src='assets/images/default-cover.png'">
 
 <div class="novel-actions">
 
-<button
-class="novel-btn edit-btn"
-onclick="editNovel(${novel.id})">
-
-Edit
-
-</button>
 
 <button
 class="novel-btn studio-btn"
