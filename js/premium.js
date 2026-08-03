@@ -273,7 +273,7 @@ formData.append(
 );
 
 const upload = await fetch(
-    `${API}/upload/payment-proof`,
+    `${API}/api/upload/payment-proof`,
     {
         method: "POST",
 
