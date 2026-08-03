@@ -125,6 +125,21 @@ const chapters=await res.json();
 
 chapterList.innerHTML="";
 
+document.getElementById("chapterCount").textContent =
+    `${chapters.length} ${chapters.length === 1 ? "Chapter" : "Chapters"}`;
+
+const emptyState = document.getElementById("emptyChapterState");
+
+if (chapters.length === 0) {
+
+    emptyState.style.display = "block";
+
+} else {
+
+    emptyState.style.display = "none";
+
+}
+
 chapters.forEach(ch=>{
 
 chapterList.innerHTML+=`
