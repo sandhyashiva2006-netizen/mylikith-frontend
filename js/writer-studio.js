@@ -51,7 +51,8 @@ const novel=await res.json();
 
 document.getElementById("novelTitle").textContent=novel.title;
 
-document.getElementById("novelGenre").textContent=`${novel.category} • ${novel.language}`;
+document.getElementById("novelGenre").textContent=
+`${(novel.categories||[novel.category]).join(" • ")} • ${novel.language}`;
 
 document.getElementById("novelStatus").textContent=novel.status;
 
@@ -68,15 +69,21 @@ document.getElementById("settingsNovelTitle").textContent=
 novel.title;
 
 document.getElementById("settingsNovelInfo").textContent=
-`${novel.category} • ${novel.language}`;
+`${(novel.categories||[novel.category]).join(" • ")} • ${novel.language}`;
 
 document.getElementById("settingTitle").value=novel.title;
 
 document.getElementById("settingDescription").value=novel.description||"";
 
-document.getElementById("settingCategory").value=novel.category;
-
 document.getElementById("settingLanguage").value=novel.language;
+
+const selected = novel.categories || [];
+
+document
+.querySelectorAll("#categoryContainer input")
+.forEach(cb=>{
+    cb.checked = selected.includes(cb.value);
+});
 
 document.getElementById("settingStatus").value=novel.status;
 
@@ -789,15 +796,46 @@ document.getElementById("saveSettingsBtn").onclick = async () => {
             "Content-Type": "application/json"
         },
 
-        body: JSON.stringify({
+const categories =
+[
+...document.querySelectorAll(
+'#categoryContainer input:checked'
+)
+].map(
+c=>c.value
+);
 
-            title: document.getElementById("settingTitle").value,
-            description: document.getElementById("settingDescription").value,
-            category: document.getElementById("settingCategory").value,
-            language: document.getElementById("settingLanguage").value,
-            status: document.getElementById("settingStatus").value
+if(categories.length===0){
 
-        })
+alert("Select at least one category.");
+
+return;
+
+}
+
+if(categories.length>5){
+
+alert("Maximum 5 categories allowed.");
+
+return;
+
+}
+
+body: JSON.stringify({
+
+title: document.getElementById("settingTitle").value,
+
+description: document.getElementById("settingDescription").value,
+
+category: categories[0],
+
+categories,
+
+language: document.getElementById("settingLanguage").value,
+
+status: document.getElementById("settingStatus").value
+
+})
 
     });
 

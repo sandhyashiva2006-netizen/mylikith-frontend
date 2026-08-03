@@ -1883,3 +1883,55 @@ grid-template-columns:1fr;
 
 }
 
+.category-container{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+
+gap:12px;
+
+margin-bottom:20px;
+
+}
+
+.category-container label{
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+padding:12px;
+
+border:1px solid rgba(255,255,255,.08);
+
+border-radius:12px;
+
+background:rgba(255,255,255,.04);
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.category-container label:hover{
+
+border-color:#8b5cf6;
+
+background:rgba(139,92,246,.15);
+
+}
+
+.category-container input{
+
+width:18px;
+
+height:18px;
+
+margin:0;
+
+}
+

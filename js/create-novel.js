@@ -88,10 +88,30 @@ document.getElementById(
 "language"
 ).value;
 
-const category =
-document.getElementById(
-"category"
-).value;
+const categories =
+[
+...document.querySelectorAll(
+'#categoryContainer input:checked'
+)
+].map(
+c=>c.value
+);
+
+if(categories.length===0){
+
+alert("Select at least one category.");
+
+return;
+
+}
+
+if(categories.length>5){
+
+alert("Maximum 5 categories allowed.");
+
+return;
+
+}
 
 const response =
 await fetch(
@@ -112,7 +132,9 @@ author_id:user.id,
 title,
 description,
 language,
-category,
+category:categories[0],
+
+categories,
 
 cover_url:coverUrl
 
