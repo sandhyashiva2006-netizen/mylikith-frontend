@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Classics Management - MyLikith</title>
+
+    <link
+        rel="stylesheet"
+        href="css/admin.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/admin-classics.css"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+</head>
+
+
+<body>
+
+
+<button
+    id="menuToggle"
+    class="menu-toggle"
+>
+    ☰
+</button>
+
+
+<div
+    id="sidebarOverlay"
+    class="sidebar-overlay"
+></div>
+
+
+<div class="admin-layout">
+
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-header">
+
+            <button
+                id="closeSidebar"
+                class="close-sidebar"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="logo">
+
+            <h2>MyLikith</h2>
+
+            <p>Admin Panel</p>
+
+        </div>
+
+
+        <nav>
+
+            <a href="admin-dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="admin-users.html">
+                👥 Users
+            </a>
+
+            <a href="admin-writers.html">
+                ✍ Writers
+            </a>
+
+            <a href="admin-writer-applications.html">
+                Writer Applications
+            </a>
+
+            <a href="admin-manual-payments.html">
+                Manual Payments
+            </a>
+
+            <a href="admin-novels.html">
+                📚 Novels
+            </a>
+
+            <a href="admin-contests.html">
+                🏆 Contests
+            </a>
+
+            <a href="admin-novel-approvals.html">
+                📖 Novel Approvals
+            </a>
+
+            <a href="admin-chapters.html">
+                📝 Chapters
+            </a>
+
+            <a href="admin-reviews.html">
+                ⭐ Reviews
+            </a>
+
+            <a href="admin-comments.html">
+                💬 Comments
+            </a>
+
+            <a href="admin-reports.html">
+                🚩 Reports
+            </a>
+
+            <a href="admin-analytics.html">
+                📈 Analytics
+            </a>
+
+            <a href="admin-revenue.html">
+                💰 Revenue
+            </a>
+
+            <a href="admin-withdrawals.html">
+                💸 Withdrawals
+            </a>
+
+            <a href="admin-settings.html">
+                ⚙ Settings
+            </a>
+
+            <a href="admin-pages.html">
+                📄 Site Pages
+            </a>
+
+            <a href="admin-universe.html">
+                🌌 Universe
+            </a>
+
+            <a
+                href="admin-classics.html"
+                class="active"
+            >
+                📖 Classics
+            </a>
+
+            <a
+                href="admin-login.html"
+                id="logoutBtn"
+            >
+                🚪 Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <main class="main-content">
+
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    MyLikith Classics
+                </h1>
+
+                <p>
+                    Manage public-domain literature
+                </p>
+
+            </div>
+
+
+            <div class="admin-profile">
+
+                <span>
+                    Admin
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <section class="classics-admin-header">
+
+            <div>
+
+                <h2>
+                    📖 Classics Library
+                </h2>
+
+                <p>
+                    Add and manage public-domain books.
+                </p>
+
+            </div>
+
+
+            <button
+                id="addClassicBtn"
+                class="classics-primary-btn"
+            >
+                + Add Classic
+            </button>
+
+        </section>
+
+
+        <div
+            id="classicsMessage"
+            class="classics-message"
+        ></div>
+
+
+        <section
+            id="classicFormSection"
+            class="classic-form-section"
+            hidden
+        >
+
+            <div class="classic-form-header">
+
+                <h2 id="classicFormTitle">
+                    Add Classic
+                </h2>
+
+                <button
+                    type="button"
+                    id="closeClassicForm"
+                    class="classic-close-btn"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+
+            <form id="classicForm">
+
+
+                <input
+                    type="hidden"
+                    id="classicId"
+                >
+
+
+                <div class="classic-form-grid">
+
+
+                    <div class="classic-field">
+
+                        <label for="classicTitle">
+                            Title *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="classicTitle"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="classic-field">
+
+                        <label for="classicAuthor">
+                            Author *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="classicAuthor"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="classic-field">
+
+                        <label for="classicLanguage">
+                            Language *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="classicLanguage"
+                            value="English"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="classic-field">
+
+                        <label for="classicOriginalLanguage">
+                            Original Language
+                        </label>
+
+                        <input
+                            type="text"
+                            id="classicOriginalLanguage"
+                        >
+
+                    </div>
+
+
+                    <div class="classic-field">
+
+                        <label for="classicYear">
+                            Publication Year
+                        </label>
+
+                        <input
+                            type="number"
+                            id="classicYear"
+                        >
+
+                    </div>
+
+
+                    <div class="classic-field">
+
+                        <label for="classicCategory">
+                            Category
+                        </label>
+
+                        <input
+                            type="text"
+                            id="classicCategory"
+                            placeholder="Fantasy, Romance, Mystery..."
+                        >
+
+                    </div>
+
+
+                    <div class="classic-field">
+
+                        <label for="classicSource">
+                            Source Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="classicSource"
+                            placeholder="Project Gutenberg"
+                        >
+
+                    </div>
+
+
+                    <div class="classic-field">
+
+                        <label for="classicSourceUrl">
+                            Source URL
+                        </label>
+
+                        <input
+                            type="url"
+                            id="classicSourceUrl"
+                        >
+
+                    </div>
+
+
+                    <div class="classic-field">
+
+                        <label for="classicCover">
+                            Cover Image URL
+                        </label>
+
+                        <input
+                            type="url"
+                            id="classicCover"
+                        >
+
+                    </div>
+
+
+                    <div class="classic-field">
+
+                        <label for="classicLicense">
+                            License
+                        </label>
+
+                        <input
+                            type="text"
+                            id="classicLicense"
+                            value="Public Domain"
+                        >
+
+                    </div>
+
+
+                    <div class="classic-field classic-full">
+
+                        <label for="classicDescription">
+                            Description
+                        </label>
+
+                        <textarea
+                            id="classicDescription"
+                            rows="5"
+                        ></textarea>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="classic-form-options">
+
+                    <label class="classic-checkbox">
+
+                        <input
+                            type="checkbox"
+                            id="classicFeatured"
+                        >
+
+                        <span>
+                            Featured Classic
+                        </span>
+
+                    </label>
+
+
+                    <label class="classic-checkbox">
+
+                        <input
+                            type="checkbox"
+                            id="classicPublished"
+                            checked
+                        >
+
+                        <span>
+                            Published
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="classic-form-actions">
+
+                    <button
+                        type="button"
+                        id="cancelClassicBtn"
+                        class="classics-secondary-btn"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="classics-primary-btn"
+                    >
+                        Save Classic
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </section>
+
+
+        <section
+            id="classicsList"
+            class="classics-list"
+        >
+
+            <div class="classics-loading">
+
+                <div class="classics-spinner"></div>
+
+                <p>
+                    Loading Classics...
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+<script src="js/admin-auth.js"></script>
+
+<script src="js/admin-classics.js"></script>
+
+
+</body>
+
+</html>
