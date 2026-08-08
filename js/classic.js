@@ -9,7 +9,8 @@ let currentChapterIndex = -1;
 
 let savedProgress = null;
 let progressSaveTimer = null;
-let hasUserScrolled = false;
+let restoringProgress = false;
+
 
 /* =========================================================
    ELEMENTS
@@ -379,7 +380,14 @@ if (chapters.length > 0) {
 
     }
 
-    selectChapter(startIndex);
+    restoringProgress = true;
+
+selectChapter(
+    startIndex,
+    false
+);
+
+restoringProgress = false;
 
 } else {
 
@@ -483,7 +491,7 @@ function renderChapterList() {
    SELECT CHAPTER
 ========================================================= */
 
-function selectChapter(index) {
+function selectChapter(index, saveProgress = true) {
 
     if (
         index < 0 ||
@@ -530,10 +538,19 @@ function selectChapter(index) {
 
     updateActiveChapter();
 
-    saveReadingProgress();
 
     document.title =
         `${chapter.title || `Chapter ${chapter.chapter_number}`} — ${classic?.title || "Classic"} | MyLikith`;
+
+
+    if (
+        saveProgress &&
+        !restoringProgress
+    ) {
+
+        saveCurrentChapterProgress();
+
+    }
 
 
     if (window.innerWidth < 900) {
@@ -542,6 +559,7 @@ function selectChapter(index) {
             document.querySelector(
                 ".classic-reader-content"
             );
+
 
         if (readerContent) {
 
@@ -612,60 +630,139 @@ function formatChapterContent(content) {
 
 }
 
-function calculateReadingProgress() {
+/* =========================================================
+   CLASSIC READING PROGRESS
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   GET CURRENT CHAPTER SCROLL PROGRESS
+--------------------------------------------------------- */
+
+function getChapterScrollProgress() {
 
     const content =
         document.getElementById(
             "chapterContent"
         );
 
+
     if (!content) {
         return 0;
     }
 
-    const scrollTop =
-        window.scrollY;
 
     const contentTop =
         content.getBoundingClientRect().top +
         window.scrollY;
 
+
     const contentHeight =
-        content.offsetHeight;
+        content.scrollHeight;
+
 
     const viewportHeight =
         window.innerHeight;
 
-    const readableHeight =
+
+    const maxScroll =
         contentHeight -
         viewportHeight;
 
-    if (readableHeight <= 0) {
+
+    if (maxScroll <= 0) {
+
         return 100;
+
     }
 
-    const progress =
-        ((scrollTop - contentTop) /
-            readableHeight) * 100;
+
+    const currentScroll =
+        window.scrollY -
+        contentTop;
+
+
+    const percentage =
+        (
+            currentScroll /
+            maxScroll
+        ) * 100;
+
 
     return Math.min(
         100,
         Math.max(
             0,
-            Math.round(progress)
+            Math.round(percentage)
         )
     );
 
 }
 
-/* =========================================================
-   SAVE READING PROGRESS
-========================================================= */
 
-async function saveReadingProgress() {
+/* ---------------------------------------------------------
+   CALCULATE OVERALL CLASSIC PROGRESS
+--------------------------------------------------------- */
+
+function calculateOverallProgress(
+    chapterProgress
+) {
+
+    if (
+        chapters.length === 0 ||
+        currentChapterIndex < 0
+    ) {
+
+        return 0;
+
+    }
+
+
+    const completedChapters =
+        currentChapterIndex;
+
+
+    const currentProgress =
+        Math.min(
+            100,
+            Math.max(
+                0,
+                Number(chapterProgress) || 0
+            )
+        );
+
+
+    const totalProgress =
+        (
+            completedChapters +
+            (currentProgress / 100)
+        ) /
+        chapters.length *
+        100;
+
+
+    return Math.min(
+        100,
+        Math.max(
+            0,
+            Math.round(totalProgress)
+        )
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   SAVE CURRENT CHAPTER PROGRESS
+--------------------------------------------------------- */
+
+async function saveCurrentChapterProgress(
+    forceComplete = false
+) {
 
     const token =
-        localStorage.getItem("token");
+        localStorage.getItem("token") ||
+        localStorage.getItem("authToken");
 
     if (!token) {
         return;
@@ -679,62 +776,131 @@ async function saveReadingProgress() {
         return;
     }
 
-    clearTimeout(progressSaveTimer);
+    const chapter =
+        chapters[currentChapterIndex];
 
-    progressSaveTimer =
-        setTimeout(async () => {
+    const chapterProgress =
+        forceComplete
+            ? 100
+            : getChapterScrollProgress();
 
-            const chapter =
-                chapters[currentChapterIndex];
+    const overallProgress =
+        calculateOverallProgress(
+            chapterProgress
+        );
 
-            try {
+    const saveRequest = async () => {
 
-                const response =
-                    await fetch(
-                        `${API}/api/classic-progress/${classicId}`,
-                        {
-                            method: "PUT",
+        try {
 
-                            headers: {
-                                "Content-Type":
-                                    "application/json",
+            const response =
+                await fetch(
+                    `${API}/api/classic-progress/${classicId}`,
+                    {
+                        method: "PUT",
 
-                                "Authorization":
-                                    `Bearer ${token}`
-                            },
+                        headers: {
+                            "Content-Type":
+                                "application/json",
 
-                            body: JSON.stringify({
-                                chapter_id:
-                                    chapter.id,
+                            "Authorization":
+                                `Bearer ${token}`
+                        },
 
-                                chapter_number:
-                                    chapter.chapter_number,
+                        body: JSON.stringify({
 
-                                progress_percent: calculateReadingProgress()
-                            })
-                        }
-                    );
+                            chapter_id:
+                                chapter.id,
 
-                if (!response.ok) {
+                            chapter_number:
+                                chapter.chapter_number,
 
-                    console.warn(
-                        "Unable to save Classic progress."
-                    );
+                            progress_percent:
+                                overallProgress
 
-                }
+                        })
+                    }
+                );
 
-            } catch (error) {
+
+            if (!response.ok) {
 
                 console.warn(
-                    "Classic progress save error:",
-                    error
+                    "Unable to save Classic progress."
                 );
+
+                return false;
 
             }
 
-        }, 500);
+
+            const data =
+                await response.json();
+
+
+            if (
+                data.success &&
+                data.progress
+            ) {
+
+                savedProgress =
+                    data.progress;
+
+            }
+
+
+            return true;
+
+        } catch (error) {
+
+            console.warn(
+                "Classic progress save error:",
+                error
+            );
+
+            return false;
+
+        }
+
+    };
+
+
+    /* -----------------------------------------------------
+       FORCE COMPLETE
+       Used by Previous / Next
+    ----------------------------------------------------- */
+
+    if (forceComplete) {
+
+        clearTimeout(
+            progressSaveTimer
+        );
+
+        return await saveRequest();
+
+    }
+
+
+    /* -----------------------------------------------------
+       NORMAL AUTO SAVE
+    ----------------------------------------------------- */
+
+    clearTimeout(
+        progressSaveTimer
+    );
+
+
+    progressSaveTimer =
+        setTimeout(
+            () => {
+                saveRequest();
+            },
+            1000
+        );
 
 }
+
+
 
 /* =========================================================
    PREVIOUS / NEXT
@@ -744,11 +910,16 @@ if (previousChapter) {
 
     previousChapter.addEventListener(
         "click",
-        () => {
+        async () => {
 
             if (
                 currentChapterIndex > 0
             ) {
+
+                await saveCurrentChapterProgress(
+                    true
+                );
+
 
                 selectChapter(
                     currentChapterIndex - 1
@@ -768,18 +939,21 @@ if (nextChapter) {
         "click",
         async () => {
 
-if (
-    currentChapterIndex <
-    chapters.length - 1
-) {
+            if (
+                currentChapterIndex <
+                chapters.length - 1
+            ) {
 
-    await saveReadingProgressAsComplete();
+                await saveCurrentChapterProgress(
+                    true
+                );
 
-    selectChapter(
-        currentChapterIndex + 1
-    );
 
-}
+                selectChapter(
+                    currentChapterIndex + 1
+                );
+
+            }
 
         }
     );
@@ -787,71 +961,44 @@ if (
 }
 
 /* =========================================================
-   MARK CURRENT CHAPTER COMPLETE
+   AUTO SAVE WHILE READING
 ========================================================= */
 
-async function saveReadingProgressAsComplete() {
+window.addEventListener(
+    "scroll",
+    () => {
 
-    const token =
-        localStorage.getItem("token") ||
-        localStorage.getItem("authToken");
+        if (
+            currentChapterIndex < 0 ||
+            restoringProgress
+        ) {
 
-    if (!token) {
-        return;
-    }
+            return;
 
-    if (
-        currentChapterIndex < 0 ||
-        !chapters[currentChapterIndex]
-    ) {
-        return;
-    }
+        }
 
 
-    const chapter =
-        chapters[currentChapterIndex];
+        clearTimeout(
+            progressSaveTimer
+        );
 
 
-    try {
+        progressSaveTimer =
+            setTimeout(
+                () => {
 
-        await fetch(
-            `${API}/api/classic-progress/${classicId}`,
-            {
-                method: "PUT",
+                    saveCurrentChapterProgress();
 
-                headers: {
-                    "Content-Type":
-                        "application/json",
-
-                    "Authorization":
-                        `Bearer ${token}`
                 },
+                1000
+            );
 
-                body: JSON.stringify({
-
-                    chapter_id:
-                        chapter.id,
-
-                    chapter_number:
-                        chapter.chapter_number,
-
-                    progress_percent:
-                        100
-
-                })
-            }
-        );
-
-    } catch (error) {
-
-        console.warn(
-            "Unable to mark Classic chapter complete:",
-            error
-        );
-
+    },
+    {
+        passive: true
     }
+);
 
-}
 
 /* =========================================================
    REGISTER VIEW
@@ -949,41 +1096,3 @@ function escapeAttribute(value) {
 
 }
 
-/* =========================================================
-   TRACK READING PROGRESS
-========================================================= */
-
-window.addEventListener(
-    "scroll",
-    () => {
-
-        if (
-            currentChapterIndex < 0
-        ) {
-            return;
-        }
-
-
-        hasUserScrolled = true;
-
-
-        clearTimeout(
-            progressSaveTimer
-        );
-
-
-        progressSaveTimer =
-            setTimeout(
-                () => {
-
-                    saveReadingProgress();
-
-                },
-                800
-            );
-
-    },
-    {
-        passive: true
-    }
-);
