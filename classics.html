@@ -132,29 +132,54 @@ class="navbar">
             </div>
 
 
-            <div class="classics-filters">
+ <div class="classics-filters">
 
-                <select
-                    id="languageFilter"
-                >
+    <div class="classics-search">
 
-                    <option value="">
-                        All Languages
-                    </option>
+        <input
+            type="search"
+            id="classicSearch"
+            placeholder="Search Classics or authors..."
+            autocomplete="off"
+        >
 
-                </select>
+        <button
+            type="button"
+            id="classicSearchBtn"
+        >
+            Search
+        </button>
 
-                <select
-                    id="categoryFilter"
-                >
+    </div>
 
-                    <option value="">
-                        All Categories
-                    </option>
 
-                </select>
+    <select id="languageFilter">
 
-            </div>
+        <option value="">
+            All Languages
+        </option>
+
+    </select>
+
+
+    <select id="categoryFilter">
+
+        <option value="">
+            All Categories
+        </option>
+
+    </select>
+
+
+    <button
+        type="button"
+        id="clearClassicFilters"
+        class="classic-clear-filters"
+    >
+        Clear
+    </button>
+
+</div>
 
         </div>
 

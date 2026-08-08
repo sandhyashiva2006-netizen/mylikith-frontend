@@ -15,6 +15,16 @@ const languageFilter =
 const categoryFilter =
     document.getElementById("categoryFilter");
 
+const classicSearch =
+    document.getElementById("classicSearch");
+
+const classicSearchBtn =
+    document.getElementById("classicSearchBtn");
+
+const clearClassicFilters =
+    document.getElementById(
+        "clearClassicFilters"
+    );
 
 let allClassics = [];
 
@@ -107,7 +117,10 @@ renderClassics(
 
 async function loadClassics() {
 
-    if (!classicsContainer) return;
+    if (!classicsContainer) {
+        return;
+    }
+
 
     classicsContainer.innerHTML = `
         <div class="classics-loading">
@@ -124,11 +137,75 @@ async function loadClassics() {
 
     try {
 
-        const response = await fetch(
-            `${API}/api/classics`
-        );
+        const params =
+            new URLSearchParams();
 
-        const data = await response.json();
+
+        const search =
+            classicSearch
+                ? classicSearch.value.trim()
+                : "";
+
+
+        const language =
+            languageFilter
+                ? languageFilter.value
+                : "";
+
+
+        const category =
+            categoryFilter
+                ? categoryFilter.value
+                : "";
+
+
+        if (search) {
+
+            params.set(
+                "search",
+                search
+            );
+
+        }
+
+
+        if (language) {
+
+            params.set(
+                "language",
+                language
+            );
+
+        }
+
+
+        if (category) {
+
+            params.set(
+                "category",
+                category
+            );
+
+        }
+
+
+        const query =
+            params.toString();
+
+
+        const url =
+            query
+                ? `${API}/api/classics?${query}`
+                : `${API}/api/classics`;
+
+
+        const response =
+            await fetch(url);
+
+
+        const data =
+            await response.json();
+
 
         if (!response.ok) {
 
@@ -138,6 +215,7 @@ async function loadClassics() {
             );
 
         }
+
 
         const classics =
             Array.isArray(data)
@@ -151,9 +229,26 @@ async function loadClassics() {
                 : [];
 
 
-        populateFilters();
+        /*
+         * Only populate filter options when
+         * we have the complete initial list.
+         */
 
-        applyFilters();
+        if (
+            !search &&
+            !language &&
+            !category
+        ) {
+
+            populateFilters();
+
+        }
+
+
+        renderClassics(
+            classicsContainer,
+            allClassics
+        );
 
 
     } catch (error) {
@@ -162,6 +257,7 @@ async function loadClassics() {
             "Classics error:",
             error
         );
+
 
         classicsContainer.innerHTML = `
             <div class="classics-error">
@@ -463,47 +559,7 @@ function populateFilters() {
 
 function applyFilters() {
 
-    if (!classicsContainer) return;
-
-
-    const selectedLanguage =
-        languageFilter
-            ? languageFilter.value
-            : "";
-
-    const selectedCategory =
-        categoryFilter
-            ? categoryFilter.value
-            : "";
-
-
-    const filtered =
-        allClassics.filter(classic => {
-
-            const languageMatch =
-                !selectedLanguage ||
-                classic.language ===
-                    selectedLanguage;
-
-
-            const categoryMatch =
-                !selectedCategory ||
-                classic.category ===
-                    selectedCategory;
-
-
-            return (
-                languageMatch &&
-                categoryMatch
-            );
-
-        });
-
-
-    renderClassics(
-        classicsContainer,
-        filtered
-    );
+    loadClassics();
 
 }
 
@@ -531,6 +587,73 @@ if (categoryFilter) {
 
 }
 
+if (classicSearchBtn) {
+
+    classicSearchBtn.addEventListener(
+        "click",
+        () => {
+
+            loadClassics();
+
+        }
+    );
+
+}
+
+
+if (classicSearch) {
+
+    classicSearch.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                loadClassics();
+
+            }
+
+        }
+    );
+
+}
+
+
+if (clearClassicFilters) {
+
+    clearClassicFilters.addEventListener(
+        "click",
+        () => {
+
+            if (classicSearch) {
+
+                classicSearch.value = "";
+
+            }
+
+
+            if (languageFilter) {
+
+                languageFilter.value = "";
+
+            }
+
+
+            if (categoryFilter) {
+
+                categoryFilter.value = "";
+
+            }
+
+
+            loadClassics();
+
+        }
+    );
+
+}
 
 /* =========================================================
    HELPERS
