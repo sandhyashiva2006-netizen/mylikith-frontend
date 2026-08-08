@@ -1,0 +1,745 @@
+/* =========================================================
+   MYLIKITH CLASSICS — ADMIN
+========================================================= */
+
+.classics-admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    margin-bottom: 25px;
+    padding: 24px;
+
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+}
+
+.classics-admin-header h2 {
+    margin: 0 0 6px;
+
+    color: #ffffff;
+    font-size: 22px;
+}
+
+.classics-admin-header p {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.classics-primary-btn,
+.classics-secondary-btn,
+.classics-danger-btn {
+    border-radius: 9px;
+
+    padding: 10px 16px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease,
+        background 0.2s ease;
+}
+
+.classics-primary-btn {
+    border: 1px solid rgba(180, 120, 255, 0.35);
+
+    background: linear-gradient(
+        135deg,
+        #7c3aed,
+        #9333ea
+    );
+
+    color: #ffffff;
+}
+
+.classics-primary-btn:hover {
+    transform: translateY(-1px);
+    opacity: 0.92;
+}
+
+.classics-secondary-btn {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    background: rgba(255, 255, 255, 0.05);
+
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.classics-secondary-btn:hover {
+    background: rgba(255, 255, 255, 0.09);
+}
+
+.classics-danger-btn {
+    border: 1px solid rgba(239, 68, 68, 0.25);
+
+    background: rgba(239, 68, 68, 0.08);
+
+    color: #fca5a5;
+}
+
+.classics-danger-btn:hover {
+    background: rgba(239, 68, 68, 0.15);
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+.classics-message {
+    display: none;
+
+    margin-bottom: 20px;
+    padding: 13px 16px;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.classics-message.success {
+    display: block;
+
+    background: rgba(16, 185, 129, 0.10);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+
+    color: #6ee7b7;
+}
+
+.classics-message.error {
+    display: block;
+
+    background: rgba(239, 68, 68, 0.10);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+
+    color: #fca5a5;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.classic-form-section {
+    margin-bottom: 25px;
+    padding: 25px;
+
+    background: rgba(255, 255, 255, 0.04);
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 16px;
+}
+
+.classic-form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+}
+
+.classic-form-header h2 {
+    margin: 0;
+
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.classic-close-btn {
+    width: 34px;
+    height: 34px;
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 8px;
+
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.7);
+
+    cursor: pointer;
+}
+
+.classic-close-btn:hover {
+    background: rgba(255, 255, 255, 0.09);
+}
+
+
+.classic-form-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+.classic-field {
+    min-width: 0;
+}
+
+.classic-full {
+    grid-column: 1 / -1;
+}
+
+.classic-field label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: rgba(255, 255, 255, 0.72);
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.classic-field input,
+.classic-field textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 11px 12px;
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 9px;
+
+    background: rgba(0, 0, 0, 0.16);
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.classic-field textarea {
+    resize: vertical;
+
+    min-height: 120px;
+
+    line-height: 1.6;
+}
+
+.classic-field input:focus,
+.classic-field textarea:focus {
+    border-color: rgba(167, 113, 255, 0.60);
+
+    background: rgba(0, 0, 0, 0.22);
+
+    box-shadow:
+        0 0 0 3px rgba(124, 58, 237, 0.10);
+}
+
+.classic-field input::placeholder,
+.classic-field textarea::placeholder {
+    color: rgba(255, 255, 255, 0.30);
+}
+
+
+/* =========================================================
+   CHECKBOX OPTIONS
+========================================================= */
+
+.classic-form-options {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 25px;
+
+    margin-top: 22px;
+    padding-top: 20px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.classic-checkbox {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 9px;
+
+    color: rgba(255, 255, 255, 0.72);
+
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+.classic-checkbox input {
+    width: 16px;
+    height: 16px;
+
+    accent-color: #7c3aed;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   FORM ACTIONS
+========================================================= */
+
+.classic-form-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 25px;
+    padding-top: 20px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================================
+   CLASSICS LIST
+========================================================= */
+
+.classics-list {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   CLASSIC CARD
+========================================================= */
+
+.classic-admin-card {
+    padding: 20px;
+
+    background: rgba(255, 255, 255, 0.04);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.classic-admin-card:hover {
+    border-color: rgba(167, 113, 255, 0.25);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   CARD TOP
+========================================================= */
+
+.classic-admin-card-top {
+    display: flex;
+
+    gap: 16px;
+}
+
+.classic-admin-cover,
+.classic-admin-cover-placeholder {
+    width: 82px;
+    height: 116px;
+
+    flex-shrink: 0;
+
+    border-radius: 9px;
+
+    object-fit: cover;
+}
+
+.classic-admin-cover-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(124, 58, 237, 0.20),
+            rgba(124, 58, 237, 0.06)
+        );
+
+    border: 1px solid rgba(167, 113, 255, 0.15);
+
+    font-size: 30px;
+}
+
+.classic-admin-main {
+    min-width: 0;
+
+    flex: 1;
+}
+
+.classic-admin-title-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 10px;
+}
+
+.classic-admin-title-row h3 {
+    margin: 0 0 5px;
+
+    color: #ffffff;
+
+    font-size: 17px;
+
+    line-height: 1.3;
+}
+
+.classic-admin-title-row p {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.52);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   META
+========================================================= */
+
+.classic-meta {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    margin-top: 14px;
+}
+
+.classic-meta span {
+    padding: 5px 8px;
+
+    border-radius: 6px;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    color: rgba(255, 255, 255, 0.50);
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.classic-status-row {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 12px;
+}
+
+.classic-badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.classic-badge.featured {
+    background: rgba(251, 191, 36, 0.10);
+
+    border: 1px solid rgba(251, 191, 36, 0.20);
+
+    color: #fcd34d;
+}
+
+.classic-badge.published {
+    background: rgba(16, 185, 129, 0.10);
+
+    border: 1px solid rgba(16, 185, 129, 0.20);
+
+    color: #6ee7b7;
+}
+
+.classic-badge.unpublished {
+    background: rgba(156, 163, 175, 0.08);
+
+    border: 1px solid rgba(156, 163, 175, 0.15);
+
+    color: #9ca3af;
+}
+
+.classic-views {
+    color: rgba(255, 255, 255, 0.40);
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.classic-admin-description {
+    margin: 18px 0 0;
+
+    color: rgba(255, 255, 255, 0.52);
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   SOURCE
+========================================================= */
+
+.classic-source {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 16px;
+    padding-top: 14px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+
+    color: rgba(255, 255, 255, 0.42);
+
+    font-size: 10px;
+}
+
+.classic-source strong {
+    color: rgba(255, 255, 255, 0.62);
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.classic-admin-actions {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 18px;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.classics-empty {
+    grid-column: 1 / -1;
+
+    padding: 60px 25px;
+
+    text-align: center;
+
+    background: rgba(255, 255, 255, 0.04);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+}
+
+.classics-empty-icon {
+    margin-bottom: 15px;
+
+    font-size: 40px;
+}
+
+.classics-empty h3 {
+    margin: 0 0 8px;
+
+    color: #ffffff;
+
+    font-size: 20px;
+}
+
+.classics-empty p {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.52);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.classics-loading {
+    grid-column: 1 / -1;
+
+    min-height: 260px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 15px;
+
+    background: rgba(255, 255, 255, 0.04);
+
+    border-radius: 15px;
+
+    color: rgba(255, 255, 255, 0.50);
+}
+
+.classics-spinner {
+    width: 34px;
+    height: 34px;
+
+    border: 3px solid rgba(255, 255, 255, 0.10);
+    border-top-color: #9b6cff;
+
+    border-radius: 50%;
+
+    animation:
+        classicsSpin 0.8s linear infinite;
+}
+
+@keyframes classicsSpin {
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.classics-error {
+    grid-column: 1 / -1;
+
+    padding: 40px;
+
+    text-align: center;
+
+    background: rgba(239, 68, 68, 0.05);
+
+    border: 1px solid rgba(239, 68, 68, 0.15);
+
+    border-radius: 15px;
+}
+
+.classics-error h3 {
+    margin: 0 0 8px;
+
+    color: #fca5a5;
+
+    font-size: 17px;
+}
+
+.classics-error p {
+    margin: 0 0 20px;
+
+    color: rgba(255, 255, 255, 0.50);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .classics-list {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .classics-admin-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .classics-primary-btn {
+        width: 100%;
+    }
+
+    .classic-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .classic-full {
+        grid-column: auto;
+    }
+
+    .classic-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .classic-form-actions button {
+        width: 100%;
+    }
+
+    .classic-admin-card-top {
+        align-items: flex-start;
+    }
+
+    .classic-admin-cover,
+    .classic-admin-cover-placeholder {
+        width: 68px;
+        height: 98px;
+    }
+
+    .classic-admin-title-row {
+        flex-direction: column;
+    }
+
+    .classic-admin-actions {
+        flex-direction: column;
+    }
+
+    .classic-admin-actions button {
+        width: 100%;
+    }
+
+}
