@@ -112,29 +112,23 @@ function renderClassics(classics) {
     if (!Array.isArray(classics) || !classics.length) {
 
         list.innerHTML = `
-            <div class="classics-empty">
+    <div class="classics-empty">
 
-                <div class="classics-empty-icon">
-                    📖
-                </div>
+        <div class="classics-empty-icon">
+            📖
+        </div>
 
-                <h3>
-                    No Classics Yet
-                </h3>
+        <h3>
+            No Classics Yet
+        </h3>
 
-                <p>
-                    Add your first public-domain classic.
-                </p>
+        <p>
+            Add your first public-domain classic using
+            the button above.
+        </p>
 
-                <button
-                    class="classics-primary-btn"
-                    onclick="openAddForm()"
-                >
-                    + Add Classic
-                </button>
-
-            </div>
-        `;
+    </div>
+`;
 
         return;
     }
