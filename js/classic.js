@@ -610,6 +610,52 @@ function formatChapterContent(content) {
 
 }
 
+function calculateReadingProgress() {
+
+    const content =
+        document.getElementById(
+            "chapterContent"
+        );
+
+    if (!content) {
+        return 0;
+    }
+
+    const scrollTop =
+        window.scrollY;
+
+    const contentTop =
+        content.getBoundingClientRect().top +
+        window.scrollY;
+
+    const contentHeight =
+        content.offsetHeight;
+
+    const viewportHeight =
+        window.innerHeight;
+
+    const readableHeight =
+        contentHeight -
+        viewportHeight;
+
+    if (readableHeight <= 0) {
+        return 100;
+    }
+
+    const progress =
+        ((scrollTop - contentTop) /
+            readableHeight) * 100;
+
+    return Math.min(
+        100,
+        Math.max(
+            0,
+            Math.round(progress)
+        )
+    );
+
+}
+
 /* =========================================================
    SAVE READING PROGRESS
 ========================================================= */
@@ -662,7 +708,7 @@ async function saveReadingProgress() {
                                 chapter_number:
                                     chapter.chapter_number,
 
-                                progress_percent: 0
+                                progress_percent: calculateReadingProgress()
                             })
                         }
                     );
@@ -832,3 +878,17 @@ function escapeAttribute(value) {
     return escapeHTML(value);
 
 }
+
+window.addEventListener(
+    "scroll",
+    () => {
+
+        if (currentChapterIndex < 0) {
+            return;
+        }
+
+        saveReadingProgress();
+
+    },
+    { passive: true }
+);
