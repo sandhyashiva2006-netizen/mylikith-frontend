@@ -400,9 +400,23 @@ async function loadClassicProgress() {
 
     try {
 
-        const response = await fetch(
-            `${API}/api/classic-progress`
-        );
+const token =
+    localStorage.getItem("token") ||
+    localStorage.getItem("authToken");
+
+if (!token) {
+    return;
+}
+
+const response = await fetch(
+    `${API}/api/classic-progress`,
+    {
+        headers: {
+            "Authorization":
+                `Bearer ${token}`
+        }
+    }
+);
 
         const data = await response.json();
 
