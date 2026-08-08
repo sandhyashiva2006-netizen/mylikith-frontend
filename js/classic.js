@@ -9,6 +9,7 @@ let currentChapterIndex = -1;
 
 let savedProgress = null;
 let progressSaveTimer = null;
+let hasUserScrolled = false;
 
 /* =========================================================
    ELEMENTS
@@ -239,7 +240,8 @@ function renderClassic() {
 async function loadReadingProgress() {
 
     const token =
-        localStorage.getItem("token");
+        localStorage.getItem("token") ||
+        localStorage.getItem("authToken");
 
     if (!token) {
         return;
@@ -277,7 +279,7 @@ async function loadReadingProgress() {
     } catch (error) {
 
         console.warn(
-            "Unable to load Classic reading progress:",
+            "Unable to load Classic progress:",
             error
         );
 
@@ -764,24 +766,92 @@ if (nextChapter) {
 
     nextChapter.addEventListener(
         "click",
-        () => {
+        async () => {
 
-            if (
-                currentChapterIndex <
-                chapters.length - 1
-            ) {
+if (
+    currentChapterIndex <
+    chapters.length - 1
+) {
 
-                selectChapter(
-                    currentChapterIndex + 1
-                );
+    await saveReadingProgressAsComplete();
 
-            }
+    selectChapter(
+        currentChapterIndex + 1
+    );
+
+}
 
         }
     );
 
 }
 
+/* =========================================================
+   MARK CURRENT CHAPTER COMPLETE
+========================================================= */
+
+async function saveReadingProgressAsComplete() {
+
+    const token =
+        localStorage.getItem("token") ||
+        localStorage.getItem("authToken");
+
+    if (!token) {
+        return;
+    }
+
+    if (
+        currentChapterIndex < 0 ||
+        !chapters[currentChapterIndex]
+    ) {
+        return;
+    }
+
+
+    const chapter =
+        chapters[currentChapterIndex];
+
+
+    try {
+
+        await fetch(
+            `${API}/api/classic-progress/${classicId}`,
+            {
+                method: "PUT",
+
+                headers: {
+                    "Content-Type":
+                        "application/json",
+
+                    "Authorization":
+                        `Bearer ${token}`
+                },
+
+                body: JSON.stringify({
+
+                    chapter_id:
+                        chapter.id,
+
+                    chapter_number:
+                        chapter.chapter_number,
+
+                    progress_percent:
+                        100
+
+                })
+            }
+        );
+
+    } catch (error) {
+
+        console.warn(
+            "Unable to mark Classic chapter complete:",
+            error
+        );
+
+    }
+
+}
 
 /* =========================================================
    REGISTER VIEW
@@ -879,16 +949,41 @@ function escapeAttribute(value) {
 
 }
 
+/* =========================================================
+   TRACK READING PROGRESS
+========================================================= */
+
 window.addEventListener(
     "scroll",
     () => {
 
-        if (currentChapterIndex < 0) {
+        if (
+            currentChapterIndex < 0
+        ) {
             return;
         }
 
-        saveReadingProgress();
+
+        hasUserScrolled = true;
+
+
+        clearTimeout(
+            progressSaveTimer
+        );
+
+
+        progressSaveTimer =
+            setTimeout(
+                () => {
+
+                    saveReadingProgress();
+
+                },
+                800
+            );
 
     },
-    { passive: true }
+    {
+        passive: true
+    }
 );
