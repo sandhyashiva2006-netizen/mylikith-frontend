@@ -400,25 +400,9 @@ async function loadClassicProgress() {
 
     try {
 
-const token =
-    localStorage.getItem("token") ||
-    localStorage.getItem("authToken");
-
-if (!token) {
-    return;
-}
-
-const response = await fetch(
-    `${API}/api/classic-progress`,
-    {
-        headers: {
-            "Authorization":
-                `Bearer ${token}`
-        }
-    }
-);
-
-        const data = await response.json();
+        const token =
+            localStorage.getItem("token") ||
+            localStorage.getItem("authToken");
 
         const container =
             document.getElementById(
@@ -429,7 +413,35 @@ const response = await fetch(
             return;
         }
 
+        if (!token) {
+
+            container.innerHTML = `
+                <div class="empty-card">
+                    Please login to view your Classics.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        const response = await fetch(
+            `${API}/api/classic-progress`,
+            {
+                headers: {
+                    "Authorization":
+                        `Bearer ${token}`
+                }
+            }
+        );
+
+
+        const data =
+            await response.json();
+
+
         container.innerHTML = "";
+
 
         if (
             !response.ok ||
@@ -445,58 +457,134 @@ const response = await fetch(
             `;
 
             return;
+
         }
 
 
         data.progress.forEach(item => {
 
+            const progress =
+                Math.min(
+                    100,
+                    Math.max(
+                        0,
+                        Number(
+                            item.progress_percent
+                        ) || 0
+                    )
+                );
+
+
+            const cover =
+                item.cover_image
+                    ? `
+                        <img
+                            src="${escapeHTML(
+                                item.cover_image
+                            )}"
+                            alt="${escapeHTML(
+                                item.classic_title
+                            )}"
+                            class="classic-library-cover"
+                        >
+                      `
+                    : `
+                        <div class="classic-library-cover-placeholder">
+                            📖
+                        </div>
+                      `;
+
+
             container.innerHTML += `
 
-                <div class="library-card">
+                <div class="classic-library-card">
 
-                    <div>
 
-                        <h3>
-                            ${item.classic_title}
-                        </h3>
+                    <div class="classic-library-left">
 
-                        <p>
-                            ${item.author_name || "Unknown Author"}
-                        </p>
+                        <div class="classic-library-cover-wrap">
 
-                        <p>
-                            ${item.category || "Classic"}
-                            •
-                            ${item.language || "Unknown Language"}
-                        </p>
-
-                        <div class="progress">
-
-                            <span
-                                style="
-                                    width:${item.progress_percent}%
-                                "
-                            ></span>
+                            ${cover}
 
                         </div>
 
-                        <p>
-                            ${item.progress_percent}% Complete
-                        </p>
+
+                        <div class="classic-library-info">
+
+                            <span class="classic-library-label">
+                                MYLIKITH CLASSICS
+                            </span>
+
+
+                            <h3>
+                                ${escapeHTML(
+                                    item.classic_title
+                                )}
+                            </h3>
+
+
+                            <p class="classic-library-author">
+                                ${escapeHTML(
+                                    item.author_name ||
+                                    "Unknown Author"
+                                )}
+                            </p>
+
+
+                            <p class="classic-library-meta">
+                                ${escapeHTML(
+                                    item.category ||
+                                    "Classic"
+                                )}
+                                •
+                                ${escapeHTML(
+                                    item.language ||
+                                    "Unknown Language"
+                                )}
+                            </p>
+
+
+                            <div class="classic-library-progress">
+
+                                <div
+                                    class="classic-library-progress-bar"
+                                >
+
+                                    <span
+                                        style="
+                                            width:${progress}%
+                                        "
+                                    ></span>
+
+                                </div>
+
+
+                                <span
+                                    class="classic-library-progress-text"
+                                >
+                                    ${progress}% Complete
+                                </span>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
 
-                    <div>
+                    <div class="classic-library-action">
 
                         <a
-                            href="classic.html?id=${item.classic_id}"
-                            class="btn btn-primary"
+                            href="classic.html?id=${encodeURIComponent(
+                                item.classic_id
+                            )}"
+                            class="classic-library-continue"
                         >
-                            Continue
+                            📖 Continue Reading
                         </a>
 
                     </div>
+
 
                 </div>
 
@@ -504,18 +592,20 @@ const response = await fetch(
 
         });
 
-    }
-    catch (err) {
 
-        console.log(
+    } catch (err) {
+
+        console.error(
             "Classic progress loading error:",
             err
         );
+
 
         const container =
             document.getElementById(
                 "classicProgress"
             );
+
 
         if (container) {
 
@@ -528,5 +618,16 @@ const response = await fetch(
         }
 
     }
+
+}
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
 }

@@ -1935,3 +1935,371 @@ margin:0;
 
 }
 
+/* =========================================================
+   MYLIKITH CLASSICS — LIBRARY
+========================================================= */
+
+.classic-library-card {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 25px;
+
+    padding: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18, 26, 46, 0.78),
+            rgba(18, 14, 35, 0.72)
+        );
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.08);
+
+    border-radius: 18px;
+
+    backdrop-filter: blur(16px);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.classic-library-card:hover {
+
+    transform: translateY(-3px);
+
+    border-color:
+        rgba(124, 58, 237, 0.45);
+
+    box-shadow:
+        0 15px 40px
+        rgba(0, 0, 0, 0.20);
+}
+
+
+.classic-library-left {
+
+    min-width: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    flex: 1;
+}
+
+
+.classic-library-cover-wrap {
+
+    width: 90px;
+
+    height: 125px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(124, 58, 237, 0.20),
+            rgba(255, 255, 255, 0.04)
+        );
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.08);
+}
+
+
+.classic-library-cover {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+.classic-library-cover-placeholder {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 34px;
+
+    color:
+        rgba(255, 255, 255, 0.50);
+}
+
+
+.classic-library-info {
+
+    min-width: 0;
+
+    flex: 1;
+}
+
+
+.classic-library-label {
+
+    display: inline-block;
+
+    margin-bottom: 6px;
+
+    color: #a98cff;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+}
+
+
+.classic-library-info h3 {
+
+    margin: 0 0 5px;
+
+    color: #ffffff;
+
+    font-size: 21px;
+
+    line-height: 1.35;
+}
+
+
+.classic-library-author {
+
+    margin: 0 0 5px;
+
+    color: #b99cff !important;
+
+    font-size: 12px;
+}
+
+
+.classic-library-meta {
+
+    margin: 0 0 13px;
+
+    color:
+        rgba(255, 255, 255, 0.43) !important;
+
+    font-size: 10px;
+}
+
+
+.classic-library-progress {
+
+    max-width: 500px;
+}
+
+
+.classic-library-progress-bar {
+
+    width: 100%;
+
+    height: 6px;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255, 255, 255, 0.08);
+}
+
+
+.classic-library-progress-bar span {
+
+    display: block;
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            #7c3aed,
+            #a78bfa
+        );
+
+    transition:
+        width 0.3s ease;
+}
+
+
+.classic-library-progress-text {
+
+    display: block;
+
+    margin-top: 6px;
+
+    color:
+        rgba(255, 255, 255, 0.40);
+
+    font-size: 9px;
+}
+
+
+.classic-library-action {
+
+    flex-shrink: 0;
+}
+
+
+.classic-library-continue {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 11px 17px;
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #9333ea
+        );
+
+    color: #ffffff;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+.classic-library-continue:hover {
+
+    transform: translateY(-2px);
+
+    opacity: 0.9;
+}
+
+
+/* =========================================================
+   CLASSICS LIBRARY — MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .classic-library-card {
+
+        align-items: stretch;
+
+        flex-direction: column;
+
+        gap: 18px;
+
+        padding: 17px;
+    }
+
+
+    .classic-library-left {
+
+        align-items: flex-start;
+
+        gap: 14px;
+    }
+
+
+    .classic-library-cover-wrap {
+
+        width: 72px;
+
+        height: 102px;
+    }
+
+
+    .classic-library-info h3 {
+
+        font-size: 17px;
+    }
+
+
+    .classic-library-action {
+
+        width: 100%;
+    }
+
+
+    .classic-library-continue {
+
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .classic-library-left {
+
+        gap: 11px;
+    }
+
+
+    .classic-library-cover-wrap {
+
+        width: 62px;
+
+        height: 88px;
+    }
+
+
+    .classic-library-info h3 {
+
+        font-size: 15px;
+    }
+
+
+    .classic-library-author {
+
+        font-size: 10px;
+    }
+
+}
+
