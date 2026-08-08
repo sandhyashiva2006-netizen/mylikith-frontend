@@ -572,18 +572,26 @@ async function loadClassicProgress() {
                     </div>
 
 
-                    <div class="classic-library-action">
+<div class="classic-library-action">
 
-                        <a
-                            href="classic.html?id=${encodeURIComponent(
-                                item.classic_id
-                            )}"
-                            class="classic-library-continue"
-                        >
-                            📖 Continue Reading
-                        </a>
+    <a
+        href="classic.html?id=${encodeURIComponent(
+            item.classic_id
+        )}"
+        class="classic-library-continue"
+    >
+        📖 Continue Reading
+    </a>
 
-                    </div>
+    <button
+        type="button"
+        class="classic-library-remove"
+        onclick="removeClassicProgress(${item.classic_id})"
+    >
+        🗑 Remove
+    </button>
+
+</div>
 
 
                 </div>
@@ -629,5 +637,67 @@ function escapeHTML(value) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+
+}
+
+async function removeClassicProgress(classicId) {
+
+    if (
+        !confirm(
+            "Remove this Classic from your reading progress?"
+        )
+    ) {
+        return;
+    }
+
+    try {
+
+        const token =
+            localStorage.getItem("token") ||
+            localStorage.getItem("authToken");
+
+        if (!token) {
+            return;
+        }
+
+        const response = await fetch(
+            `${API}/api/classic-progress/${classicId}`,
+            {
+                method: "DELETE",
+
+                headers: {
+                    "Authorization":
+                        `Bearer ${token}`
+                }
+            }
+        );
+
+        const data =
+            await response.json();
+
+        if (!response.ok || !data.success) {
+
+            alert(
+                data.message ||
+                "Unable to remove Classic."
+            );
+
+            return;
+        }
+
+        loadClassicProgress();
+
+    } catch (error) {
+
+        console.error(
+            "Remove Classic progress error:",
+            error
+        );
+
+        alert(
+            "Unable to remove Classic."
+        );
+
+    }
 
 }
