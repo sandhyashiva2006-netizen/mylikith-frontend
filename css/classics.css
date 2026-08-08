@@ -1,0 +1,693 @@
+/* =========================================================
+   MYLIKITH CLASSICS
+========================================================= */
+
+.classics-page {
+    min-height: 100vh;
+
+    padding-bottom: 60px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.classics-hero {
+    position: relative;
+
+    min-height: 340px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 80px 24px 60px;
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(139, 92, 246, 0.18),
+            transparent 55%
+        ),
+        linear-gradient(
+            180deg,
+            rgba(15, 10, 30, 0.35),
+            rgba(8, 6, 18, 0.92)
+        );
+}
+
+.classics-hero-content {
+    max-width: 760px;
+
+    position: relative;
+    z-index: 1;
+}
+
+.classics-eyebrow {
+    display: inline-block;
+
+    margin-bottom: 15px;
+
+    color: #b89cff;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 3px;
+}
+
+.classics-hero h1 {
+    margin: 0 0 16px;
+
+    color: #ffffff;
+
+    font-size: clamp(38px, 6vw, 68px);
+    font-weight: 700;
+
+    line-height: 1.05;
+
+    text-shadow:
+        0 8px 35px rgba(0, 0, 0, 0.35);
+}
+
+.classics-hero p {
+    max-width: 600px;
+
+    margin: 0 auto;
+
+    color: rgba(255, 255, 255, 0.62);
+
+    font-size: 15px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.classics-section {
+    max-width: 1250px;
+
+    margin: 0 auto;
+
+    padding:
+        45px 24px 10px;
+}
+
+.classics-section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    margin-bottom: 25px;
+}
+
+.classics-section-heading > div:first-child span {
+    color: #a98cff;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+}
+
+.classics-section-heading h2 {
+    margin: 5px 0 0;
+
+    color: #ffffff;
+
+    font-size: 27px;
+}
+
+
+/* =========================================================
+   FILTERS
+========================================================= */
+
+.classics-filters {
+    display: flex;
+
+    gap: 10px;
+}
+
+.classics-filters select {
+    min-width: 145px;
+
+    padding: 10px 13px;
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.78);
+
+    font-family: inherit;
+    font-size: 11px;
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+.classics-filters select:focus {
+    border-color: rgba(167, 113, 255, 0.45);
+}
+
+.classics-filters option {
+    background: #171326;
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.classics-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 22px;
+}
+
+
+/* =========================================================
+   CLASSIC CARD
+========================================================= */
+
+.classic-card {
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.055),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+
+    backdrop-filter: blur(12px);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.classic-card:hover {
+    transform: translateY(-5px);
+
+    border-color:
+        rgba(167, 113, 255, 0.30);
+
+    box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.20);
+}
+
+
+/* =========================================================
+   COVER
+========================================================= */
+
+.classic-cover-wrapper {
+    position: relative;
+
+    aspect-ratio: 3 / 4;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(124, 58, 237, 0.16),
+            rgba(255, 255, 255, 0.03)
+        );
+}
+
+.classic-cover {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.35s ease;
+}
+
+.classic-card:hover .classic-cover {
+    transform: scale(1.04);
+}
+
+.classic-cover-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(139, 92, 246, 0.22),
+            transparent 65%
+        );
+
+    color: rgba(255, 255, 255, 0.55);
+
+    font-size: 48px;
+}
+
+
+/* =========================================================
+   FEATURED BADGE
+========================================================= */
+
+.classic-featured-badge {
+    position: absolute;
+
+    top: 12px;
+    left: 12px;
+
+    padding: 6px 9px;
+
+    border: 1px solid rgba(251, 191, 36, 0.25);
+    border-radius: 999px;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    color: #fcd34d;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+}
+
+
+/* =========================================================
+   CARD CONTENT
+========================================================= */
+
+.classic-card-content {
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+
+    padding: 17px;
+}
+
+.classic-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    margin-bottom: 10px;
+}
+
+.classic-card-meta span {
+    padding: 4px 7px;
+
+    border-radius: 5px;
+
+    background: rgba(255, 255, 255, 0.055);
+
+    color: rgba(255, 255, 255, 0.42);
+
+    font-size: 9px;
+}
+
+.classic-card h3 {
+    margin: 0 0 5px;
+
+    color: #ffffff;
+
+    font-size: 16px;
+
+    line-height: 1.35;
+}
+
+.classic-author {
+    margin: 0;
+
+    color: #b99cff;
+
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.classic-description {
+    margin: 12px 0 0;
+
+    color: rgba(255, 255, 255, 0.48);
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   CARD BOTTOM
+========================================================= */
+
+.classic-card-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-top: auto;
+    padding-top: 17px;
+}
+
+.classic-category {
+    max-width: 55%;
+
+    overflow: hidden;
+
+    padding: 5px 8px;
+
+    border-radius: 6px;
+
+    background: rgba(124, 58, 237, 0.08);
+
+    color: rgba(196, 161, 255, 0.80);
+
+    font-size: 9px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.classic-read-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px 14px;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #9333ea
+        );
+
+    color: #ffffff;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.classic-read-btn:hover {
+    transform: translateY(-1px);
+
+    opacity: 0.9;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.classics-loading {
+    grid-column: 1 / -1;
+
+    min-height: 250px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 14px;
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 15px;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    color: rgba(255, 255, 255, 0.45);
+
+    font-size: 12px;
+}
+
+.classics-spinner {
+    width: 34px;
+    height: 34px;
+
+    border: 3px solid rgba(255, 255, 255, 0.08);
+    border-top-color: #a78bfa;
+
+    border-radius: 50%;
+
+    animation:
+        classicsSpin 0.8s linear infinite;
+}
+
+@keyframes classicsSpin {
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.classics-empty {
+    grid-column: 1 / -1;
+
+    padding: 55px 25px;
+
+    text-align: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 15px;
+
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.classics-empty-icon {
+    margin-bottom: 12px;
+
+    font-size: 38px;
+}
+
+.classics-empty h3 {
+    margin: 0 0 7px;
+
+    color: #ffffff;
+
+    font-size: 18px;
+}
+
+.classics-empty p {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.45);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.classics-error {
+    grid-column: 1 / -1;
+
+    padding: 45px 25px;
+
+    text-align: center;
+
+    border: 1px solid rgba(239, 68, 68, 0.15);
+    border-radius: 15px;
+
+    background: rgba(239, 68, 68, 0.04);
+}
+
+.classics-error h3 {
+    margin: 0 0 7px;
+
+    color: #fca5a5;
+
+    font-size: 17px;
+}
+
+.classics-error p {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.45);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   FEATURED CARD SIZE
+========================================================= */
+
+.featured-card .classic-card-content {
+    padding: 18px;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+
+    .classics-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+}
+
+
+/* =========================================================
+   SMALL TABLET
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .classics-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .classics-section-heading {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .classics-filters {
+        width: 100%;
+    }
+
+    .classics-filters select {
+        flex: 1;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 560px) {
+
+    .classics-hero {
+        min-height: 300px;
+
+        padding:
+            70px 20px 45px;
+    }
+
+    .classics-hero h1 {
+        font-size: 40px;
+    }
+
+    .classics-hero p {
+        font-size: 13px;
+    }
+
+    .classics-section {
+        padding:
+            35px 15px 10px;
+    }
+
+    .classics-section-heading h2 {
+        font-size: 23px;
+    }
+
+    .classics-filters {
+        flex-direction: column;
+    }
+
+    .classics-filters select {
+        width: 100%;
+    }
+
+    .classics-grid {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 12px;
+    }
+
+    .classic-card-content {
+        padding: 13px;
+    }
+
+    .classic-card h3 {
+        font-size: 14px;
+    }
+
+    .classic-author {
+        font-size: 10px;
+    }
+
+    .classic-description {
+        display: none;
+    }
+
+    .classic-read-btn {
+        padding: 7px 11px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .classics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .classic-description {
+        display: block;
+    }
+
+}
