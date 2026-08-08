@@ -1,0 +1,761 @@
+/* =========================================================
+   MYLIKITH CLASSIC READER
+========================================================= */
+
+.classic-reader-page {
+    min-height: 100vh;
+    padding-bottom: 70px;
+}
+
+
+/* =========================================================
+   BOOK HEADER
+========================================================= */
+
+.classic-reader-header {
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    padding:
+        130px 24px 50px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 40px;
+}
+
+.classic-reader-cover {
+    width: 190px;
+    height: 270px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(124, 58, 237, 0.22),
+            rgba(255, 255, 255, 0.04)
+        );
+
+    border: 1px solid
+        rgba(255, 255, 255, 0.10);
+
+    box-shadow:
+        0 20px 50px
+        rgba(0, 0, 0, 0.30);
+
+    color: rgba(255, 255, 255, 0.55);
+
+    font-size: 55px;
+}
+
+.classic-reader-cover img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+.classic-reader-info {
+    min-width: 0;
+}
+
+.classic-reader-language {
+    display: inline-block;
+
+    margin-bottom: 12px;
+
+    padding: 5px 9px;
+
+    border-radius: 6px;
+
+    background:
+        rgba(124, 58, 237, 0.10);
+
+    color: #b99cff;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+.classic-reader-info h1 {
+    margin: 0 0 7px;
+
+    color: #ffffff;
+
+    font-size: clamp(30px, 4vw, 48px);
+
+    line-height: 1.15;
+}
+
+.classic-reader-author {
+    margin: 0;
+
+    color: #b99cff;
+
+    font-size: 15px;
+}
+
+.classic-reader-description {
+    max-width: 680px;
+
+    margin: 18px 0 0;
+
+    color:
+        rgba(255, 255, 255, 0.55);
+
+    font-size: 13px;
+
+    line-height: 1.75;
+}
+
+.classic-reader-meta {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 20px;
+}
+
+.classic-reader-meta span {
+    padding: 6px 9px;
+
+    border-radius: 7px;
+
+    background:
+        rgba(255, 255, 255, 0.045);
+
+    color:
+        rgba(255, 255, 255, 0.45);
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   READER SECTION
+========================================================= */
+
+.classic-reader-section {
+    max-width: 1250px;
+
+    margin: 0 auto;
+
+    padding:
+        0 24px;
+}
+
+.classic-reader-layout {
+    display: grid;
+
+    grid-template-columns:
+        260px minmax(0, 1fr);
+
+    gap: 25px;
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   CHAPTER SIDEBAR
+========================================================= */
+
+.classic-chapters-sidebar {
+    position: sticky;
+
+    top: 90px;
+
+    max-height:
+        calc(100vh - 110px);
+
+    overflow: hidden;
+
+    padding: 20px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.08);
+
+    border-radius: 15px;
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    backdrop-filter: blur(12px);
+}
+
+.classic-chapters-heading span {
+    color: #a98cff;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+}
+
+.classic-chapters-heading h2 {
+    margin: 5px 0 17px;
+
+    color: #ffffff;
+
+    font-size: 19px;
+}
+
+.classic-chapters-list {
+    max-height:
+        calc(100vh - 220px);
+
+    overflow-y: auto;
+
+    padding-right: 4px;
+}
+
+.classic-chapters-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.classic-chapters-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.classic-chapters-list::-webkit-scrollbar-thumb {
+    background:
+        rgba(167, 139, 250, 0.30);
+
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   CHAPTER ITEM
+========================================================= */
+
+.classic-chapter-item {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 7px;
+
+    padding: 10px;
+
+    border:
+        1px solid transparent;
+
+    border-radius: 9px;
+
+    background: transparent;
+
+    color:
+        rgba(255, 255, 255, 0.58);
+
+    font-family: inherit;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.classic-chapter-item:hover {
+    background:
+        rgba(255, 255, 255, 0.045);
+
+    color: #ffffff;
+}
+
+.classic-chapter-item.active {
+    background:
+        rgba(124, 58, 237, 0.13);
+
+    border-color:
+        rgba(167, 113, 255, 0.22);
+
+    color: #ffffff;
+}
+
+.classic-chapter-number {
+    width: 27px;
+    height: 27px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background:
+        rgba(255, 255, 255, 0.05);
+
+    color:
+        rgba(255, 255, 255, 0.50);
+
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.classic-chapter-item.active
+.classic-chapter-number {
+    background:
+        rgba(124, 58, 237, 0.25);
+
+    color: #c4a1ff;
+}
+
+.classic-chapter-item-title {
+    min-width: 0;
+
+    overflow: hidden;
+
+    font-size: 11px;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   READER CONTENT
+========================================================= */
+
+.classic-reader-content {
+    min-width: 0;
+
+    padding: 35px 45px 40px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.08);
+
+    border-radius: 16px;
+
+    background:
+        rgba(255, 255, 255, 0.028);
+
+    box-shadow:
+        0 20px 60px
+        rgba(0, 0, 0, 0.12);
+}
+
+
+/* =========================================================
+   CHAPTER HEADER
+========================================================= */
+
+.classic-chapter-header {
+    padding-bottom: 25px;
+
+    margin-bottom: 30px;
+
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.08);
+}
+
+.classic-chapter-header span {
+    color: #a98cff;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+}
+
+.classic-chapter-header h2 {
+    margin: 7px 0 0;
+
+    color: #ffffff;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(25px, 3vw, 36px);
+
+    font-weight: 600;
+
+    line-height: 1.3;
+}
+
+
+/* =========================================================
+   CHAPTER CONTENT
+========================================================= */
+
+.classic-chapter-content {
+    min-height: 500px;
+}
+
+.classic-chapter-content p {
+    margin: 0 0 22px;
+
+    color:
+        rgba(255, 255, 255, 0.76);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 18px;
+
+    line-height: 1.95;
+
+    letter-spacing: 0.05px;
+}
+
+.classic-chapter-content p:first-child::first-letter {
+    font-size: 3.2em;
+
+    float: left;
+
+    padding-right: 8px;
+
+    padding-top: 4px;
+
+    color: #b99cff;
+
+    line-height: 0.8;
+}
+
+
+/* =========================================================
+   CHAPTER NAVIGATION
+========================================================= */
+
+.classic-chapter-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-top: 45px;
+    padding-top: 25px;
+
+    border-top:
+        1px solid
+        rgba(255, 255, 255, 0.08);
+}
+
+.classic-nav-btn {
+    min-width: 120px;
+
+    padding: 10px 15px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.10);
+
+    border-radius: 9px;
+
+    background:
+        rgba(255, 255, 255, 0.045);
+
+    color:
+        rgba(255, 255, 255, 0.75);
+
+    font-family: inherit;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.classic-nav-btn:hover:not(:disabled) {
+    background:
+        rgba(255, 255, 255, 0.09);
+}
+
+.classic-nav-btn:disabled {
+    opacity: 0.25;
+
+    cursor: not-allowed;
+}
+
+.classic-chapter-position {
+    color:
+        rgba(255, 255, 255, 0.40);
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   EMPTY / LOADING / ERROR
+========================================================= */
+
+.classic-reader-empty,
+.classic-reader-loading,
+.classic-reader-no-chapters,
+.classic-reader-error {
+    min-height: 300px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.classic-reader-empty > div,
+.classic-reader-no-chapters > div {
+    margin-bottom: 12px;
+
+    font-size: 40px;
+}
+
+.classic-reader-empty h3 {
+    margin: 0 0 7px;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 18px;
+}
+
+.classic-reader-empty p,
+.classic-reader-no-chapters p,
+.classic-reader-error p {
+    margin: 0;
+
+    color:
+        rgba(255, 255, 255, 0.43);
+
+    font-size: 12px;
+}
+
+.classic-reader-loading {
+    min-height: 120px;
+
+    color:
+        rgba(255, 255, 255, 0.40);
+
+    font-size: 11px;
+}
+
+.classic-reader-error {
+    color: #fca5a5;
+}
+
+
+/* =========================================================
+   PAGE ERROR
+========================================================= */
+
+.classic-reader-page-error {
+    min-height: 70vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 20px;
+
+    text-align: center;
+}
+
+.classic-reader-error-icon {
+    margin-bottom: 15px;
+
+    font-size: 55px;
+}
+
+.classic-reader-page-error h1 {
+    margin: 0 0 8px;
+
+    color: #ffffff;
+
+    font-size: 25px;
+}
+
+.classic-reader-page-error p {
+    margin: 0 0 22px;
+
+    color:
+        rgba(255, 255, 255, 0.48);
+
+    font-size: 12px;
+}
+
+.classic-back-btn {
+    display: inline-flex;
+
+    padding: 10px 16px;
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #9333ea
+        );
+
+    color: #ffffff;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .classic-reader-header {
+        padding-top: 110px;
+
+        gap: 25px;
+    }
+
+    .classic-reader-cover {
+        width: 155px;
+        height: 220px;
+    }
+
+    .classic-reader-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .classic-chapters-sidebar {
+        position: relative;
+
+        top: auto;
+
+        max-height: none;
+    }
+
+    .classic-chapters-list {
+        max-height: 220px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .classic-reader-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        padding:
+            100px 18px 35px;
+
+        gap: 22px;
+    }
+
+    .classic-reader-cover {
+        width: 135px;
+        height: 190px;
+    }
+
+    .classic-reader-info h1 {
+        font-size: 32px;
+    }
+
+    .classic-reader-description {
+        font-size: 12px;
+    }
+
+    .classic-reader-section {
+        padding: 0 12px;
+    }
+
+    .classic-reader-content {
+        padding:
+            25px 20px 30px;
+    }
+
+    .classic-chapter-content p {
+        font-size: 17px;
+
+        line-height: 1.85;
+    }
+
+    .classic-chapter-navigation {
+        flex-wrap: wrap;
+    }
+
+    .classic-nav-btn {
+        flex: 1;
+
+        min-width: 0;
+    }
+
+    .classic-chapter-position {
+        order: -1;
+
+        width: 100%;
+
+        text-align: center;
+
+        margin-bottom: 3px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .classic-reader-content {
+        padding:
+            22px 15px 25px;
+    }
+
+    .classic-chapter-content p {
+        font-size: 16px;
+    }
+
+}

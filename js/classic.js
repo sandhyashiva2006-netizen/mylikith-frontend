@@ -7,6 +7,8 @@ let classic = null;
 let chapters = [];
 let currentChapterIndex = -1;
 
+let savedProgress = null;
+let progressSaveTimer = null;
 
 /* =========================================================
    ELEMENTS
@@ -74,6 +76,8 @@ if (!classicId) {
     loadClassic();
 
     loadChapters();
+
+    loadReadingProgress();
 
     registerView();
 
@@ -227,6 +231,58 @@ function renderClassic() {
 
 }
 
+/* =========================================================
+   LOAD READING PROGRESS
+========================================================= */
+
+async function loadReadingProgress() {
+
+    const token =
+        localStorage.getItem("token");
+
+    if (!token) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `${API}/api/classic-progress/${classicId}`,
+            {
+                headers: {
+                    "Authorization":
+                        `Bearer ${token}`
+                }
+            }
+        );
+
+        if (!response.ok) {
+            return;
+        }
+
+        const data =
+            await response.json();
+
+        if (
+            data.success &&
+            data.progress
+        ) {
+
+            savedProgress =
+                data.progress;
+
+        }
+
+    } catch (error) {
+
+        console.warn(
+            "Unable to load Classic reading progress:",
+            error
+        );
+
+    }
+
+}
 
 /* =========================================================
    LOAD CHAPTERS
@@ -275,11 +331,54 @@ async function loadChapters() {
         renderChapterList();
 
 
-        if (chapters.length > 0) {
+if (chapters.length > 0) {
 
-            selectChapter(0);
+    let startIndex = 0;
 
-        } else {
+    if (savedProgress) {
+
+        const savedChapterId =
+            Number(savedProgress.chapter_id);
+
+        const savedIndex =
+            chapters.findIndex(
+                chapter =>
+                    Number(chapter.id) ===
+                    savedChapterId
+            );
+
+        if (savedIndex >= 0) {
+
+            startIndex = savedIndex;
+
+        } else if (
+            savedProgress.chapter_number
+        ) {
+
+            const numberIndex =
+                chapters.findIndex(
+                    chapter =>
+                        Number(
+                            chapter.chapter_number
+                        ) ===
+                        Number(
+                            savedProgress.chapter_number
+                        )
+                );
+
+            if (numberIndex >= 0) {
+
+                startIndex = numberIndex;
+
+            }
+
+        }
+
+    }
+
+    selectChapter(startIndex);
+
+} else {
 
             chaptersList.innerHTML = `
                 <div class="classic-reader-no-chapters">
@@ -428,6 +527,7 @@ function selectChapter(index) {
 
     updateActiveChapter();
 
+    saveReadingProgress();
 
     document.title =
         `${chapter.title || `Chapter ${chapter.chapter_number}`} — ${classic?.title || "Classic"} | MyLikith`;
@@ -509,6 +609,83 @@ function formatChapterContent(content) {
 
 }
 
+/* =========================================================
+   SAVE READING PROGRESS
+========================================================= */
+
+async function saveReadingProgress() {
+
+    const token =
+        localStorage.getItem("token");
+
+    if (!token) {
+        return;
+    }
+
+    if (
+        !classicId ||
+        currentChapterIndex < 0 ||
+        !chapters[currentChapterIndex]
+    ) {
+        return;
+    }
+
+    clearTimeout(progressSaveTimer);
+
+    progressSaveTimer =
+        setTimeout(async () => {
+
+            const chapter =
+                chapters[currentChapterIndex];
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${API}/api/classic-progress/${classicId}`,
+                        {
+                            method: "PUT",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json",
+
+                                "Authorization":
+                                    `Bearer ${token}`
+                            },
+
+                            body: JSON.stringify({
+                                chapter_id:
+                                    chapter.id,
+
+                                chapter_number:
+                                    chapter.chapter_number,
+
+                                progress_percent: 0
+                            })
+                        }
+                    );
+
+                if (!response.ok) {
+
+                    console.warn(
+                        "Unable to save Classic progress."
+                    );
+
+                }
+
+            } catch (error) {
+
+                console.warn(
+                    "Classic progress save error:",
+                    error
+                );
+
+            }
+
+        }, 500);
+
+}
 
 /* =========================================================
    PREVIOUS / NEXT
