@@ -1,0 +1,333 @@
+/* =========================================================
+   MYLIKITH CLASSIC CHAPTERS — ADMIN
+========================================================= */
+
+.chapter-back-row {
+    margin-bottom: 18px;
+}
+
+.chapter-back-btn {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 9px 13px;
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 8px;
+
+    background: rgba(255, 255, 255, 0.04);
+
+    color: rgba(255, 255, 255, 0.70);
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: background 0.2s ease;
+}
+
+.chapter-back-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================================
+   CLASSIC INFO
+========================================================= */
+
+.classic-chapters-info {
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+
+    margin-bottom: 22px;
+    padding: 20px;
+
+    background: rgba(255, 255, 255, 0.04);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+}
+
+.classic-chapters-cover,
+.classic-chapters-cover-placeholder {
+    width: 70px;
+    height: 96px;
+
+    flex-shrink: 0;
+
+    border-radius: 9px;
+
+    object-fit: cover;
+}
+
+.classic-chapters-cover-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(124, 58, 237, 0.20),
+            rgba(124, 58, 237, 0.06)
+        );
+
+    font-size: 28px;
+}
+
+.classic-chapters-info h2 {
+    margin: 0 0 5px;
+
+    color: #ffffff;
+
+    font-size: 20px;
+}
+
+.classic-chapters-info p {
+    margin: 0 0 8px;
+
+    color: rgba(255, 255, 255, 0.55);
+
+    font-size: 13px;
+}
+
+.classic-chapters-info span {
+    color: rgba(255, 255, 255, 0.40);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.chapters-admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 20px;
+    padding: 22px;
+
+    background: rgba(255, 255, 255, 0.04);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+}
+
+.chapters-admin-header h2 {
+    margin: 0 0 5px;
+
+    color: #ffffff;
+
+    font-size: 20px;
+}
+
+.chapters-admin-header p {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.52);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.chapter-form-section {
+    margin-bottom: 25px;
+    padding: 25px;
+
+    background: rgba(255, 255, 255, 0.04);
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 16px;
+}
+
+.chapter-form-grid {
+    display: grid;
+
+    grid-template-columns:
+        180px 1fr;
+
+    gap: 18px;
+}
+
+.chapter-form-grid .classic-full {
+    grid-column: 1 / -1;
+}
+
+#chapterContent {
+    min-height: 420px;
+
+    font-family: inherit;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   CHAPTER LIST
+========================================================= */
+
+.chapters-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+
+/* =========================================================
+   CHAPTER CARD
+========================================================= */
+
+.chapter-admin-card {
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 18px 20px;
+
+    background: rgba(255, 255, 255, 0.04);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 13px;
+
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.chapter-admin-card:hover {
+    border-color: rgba(167, 113, 255, 0.25);
+
+    transform: translateY(-1px);
+}
+
+.chapter-number {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(124, 58, 237, 0.20),
+            rgba(124, 58, 237, 0.07)
+        );
+
+    border: 1px solid rgba(167, 113, 255, 0.15);
+
+    color: #c4a1ff;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.chapter-admin-main {
+    min-width: 0;
+
+    flex: 1;
+}
+
+.chapter-admin-main h3 {
+    margin: 0 0 5px;
+
+    color: #ffffff;
+
+    font-size: 15px;
+}
+
+.chapter-admin-main p {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.42);
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+.chapter-admin-actions {
+    display: flex;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .classic-chapters-info {
+        align-items: flex-start;
+    }
+
+    .chapters-admin-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .chapters-admin-header .classics-primary-btn {
+        width: 100%;
+    }
+
+    .chapter-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chapter-form-grid .classic-full {
+        grid-column: auto;
+    }
+
+    .chapter-admin-card {
+        align-items: flex-start;
+
+        flex-wrap: wrap;
+    }
+
+    .chapter-admin-main {
+        width: calc(100% - 70px);
+    }
+
+    .chapter-admin-actions {
+        width: 100%;
+
+        margin-left: 66px;
+    }
+
+    .chapter-admin-actions button {
+        flex: 1;
+    }
+
+    .classic-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .classic-form-actions button {
+        width: 100%;
+    }
+
+}

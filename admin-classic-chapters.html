@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Classic Chapters - MyLikith</title>
+
+    <link
+        rel="stylesheet"
+        href="css/admin.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/admin-classics.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/admin-classic-chapters.css"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+</head>
+
+
+<body>
+
+
+<button
+    id="menuToggle"
+    class="menu-toggle"
+>
+    ☰
+</button>
+
+
+<div
+    id="sidebarOverlay"
+    class="sidebar-overlay"
+></div>
+
+
+<div class="admin-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-header">
+
+            <button
+                id="closeSidebar"
+                class="close-sidebar"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="logo">
+
+            <h2>MyLikith</h2>
+
+            <p>Admin Panel</p>
+
+        </div>
+
+
+        <nav>
+
+            <a href="admin-dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="admin-users.html">
+                👥 Users
+            </a>
+
+            <a href="admin-writers.html">
+                ✍ Writers
+            </a>
+
+            <a href="admin-writer-applications.html">
+                Writer Applications
+            </a>
+
+            <a href="admin-manual-payments.html">
+                Manual Payments
+            </a>
+
+            <a href="admin-novels.html">
+                📚 Novels
+            </a>
+
+            <a href="admin-contests.html">
+                🏆 Contests
+            </a>
+
+            <a href="admin-novel-approvals.html">
+                📖 Novel Approvals
+            </a>
+
+            <a href="admin-chapters.html">
+                📝 Chapters
+            </a>
+
+            <a href="admin-reviews.html">
+                ⭐ Reviews
+            </a>
+
+            <a href="admin-comments.html">
+                💬 Comments
+            </a>
+
+            <a href="admin-reports.html">
+                🚩 Reports
+            </a>
+
+            <a href="admin-analytics.html">
+                📈 Analytics
+            </a>
+
+            <a href="admin-revenue.html">
+                💰 Revenue
+            </a>
+
+            <a href="admin-withdrawals.html">
+                💸 Withdrawals
+            </a>
+
+            <a href="admin-settings.html">
+                ⚙ Settings
+            </a>
+
+            <a href="admin-pages.html">
+                📄 Site Pages
+            </a>
+
+            <a href="admin-universe.html">
+                🌌 Universe
+            </a>
+
+            <a
+                href="admin-classics.html"
+                class="active"
+            >
+                📖 Classics
+            </a>
+
+            <a
+                href="admin-login.html"
+                id="logoutBtn"
+            >
+                🚪 Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main-content">
+
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Classic Chapters
+                </h1>
+
+                <p id="classicSubtitle">
+                    Manage chapters
+                </p>
+
+            </div>
+
+
+            <div class="admin-profile">
+
+                <span>
+                    Admin
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- BACK -->
+
+        <div class="chapter-back-row">
+
+            <a
+                href="admin-classics.html"
+                class="chapter-back-btn"
+            >
+                ← Back to Classics
+            </a>
+
+        </div>
+
+
+        <!-- CLASSIC INFO -->
+
+        <section
+            id="classicInfo"
+            class="classic-chapters-info"
+        >
+
+            <div class="classic-chapters-cover-placeholder">
+                📖
+            </div>
+
+            <div>
+
+                <h2 id="classicTitle">
+                    Loading...
+                </h2>
+
+                <p id="classicAuthor">
+                    Loading...
+                </p>
+
+                <span id="classicLanguage">
+                    Loading...
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- HEADER -->
+
+        <section class="chapters-admin-header">
+
+            <div>
+
+                <h2>
+                    📝 Chapters
+                </h2>
+
+                <p>
+                    Add, edit and manage chapters for this Classic.
+                </p>
+
+            </div>
+
+
+            <button
+                id="addChapterBtn"
+                class="classics-primary-btn"
+            >
+                + Add Chapter
+            </button>
+
+        </section>
+
+
+        <!-- MESSAGE -->
+
+        <div
+            id="chapterMessage"
+            class="classics-message"
+        ></div>
+
+
+        <!-- FORM -->
+
+        <section
+            id="chapterFormSection"
+            class="chapter-form-section"
+            hidden
+        >
+
+            <div class="classic-form-header">
+
+                <h2 id="chapterFormTitle">
+                    Add Chapter
+                </h2>
+
+                <button
+                    type="button"
+                    id="closeChapterForm"
+                    class="classic-close-btn"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+
+            <form id="chapterForm">
+
+                <input
+                    type="hidden"
+                    id="chapterId"
+                >
+
+
+                <div class="chapter-form-grid">
+
+
+                    <div class="classic-field">
+
+                        <label for="chapterNumber">
+                            Chapter Number *
+                        </label>
+
+                        <input
+                            type="number"
+                            id="chapterNumber"
+                            min="1"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="classic-field">
+
+                        <label for="chapterTitle">
+                            Chapter Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="chapterTitle"
+                            placeholder="Chapter title"
+                        >
+
+                    </div>
+
+
+                    <div class="classic-field classic-full">
+
+                        <label for="chapterContent">
+                            Chapter Content *
+                        </label>
+
+                        <textarea
+                            id="chapterContent"
+                            rows="18"
+                            required
+                            placeholder="Enter the complete chapter content..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <div class="classic-form-actions">
+
+                    <button
+                        type="button"
+                        id="cancelChapterBtn"
+                        class="classics-secondary-btn"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="classics-primary-btn"
+                    >
+                        Save Chapter
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- CHAPTER LIST -->
+
+        <section
+            id="chaptersList"
+            class="chapters-list"
+        >
+
+            <div class="classics-loading">
+
+                <div class="classics-spinner"></div>
+
+                <p>
+                    Loading chapters...
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+<script src="js/admin-auth.js"></script>
+
+<script src="js/admin-classic-chapters.js"></script>
+
+
+</body>
+
+</html>
