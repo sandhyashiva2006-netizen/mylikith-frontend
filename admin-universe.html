@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Universe Management - MyLikith</title>
+
+    <link
+        rel="stylesheet"
+        href="css/admin.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/admin-universe.css"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- MOBILE MENU -->
+
+<button
+    id="menuToggle"
+    class="menu-toggle"
+>
+    ☰
+</button>
+
+
+<div
+    id="sidebarOverlay"
+    class="sidebar-overlay"
+></div>
+
+
+<div class="admin-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-header">
+
+            <button
+                id="closeSidebar"
+                class="close-sidebar"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="logo">
+
+            <h2>MyLikith</h2>
+
+            <p>Admin Panel</p>
+
+        </div>
+
+
+        <nav>
+
+            <a href="admin-dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="admin-users.html">
+                👥 Users
+            </a>
+
+            <a href="admin-writers.html">
+                ✍ Writers
+            </a>
+
+            <a href="admin-writer-applications.html">
+                Writer Applications
+            </a>
+
+            <a href="admin-manual-payments.html">
+                Manual Payments
+            </a>
+
+            <a href="admin-novels.html">
+                📚 Novels
+            </a>
+
+            <a href="admin-contests.html">
+                🏆 Contests
+            </a>
+
+            <a href="admin-novel-approvals.html">
+                📖 Novel Approvals
+            </a>
+
+            <a href="admin-chapters.html">
+                📝 Chapters
+            </a>
+
+            <a href="admin-reviews.html">
+                ⭐ Reviews
+            </a>
+
+            <a href="admin-comments.html">
+                💬 Comments
+            </a>
+
+            <a href="admin-reports.html">
+                🚩 Reports
+            </a>
+
+            <a href="admin-analytics.html">
+                📈 Analytics
+            </a>
+
+            <a href="admin-revenue.html">
+                💰 Revenue
+            </a>
+
+            <a href="admin-withdrawals.html">
+                💸 Withdrawals
+            </a>
+
+            <a href="admin-settings.html">
+                ⚙ Settings
+            </a>
+
+            <a href="admin-pages.html">
+                📄 Site Pages
+            </a>
+
+            <a
+                href="admin-universe.html"
+                class="active"
+            >
+                🌌 Universe
+            </a>
+
+            <a
+                href="admin-login.html"
+                id="logoutBtn"
+            >
+                🚪 Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    MyLikith Universe
+                </h1>
+
+                <p>
+                    Manage Universe modules and availability
+                </p>
+
+            </div>
+
+
+            <div class="admin-profile">
+
+                <span>
+                    Admin
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- INTRO -->
+
+        <section class="universe-admin-intro">
+
+            <div>
+
+                <h2>
+                    🌌 Universe Modules
+                </h2>
+
+                <p>
+                    Control which MyLikith Universe experiences
+                    are available to readers.
+                </p>
+
+            </div>
+
+
+            <button
+                id="refreshUniverse"
+                class="universe-refresh-btn"
+            >
+                ↻ Refresh
+            </button>
+
+        </section>
+
+
+        <!-- MESSAGE -->
+
+        <div
+            id="universeMessage"
+            class="universe-message"
+        ></div>
+
+
+        <!-- MODULES -->
+
+        <section
+            id="universeAdminGrid"
+            class="universe-admin-grid"
+        >
+
+            <div class="universe-admin-loading">
+
+                <div class="universe-admin-spinner"></div>
+
+                <p>
+                    Loading Universe modules...
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+<script src="js/admin-auth.js"></script>
+
+<script src="js/admin-universe.js"></script>
+
+
+</body>
+
+</html>

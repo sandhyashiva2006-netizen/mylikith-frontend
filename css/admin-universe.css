@@ -1,0 +1,534 @@
+/* =========================================================
+   MYLIKITH UNIVERSE — ADMIN
+   ========================================================= */
+
+.universe-admin-intro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    margin-bottom: 25px;
+    padding: 24px;
+
+    background: #ffffff;
+    border-radius: 14px;
+
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+.universe-admin-intro h2 {
+    margin: 0 0 7px;
+
+    color: #222;
+    font-size: 22px;
+}
+
+.universe-admin-intro p {
+    margin: 0;
+
+    color: #777;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   REFRESH BUTTON
+   ========================================================= */
+
+.universe-refresh-btn {
+    border: none;
+    border-radius: 9px;
+
+    padding: 11px 18px;
+
+    background: #7c3aed;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.universe-refresh-btn:hover {
+    background: #6d28d9;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   MESSAGE
+   ========================================================= */
+
+.universe-message {
+    display: none;
+
+    margin-bottom: 20px;
+    padding: 13px 16px;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.universe-message.success {
+    display: block;
+
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #047857;
+}
+
+.universe-message.error {
+    display: block;
+
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+}
+
+
+/* =========================================================
+   GRID
+   ========================================================= */
+
+.universe-admin-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.universe-admin-card {
+    padding: 24px;
+
+    background: #ffffff;
+
+    border: 1px solid #eeeeee;
+    border-radius: 15px;
+
+    box-shadow:
+        0 4px 18px rgba(0, 0, 0, 0.045);
+}
+
+
+/* =========================================================
+   CARD HEADER
+   ========================================================= */
+
+.universe-admin-card-header {
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 22px;
+}
+
+.universe-admin-icon {
+    width: 56px;
+    height: 56px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f3e8ff,
+            #ede9fe
+        );
+
+    font-size: 28px;
+}
+
+.universe-admin-title h3 {
+    margin: 0 0 4px;
+
+    color: #222;
+
+    font-size: 18px;
+}
+
+.universe-admin-title span {
+    color: #999;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   FORM FIELDS
+   ========================================================= */
+
+.universe-admin-field {
+    margin-bottom: 17px;
+}
+
+.universe-admin-field label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #555;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.universe-admin-field input,
+.universe-admin-field textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 11px 12px;
+
+    border: 1px solid #dddddd;
+    border-radius: 9px;
+
+    background: #fafafa;
+    color: #222;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.universe-admin-field textarea {
+    min-height: 85px;
+
+    resize: vertical;
+
+    line-height: 1.5;
+}
+
+.universe-admin-field input:focus,
+.universe-admin-field textarea:focus {
+    border-color: #8b5cf6;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px rgba(139, 92, 246, 0.10);
+}
+
+
+/* =========================================================
+   TWO COLUMN ROW
+   ========================================================= */
+
+.universe-admin-row {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 14px;
+}
+
+
+/* =========================================================
+   SWITCHES
+   ========================================================= */
+
+.universe-admin-controls {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 9px;
+
+    margin-top: 20px;
+    padding-top: 18px;
+
+    border-top: 1px solid #eeeeee;
+}
+
+.universe-switch {
+    position: relative;
+
+    width: 42px;
+    height: 23px;
+
+    display: inline-block;
+}
+
+.universe-switch input {
+    width: 0;
+    height: 0;
+
+    opacity: 0;
+}
+
+.universe-slider {
+    position: absolute;
+    inset: 0;
+
+    border-radius: 999px;
+
+    background: #d1d5db;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease;
+}
+
+.universe-slider::before {
+    content: "";
+
+    position: absolute;
+
+    width: 17px;
+    height: 17px;
+
+    left: 3px;
+    top: 3px;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.2);
+
+    transition:
+        transform 0.2s ease;
+}
+
+.universe-switch input:checked + .universe-slider {
+    background: #7c3aed;
+}
+
+.universe-switch input:checked + .universe-slider::before {
+    transform: translateX(19px);
+}
+
+.switch-label {
+    margin-right: 14px;
+
+    color: #666;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   CARD FOOTER
+   ========================================================= */
+
+.universe-admin-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-top: 20px;
+    padding-top: 18px;
+
+    border-top: 1px solid #eeeeee;
+}
+
+.module-status {
+    padding: 6px 11px;
+
+    border-radius: 999px;
+
+    background: #f3f4f6;
+    color: #6b7280;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.universe-save-btn {
+    border: none;
+    border-radius: 8px;
+
+    padding: 10px 16px;
+
+    background: #7c3aed;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.universe-save-btn:hover {
+    background: #6d28d9;
+    transform: translateY(-1px);
+}
+
+.universe-save-btn:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.universe-admin-loading {
+    grid-column: 1 / -1;
+
+    min-height: 260px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 15px;
+
+    background: #ffffff;
+
+    border-radius: 15px;
+
+    color: #888;
+}
+
+.universe-admin-spinner {
+    width: 34px;
+    height: 34px;
+
+    border: 3px solid #eeeeee;
+    border-top-color: #7c3aed;
+
+    border-radius: 50%;
+
+    animation:
+        universeAdminSpin 0.8s linear infinite;
+}
+
+@keyframes universeAdminSpin {
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.universe-admin-error {
+    grid-column: 1 / -1;
+
+    padding: 35px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #fee2e2;
+    border-radius: 15px;
+}
+
+.universe-admin-error h3 {
+    margin: 0 0 8px;
+
+    color: #b91c1c;
+
+    font-size: 17px;
+}
+
+.universe-admin-error p {
+    margin: 0 0 20px;
+
+    color: #777;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .universe-admin-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .universe-admin-intro {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .universe-refresh-btn {
+        width: 100%;
+    }
+
+    .universe-admin-card {
+        padding: 19px;
+    }
+
+    .universe-admin-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .universe-admin-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .universe-save-btn {
+        width: 100%;
+    }
+
+}
