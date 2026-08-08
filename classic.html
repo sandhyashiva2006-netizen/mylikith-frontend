@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Classic - MyLikith</title>
+
+    <meta
+        name="description"
+        content="Read MyLikith Classics."
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/common.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/classic.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<nav
+    id="navbar"
+    class="navbar"
+></nav>
+
+
+<main class="classic-reader-page">
+
+
+    <!-- BOOK HEADER -->
+
+    <section class="classic-reader-header">
+
+        <div
+            id="classicCover"
+            class="classic-reader-cover"
+        >
+            📖
+        </div>
+
+
+        <div class="classic-reader-info">
+
+            <span
+                id="classicLanguage"
+                class="classic-reader-language"
+            >
+                Loading...
+            </span>
+
+            <h1 id="classicTitle">
+                Loading...
+            </h1>
+
+            <p
+                id="classicAuthor"
+                class="classic-reader-author"
+            >
+                Loading...
+            </p>
+
+            <p
+                id="classicDescription"
+                class="classic-reader-description"
+            >
+                Loading...
+            </p>
+
+
+            <div class="classic-reader-meta">
+
+                <span id="classicYear"></span>
+
+                <span id="classicCategory"></span>
+
+                <span id="classicLicense"></span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- READER -->
+
+    <section class="classic-reader-section">
+
+
+        <div class="classic-reader-layout">
+
+
+            <!-- CHAPTER LIST -->
+
+            <aside
+                class="classic-chapters-sidebar"
+                id="chaptersSidebar"
+            >
+
+                <div class="classic-chapters-heading">
+
+                    <span>
+                        CONTENT
+                    </span>
+
+                    <h2>
+                        Chapters
+                    </h2>
+
+                </div>
+
+
+                <div
+                    id="chaptersList"
+                    class="classic-chapters-list"
+                >
+
+                    <div class="classic-reader-loading">
+                        Loading...
+                    </div>
+
+                </div>
+
+            </aside>
+
+
+            <!-- CONTENT -->
+
+            <article
+                class="classic-reader-content"
+            >
+
+                <div
+                    id="chapterHeader"
+                    class="classic-chapter-header"
+                >
+
+                    <span>
+                        CHAPTER
+                    </span>
+
+                    <h2 id="chapterTitle">
+                        Select a chapter
+                    </h2>
+
+                </div>
+
+
+                <div
+                    id="chapterContent"
+                    class="classic-chapter-content"
+                >
+
+                    <div class="classic-reader-empty">
+
+                        <div>
+                            📖
+                        </div>
+
+                        <h3>
+                            Select a Chapter
+                        </h3>
+
+                        <p>
+                            Choose a chapter from the list
+                            to begin reading.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- NAVIGATION -->
+
+                <div
+                    id="chapterNavigation"
+                    class="classic-chapter-navigation"
+                    hidden
+                >
+
+                    <button
+                        type="button"
+                        id="previousChapter"
+                        class="classic-nav-btn"
+                    >
+                        ← Previous
+                    </button>
+
+
+                    <span
+                        id="chapterPosition"
+                        class="classic-chapter-position"
+                    >
+                        1 / 1
+                    </span>
+
+
+                    <button
+                        type="button"
+                        id="nextChapter"
+                        class="classic-nav-btn"
+                    >
+                        Next →
+                    </button>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<div id="footer"></div>
+
+
+<script src="js/session.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/footer.js"></script>
+<script src="js/classic.js"></script>
+
+
+</body>
+
+</html>
