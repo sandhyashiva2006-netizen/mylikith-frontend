@@ -3,6 +3,9 @@ const API = "https://mylikith-backend.onrender.com";
 const featuredContainer =
     document.getElementById("featuredClassics");
 
+const featuredSection =
+    document.getElementById("featuredSection");
+
 const classicsContainer =
     document.getElementById("classicsGrid");
 
@@ -47,13 +50,29 @@ async function loadFeaturedClassics() {
                 : data.classics;
 
 
-        renderClassics(
-            featuredContainer,
-            Array.isArray(classics)
-                ? classics
-                : [],
-            true
-        );
+const featured =
+    Array.isArray(classics)
+        ? classics
+        : [];
+
+if (!featured.length) {
+
+    if (featuredSection) {
+        featuredSection.style.display = "none";
+    }
+
+    return;
+}
+
+if (featuredSection) {
+    featuredSection.style.display = "";
+}
+
+renderClassics(
+    featuredContainer,
+    featured,
+    true
+);
 
 
     } catch (error) {
