@@ -393,3 +393,126 @@ loadHistory();
 loadBookmarks();
 
 loadLibraryBooks();
+
+loadClassicProgress();
+
+async function loadClassicProgress() {
+
+    try {
+
+        const response = await fetch(
+            `${API}/api/classic-progress`
+        );
+
+        const data = await response.json();
+
+        const container =
+            document.getElementById(
+                "classicProgress"
+            );
+
+        if (!container) {
+            return;
+        }
+
+        container.innerHTML = "";
+
+        if (
+            !response.ok ||
+            !data.success ||
+            !data.progress ||
+            data.progress.length === 0
+        ) {
+
+            container.innerHTML = `
+                <div class="empty-card">
+                    No Classics in progress.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        data.progress.forEach(item => {
+
+            container.innerHTML += `
+
+                <div class="library-card">
+
+                    <div>
+
+                        <h3>
+                            ${item.classic_title}
+                        </h3>
+
+                        <p>
+                            ${item.author_name || "Unknown Author"}
+                        </p>
+
+                        <p>
+                            ${item.category || "Classic"}
+                            •
+                            ${item.language || "Unknown Language"}
+                        </p>
+
+                        <div class="progress">
+
+                            <span
+                                style="
+                                    width:${item.progress_percent}%
+                                "
+                            ></span>
+
+                        </div>
+
+                        <p>
+                            ${item.progress_percent}% Complete
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <a
+                            href="classic.html?id=${item.classic_id}"
+                            class="btn btn-primary"
+                        >
+                            Continue
+                        </a>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+
+    }
+    catch (err) {
+
+        console.log(
+            "Classic progress loading error:",
+            err
+        );
+
+        const container =
+            document.getElementById(
+                "classicProgress"
+            );
+
+        if (container) {
+
+            container.innerHTML = `
+                <div class="empty-card">
+                    Unable to load Classics.
+                </div>
+            `;
+
+        }
+
+    }
+
+}
