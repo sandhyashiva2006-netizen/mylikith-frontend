@@ -52,6 +52,12 @@ html += `
 </li>
 
 <li>
+    <a href="universe.html">
+        🌌 Universe
+    </a>
+</li>
+
+<li>
 <a href="languages.html">Languages</a>
 </li>
 
@@ -80,6 +86,10 @@ Home
 <a href="explore.html">
 Explore
 </a>
+</li>
+
+<li>
+    <a href="universe.html">🌌 Universe</a>
 </li>
 
 <li>
