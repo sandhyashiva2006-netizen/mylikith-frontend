@@ -75,9 +75,10 @@ if (!classicId) {
 
     loadClassic();
 
-    loadChapters();
-
-    loadReadingProgress();
+    loadReadingProgress()
+        .finally(() => {
+            loadChapters();
+        });
 
     registerView();
 
