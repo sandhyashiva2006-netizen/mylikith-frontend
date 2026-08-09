@@ -392,6 +392,8 @@ loadHistory();
 
 loadBookmarks();
 
+loadClassicBookmarks();
+
 loadLibraryBooks();
 
 loadClassicProgress();
@@ -701,3 +703,179 @@ async function removeClassicProgress(classicId) {
     }
 
 }
+
+/* =========================================================
+   CLASSIC BOOKMARKS
+========================================================= */
+
+async function loadClassicBookmarks() {
+
+    try {
+
+        const token =
+            localStorage.getItem("token") ||
+            localStorage.getItem("authToken");
+
+
+        const container =
+            document.getElementById(
+                "classicBookmarks"
+            );
+
+
+        if (!container) {
+            return;
+        }
+
+
+        if (!token) {
+
+            container.innerHTML = `
+                <div class="empty-card">
+                    Please login to view your Classic bookmarks.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        const response =
+            await fetch(
+                `${API}/api/writers/classic-bookmarks/${libraryUser.id}`,
+                {
+                    headers: {
+                        "Authorization":
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load Classic bookmarks."
+            );
+
+        }
+
+
+        const bookmarks =
+            Array.isArray(data.bookmarks)
+                ? data.bookmarks
+                : [];
+
+
+        container.innerHTML = "";
+
+
+        if (bookmarks.length === 0) {
+
+            container.innerHTML = `
+                <div class="empty-card">
+
+                    No Classic bookmarks.
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        bookmarks.forEach(item => {
+
+            container.innerHTML += `
+
+                <div class="library-card classic-bookmark-card">
+
+                    <div>
+
+                        <h3>
+                            📖 ${escapeHTML(
+                                item.classic_title ||
+                                "Classic"
+                            )}
+                        </h3>
+
+                        <p>
+                            ${escapeHTML(
+                                item.chapter_title ||
+                                "Bookmarked Chapter"
+                            )}
+                        </p>
+
+<p>
+    Chapter ${escapeHTML(
+        item.chapter_number
+    )}
+</p>
+
+                    </div>
+
+
+                    <div
+                        style="
+                            display:flex;
+                            gap:10px;
+                            flex-wrap:wrap;
+                        "
+                    >
+
+                        <a
+                            href="classic.html?id=${encodeURIComponent(
+                                item.classic_id
+                            )}"
+                            class="btn btn-primary"
+                        >
+                            📖 Open Classic
+                        </a>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+
+
+    } catch (err) {
+
+        console.error(
+            "Classic bookmarks loading error:",
+            err
+        );
+
+
+        const container =
+            document.getElementById(
+                "classicBookmarks"
+            );
+
+
+        if (container) {
+
+            container.innerHTML = `
+                <div class="empty-card">
+
+                    Unable to load Classic bookmarks.
+
+                </div>
+            `;
+
+        }
+
+    }
+
+}
+
