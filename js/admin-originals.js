@@ -10,6 +10,7 @@ let currentChapterId = null;
 let selectedVideoFile = null;
 let uploadCancelled = false;
 let uploadRunning = false;
+let activeUploadXHR = null;
 
 const originalsList =
     document.getElementById("originalsList");
@@ -206,15 +207,10 @@ document.addEventListener(
             startVideoUpload
         );
 
-        cancelUploadBtn.addEventListener(
-            "click",
-            () => {
-                uploadCancelled = true;
-                cancelUploadBtn.disabled = true;
-                uploadStatusText.textContent =
-                    "Cancelling upload...";
-            }
-        );
+cancelUploadBtn.addEventListener(
+    "click",
+    cancelCurrentUpload
+);
 
         document
             .getElementById("closeUploadBtn")
@@ -1847,6 +1843,31 @@ function selectVideoFile(file) {
         false;
 }
 
+async function cancelCurrentUpload() {
+
+    if (!uploadRunning) {
+        return;
+    }
+
+    uploadCancelled = true;
+
+    cancelUploadBtn.disabled = true;
+    startUploadBtn.disabled = true;
+
+    uploadStatusText.textContent =
+        "Cancelling upload...";
+
+    if (activeUploadXHR) {
+        try {
+            activeUploadXHR.abort();
+        } catch (error) {
+            console.warn(
+                "Unable to abort active XHR:",
+                error
+            );
+        }
+    }
+}
 
 /* =========================================================
    LARGE VIDEO UPLOAD
@@ -2178,14 +2199,16 @@ async function startVideoUpload() {
 
     } finally {
 
-        uploadRunning = false;
+    activeUploadXHR = null;
 
-        startUploadBtn.disabled =
-            false;
+    uploadRunning = false;
 
-        cancelUploadBtn.disabled =
-            true;
-    }
+    startUploadBtn.disabled =
+        false;
+
+    cancelUploadBtn.disabled =
+        true;
+}
 }
 
 
@@ -2333,13 +2356,13 @@ function uploadBlobWithProgress(
             const xhr =
                 new XMLHttpRequest();
 
+            activeUploadXHR = xhr;
 
             xhr.open(
                 "PUT",
                 url,
                 true
             );
-
 
             xhr.upload.onprogress =
                 event => {
@@ -2352,12 +2375,16 @@ function uploadBlobWithProgress(
                             event.loaded
                         );
                     }
-
                 };
-
 
             xhr.onload =
                 () => {
+
+                    if (
+                        activeUploadXHR === xhr
+                    ) {
+                        activeUploadXHR = null;
+                    }
 
                     if (
                         xhr.status >= 200 &&
@@ -2378,31 +2405,37 @@ function uploadBlobWithProgress(
                             )
                         );
                     }
-
                 };
-
 
             xhr.onerror =
                 () => {
+
+                    if (
+                        activeUploadXHR === xhr
+                    ) {
+                        activeUploadXHR = null;
+                    }
 
                     reject(
                         new Error(
                             "Network error while uploading to B2."
                         )
                     );
-
                 };
-
 
             xhr.onabort =
                 () => {
 
+                    if (
+                        activeUploadXHR === xhr
+                    ) {
+                        activeUploadXHR = null;
+                    }
+
                     reject(
                         new UploadCancelledError()
                     );
-
                 };
-
 
             if (uploadCancelled) {
 
@@ -2411,9 +2444,7 @@ function uploadBlobWithProgress(
                 return;
             }
 
-
             xhr.send(blob);
-
         }
     );
 }
