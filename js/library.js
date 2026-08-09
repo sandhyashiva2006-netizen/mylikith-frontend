@@ -807,17 +807,15 @@ async function loadClassicBookmarks() {
                             )}
                         </h3>
 
-                        <p>
-                            ${escapeHTML(
-                                item.chapter_title ||
-                                "Bookmarked Chapter"
-                            )}
-                        </p>
-
 <p>
     Chapter ${escapeHTML(
         item.chapter_number
     )}
+    ${item.chapter_title &&
+      item.chapter_title !==
+      `Chapter ${item.chapter_number}`
+        ? `• ${escapeHTML(item.chapter_title)}`
+        : ""}
 </p>
 
                     </div>
