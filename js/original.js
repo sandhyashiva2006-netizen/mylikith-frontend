@@ -278,9 +278,9 @@ function renderChapters() {
                 "original-chapter-card";
 
             card.href =
-                `original-reader.html?chapter=${encodeURIComponent(
-                    chapter.id
-                )}`;
+    `original-chapter.html?id=${encodeURIComponent(
+        chapter.id
+    )}`;
 
 
             const access =
@@ -345,15 +345,14 @@ function startReading() {
     if (!chapters.length) {
 
         alert(
-            "No chapters are available yet."
+            "No episodes are available yet."
         );
 
         return;
-
     }
 
     window.location.href =
-        `original-reader.html?chapter=${encodeURIComponent(
+        `original-chapter.html?id=${encodeURIComponent(
             chapters[0].id
         )}`;
 
