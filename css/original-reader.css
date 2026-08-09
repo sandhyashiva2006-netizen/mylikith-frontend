@@ -1,0 +1,102 @@
+.original-reader-label {
+    margin-bottom: 15px;
+
+    color: #b987ff;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+.original-reader #chapterTitle {
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #c9a4ff
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+}
+
+.original-reader #chapterContent {
+    max-width: 820px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.original-reader .chapter-navigation {
+    max-width: 820px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.original-premium-lock {
+    max-width: 650px;
+
+    margin: 50px auto;
+
+    padding: 45px 30px;
+
+    text-align: center;
+
+    border-radius: 22px;
+
+    border: 1px solid
+        rgba(190,130,255,.25);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(120,60,200,.25),
+            rgba(50,25,90,.30)
+        );
+
+    box-shadow:
+        0 25px 70px
+        rgba(80,30,150,.20);
+}
+
+.original-premium-lock .lock-icon {
+    font-size: 45px;
+
+    margin-bottom: 15px;
+}
+
+.original-premium-lock h2 {
+    color: #fff;
+
+    margin-bottom: 12px;
+}
+
+.original-premium-lock p {
+    color:
+        rgba(255,255,255,.62);
+
+    line-height: 1.7;
+}
+
+.original-premium-lock a {
+    display: inline-block;
+
+    margin-top: 20px;
+
+    padding: 12px 22px;
+
+    border-radius: 10px;
+
+    background:
+        #7c3aed;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    font-weight: 700;
+}
