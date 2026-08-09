@@ -40,6 +40,32 @@ const premiumNotice =
         "premiumNotice"
     );
 
+const premiumTitle =
+    document.getElementById(
+        "premiumTitle"
+    );
+
+const premiumActions =
+    document.getElementById(
+        "premiumActions"
+    );
+
+const loginPremiumBtn =
+    document.getElementById(
+        "loginPremiumBtn"
+    );
+
+const unlockPremiumBtn =
+    document.getElementById(
+        "unlockPremiumBtn"
+    );
+
+const walletPremiumBtn =
+    document.getElementById(
+        "walletPremiumBtn"
+    );
+
+let lockedChapterData = null;
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -52,6 +78,32 @@ retryButton.addEventListener(
     loadChapterVideo
 );
 
+loginPremiumBtn.addEventListener(
+    "click",
+    () => {
+
+        window.location.href =
+            `login.html?redirect=${encodeURIComponent(
+                window.location.href
+            )}`;
+
+    }
+);
+
+walletPremiumBtn.addEventListener(
+    "click",
+    () => {
+
+        window.location.href =
+            "wallet.html";
+
+    }
+);
+
+unlockPremiumBtn.addEventListener(
+    "click",
+    unlockPremiumEpisode
+);
 
 async function initChapter() {
 
@@ -96,10 +148,25 @@ async function loadChapterVideo() {
 
     try {
 
-        const response =
-            await fetch(
-                `${ORIGINAL_CHAPTER_API}/chapter/${chapterId}/video`
-            );
+        const token =
+    localStorage.getItem("token");
+
+const headers = {};
+
+if (token) {
+
+    headers.Authorization =
+        `Bearer ${token}`;
+
+}
+
+const response =
+    await fetch(
+        `${ORIGINAL_CHAPTER_API}/chapter/${chapterId}/video`,
+        {
+            headers
+        }
+    );
 
 
         const data =
@@ -265,8 +332,12 @@ function showPremiumLocked(
         false;
 
 
-    const chapter =
+    lockedChapterData =
         data.chapter || {};
+
+
+    const chapter =
+        lockedChapterData;
 
 
     document.getElementById(
@@ -320,14 +391,192 @@ function showPremiumLocked(
     `;
 
 
-    document.getElementById(
-        "premiumMessage"
-    ).textContent =
+    premiumTitle.textContent =
+        "Premium Episode";
+
+
+    premiumMessage.textContent =
         data.message ||
-        "This episode requires premium access.";
+        "This episode requires coins to unlock.";
+
+
+const currentUser =
+    JSON.parse(
+        localStorage.getItem("user") || "null"
+    );
+
+const isLoggedIn =
+    !!currentUser;
+
+
+loginPremiumBtn.hidden =
+    isLoggedIn;
+
+
+unlockPremiumBtn.hidden =
+    !isLoggedIn;
+
+
+walletPremiumBtn.hidden =
+    !isLoggedIn;
+
+
+if (!isLoggedIn) {
+
+    premiumTitle.textContent =
+        "Login Required";
+
+    premiumMessage.textContent =
+        "Please login to watch this premium episode.";
+
+    return;
 
 }
 
+
+    unlockPremiumBtn.textContent =
+        `🪙 Unlock for ${
+            Number(
+                chapter.coins_required ||
+                0
+            )
+        } Coins`;
+
+}
+
+async function unlockPremiumEpisode() {
+
+    if (
+        !chapterId ||
+        !lockedChapterData
+    ) {
+        return;
+    }
+
+    const token =
+        localStorage.getItem("token");
+
+    if (!token) {
+
+        window.location.href =
+            `login.html?redirect=${encodeURIComponent(
+                window.location.href
+            )}`;
+
+        return;
+    }
+
+    const coinsRequired =
+        Number(
+            lockedChapterData.coins_required || 0
+        );
+
+    if (coinsRequired <= 0) {
+
+        alert(
+            "This episode does not have a valid coin price."
+        );
+
+        return;
+    }
+
+    const confirmed =
+        confirm(
+            `Unlock "${lockedChapterData.title || "this episode"}" for ${coinsRequired} coins?`
+        );
+
+    if (!confirmed) {
+        return;
+    }
+
+    unlockPremiumBtn.disabled =
+        true;
+
+    unlockPremiumBtn.textContent =
+        "⏳ Unlocking...";
+
+    try {
+
+        const response =
+            await fetch(
+                `${ORIGINAL_CHAPTER_API}/chapter/${chapterId}/unlock`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (response.status === 401) {
+
+            window.location.href =
+                `login.html?redirect=${encodeURIComponent(
+                    window.location.href
+                )}`;
+
+            return;
+        }
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            if (
+                response.status === 400 &&
+                data.message ===
+                    "Not enough coins."
+            ) {
+
+                alert(
+                    `You need ${data.coins_required} coins, but you only have ${data.coins_balance} coins.`
+                );
+
+                walletPremiumBtn.hidden =
+                    false;
+
+                return;
+            }
+
+            throw new Error(
+                data.message ||
+                "Unable to unlock episode."
+            );
+        }
+
+        await loadChapterVideo();
+
+    } catch (error) {
+
+        console.error(
+            "Episode unlock error:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Unable to unlock episode."
+        );
+
+    } finally {
+
+        unlockPremiumBtn.disabled =
+            false;
+
+        unlockPremiumBtn.textContent =
+            `🪙 Unlock for ${coinsRequired} Coins`;
+
+    }
+}
 
 /* =========================================================
    STATES
