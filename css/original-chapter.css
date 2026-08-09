@@ -1,0 +1,426 @@
+/* =========================================================
+   MYLIKITH ORIGINAL CHAPTER PLAYER
+========================================================= */
+
+.original-chapter-page {
+
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(124,58,237,.18),
+            transparent 35%
+        ),
+        #080d20;
+
+    color: #fff;
+
+    padding:
+        100px 0 80px;
+
+}
+
+
+.video-section {
+
+    width:
+        min(1100px, 92%);
+
+    margin:
+        0 auto;
+
+}
+
+
+.back-link {
+
+    display:
+        inline-block;
+
+    margin-bottom:
+        22px;
+
+    color:
+        #c4b5fd;
+
+    text-decoration:
+        none;
+
+    font-weight:
+        600;
+
+}
+
+
+.video-player-container {
+
+    position:
+        relative;
+
+    width:
+        100%;
+
+    aspect-ratio:
+        16 / 9;
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid
+        rgba(167,139,250,.20);
+
+    border-radius:
+        22px;
+
+    background:
+        #020617;
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.45);
+
+}
+
+
+.original-video {
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    display:
+        block;
+
+    background:
+        #000;
+
+}
+
+
+.player-state {
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        25px;
+
+    text-align:
+        center;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(124,58,237,.16),
+            transparent 60%
+        );
+
+}
+
+
+.player-spinner {
+
+    width:
+        42px;
+
+    height:
+        42px;
+
+    margin-bottom:
+        18px;
+
+    border:
+        4px solid
+        rgba(167,139,250,.18);
+
+    border-top-color:
+        #a78bfa;
+
+    border-radius:
+        50%;
+
+    animation:
+        player-spin .8s linear infinite;
+
+}
+
+
+@keyframes player-spin {
+
+    to {
+        transform:
+            rotate(360deg);
+    }
+
+}
+
+
+.player-error-icon {
+
+    font-size:
+        48px;
+
+    margin-bottom:
+        10px;
+
+}
+
+
+.player-state h2 {
+
+    margin:
+        0 0 8px;
+
+}
+
+
+.player-state p {
+
+    margin:
+        0;
+
+    color:
+        #929db8;
+
+}
+
+
+.retry-button {
+
+    margin-top:
+        20px;
+
+    min-height:
+        44px;
+
+    padding:
+        0 20px;
+
+    border:
+        0;
+
+    border-radius:
+        12px;
+
+    background:
+        #7c3aed;
+
+    color:
+        #fff;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+}
+
+
+.episode-header {
+
+    padding:
+        28px 4px 0;
+
+}
+
+
+.original-title {
+
+    color:
+        #a78bfa;
+
+    font-size:
+        13px;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        2px;
+
+    text-transform:
+        uppercase;
+
+    margin-bottom:
+        8px;
+
+}
+
+
+.episode-header h1 {
+
+    margin:
+        0;
+
+    font-size:
+        clamp(28px, 4vw, 42px);
+
+    line-height:
+        1.2;
+
+}
+
+
+.episode-meta {
+
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        8px;
+
+    margin-top:
+        14px;
+
+}
+
+
+.episode-meta-pill {
+
+    padding:
+        7px 11px;
+
+    border:
+        1px solid
+        rgba(167,139,250,.18);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(124,58,237,.10);
+
+    color:
+        #c4b5fd;
+
+    font-size:
+        12px;
+
+    font-weight:
+        600;
+
+}
+
+
+.premium-notice {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        16px;
+
+    margin-top:
+        25px;
+
+    padding:
+        20px;
+
+    border:
+        1px solid
+        rgba(245,158,11,.25);
+
+    border-radius:
+        18px;
+
+    background:
+        rgba(245,158,11,.08);
+
+}
+
+
+.premium-icon {
+
+    font-size:
+        34px;
+
+}
+
+
+.premium-notice h3 {
+
+    margin:
+        0 0 5px;
+
+}
+
+
+.premium-notice p {
+
+    margin:
+        0;
+
+    color:
+        #aab4ce;
+
+}
+
+
+@media (max-width: 700px) {
+
+    .original-chapter-page {
+
+        padding:
+            85px 0 60px;
+
+    }
+
+
+    .video-section {
+
+        width:
+            94%;
+
+    }
+
+
+    .video-player-container {
+
+        border-radius:
+            15px;
+
+    }
+
+
+    .episode-header {
+
+        padding-top:
+            20px;
+
+    }
+
+
+    .premium-notice {
+
+        align-items:
+            flex-start;
+
+    }
+
+}
