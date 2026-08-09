@@ -61,6 +61,13 @@ const nextChapter =
 const chapterPosition =
     document.getElementById("chapterPosition");
 
+const classicBookmarkBtn =
+    document.getElementById(
+        "classicBookmarkBtn"
+    );
+
+let currentChapterBookmarked = false;
+
 
 /* =========================================================
    VALIDATE ID
@@ -538,6 +545,11 @@ function selectChapter(index, saveProgress = true) {
 
     updateActiveChapter();
 
+currentChapterBookmarked = false;
+
+updateClassicBookmarkButton();
+
+loadClassicBookmarkStatus();
 
     document.title =
         `${chapter.title || `Chapter ${chapter.chapter_number}`} — ${classic?.title || "Classic"} | MyLikith`;
@@ -600,6 +612,299 @@ function updateActiveChapter() {
 
 }
 
+/* =========================================================
+   CLASSIC BOOKMARK
+========================================================= */
+
+async function loadClassicBookmarkStatus() {
+
+    if (
+        !classicBookmarkBtn ||
+        !classicId ||
+        currentChapterIndex < 0 ||
+        !chapters[currentChapterIndex]
+    ) {
+        return;
+    }
+
+
+    const token =
+        localStorage.getItem("token") ||
+        localStorage.getItem("authToken");
+
+
+    if (!token) {
+
+        currentChapterBookmarked = false;
+
+        updateClassicBookmarkButton();
+
+        return;
+    }
+
+
+    const chapter =
+        chapters[currentChapterIndex];
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/api/writers/classic-bookmark/status/${classicId}/${chapter.id}`,
+                {
+                    headers: {
+                        "Authorization":
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+
+        if (!response.ok) {
+
+            currentChapterBookmarked = false;
+
+            updateClassicBookmarkButton();
+
+            return;
+        }
+
+
+        const data =
+            await response.json();
+
+
+        currentChapterBookmarked =
+            data.success &&
+            data.bookmarked === true;
+
+
+        updateClassicBookmarkButton();
+
+
+    } catch (error) {
+
+        console.warn(
+            "Unable to load Classic bookmark status:",
+            error
+        );
+
+
+        currentChapterBookmarked = false;
+
+        updateClassicBookmarkButton();
+
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   UPDATE BOOKMARK BUTTON
+--------------------------------------------------------- */
+
+function updateClassicBookmarkButton() {
+
+    if (!classicBookmarkBtn) {
+        return;
+    }
+
+
+    if (
+        currentChapterIndex < 0 ||
+        !chapters[currentChapterIndex]
+    ) {
+
+        classicBookmarkBtn.hidden = true;
+
+        return;
+    }
+
+
+    classicBookmarkBtn.hidden = false;
+
+
+    if (currentChapterBookmarked) {
+
+        classicBookmarkBtn.textContent =
+            "🔖 Bookmarked";
+
+        classicBookmarkBtn.classList.add(
+            "bookmarked"
+        );
+
+        classicBookmarkBtn.setAttribute(
+            "aria-label",
+            "Remove bookmark"
+        );
+
+    } else {
+
+        classicBookmarkBtn.textContent =
+            "🔖 Bookmark";
+
+        classicBookmarkBtn.classList.remove(
+            "bookmarked"
+        );
+
+        classicBookmarkBtn.setAttribute(
+            "aria-label",
+            "Bookmark chapter"
+        );
+
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   TOGGLE BOOKMARK
+--------------------------------------------------------- */
+
+async function toggleClassicBookmark() {
+
+    if (
+        currentChapterIndex < 0 ||
+        !chapters[currentChapterIndex]
+    ) {
+        return;
+    }
+
+
+    const token =
+        localStorage.getItem("token") ||
+        localStorage.getItem("authToken");
+
+
+    if (!token) {
+
+        alert(
+            "Please login to bookmark this chapter."
+        );
+
+        return;
+    }
+
+
+    const chapter =
+        chapters[currentChapterIndex];
+
+
+    const originalText =
+        classicBookmarkBtn.textContent;
+
+
+    classicBookmarkBtn.disabled = true;
+
+    classicBookmarkBtn.textContent =
+        "Saving...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/api/writers/classic-bookmark`,
+                {
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            `Bearer ${token}`
+
+                    },
+
+                    body: JSON.stringify({
+
+                        classic_id:
+                            Number(classicId),
+
+                        chapter_id:
+                            Number(chapter.id),
+
+                        chapter_number:
+                            Number(
+                                chapter.chapter_number
+                            )
+
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            response.status === 401
+        ) {
+
+            alert(
+                "Please login to bookmark this chapter."
+            );
+
+            return;
+        }
+
+
+        if (!response.ok || !data.success) {
+
+            throw new Error(
+                data.message ||
+                "Unable to update bookmark."
+            );
+
+        }
+
+
+        currentChapterBookmarked =
+            data.bookmarked === true;
+
+
+        updateClassicBookmarkButton();
+
+
+    } catch (error) {
+
+        console.error(
+            "Classic bookmark error:",
+            error
+        );
+
+
+        classicBookmarkBtn.textContent =
+            originalText;
+
+
+        alert(
+            error.message ||
+            "Unable to update bookmark."
+        );
+
+    } finally {
+
+        classicBookmarkBtn.disabled = false;
+
+        updateClassicBookmarkButton();
+
+    }
+
+}
+
+if (classicBookmarkBtn) {
+
+    classicBookmarkBtn.addEventListener(
+        "click",
+        toggleClassicBookmark
+    );
+
+}
 
 /* =========================================================
    FORMAT CONTENT
