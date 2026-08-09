@@ -3,7 +3,7 @@ const ORIGINAL_CHAPTER_API =
 
 
 let chapterId = null;
-
+let originalChapterList = [];
 
 const video =
     document.getElementById(
@@ -63,6 +63,21 @@ const unlockPremiumBtn =
 const walletPremiumBtn =
     document.getElementById(
         "walletPremiumBtn"
+    );
+
+const episodeNavigation =
+    document.getElementById(
+        "episodeNavigation"
+    );
+
+const previousEpisodeBtn =
+    document.getElementById(
+        "previousEpisodeBtn"
+    );
+
+const nextEpisodeBtn =
+    document.getElementById(
+        "nextEpisodeBtn"
     );
 
 let lockedChapterData = null;
@@ -213,6 +228,11 @@ const response =
         );
 
 
+setupEpisodeNavigation(
+    data.chapter.original_id,
+    data.chapter.id
+);
+
         video.src =
             data.url;
 
@@ -339,6 +359,11 @@ function showPremiumLocked(
     const chapter =
         lockedChapterData;
 
+
+setupEpisodeNavigation(
+    chapter.original_id,
+    chapter.id
+);
 
     document.getElementById(
         "originalTitle"
@@ -653,5 +678,130 @@ function escapeHTML(
             /'/g,
             "&#039;"
         );
+
+}
+
+/* =========================================================
+   EPISODE NAVIGATION
+========================================================= */
+
+async function setupEpisodeNavigation(
+    originalId,
+    currentChapterId
+) {
+
+    if (
+        !originalId ||
+        !episodeNavigation
+    ) {
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                `${ORIGINAL_CHAPTER_API}/${originalId}/chapters`
+            );
+
+        const data =
+            await response.json();
+
+        if (
+            !response.ok ||
+            !Array.isArray(data.chapters)
+        ) {
+            return;
+        }
+
+        originalChapterList =
+            data.chapters;
+
+
+        const currentIndex =
+            originalChapterList.findIndex(
+                chapter =>
+                    Number(chapter.id) ===
+                    Number(currentChapterId)
+            );
+
+
+        if (
+            currentIndex === -1
+        ) {
+            return;
+        }
+
+
+        const previousChapter =
+            currentIndex > 0
+                ? originalChapterList[
+                    currentIndex - 1
+                ]
+                : null;
+
+
+        const nextChapter =
+            currentIndex <
+            originalChapterList.length - 1
+                ? originalChapterList[
+                    currentIndex + 1
+                ]
+                : null;
+
+
+        episodeNavigation.hidden =
+            false;
+
+
+        previousEpisodeBtn.hidden =
+            !previousChapter;
+
+
+        nextEpisodeBtn.hidden =
+            !nextChapter;
+
+
+        previousEpisodeBtn.onclick =
+            () => {
+
+                if (!previousChapter) {
+                    return;
+                }
+
+                window.location.href =
+                    `original-chapter.html?id=${encodeURIComponent(
+                        previousChapter.id
+                    )}`;
+
+            };
+
+
+        nextEpisodeBtn.onclick =
+            () => {
+
+                if (!nextChapter) {
+                    return;
+                }
+
+                window.location.href =
+                    `original-chapter.html?id=${encodeURIComponent(
+                        nextChapter.id
+                    )}`;
+
+            };
+
+
+    } catch (error) {
+
+        console.error(
+            "Episode navigation error:",
+            error
+        );
+
+        episodeNavigation.hidden =
+            true;
+
+    }
 
 }

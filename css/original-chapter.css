@@ -487,3 +487,81 @@
 
 }
 
+/* =========================================================
+   EPISODE NAVIGATION
+========================================================= */
+
+.episode-navigation {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 14px;
+
+    margin-top: 28px;
+
+}
+
+.episode-nav-button {
+
+    min-height: 46px;
+
+    padding:
+        0 20px;
+
+    border:
+        1px solid
+        rgba(167,139,250,.22);
+
+    border-radius:
+        12px;
+
+    background:
+        rgba(124,58,237,.10);
+
+    color:
+        #c4b5fd;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+    transition:
+        .2s ease;
+
+}
+
+.episode-nav-button:hover {
+
+    background:
+        rgba(124,58,237,.20);
+
+    border-color:
+        rgba(167,139,250,.40);
+
+    transform:
+        translateY(-1px);
+
+}
+
+@media (max-width: 700px) {
+
+    .episode-navigation {
+
+        flex-direction:
+            column;
+
+    }
+
+    .episode-nav-button {
+
+        width:
+            100%;
+
+    }
+
+}
+
