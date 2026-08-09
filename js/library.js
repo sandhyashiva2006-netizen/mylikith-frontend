@@ -829,14 +829,18 @@ async function loadClassicBookmarks() {
                         "
                     >
 
-                        <a
-                            href="classic.html?id=${encodeURIComponent(
-                                item.classic_id
-                            )}"
-                            class="btn btn-primary"
-                        >
-                            📖 Open Classic
-                        </a>
+<a
+    href="classic.html?id=${encodeURIComponent(
+        item.classic_id
+    )}&chapter=${encodeURIComponent(
+        item.classic_chapter_id
+    )}"
+    class="classic-library-continue"
+>
+    📖 Open Chapter ${escapeHTML(
+        item.chapter_number
+    )}
+</a>
 
                     </div>
 

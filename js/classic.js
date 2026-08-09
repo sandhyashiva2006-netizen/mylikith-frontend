@@ -3,6 +3,9 @@ const API = "https://mylikith-backend.onrender.com";
 const params = new URLSearchParams(window.location.search);
 const classicId = params.get("id");
 
+const bookmarkedChapterId =
+    params.get("chapter");
+
 let classic = null;
 let chapters = [];
 let currentChapterIndex = -1;
@@ -437,6 +440,33 @@ restoringProgress = false;
 
 }
 
+/* =========================================================
+   OPEN BOOKMARKED CHAPTER
+   Explicit bookmark URL takes priority over progress
+========================================================= */
+
+if (bookmarkedChapterId) {
+
+    const bookmarkedId =
+        Number(bookmarkedChapterId);
+
+
+    const bookmarkedIndex =
+        chapters.findIndex(
+            chapter =>
+                Number(chapter.id) ===
+                bookmarkedId
+        );
+
+
+    if (bookmarkedIndex >= 0) {
+
+        startIndex =
+            bookmarkedIndex;
+
+    }
+
+}
 
 /* =========================================================
    RENDER CHAPTER LIST
