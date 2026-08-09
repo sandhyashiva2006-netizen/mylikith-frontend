@@ -937,6 +937,758 @@ if (classicBookmarkBtn) {
 }
 
 /* =========================================================
+   CLASSIC RATINGS & REVIEWS
+========================================================= */
+
+const classicAverageRating =
+    document.getElementById(
+        "classicAverageRating"
+    );
+
+const classicAverageStars =
+    document.getElementById(
+        "classicAverageStars"
+    );
+
+const classicRatingCount =
+    document.getElementById(
+        "classicRatingCount"
+    );
+
+const classicRatingStars =
+    document.getElementById(
+        "classicRatingStars"
+    );
+
+const classicReviewInput =
+    document.getElementById(
+        "classicReviewInput"
+    );
+
+const classicReviewSubmit =
+    document.getElementById(
+        "classicReviewSubmit"
+    );
+
+const classicReviewsList =
+    document.getElementById(
+        "classicReviewsList"
+    );
+
+
+let currentClassicUserRating = 0;
+
+
+/* ---------------------------------------------------------
+   LOAD RATING
+--------------------------------------------------------- */
+
+async function loadClassicRating() {
+
+    if (!classicId) {
+        return;
+    }
+
+    try {
+
+        const token =
+            localStorage.getItem("token") ||
+            localStorage.getItem("authToken");
+
+        const headers = {};
+
+        if (token) {
+
+            headers.Authorization =
+                `Bearer ${token}`;
+
+        }
+
+
+        const response =
+            await fetch(
+                `${API}/api/writers/classic-rating/${classicId}`,
+                {
+                    headers
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load rating."
+            );
+
+        }
+
+
+        const average =
+            Number(
+                data.average_rating
+            ) || 0;
+
+        const count =
+            Number(
+                data.rating_count
+            ) || 0;
+
+
+        if (classicAverageRating) {
+
+            classicAverageRating.textContent =
+                average.toFixed(1);
+
+        }
+
+
+        if (classicAverageStars) {
+
+            classicAverageStars.textContent =
+                renderClassicStars(
+                    average
+                );
+
+        }
+
+
+        if (classicRatingCount) {
+
+            classicRatingCount.textContent =
+                `${count} ${
+                    count === 1
+                        ? "rating"
+                        : "ratings"
+                }`;
+
+        }
+
+
+        currentClassicUserRating =
+            data.user_rating
+                ? Number(
+                    data.user_rating.rating
+                )
+                : 0;
+
+
+        updateClassicRatingStars();
+
+    } catch (error) {
+
+        console.warn(
+            "Unable to load Classic rating:",
+            error
+        );
+
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   STAR DISPLAY
+--------------------------------------------------------- */
+
+function renderClassicStars(
+    rating
+) {
+
+    const rounded =
+        Math.round(
+            Number(rating) || 0
+        );
+
+
+    let stars = "";
+
+
+    for (
+        let i = 1;
+        i <= 5;
+        i++
+    ) {
+
+        stars +=
+            i <= rounded
+                ? "★"
+                : "☆";
+
+    }
+
+
+    return stars;
+
+}
+
+
+/* ---------------------------------------------------------
+   UPDATE USER STAR SELECTION
+--------------------------------------------------------- */
+
+function updateClassicRatingStars() {
+
+    if (!classicRatingStars) {
+        return;
+    }
+
+
+    const buttons =
+        classicRatingStars.querySelectorAll(
+            "button"
+        );
+
+
+    buttons.forEach(
+        button => {
+
+            const rating =
+                Number(
+                    button.dataset.rating
+                );
+
+
+            button.textContent =
+                rating <=
+                currentClassicUserRating
+                    ? "★"
+                    : "☆";
+
+        }
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   SAVE RATING
+--------------------------------------------------------- */
+
+async function saveClassicRating(
+    rating
+) {
+
+    const token =
+        localStorage.getItem("token") ||
+        localStorage.getItem("authToken");
+
+
+    if (!token) {
+
+        alert(
+            "Please login to rate this Classic."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/api/writers/classic-rating`,
+                {
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            `Bearer ${token}`
+
+                    },
+
+                    body: JSON.stringify({
+
+                        classic_id:
+                            Number(classicId),
+
+                        rating:
+                            Number(rating)
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Unable to save rating."
+            );
+
+        }
+
+
+        currentClassicUserRating =
+            Number(rating);
+
+
+        updateClassicRatingStars();
+
+
+        await loadClassicRating();
+
+
+    } catch (error) {
+
+        console.error(
+            "Classic rating error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Unable to save rating."
+        );
+
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   RATING BUTTONS
+--------------------------------------------------------- */
+
+if (classicRatingStars) {
+
+    classicRatingStars
+        .querySelectorAll("button")
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const rating =
+                            Number(
+                                button.dataset.rating
+                            );
+
+
+                        if (
+                            rating >= 1 &&
+                            rating <= 5
+                        ) {
+
+                            saveClassicRating(
+                                rating
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* ---------------------------------------------------------
+   LOAD REVIEWS
+--------------------------------------------------------- */
+
+async function loadClassicReviews() {
+
+    if (!classicId) {
+        return;
+    }
+
+
+    if (!classicReviewsList) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/api/writers/classic-reviews/${classicId}`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load reviews."
+            );
+
+        }
+
+
+        const reviews =
+            Array.isArray(data.reviews)
+                ? data.reviews
+                : [];
+
+
+        classicReviewsList.innerHTML =
+            "";
+
+
+        if (!reviews.length) {
+
+            classicReviewsList.innerHTML = `
+                <div class="classic-no-reviews">
+                    No reviews yet. Be the first to review this Classic.
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        reviews.forEach(
+            review => {
+
+                const reviewCard =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                reviewCard.className =
+                    "classic-review-card";
+
+
+                const rating =
+                    Number(
+                        review.rating
+                    ) || 0;
+
+
+                reviewCard.innerHTML = `
+
+                    <div class="classic-review-header">
+
+                        <strong>
+                            ${escapeHTML(
+                                review.name ||
+                                "Reader"
+                            )}
+                        </strong>
+
+                        <span class="classic-review-stars">
+                            ${renderClassicStars(
+                                rating
+                            )}
+                        </span>
+
+                    </div>
+
+
+                    ${
+                        review.review
+                            ? `
+                                <p>
+                                    ${escapeHTML(
+                                        review.review
+                                    )}
+                                </p>
+                            `
+                            : ""
+                    }
+
+
+                    <small>
+                        ${formatClassicReviewDate(
+                            review.created_at
+                        )}
+                    </small>
+
+                `;
+
+
+                classicReviewsList
+                    .appendChild(
+                        reviewCard
+                    );
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Classic reviews error:",
+            error
+        );
+
+
+        classicReviewsList.innerHTML = `
+            <div class="classic-no-reviews">
+                Unable to load reviews.
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   SUBMIT REVIEW
+--------------------------------------------------------- */
+
+async function submitClassicReview() {
+
+    const token =
+        localStorage.getItem("token") ||
+        localStorage.getItem("authToken");
+
+
+    if (!token) {
+
+        alert(
+            "Please login to write a review."
+        );
+
+        return;
+
+    }
+
+
+    const reviewText =
+        classicReviewInput
+            ? classicReviewInput.value.trim()
+            : "";
+
+
+    if (!currentClassicUserRating) {
+
+        alert(
+            "Please select a rating first."
+        );
+
+        return;
+
+    }
+
+
+    if (!reviewText) {
+
+        alert(
+            "Please write a review."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        if (classicReviewSubmit) {
+
+            classicReviewSubmit.disabled =
+                true;
+
+            classicReviewSubmit.textContent =
+                "Saving...";
+
+        }
+
+
+        const response =
+            await fetch(
+                `${API}/api/writers/classic-review`,
+                {
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            `Bearer ${token}`
+
+                    },
+
+                    body: JSON.stringify({
+
+                        classic_id:
+                            Number(classicId),
+
+                        rating:
+                            Number(
+                                currentClassicUserRating
+                            ),
+
+                        review:
+                            reviewText
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Unable to save review."
+            );
+
+        }
+
+
+        if (classicReviewInput) {
+
+            classicReviewInput.value =
+                "";
+
+        }
+
+
+        await loadClassicReviews();
+
+        await loadClassicRating();
+
+
+        alert(
+            "Your review has been saved."
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Classic review error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Unable to save review."
+        );
+
+    } finally {
+
+        if (classicReviewSubmit) {
+
+            classicReviewSubmit.disabled =
+                false;
+
+            classicReviewSubmit.textContent =
+                "Submit Review";
+
+        }
+
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   REVIEW SUBMIT BUTTON
+--------------------------------------------------------- */
+
+if (classicReviewSubmit) {
+
+    classicReviewSubmit.addEventListener(
+        "click",
+        submitClassicReview
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   REVIEW DATE
+--------------------------------------------------------- */
+
+function formatClassicReviewDate(
+    value
+) {
+
+    if (!value) {
+        return "";
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return "";
+
+    }
+
+
+    return date.toLocaleDateString(
+        undefined,
+        {
+            year: "numeric",
+            month: "short",
+            day: "numeric"
+        }
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   INITIAL LOAD
+--------------------------------------------------------- */
+
+loadClassicRating();
+
+loadClassicReviews();
+
+/* =========================================================
    FORMAT CONTENT
 ========================================================= */
 
