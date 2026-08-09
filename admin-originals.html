@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Originals Management - MyLikith</title>
+
+    <link
+        rel="stylesheet"
+        href="css/admin.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/admin-originals.css"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+</head>
+
+
+<body>
+
+<!-- MOBILE MENU -->
+
+<button
+    id="menuToggle"
+    class="menu-toggle"
+    type="button"
+>
+    ☰
+</button>
+
+
+<div
+    id="sidebarOverlay"
+    class="sidebar-overlay"
+></div>
+
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-header">
+
+            <button
+                id="closeSidebar"
+                class="close-sidebar"
+                type="button"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="logo">
+
+            <h2>MyLikith</h2>
+
+            <p>Admin Panel</p>
+
+        </div>
+
+
+        <nav>
+
+            <a href="admin-dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="admin-users.html">
+                👥 Users
+            </a>
+
+            <a href="admin-writers.html">
+                ✍ Writers
+            </a>
+
+            <a href="admin-writer-applications.html">
+                Writer Applications
+            </a>
+
+            <a href="admin-manual-payments.html">
+                Manual Payments
+            </a>
+
+            <a href="admin-novels.html">
+                📚 Novels
+            </a>
+
+            <a href="admin-contests.html">
+                🏆 Contests
+            </a>
+
+            <a href="admin-novel-approvals.html">
+                📖 Novel Approvals
+            </a>
+
+            <a href="admin-chapters.html">
+                📝 Chapters
+            </a>
+
+            <a href="admin-reviews.html">
+                ⭐ Reviews
+            </a>
+
+            <a href="admin-comments.html">
+                💬 Comments
+            </a>
+
+            <a href="admin-reports.html">
+                🚩 Reports
+            </a>
+
+            <a href="admin-analytics.html">
+                📈 Analytics
+            </a>
+
+            <a href="admin-revenue.html">
+                💰 Revenue
+            </a>
+
+            <a href="admin-withdrawals.html">
+                💸 Withdrawals
+            </a>
+
+            <a href="admin-settings.html">
+                ⚙ Settings
+            </a>
+
+            <a href="admin-pages.html">
+                📄 Site Pages
+            </a>
+
+            <a href="admin-universe.html">
+                🌌 Universe
+            </a>
+
+            <a href="admin-classics.html">
+                📖 Classics
+            </a>
+
+            <a
+                href="admin-originals.html"
+                class="active"
+            >
+                🎬 Originals
+            </a>
+
+            <a
+                href="admin-login.html"
+                id="logoutBtn"
+            >
+                🚪 Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    MyLikith Originals
+                </h1>
+
+                <p>
+                    Manage Original series and video episodes
+                </p>
+
+            </div>
+
+
+            <div class="admin-profile">
+
+                <span>
+                    Admin
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- MESSAGE -->
+
+        <div
+            id="originalsMessage"
+            class="originals-message"
+        ></div>
+
+
+        <!-- ORIGINALS SECTION -->
+
+        <section class="originals-panel">
+
+            <div class="originals-section-header">
+
+                <div>
+
+                    <span class="originals-eyebrow">
+                        ORIGINALS STUDIO
+                    </span>
+
+                    <h2>
+                        🎬 Original Series
+                    </h2>
+
+                    <p>
+                        Create, manage and publish MyLikith video Originals.
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="newOriginalBtn"
+                    class="originals-primary-btn"
+                    type="button"
+                >
+                    + New Original
+                </button>
+
+            </div>
+
+
+            <div
+                id="originalsList"
+                class="originals-list"
+            >
+
+                <div class="originals-loading">
+                    Loading Originals...
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ORIGINAL FORM -->
+
+        <section
+            id="originalFormSection"
+            class="original-form-panel"
+            hidden
+        >
+
+            <div class="original-form-header">
+
+                <div>
+
+                    <span class="originals-eyebrow">
+                        SERIES DETAILS
+                    </span>
+
+                    <h2 id="originalFormTitle">
+                        Create Original
+                    </h2>
+
+                </div>
+
+
+                <button
+                    id="closeOriginalForm"
+                    class="originals-icon-btn"
+                    type="button"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+
+            <form id="originalForm">
+
+                <input
+                    type="hidden"
+                    id="originalId"
+                >
+
+
+                <div class="original-form-grid">
+
+                    <div class="original-field original-field-wide">
+
+                        <label for="originalTitle">
+                            Title *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="originalTitle"
+                            required
+                            maxlength="200"
+                            placeholder="MyLikith Originals — Episode Series"
+                        >
+
+                    </div>
+
+
+                    <div class="original-field original-field-wide">
+
+                        <label for="originalDescription">
+                            Description
+                        </label>
+
+                        <textarea
+                            id="originalDescription"
+                            rows="4"
+                            placeholder="Describe this Original series..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="original-field">
+
+                        <label for="originalLanguage">
+                            Language
+                        </label>
+
+                        <select id="originalLanguage">
+
+                            <option value="English">
+                                English
+                            </option>
+
+                            <option value="Telugu">
+                                Telugu
+                            </option>
+
+                            <option value="Hindi">
+                                Hindi
+                            </option>
+
+                            <option value="Tamil">
+                                Tamil
+                            </option>
+
+                            <option value="Japanese">
+                                Japanese
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="original-field">
+
+                        <label for="originalCategory">
+                            Category
+                        </label>
+
+                        <input
+                            type="text"
+                            id="originalCategory"
+                            placeholder="Drama"
+                        >
+
+                    </div>
+
+
+                    <div class="original-field">
+
+                        <label for="originalCover">
+                            Cover Image URL
+                        </label>
+
+                        <input
+                            type="url"
+                            id="originalCover"
+                            placeholder="https://..."
+                        >
+
+                    </div>
+
+
+                    <div class="original-field">
+
+                        <label for="originalReleaseDate">
+                            Release Date
+                        </label>
+
+                        <input
+                            type="datetime-local"
+                            id="originalReleaseDate"
+                        >
+
+                    </div>
+
+
+                    <div class="original-field">
+
+                        <label for="originalStatus">
+                            Series Status
+                        </label>
+
+                        <select id="originalStatus">
+
+                            <option value="ongoing">
+                                Ongoing
+                            </option>
+
+                            <option value="completed">
+                                Completed
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="original-field">
+
+                        <label for="originalPublishStatus">
+                            Publish Status
+                        </label>
+
+                        <select id="originalPublishStatus">
+
+                            <option value="draft">
+                                Draft
+                            </option>
+
+                            <option value="published">
+                                Published
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="original-field">
+
+                        <label for="originalVisibility">
+                            Visibility
+                        </label>
+
+                        <select id="originalVisibility">
+
+                            <option value="private">
+                                Private
+                            </option>
+
+                            <option value="public">
+                                Public
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="original-field original-field-wide">
+
+                        <div class="original-checkbox-row">
+
+                            <label class="original-check">
+
+                                <input
+                                    type="checkbox"
+                                    id="originalPremiumOnly"
+                                >
+
+                                <span>
+                                    Premium Only
+                                </span>
+
+                            </label>
+
+
+                            <label class="original-check">
+
+                                <input
+                                    type="checkbox"
+                                    id="originalFeatured"
+                                >
+
+                                <span>
+                                    Featured
+                                </span>
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="original-form-actions">
+
+                    <button
+                        type="button"
+                        id="cancelOriginalBtn"
+                        class="originals-secondary-btn"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        id="saveOriginalBtn"
+                        class="originals-primary-btn"
+                    >
+                        Save Original
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- EPISODE MANAGEMENT -->
+
+        <section
+            id="episodesSection"
+            class="episodes-panel"
+            hidden
+        >
+
+            <div class="episodes-header">
+
+                <div>
+
+                    <span class="originals-eyebrow">
+                        EPISODE STUDIO
+                    </span>
+
+                    <h2 id="episodesOriginalTitle">
+                        Episodes
+                    </h2>
+
+                    <p id="episodesOriginalMeta">
+                        Manage video episodes for this Original.
+                    </p>
+
+                </div>
+
+
+                <div class="episodes-header-actions">
+
+                    <button
+                        id="refreshEpisodesBtn"
+                        class="originals-secondary-btn"
+                        type="button"
+                    >
+                        ↻ Refresh
+                    </button>
+
+                    <button
+                        id="newEpisodeBtn"
+                        class="originals-primary-btn"
+                        type="button"
+                    >
+                        + New Episode
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="episodesList"
+                class="episodes-list"
+            ></div>
+
+        </section>
+
+
+        <!-- EPISODE FORM -->
+
+        <section
+            id="episodeFormSection"
+            class="episode-form-panel"
+            hidden
+        >
+
+            <div class="episode-form-header">
+
+                <div>
+
+                    <span class="originals-eyebrow">
+                        EPISODE DETAILS
+                    </span>
+
+                    <h2 id="episodeFormTitle">
+                        Create Episode
+                    </h2>
+
+                </div>
+
+
+                <button
+                    id="closeEpisodeForm"
+                    class="originals-icon-btn"
+                    type="button"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+
+            <form id="episodeForm">
+
+                <input
+                    type="hidden"
+                    id="episodeId"
+                >
+
+
+                <div class="episode-form-grid">
+
+                    <div class="original-field">
+
+                        <label for="episodeNo">
+                            Episode Number *
+                        </label>
+
+                        <input
+                            type="number"
+                            id="episodeNo"
+                            min="1"
+                            step="1"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="original-field">
+
+                        <label for="episodeTitle">
+                            Episode Title *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="episodeTitle"
+                            required
+                            maxlength="200"
+                            placeholder="Episode 1 — The Beginning"
+                        >
+
+                    </div>
+
+
+                    <div class="original-field">
+
+                        <label for="episodeCoins">
+                            Coins Required
+                        </label>
+
+                        <input
+                            type="number"
+                            id="episodeCoins"
+                            min="0"
+                            value="0"
+                        >
+
+                    </div>
+
+
+                    <div class="original-field">
+
+                        <label class="original-check episode-check">
+
+                            <input
+                                type="checkbox"
+                                id="episodePremium"
+                            >
+
+                            <span>
+                                Premium Episode
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="original-field">
+
+                        <label class="original-check episode-check">
+
+                            <input
+                                type="checkbox"
+                                id="episodeEarlyAccess"
+                            >
+
+                            <span>
+                                Early Access
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="original-field">
+
+                        <label class="original-check episode-check">
+
+                            <input
+                                type="checkbox"
+                                id="episodeDraft"
+                                checked
+                            >
+
+                            <span>
+                                Draft
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="original-field">
+
+                        <label class="original-check episode-check">
+
+                            <input
+                                type="checkbox"
+                                id="episodePublished"
+                            >
+
+                            <span>
+                                Published
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="original-field">
+
+                        <label for="episodePublishAt">
+                            Publish At
+                        </label>
+
+                        <input
+                            type="datetime-local"
+                            id="episodePublishAt"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <p class="episode-video-note">
+                    Video is uploaded separately after the episode is saved.
+                </p>
+
+
+                <div class="original-form-actions">
+
+                    <button
+                        type="button"
+                        id="cancelEpisodeBtn"
+                        class="originals-secondary-btn"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        id="saveEpisodeBtn"
+                        class="originals-primary-btn"
+                    >
+                        Save Episode
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- VIDEO UPLOAD -->
+
+        <section
+            id="uploadSection"
+            class="upload-panel"
+            hidden
+        >
+
+            <div class="upload-header">
+
+                <div>
+
+                    <span class="originals-eyebrow">
+                        B2 VIDEO UPLOAD
+                    </span>
+
+                    <h2 id="uploadEpisodeTitle">
+                        Upload Episode Video
+                    </h2>
+
+                    <p>
+                        Large video files upload directly from your browser to Backblaze B2.
+                        Render does not receive the video file.
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="closeUploadBtn"
+                    class="originals-icon-btn"
+                    type="button"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+
+            <div class="upload-dropzone" id="uploadDropzone">
+
+                <div class="upload-drop-icon">
+                    🎬
+                </div>
+
+                <h3>
+                    Select Episode Video
+                </h3>
+
+                <p>
+                    MP4, WebM, MOV and other browser-supported video formats
+                </p>
+
+                <input
+                    type="file"
+                    id="videoFile"
+                    accept="video/*"
+                    hidden
+                >
+
+                <button
+                    type="button"
+                    id="chooseVideoBtn"
+                    class="originals-primary-btn"
+                >
+                    Choose Video
+                </button>
+
+            </div>
+
+
+            <div
+                id="selectedFile"
+                class="selected-file"
+                hidden
+            ></div>
+
+
+            <div
+                id="uploadProgressBox"
+                class="upload-progress-box"
+                hidden
+            >
+
+                <div class="upload-progress-top">
+
+                    <strong id="uploadStatusText">
+                        Preparing upload...
+                    </strong>
+
+                    <span id="uploadPercent">
+                        0%
+                    </span>
+
+                </div>
+
+
+                <div class="upload-progress-track">
+
+                    <div
+                        id="uploadProgressBar"
+                        class="upload-progress-bar"
+                    ></div>
+
+                </div>
+
+
+                <div class="upload-stats">
+
+                    <span id="uploadPartText">
+                        Part 0 / 0
+                    </span>
+
+                    <span id="uploadSpeedText">
+                        0 MB/s
+                    </span>
+
+                    <span id="uploadEtaText">
+                        ETA — 
+                    </span>
+
+                </div>
+
+
+                <div class="upload-actions">
+
+                    <button
+                        type="button"
+                        id="startUploadBtn"
+                        class="originals-primary-btn"
+                    >
+                        Start Upload
+                    </button>
+
+                    <button
+                        type="button"
+                        id="cancelUploadBtn"
+                        class="originals-danger-btn"
+                        disabled
+                    >
+                        Cancel Upload
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="uploadResult"
+                class="upload-result"
+            ></div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="js/admin-auth.js"></script>
+<script src="js/admin-nav.js"></script>
+<script src="js/admin-originals.js"></script>
+
+</body>
+</html>
