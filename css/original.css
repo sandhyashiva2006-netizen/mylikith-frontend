@@ -785,3 +785,43 @@
 
 }
 
+/* =========================================================
+   ORIGINAL COMMENT DELETE
+========================================================= */
+
+.original-comment-delete {
+    display: inline-block;
+
+    margin-top: 10px;
+
+    padding: 5px 10px;
+
+    border: 1px solid rgba(248, 113, 113, 0.25);
+    border-radius: 7px;
+
+    background: transparent;
+
+    color: #f87171;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.original-comment-delete:hover {
+    background: rgba(248, 113, 113, 0.10);
+
+    border-color:
+        rgba(248, 113, 113, 0.55);
+
+    color: #fca5a5;
+}
+

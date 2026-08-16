@@ -1173,24 +1173,39 @@ function renderOriginalComments(
 
                 <div class="original-comment-content">
 
-                    <div class="original-comment-header">
+<div class="original-comment-header">
 
-                        <strong>
-                            ${safeName}
-                        </strong>
+    <strong>
+        ${safeName}
+    </strong>
 
-                        <span>
-                            ${formatCommentDate(
-                                comment.created_at
-                            )}
-                        </span>
+    <span>
+        ${formatCommentDate(
+            comment.created_at
+        )}
+    </span>
 
-                    </div>
+</div>
 
 
-                    <p>
-                        ${safeComment}
-                    </p>
+<p>
+    ${safeComment}
+</p>
+
+
+${
+    comment.is_owner
+        ? `
+            <button
+                type="button"
+                class="original-comment-delete"
+                data-comment-id="${comment.id}"
+            >
+                Delete
+            </button>
+          `
+        : ""
+}
 
                 </div>
 
@@ -1204,8 +1219,113 @@ function renderOriginalComments(
         }
     );
 
+const deleteButtons =
+    container.querySelectorAll(
+        ".original-comment-delete"
+    );
+
+
+deleteButtons.forEach(
+    (button) => {
+
+        button.onclick = () => {
+
+            deleteOriginalComment(
+                button.dataset.commentId
+            );
+
+        };
+
+    }
+);
+
 }
 
+async function deleteOriginalComment(
+    commentId
+) {
+
+    const token =
+        localStorage.getItem(
+            "token"
+        );
+
+
+    if (!token) {
+
+        window.location.href =
+            `login.html?redirect=${encodeURIComponent(
+                window.location.href
+            )}`;
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to delete this comment?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/api/originals/${originalId}/comments/${commentId}`,
+                {
+                    method: "DELETE",
+
+                    headers: {
+                        Authorization:
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Unable to delete comment."
+            );
+
+        }
+
+
+        await loadOriginalComments();
+
+
+    } catch (error) {
+
+        console.error(
+            "Original comment delete error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Unable to delete comment."
+        );
+
+    }
+
+}
 
 function formatCommentDate(
     date
