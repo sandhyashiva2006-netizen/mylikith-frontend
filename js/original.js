@@ -1453,23 +1453,20 @@ async function reportOriginalComment(
         }
 
 
-        if (button) {
+if (button) {
 
-            button.disabled = true;
+    button.textContent = "Reported";
 
-            button.textContent =
-                "Reported";
+    button.classList.add("reported");
 
-            button.classList.add(
-                "reported"
-            );
+    button.disabled = true;
 
-        }
+}
 
 
-        alert(
-            "Comment reported successfully."
-        );
+alert(
+    "Comment reported successfully."
+);
 
 
     } catch (error) {
