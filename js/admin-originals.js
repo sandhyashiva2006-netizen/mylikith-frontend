@@ -92,6 +92,17 @@ document.addEventListener(
 
         loadOriginals();
 
+loadOriginalReports();
+
+document
+    .getElementById(
+        "refreshOriginalReportsBtn"
+    )
+    .addEventListener(
+        "click",
+        loadOriginalReports
+    );
+
         document
             .getElementById("newOriginalBtn")
             .addEventListener(
@@ -222,6 +233,256 @@ cancelUploadBtn.addEventListener(
     }
 );
 
+/* =========================================================
+   ORIGINAL COMMENT REPORTS
+========================================================= */
+
+async function loadOriginalReports() {
+
+    const container =
+        document.getElementById(
+            "originalReportsList"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    container.innerHTML =
+        `<div class="originals-loading">
+            Loading reports...
+        </div>`;
+
+
+    try {
+
+        const response =
+            await adminFetch(
+                `${API}/api/admin/originals/comment-reports`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load comment reports."
+            );
+
+        }
+
+
+        renderOriginalReports(
+            data.reports || []
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Load Original comment reports error:",
+            error
+        );
+
+
+        container.innerHTML =
+            `<div class="originals-empty">
+
+                <div style="font-size:40px;margin-bottom:10px;">
+                    🚩
+                </div>
+
+                <h3 style="color:#fff;margin:0 0 8px;">
+                    Unable to Load Reports
+                </h3>
+
+                <p style="margin:0;">
+                    ${escapeHTML(
+                        error.message ||
+                        "Unable to load comment reports."
+                    )}
+                </p>
+
+            </div>`;
+
+    }
+
+}
+
+function renderOriginalReports(
+    reports
+) {
+
+    const container =
+        document.getElementById(
+            "originalReportsList"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    if (
+        !Array.isArray(reports) ||
+        !reports.length
+    ) {
+
+        container.innerHTML =
+            `<div class="originals-empty">
+
+                <div style="font-size:42px;margin-bottom:10px;">
+                    ✅
+                </div>
+
+                <h3 style="color:#fff;margin:0 0 8px;">
+                    No Comment Reports
+                </h3>
+
+                <p style="margin:0;">
+                    There are currently no reported Original comments.
+                </p>
+
+            </div>`;
+
+        return;
+    }
+
+
+    reports.forEach(
+        report => {
+
+            const card =
+                document.createElement(
+                    "article"
+                );
+
+
+            card.className =
+                "original-card";
+
+
+            const reportedDate =
+                report.reported_at
+                    ? new Date(
+                        report.reported_at
+                    ).toLocaleString()
+                    : "Unknown";
+
+
+            card.innerHTML = `
+
+                <div class="original-card-top">
+
+                    <div class="original-card-main">
+
+                        <div class="original-card-title-row">
+
+                            <h3>
+                                🚩 ${escapeHTML(
+                                    report.original_title ||
+                                    "Unknown Original"
+                                )}
+                            </h3>
+
+                            <span class="original-meta-pill">
+                                Report #${Number(
+                                    report.report_id
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="original-card-description"
+                            style="margin-top:12px;"
+                        >
+
+                            <strong>
+                                Reported Comment
+                            </strong>
+
+                            <p>
+                                ${escapeHTML(
+                                    report.comment ||
+                                    ""
+                                )}
+                            </p>
+
+                        </div>
+
+
+                        <div class="original-card-meta">
+
+                            <span class="original-meta-pill">
+                                👤 Commenter:
+                                ${escapeHTML(
+                                    report.commenter_name ||
+                                    "Unknown"
+                                )}
+                            </span>
+
+
+                            <span class="original-meta-pill">
+                                🚩 Reporter:
+                                ${escapeHTML(
+                                    report.reporter_name ||
+                                    "Unknown"
+                                )}
+                            </span>
+
+
+                            <span class="original-meta-pill">
+                                📅 ${escapeHTML(
+                                    reportedDate
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="original-card-description"
+                            style="margin-top:12px;"
+                        >
+
+                            <strong>
+                                Report Reason
+                            </strong>
+
+                            <p>
+                                ${escapeHTML(
+                                    report.report_reason ||
+                                    "No reason provided."
+                                )}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(card);
+
+        }
+    );
+
+}
 
 /* =========================================================
    ORIGINALS
