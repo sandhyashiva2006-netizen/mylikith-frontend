@@ -67,7 +67,7 @@ await recordOriginalView();
 
 await loadChapters();
 
-    } catch (error) {
+await loadOriginalComments();
 
         console.error(
             "Original loading error:",
@@ -432,6 +432,9 @@ loadOriginalLikeStatus();
 
 
 setupOriginalRating();
+
+
+setupOriginalComments();
 
 }
 
@@ -970,6 +973,479 @@ function renderChapters() {
 
 }
 
+/* =========================================================
+   ORIGINAL COMMENTS
+========================================================= */
+
+async function loadOriginalComments() {
+
+    const container =
+        document.getElementById(
+            "originalComments"
+        );
+
+    const countElement =
+        document.getElementById(
+            "originalCommentCount"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/api/originals/${originalId}/comments`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load comments."
+            );
+
+        }
+
+
+        const comments =
+            Array.isArray(data.comments)
+                ? data.comments
+                : [];
+
+
+        if (countElement) {
+
+            countElement.textContent =
+                `${comments.length} ${
+                    comments.length === 1
+                        ? "Comment"
+                        : "Comments"
+                }`;
+
+        }
+
+
+        renderOriginalComments(
+            comments
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Original comments loading error:",
+            error
+        );
+
+
+        container.innerHTML = `
+            <div class="original-error">
+                Unable to load comments.
+            </div>
+        `;
+
+    }
+
+}
+
+
+function renderOriginalComments(
+    comments
+) {
+
+    const container =
+        document.getElementById(
+            "originalComments"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    if (!comments.length) {
+
+        container.innerHTML = `
+            <div class="original-empty">
+
+                <strong>
+                    No comments yet.
+                </strong>
+
+                <p>
+                    Be the first to share your thoughts.
+                </p>
+
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    comments.forEach(
+        (comment) => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "original-comment";
+
+
+            const safeName =
+                escapeHTML(
+                    comment.user_name ||
+                    "Reader"
+                );
+
+
+            const safeComment =
+                escapeHTML(
+                    comment.comment ||
+                    ""
+                );
+
+
+            const profileImage =
+                comment.profile_image
+                    ? escapeHTML(
+                        comment.profile_image
+                    )
+                    : "";
+
+
+            item.innerHTML = `
+
+                <div class="original-comment-avatar">
+
+                    ${
+                        profileImage
+                            ? `
+                                <img
+                                    src="${profileImage}"
+                                    alt="${safeName}"
+                                >
+                              `
+                            : `
+                                <span>
+                                    ${safeName
+                                        .charAt(0)
+                                        .toUpperCase()}
+                                </span>
+                              `
+                    }
+
+                </div>
+
+
+                <div class="original-comment-content">
+
+                    <div class="original-comment-header">
+
+                        <strong>
+                            ${safeName}
+                        </strong>
+
+                        <span>
+                            ${formatCommentDate(
+                                comment.created_at
+                            )}
+                        </span>
+
+                    </div>
+
+
+                    <p>
+                        ${safeComment}
+                    </p>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+function formatCommentDate(
+    date
+) {
+
+    if (!date) {
+        return "";
+    }
+
+
+    const parsedDate =
+        new Date(date);
+
+
+    if (
+        Number.isNaN(
+            parsedDate.getTime()
+        )
+    ) {
+
+        return "";
+
+    }
+
+
+    return parsedDate.toLocaleDateString(
+        undefined,
+        {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+function setupOriginalComments() {
+
+    const input =
+        document.getElementById(
+            "originalCommentInput"
+        );
+
+    const submitButton =
+        document.getElementById(
+            "originalCommentSubmit"
+        );
+
+    const characters =
+        document.getElementById(
+            "originalCommentCharacters"
+        );
+
+
+    if (
+        !input ||
+        !submitButton
+    ) {
+
+        return;
+
+    }
+
+
+    input.addEventListener(
+        "input",
+        () => {
+
+            if (characters) {
+
+                characters.textContent =
+                    `${input.value.length} / 1000`;
+
+            }
+
+        }
+    );
+
+
+    submitButton.onclick =
+        submitOriginalComment;
+
+}
+
+
+async function submitOriginalComment() {
+
+    const input =
+        document.getElementById(
+            "originalCommentInput"
+        );
+
+    const submitButton =
+        document.getElementById(
+            "originalCommentSubmit"
+        );
+
+
+    const token =
+        localStorage.getItem(
+            "token"
+        );
+
+
+    if (!token) {
+
+        window.location.href =
+            `login.html?redirect=${encodeURIComponent(
+                window.location.href
+            )}`;
+
+        return;
+
+    }
+
+
+    if (!input) {
+        return;
+    }
+
+
+    const comment =
+        input.value.trim();
+
+
+    if (!comment) {
+
+        alert(
+            "Please enter a comment."
+        );
+
+        input.focus();
+
+        return;
+
+    }
+
+
+    if (comment.length > 1000) {
+
+        alert(
+            "Comment cannot exceed 1000 characters."
+        );
+
+        return;
+
+    }
+
+
+    if (submitButton) {
+
+        submitButton.disabled =
+            true;
+
+        submitButton.textContent =
+            "Posting...";
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/api/originals/${originalId}/comments`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+
+                        Authorization:
+                            `Bearer ${token}`
+                    },
+
+                    body:
+                        JSON.stringify({
+                            comment
+                        })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Unable to post comment."
+            );
+
+        }
+
+
+        input.value = "";
+
+
+        const characters =
+            document.getElementById(
+                "originalCommentCharacters"
+            );
+
+
+        if (characters) {
+
+            characters.textContent =
+                "0 / 1000";
+
+        }
+
+
+        await loadOriginalComments();
+
+
+    } catch (error) {
+
+        console.error(
+            "Original comment error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Unable to post comment."
+        );
+
+
+    } finally {
+
+        if (submitButton) {
+
+            submitButton.disabled =
+                false;
+
+            submitButton.textContent =
+                "Post Comment";
+
+        }
+
+    }
+
+}
 
 /* =========================================================
    START READING
