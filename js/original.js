@@ -147,6 +147,192 @@ async function recordOriginalView() {
 }
 
 /* =========================================================
+   LOAD ORIGINAL LIKE STATUS
+========================================================= */
+
+async function loadOriginalLikeStatus() {
+
+    const likeButton =
+        document.getElementById(
+            "originalLikeBtn"
+        );
+
+    if (!likeButton) {
+        return;
+    }
+
+
+    const token =
+        localStorage.getItem(
+            "token"
+        );
+
+
+    if (!token) {
+
+        likeButton.textContent =
+            "♡ Like";
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/api/originals/${originalId}/like`,
+                {
+                    headers: {
+                        Authorization:
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            response.ok &&
+            data.success
+        ) {
+
+            likeButton.textContent =
+                data.liked
+                    ? "♥ Liked"
+                    : "♡ Like";
+
+        }
+
+    } catch (error) {
+
+        console.warn(
+            "Original like status error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LIKE / UNLIKE ORIGINAL
+========================================================= */
+
+async function toggleOriginalLike() {
+
+    const likeButton =
+        document.getElementById(
+            "originalLikeBtn"
+        );
+
+    const token =
+        localStorage.getItem(
+            "token"
+        );
+
+
+    if (!token) {
+
+        window.location.href =
+            `login.html?redirect=${encodeURIComponent(
+                window.location.href
+            )}`;
+
+        return;
+
+    }
+
+
+    if (!likeButton) {
+        return;
+    }
+
+
+    likeButton.disabled =
+        true;
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/api/originals/${originalId}/like`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        Authorization:
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Unable to update like."
+            );
+
+        }
+
+
+        original.likes =
+            Number(
+                data.likes || 0
+            );
+
+
+        document.getElementById(
+            "originalLikes"
+        ).textContent =
+            formatNumber(
+                original.likes
+            );
+
+
+        likeButton.textContent =
+            data.liked
+                ? "♥ Liked"
+                : "♡ Like";
+
+
+    } catch (error) {
+
+        console.error(
+            "Original like error:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Unable to update like."
+        );
+
+    } finally {
+
+        likeButton.disabled =
+            false;
+
+    }
+
+}
+
+/* =========================================================
    RENDER ORIGINAL
 ========================================================= */
 
@@ -223,10 +409,26 @@ function renderOriginal() {
         startReading;
 
 
+document.getElementById(
+    "shareOriginalBtn"
+).onclick =
+    shareOriginal;
+
+
+const likeButton =
     document.getElementById(
-        "shareOriginalBtn"
-    ).onclick =
-        shareOriginal;
+        "originalLikeBtn"
+    );
+
+if (likeButton) {
+
+    likeButton.onclick =
+        toggleOriginalLike;
+
+}
+
+
+loadOriginalLikeStatus();
 
 }
 
@@ -436,7 +638,7 @@ async function shareOriginal() {
             original.title,
 
         text:
-            `Read ${original.title} on MyLikith Originals.`,
+            `Watch ${original.title} on MyLikith Originals.`,
 
         url:
             window.location.href
