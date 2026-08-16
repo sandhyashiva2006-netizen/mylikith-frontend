@@ -430,8 +430,376 @@ if (likeButton) {
 
 loadOriginalLikeStatus();
 
+
+setupOriginalRating();
+
 }
 
+/* =========================================================
+   ORIGINAL RATING
+========================================================= */
+
+function setupOriginalRating() {
+
+    const stars =
+        document.querySelectorAll(
+            "#originalRatingStars button"
+        );
+
+    if (!stars.length) {
+        return;
+    }
+
+
+    stars.forEach(
+        (star) => {
+
+            star.addEventListener(
+                "click",
+                () => {
+
+                    const rating =
+                        Number(
+                            star.dataset.rating
+                        );
+
+                    submitOriginalRating(
+                        rating
+                    );
+
+                }
+            );
+
+
+            star.addEventListener(
+                "mouseenter",
+                () => {
+
+                    const rating =
+                        Number(
+                            star.dataset.rating
+                        );
+
+                    highlightOriginalRating(
+                        rating
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    const starsContainer =
+        document.getElementById(
+            "originalRatingStars"
+        );
+
+    if (starsContainer) {
+
+        starsContainer.addEventListener(
+            "mouseleave",
+            () => {
+
+                loadOriginalRating();
+
+            }
+        );
+
+    }
+
+
+    loadOriginalRating();
+
+}
+
+
+function highlightOriginalRating(
+    rating
+) {
+
+    const stars =
+        document.querySelectorAll(
+            "#originalRatingStars button"
+        );
+
+
+    stars.forEach(
+        (star) => {
+
+            const value =
+                Number(
+                    star.dataset.rating
+                );
+
+            star.textContent =
+                value <= rating
+                    ? "★"
+                    : "☆";
+
+        }
+    );
+
+}
+
+
+async function loadOriginalRating() {
+
+    const stars =
+        document.querySelectorAll(
+            "#originalRatingStars button"
+        );
+
+    const userRatingElement =
+        document.getElementById(
+            "originalUserRating"
+        );
+
+
+    if (!stars.length) {
+        return;
+    }
+
+
+    const token =
+        localStorage.getItem(
+            "token"
+        );
+
+
+    if (!token) {
+
+        highlightOriginalRating(
+            0
+        );
+
+        if (userRatingElement) {
+
+            userRatingElement.textContent =
+                "Login to rate";
+
+        }
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/api/originals/${originalId}/rating`,
+                {
+                    headers: {
+                        Authorization:
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            response.ok &&
+            data.success
+        ) {
+
+            const userRating =
+                Number(
+                    data.user_rating || 0
+                );
+
+
+            highlightOriginalRating(
+                userRating
+            );
+
+
+            if (userRatingElement) {
+
+                userRatingElement.textContent =
+                    userRating > 0
+                        ? `Your rating: ${userRating}/5`
+                        : "Not rated";
+
+            }
+
+        }
+
+    } catch (error) {
+
+        console.warn(
+            "Original rating load error:",
+            error
+        );
+
+    }
+
+}
+
+
+async function submitOriginalRating(
+    rating
+) {
+
+    const token =
+        localStorage.getItem(
+            "token"
+        );
+
+
+    if (!token) {
+
+        window.location.href =
+            `login.html?redirect=${encodeURIComponent(
+                window.location.href
+            )}`;
+
+        return;
+
+    }
+
+
+    if (
+        !Number.isInteger(rating) ||
+        rating < 1 ||
+        rating > 5
+    ) {
+
+        return;
+
+    }
+
+
+    const stars =
+        document.querySelectorAll(
+            "#originalRatingStars button"
+        );
+
+
+    stars.forEach(
+        (star) => {
+
+            star.disabled = true;
+
+        }
+    );
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/api/originals/${originalId}/rating`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+
+                        Authorization:
+                            `Bearer ${token}`
+                    },
+
+                    body:
+                        JSON.stringify({
+                            rating
+                        })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Unable to save rating."
+            );
+
+        }
+
+
+        original.rating =
+            Number(
+                data.rating || 0
+            );
+
+
+        const ratingElement =
+            document.getElementById(
+                "originalRating"
+            );
+
+
+        if (ratingElement) {
+
+            ratingElement.textContent =
+                original.rating.toFixed(1);
+
+        }
+
+
+        highlightOriginalRating(
+            rating
+        );
+
+
+        const userRatingElement =
+            document.getElementById(
+                "originalUserRating"
+            );
+
+
+        if (userRatingElement) {
+
+            userRatingElement.textContent =
+                `Your rating: ${rating}/5`;
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Original rating error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Unable to save rating."
+        );
+
+
+        loadOriginalRating();
+
+    } finally {
+
+        stars.forEach(
+            (star) => {
+
+                star.disabled = false;
+
+            }
+        );
+
+    }
+
+}
 
 /* =========================================================
    LOAD CHAPTERS
