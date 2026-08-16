@@ -462,3 +462,326 @@
 
 }
 
+/* =========================================================
+   ORIGINAL COMMENTS
+========================================================= */
+
+.original-comments-section {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+    box-sizing: border-box;
+}
+
+
+.original-comment-form {
+    width: 100%;
+    margin-top: 24px;
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(139, 92, 246, 0.22);
+    border-radius: 16px;
+
+    background: rgba(15, 23, 42, 0.55);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+
+.original-comment-input {
+    display: block;
+
+    width: 100%;
+    min-height: 120px;
+
+    box-sizing: border-box;
+
+    padding: 14px 16px;
+
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    border-radius: 12px;
+
+    background: rgba(2, 6, 23, 0.65);
+
+    color: #e2e8f0;
+
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.6;
+
+    resize: vertical;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.original-comment-input::placeholder {
+    color: #64748b;
+}
+
+
+.original-comment-input:focus {
+    border-color: rgba(139, 92, 246, 0.7);
+
+    box-shadow:
+        0 0 0 3px rgba(139, 92, 246, 0.12);
+}
+
+
+.original-comment-form-footer {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin-top: 14px;
+}
+
+
+.original-comment-characters {
+    color: #64748b;
+
+    font-size: 12px;
+
+    white-space: nowrap;
+}
+
+
+#originalCommentSubmit {
+    width: auto;
+    min-width: 150px;
+
+    padding: 12px 22px;
+
+    white-space: nowrap;
+}
+
+
+#originalCommentSubmit:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+
+.original-comments-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+    margin-top: 24px;
+}
+
+
+.original-comment {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 14px;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 16px;
+
+    border: 1px solid rgba(139, 92, 246, 0.16);
+    border-radius: 14px;
+
+    background: rgba(15, 23, 42, 0.42);
+}
+
+
+.original-comment-avatar {
+    flex: 0 0 42px;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #4f46e5
+        );
+
+    color: #ffffff;
+
+    font-size: 17px;
+    font-weight: 700;
+}
+
+
+.original-comment-avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+.original-comment-content {
+    min-width: 0;
+
+    flex: 1;
+}
+
+
+.original-comment-header {
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 8px 12px;
+
+    margin-bottom: 6px;
+}
+
+
+.original-comment-header strong {
+    color: #f8fafc;
+
+    font-size: 14px;
+}
+
+
+.original-comment-header span {
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+
+.original-comment-content p {
+    margin: 0;
+
+    color: #cbd5e1;
+
+    font-size: 14px;
+
+    line-height: 1.65;
+
+    white-space: pre-wrap;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   COMMENTS MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .original-comments-section {
+        width: 100%;
+
+        padding:
+            0 16px 60px;
+
+        box-sizing: border-box;
+    }
+
+
+    .original-comment-form {
+        padding: 14px;
+
+        border-radius: 14px;
+    }
+
+
+    .original-comment-input {
+        width: 100%;
+
+        min-height: 115px;
+
+        font-size: 14px;
+    }
+
+
+    .original-comment-form-footer {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 10px;
+    }
+
+
+    .original-comment-characters {
+        align-self: flex-end;
+    }
+
+
+    #originalCommentSubmit {
+        width: 100%;
+
+        min-width: 0;
+    }
+
+
+    .original-comment {
+        gap: 11px;
+
+        padding: 13px;
+
+        border-radius: 13px;
+    }
+
+
+    .original-comment-avatar {
+        flex-basis: 36px;
+
+        width: 36px;
+        height: 36px;
+
+        font-size: 14px;
+    }
+
+
+    .original-comment-header {
+        gap: 5px 9px;
+    }
+
+
+    .original-comment-header strong {
+        font-size: 13px;
+    }
+
+
+    .original-comment-header span {
+        font-size: 11px;
+    }
+
+
+    .original-comment-content p {
+        font-size: 13px;
+
+        line-height: 1.6;
+    }
+
+}
+
