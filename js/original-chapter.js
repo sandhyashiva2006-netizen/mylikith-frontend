@@ -82,6 +82,11 @@ const nextEpisodeBtn =
 
 let lockedChapterData = null;
 
+let savedProgressPercent = 0;
+let progressSaveTimer = null;
+let lastProgressSaveTime = 0;
+let progressRestorePending = false;
+
 document.addEventListener(
     "DOMContentLoaded",
     initChapter
@@ -118,6 +123,20 @@ walletPremiumBtn.addEventListener(
 unlockPremiumBtn.addEventListener(
     "click",
     unlockPremiumEpisode
+);
+
+video.addEventListener(
+    "timeupdate",
+    handleVideoProgress
+);
+
+video.addEventListener(
+    "ended",
+    () => {
+        saveVideoProgress(
+            100
+        );
+    }
 );
 
 async function initChapter() {
@@ -266,11 +285,12 @@ video.src =
             true;
 
 
-        video.load();
+video.load();
 
+loadSavedVideoProgress();
 
-        document.title =
-            `${data.chapter.title} — MyLikith Originals`;
+document.title =
+    `${data.chapter.title} — MyLikith Originals`;
 
 
     } catch (error) {
@@ -822,3 +842,353 @@ async function setupEpisodeNavigation(
     }
 
 }
+
+/* =========================================================
+   ORIGINAL EPISODE PROGRESS
+========================================================= */
+
+async function loadSavedVideoProgress() {
+
+    const token =
+        localStorage.getItem("token");
+
+    if (!token) {
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                `${ORIGINAL_CHAPTER_API}/chapter/${chapterId}/progress`,
+                {
+                    headers: {
+                        "Authorization":
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+
+        if (!response.ok) {
+            return;
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !data.success
+        ) {
+            return;
+        }
+
+
+        savedProgressPercent =
+            Number(
+                data.progress_percent || 0
+            );
+
+
+        if (
+            savedProgressPercent <= 0
+        ) {
+            return;
+        }
+
+
+        if (
+            savedProgressPercent >= 100
+        ) {
+            return;
+        }
+
+
+        restoreVideoProgress();
+
+    } catch (error) {
+
+        console.error(
+            "Load video progress error:",
+            error
+        );
+
+    }
+
+}
+
+
+function restoreVideoProgress() {
+
+    if (
+        !savedProgressPercent ||
+        !video.duration ||
+        !Number.isFinite(
+            video.duration
+        )
+    ) {
+        progressRestorePending =
+            true;
+
+        return;
+    }
+
+
+    const resumeTime =
+        video.duration *
+        (
+            savedProgressPercent /
+            100
+        );
+
+
+    if (
+        resumeTime > 0 &&
+        resumeTime < video.duration
+    ) {
+
+        video.currentTime =
+            resumeTime;
+
+    }
+
+
+    progressRestorePending =
+        false;
+
+}
+
+
+function handleVideoProgress() {
+
+    if (
+        !video.duration ||
+        !Number.isFinite(
+            video.duration
+        )
+    ) {
+        return;
+    }
+
+
+    const progressPercent =
+        Math.min(
+            100,
+            Math.max(
+                0,
+                Math.round(
+                    (
+                        video.currentTime /
+                        video.duration
+                    ) * 100
+                )
+            )
+        );
+
+
+    if (
+        progressPercent <= 0
+    ) {
+        return;
+    }
+
+
+    const now =
+        Date.now();
+
+
+    if (
+        now -
+        lastProgressSaveTime <
+        10000
+    ) {
+        return;
+    }
+
+
+    lastProgressSaveTime =
+        now;
+
+
+    saveVideoProgress(
+        progressPercent
+    );
+
+}
+
+
+async function saveVideoProgress(
+    progressPercent
+) {
+
+    const token =
+        localStorage.getItem("token");
+
+    if (!token) {
+        return;
+    }
+
+
+    const progress =
+        Math.min(
+            100,
+            Math.max(
+                0,
+                Math.round(
+                    Number(
+                        progressPercent
+                    )
+                )
+            )
+        );
+
+
+    if (
+        !Number.isFinite(
+            progress
+        ) ||
+        progress <= 0
+    ) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${ORIGINAL_CHAPTER_API}/chapter/${chapterId}/progress`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            `Bearer ${token}`
+                    },
+
+                    body:
+                        JSON.stringify({
+                            progress_percent:
+                                progress
+                        })
+                }
+            );
+
+
+        if (!response.ok) {
+
+            console.error(
+                "Unable to save video progress."
+            );
+
+            return;
+        }
+
+
+        savedProgressPercent =
+            progress;
+
+    } catch (error) {
+
+        console.error(
+            "Save video progress error:",
+            error
+        );
+
+    }
+
+}
+
+
+video.addEventListener(
+    "loadedmetadata",
+    () => {
+
+        if (
+            progressRestorePending
+        ) {
+            restoreVideoProgress();
+        }
+
+    }
+);
+
+
+window.addEventListener(
+    "beforeunload",
+    () => {
+
+        const token =
+            localStorage.getItem(
+                "token"
+            );
+
+
+        if (
+            !token ||
+            !video.duration ||
+            !Number.isFinite(
+                video.duration
+            ) ||
+            video.currentTime <= 0
+        ) {
+            return;
+        }
+
+
+        const progress =
+            Math.min(
+                100,
+                Math.max(
+                    0,
+                    Math.round(
+                        (
+                            video.currentTime /
+                            video.duration
+                        ) * 100
+                    )
+                )
+            );
+
+
+        if (
+            progress <= 0
+        ) {
+            return;
+        }
+
+
+        fetch(
+            `${ORIGINAL_CHAPTER_API}/chapter/${chapterId}/progress`,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json",
+
+                    "Authorization":
+                        `Bearer ${token}`
+                },
+
+                body:
+                    JSON.stringify({
+                        progress_percent:
+                            progress
+                    }),
+
+                keepalive:
+                    true
+            }
+        ).catch(
+            () => {}
+        );
+
+    }
+);
+
