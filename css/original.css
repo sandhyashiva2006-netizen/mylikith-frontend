@@ -347,3 +347,118 @@
     }
 
 }
+
+/* =========================================================
+   ORIGINAL RATING
+========================================================= */
+
+.original-rating-box {
+    margin-top: 22px;
+    padding: 18px 20px;
+    border: 1px solid rgba(139, 92, 246, 0.25);
+    border-radius: 14px;
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+}
+
+
+.original-rating-label {
+    color: #e2e8f0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+.original-rating-stars {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+
+.original-rating-stars button {
+    appearance: none;
+    border: none;
+    background: transparent;
+    padding: 2px;
+    margin: 0;
+
+    color: #64748b;
+    font-size: 25px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+.original-rating-stars button:hover {
+    color: #fbbf24;
+    transform: scale(1.12);
+}
+
+
+.original-rating-stars button:focus-visible {
+    outline: 2px solid #a78bfa;
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+
+.original-rating-stars button:disabled {
+    cursor: default;
+}
+
+
+.original-rating-stars button:disabled:hover {
+    transform: none;
+}
+
+
+.original-user-rating {
+    color: #94a3b8;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+
+/* Selected / active stars */
+
+.original-rating-stars button[data-rating].active {
+    color: #fbbf24;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .original-rating-box {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+
+        padding: 16px;
+    }
+
+
+    .original-rating-stars button {
+        font-size: 27px;
+    }
+
+
+    .original-user-rating {
+        font-size: 12px;
+    }
+
+}
+
