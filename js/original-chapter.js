@@ -233,8 +233,25 @@ setupEpisodeNavigation(
     data.chapter.id
 );
 
-        video.src =
-            data.url;
+        const VIDEO_CDN =
+    "https://mylikith-video-cdn.sandhyashiva2006.workers.dev";
+
+const originalVideoUrl =
+    new URL(data.url);
+
+let videoPath =
+    originalVideoUrl.pathname;
+
+const bucketPrefix =
+    "/mylikith-originals/";
+
+if (videoPath.startsWith(bucketPrefix)) {
+    videoPath =
+        videoPath.substring(bucketPrefix.length - 1);
+}
+
+video.src =
+    `${VIDEO_CDN}${videoPath}`;
 
 
         video.hidden =
