@@ -1207,6 +1207,14 @@ ${
         : ""
 }
 
+<button
+    type="button"
+    class="original-comment-report"
+    data-comment-id="${comment.id}"
+>
+    Report
+</button>
+
                 </div>
 
             `;
@@ -1232,6 +1240,27 @@ deleteButtons.forEach(
 
             deleteOriginalComment(
                 button.dataset.commentId
+            );
+
+        };
+
+    }
+);
+
+const reportButtons =
+    container.querySelectorAll(
+        ".original-comment-report"
+    );
+
+
+reportButtons.forEach(
+    (button) => {
+
+        button.onclick = () => {
+
+            reportOriginalComment(
+                button.dataset.commentId,
+                button
             );
 
         };
@@ -1322,6 +1351,149 @@ async function deleteOriginalComment(
             error.message ||
             "Unable to delete comment."
         );
+
+    }
+
+}
+
+async function reportOriginalComment(
+    commentId,
+    button
+) {
+
+    const token =
+        localStorage.getItem(
+            "token"
+        );
+
+
+    if (!token) {
+
+        window.location.href =
+            `login.html?redirect=${encodeURIComponent(
+                window.location.href
+            )}`;
+
+        return;
+
+    }
+
+
+    const reason =
+        prompt(
+            "Why are you reporting this comment?\n\nYou can leave this blank."
+        );
+
+
+    if (reason === null) {
+        return;
+    }
+
+
+    try {
+
+        if (button) {
+
+            button.disabled = true;
+
+            button.textContent =
+                "Reporting...";
+
+        }
+
+
+        const response =
+            await fetch(
+                `${API}/api/originals/${originalId}/comments/${commentId}/report`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+
+                        Authorization:
+                            `Bearer ${token}`
+                    },
+
+                    body:
+                        JSON.stringify({
+                            reason:
+                                reason.trim()
+                        })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            response.status === 409
+        ) {
+
+            throw new Error(
+                "You have already reported this comment."
+            );
+
+        }
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Unable to report comment."
+            );
+
+        }
+
+
+        if (button) {
+
+            button.disabled = true;
+
+            button.textContent =
+                "Reported";
+
+            button.classList.add(
+                "reported"
+            );
+
+        }
+
+
+        alert(
+            "Comment reported successfully."
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Original comment report error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Unable to report comment."
+        );
+
+
+        if (button) {
+
+            button.disabled = false;
+
+            button.textContent =
+                "Report";
+
+        }
 
     }
 
