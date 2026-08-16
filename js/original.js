@@ -58,12 +58,14 @@ async function loadOriginal() {
 
         }
 
-        original =
-            data.original;
+original =
+    data.original;
 
-        renderOriginal();
+renderOriginal();
 
-        await loadChapters();
+await recordOriginalView();
+
+await loadChapters();
 
     } catch (error) {
 
@@ -80,6 +82,69 @@ async function loadOriginal() {
 
 }
 
+/* =========================================================
+   RECORD ORIGINAL VIEW
+========================================================= */
+
+async function recordOriginalView() {
+
+    try {
+
+        const response =
+            await fetch(
+                `${API}/api/originals/${originalId}/view`,
+                {
+                    method: "POST"
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+            console.warn(
+                "Original view was not recorded:",
+                data.message
+            );
+
+            return;
+        }
+
+
+        if (
+            data.success &&
+            typeof data.views !== "undefined"
+        ) {
+
+            original.views =
+                Number(data.views);
+
+            const viewsElement =
+                document.getElementById(
+                    "originalViews"
+                );
+
+            if (viewsElement) {
+
+                viewsElement.textContent =
+                    formatNumber(
+                        original.views
+                    );
+
+            }
+
+        }
+
+    } catch (error) {
+
+        console.warn(
+            "Original view tracking error:",
+            error
+        );
+
+    }
+
+}
 
 /* =========================================================
    RENDER ORIGINAL
