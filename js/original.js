@@ -1489,26 +1489,22 @@ async function submitOriginalComment() {
 
     try {
 
-        const response =
-            await fetch(
-                `${API}/api/originals/${originalId}/comments`,
-                {
-                    method: "POST",
+const token =
+    localStorage.getItem("token");
 
-                    headers: {
-                        "Content-Type":
-                            "application/json",
 
-                        Authorization:
-                            `Bearer ${token}`
-                    },
-
-                    body:
-                        JSON.stringify({
-                            comment
-                        })
+const response =
+    await fetch(
+        `${API}/api/originals/${originalId}/comments`,
+        {
+            headers: token
+                ? {
+                    Authorization:
+                        `Bearer ${token}`
                 }
-            );
+                : {}
+        }
+    );
 
 
         const data =
