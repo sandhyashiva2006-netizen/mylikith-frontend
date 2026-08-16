@@ -46,8 +46,10 @@ async function loadOriginal() {
                 `${API}/api/originals/${originalId}`
             );
 
+
         const data =
             await response.json();
+
 
         if (!response.ok) {
 
@@ -58,21 +60,30 @@ async function loadOriginal() {
 
         }
 
-original =
-    data.original;
 
-renderOriginal();
+        original =
+            data.original;
 
-await recordOriginalView();
 
-await loadChapters();
+        renderOriginal();
 
-await loadOriginalComments();
+
+        await recordOriginalView();
+
+
+        await loadChapters();
+
+
+        await loadOriginalComments();
+
+
+    } catch (error) {
 
         console.error(
             "Original loading error:",
             error
         );
+
 
         showError(
             error.message
