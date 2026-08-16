@@ -1008,10 +1008,22 @@ async function loadOriginalComments() {
 
     try {
 
-        const response =
-            await fetch(
-                `${API}/api/originals/${originalId}/comments`
-            );
+const token =
+    localStorage.getItem("token");
+
+
+const response =
+    await fetch(
+        `${API}/api/originals/${originalId}/comments`,
+        {
+            headers: token
+                ? {
+                    Authorization:
+                        `Bearer ${token}`
+                }
+                : {}
+        }
+    );
 
 
         const data =
@@ -1209,10 +1221,19 @@ ${
 
 <button
     type="button"
-    class="original-comment-report"
+    class="original-comment-report ${
+        comment.is_reported
+            ? "reported"
+            : ""
+    }"
     data-comment-id="${comment.id}"
+    ${comment.is_reported ? "disabled" : ""}
 >
-    Report
+    ${
+        comment.is_reported
+            ? "Reported"
+            : "Report"
+    }
 </button>
 
                 </div>
