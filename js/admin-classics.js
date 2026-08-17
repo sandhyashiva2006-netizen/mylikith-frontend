@@ -451,19 +451,19 @@ function renderClassicImportPreview(importData) {
             </div>
             <div class="classic-field">
                 <label for="importLanguage">Language *</label>
-                <input id="importLanguage" type="text" value="English">
+                <input id="importLanguage" type="text" value="${escapeAttribute(importData.suggested?.language || "English")}">
             </div>
             <div class="classic-field">
                 <label for="importOriginalLanguage">Original Language</label>
-                <input id="importOriginalLanguage" type="text">
+                <input id="importOriginalLanguage" type="text" value="${escapeAttribute(importData.suggested?.original_language || importData.suggested?.language || "")}">
             </div>
             <div class="classic-field">
                 <label for="importYear">Publication Year</label>
-                <input id="importYear" type="number">
+                <input id="importYear" type="number" value="${escapeAttribute(importData.suggested?.publication_year || "")}">
             </div>
             <div class="classic-field">
                 <label for="importCategory">Category</label>
-                <input id="importCategory" type="text" placeholder="Novel, Poetry, Drama...">
+                <input id="importCategory" type="text" value="${escapeAttribute(importData.suggested?.category || "Classic")}" placeholder="Novel, Poetry, Drama...">
             </div>
             <div class="classic-field classic-full">
                 <label for="importDescription">Description</label>
