@@ -2177,16 +2177,24 @@ async function shareOriginal() {
         title:
             original.title,
 
-text:
+        const shareDescription =
     original.description
-        ? `${original.description}\n\nRead ${original.title} on MyLikith Originals.`
-        : `Watch ${original.title} on MyLikith Originals.`,
+        ? original.description
+            .replace(/\s+/g, " ")
+            .trim()
+            .slice(0, 140)
+        : "An exclusive MyLikith Original series.";
+
+
+const shareText =
+    `🎬 Watch ${original.title} on MyLikith Originals!\n\n` +
+    `${shareDescription}\n\n` +
+    `▶️ Watch now on MyLikith`;
 
         url:
             window.location.href
 
     };
-
 
     try {
 
