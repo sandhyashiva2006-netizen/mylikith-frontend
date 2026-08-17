@@ -410,6 +410,8 @@ function renderClassicImportPreview(importData) {
     const chapters = importData.chapters || [];
     const suggestedTitle = importData.suggested?.title || "";
     const suggestedDescription = importData.suggested?.description || "";
+    const suggestedCover = importData.suggested?.cover_image || "assets/images/default-cover.png";
+    const coverIsSource = Boolean(importData.suggested?.cover_image);
 
     classicImportPreview.innerHTML = `
         <div class="classic-import-summary">
@@ -419,6 +421,23 @@ function renderClassicImportPreview(importData) {
                 <p>${escapeHTML(importData.source?.name || "Unknown source")}</p>
             </div>
             <span class="classic-import-count">${chapters.length} chapters</span>
+        </div>
+
+        <div class="classic-import-cover-preview">
+            <div class="classic-import-cover-frame">
+                <img
+                    src="${escapeAttribute(suggestedCover)}"
+                    alt="${escapeAttribute(suggestedTitle || "Classic cover")}"
+                    onerror="this.onerror=null;this.src='assets/images/default-cover.png';"
+                >
+            </div>
+            <div class="classic-import-cover-info">
+                <span class="classic-import-kicker">COVER</span>
+                <h4>${coverIsSource ? "Source cover detected" : "Default MyLikith cover"}</h4>
+                <p>${coverIsSource ? "A Gutenberg cover was found automatically and will be saved with this Classic." : "No source cover was detected. MyLikith will use the default Classics cover."}</p>
+                <label for="importCoverImage">Cover image URL</label>
+                <input id="importCoverImage" type="url" value="${escapeAttribute(suggestedCover)}">
+            </div>
         </div>
 
         <div class="classic-import-fields">
@@ -522,6 +541,7 @@ async function importPendingClassic() {
                     original_language: document.getElementById("importOriginalLanguage")?.value.trim(),
                     language,
                     description: document.getElementById("importDescription")?.value.trim(),
+                    cover_image: document.getElementById("importCoverImage")?.value.trim() || "assets/images/default-cover.png",
                     publication_year: document.getElementById("importYear")?.value || null,
                     category: document.getElementById("importCategory")?.value.trim(),
                     source_name: pendingClassicImport.source?.name || "Unknown source",

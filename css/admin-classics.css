@@ -966,3 +966,64 @@
         grid-column: auto;
     }
 }
+
+/* =========================================================
+   CLASSICS IMPORTER - COVER PREVIEW
+========================================================= */
+
+.classic-import-cover-preview {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    gap: 18px;
+    align-items: center;
+    margin: 20px 0;
+    padding: 16px;
+    border: 1px solid rgba(168, 85, 247, 0.18);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.classic-import-cover-frame {
+    width: 120px;
+    height: 168px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.classic-import-cover-frame img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.classic-import-cover-info h4 {
+    margin: 3px 0 7px;
+    font-size: 16px;
+}
+
+.classic-import-cover-info p {
+    margin: 0 0 12px;
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.classic-import-cover-info label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.classic-import-cover-info input {
+    width: 100%;
+}
+
+@media (max-width: 700px) {
+    .classic-import-cover-preview {
+        grid-template-columns: 1fr;
+    }
+}
