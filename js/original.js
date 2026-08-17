@@ -2172,13 +2172,6 @@ function startReading() {
 
 async function shareOriginal() {
 
-    const shareDescription =
-        original.description
-            ? original.description
-                .replace(/\s+/g, " ")
-                .trim()
-                .slice(0, 140)
-            : "An exclusive MyLikith Original series.";
 
 
     const shareText =
