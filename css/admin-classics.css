@@ -743,3 +743,226 @@
     }
 
 }
+/* =========================================================
+   CLASSICS IMPORTER
+========================================================= */
+
+.classic-importer-section {
+    margin: 24px 0;
+    padding: 24px;
+    border: 1px solid rgba(168, 85, 247, 0.22);
+    border-radius: 18px;
+    background: rgba(20, 14, 35, 0.72);
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.18);
+}
+
+.classic-importer-header {
+    margin-bottom: 20px;
+}
+
+.classic-importer-kicker {
+    display: inline-block;
+    margin-bottom: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+.classic-importer-header h2 {
+    margin: 0 0 7px;
+    font-size: 22px;
+}
+
+.classic-importer-header p {
+    margin: 0;
+    max-width: 760px;
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.classic-importer-form {
+    display: grid;
+    gap: 14px;
+}
+
+.classic-importer-form small {
+    display: block;
+    margin-top: 7px;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 11px;
+}
+
+.classic-importer-actions,
+.classic-import-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.classic-import-preview {
+    margin-top: 22px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.classic-import-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.classic-import-summary h3 {
+    margin: 0 0 4px;
+    font-size: 20px;
+}
+
+.classic-import-summary p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 12px;
+}
+
+.classic-import-count {
+    flex: 0 0 auto;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(168, 85, 247, 0.14);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.classic-import-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.classic-import-fields .classic-full {
+    grid-column: 1 / -1;
+}
+
+.classic-import-verification {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 20px 0;
+    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.025);
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.classic-import-verification input {
+    margin-top: 2px;
+    flex: 0 0 auto;
+}
+
+.classic-import-chapters {
+    margin-top: 20px;
+}
+
+.classic-import-chapters h4 {
+    margin: 0 0 12px;
+    font-size: 14px;
+}
+
+.classic-import-chapter-list {
+    max-height: 330px;
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+}
+
+.classic-import-chapter-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 13px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.classic-import-chapter-item:last-child {
+    border-bottom: 0;
+}
+
+.classic-import-chapter-item > span {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+    place-items: center;
+    border-radius: 8px;
+    background: rgba(168, 85, 247, 0.12);
+    font-size: 11px;
+}
+
+.classic-import-chapter-item div {
+    min-width: 0;
+}
+
+.classic-import-chapter-item strong,
+.classic-import-chapter-item small {
+    display: block;
+}
+
+.classic-import-chapter-item strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+.classic-import-chapter-item small {
+    margin-top: 3px;
+    color: rgba(255, 255, 255, 0.42);
+    font-size: 10px;
+}
+
+.classic-import-note {
+    margin: 10px 0 0;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 11px;
+}
+
+.classic-import-actions {
+    margin-top: 18px;
+}
+
+@media (max-width: 650px) {
+    .classic-importer-section {
+        padding: 18px;
+    }
+
+    .classic-importer-actions .classics-primary-btn,
+    .classic-import-actions button {
+        width: 100%;
+    }
+
+    .classic-importer-actions,
+    .classic-import-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .classic-import-summary {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .classic-import-fields {
+        grid-template-columns: 1fr;
+    }
+
+    .classic-import-fields .classic-full {
+        grid-column: auto;
+    }
+}

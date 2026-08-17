@@ -240,6 +240,55 @@
 
 
         <section
+            id="classicImporterSection"
+            class="classic-importer-section"
+        >
+
+            <div class="classic-importer-header">
+
+                <div>
+                    <span class="classic-importer-kicker">FAST IMPORT</span>
+                    <h2>Import a Classic</h2>
+                    <p>Paste a public-domain source URL. MyLikith will fetch the text, detect chapters and prepare it for import.</p>
+                </div>
+
+            </div>
+
+            <div class="classic-importer-form">
+
+                <div class="classic-field classic-full">
+                    <label for="classicImportUrl">Source URL</label>
+                    <input
+                        type="url"
+                        id="classicImportUrl"
+                        placeholder="https://www.gutenberg.org/ebooks/1342"
+                        autocomplete="off"
+                    >
+                    <small>Start with Project Gutenberg or a direct public-domain text URL.</small>
+                </div>
+
+                <div class="classic-importer-actions">
+                    <button
+                        type="button"
+                        id="previewClassicImportBtn"
+                        class="classics-primary-btn"
+                    >
+                        Fetch &amp; Preview
+                    </button>
+                </div>
+
+            </div>
+
+            <div
+                id="classicImportPreview"
+                class="classic-import-preview"
+                hidden
+            ></div>
+
+        </section>
+
+
+        <section
             id="classicFormSection"
             class="classic-form-section"
             hidden
