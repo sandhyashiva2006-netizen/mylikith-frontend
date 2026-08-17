@@ -1561,15 +1561,147 @@
 
 @media (max-width: 700px) {
 
-    .episode-like-section {
+.episode-like-section {
 
-        width:
-            94%;
+    width:
+        94%;
 
-        margin-top:
-            18px;
+    margin:
+        18px auto 0;
 
-    }
+}
+
+
+.episode-like-card {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        flex-start;
+
+}
+
+
+.episode-like-button {
+
+    width:
+        auto;
+
+    min-width:
+        125px;
+
+    min-height:
+        42px;
+
+    padding:
+        0 18px;
+
+    justify-content:
+        center;
+
+}
+
+
+.episode-like-icon {
+
+    font-size:
+        21px;
+
+}
+
+
+.episode-like-text {
+
+    font-size:
+        14px;
+
+}
+
+
+.episode-like-count {
+
+    min-width:
+        auto;
+
+    margin-left:
+        -45px;
+
+    padding-left:
+        100px;
+
+    pointer-events:
+        none;
+
+}
+
+.episode-like-card {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+}
+
+
+.episode-like-button {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        8px;
+
+    min-width:
+        125px;
+
+    min-height:
+        42px;
+
+    padding:
+        0 18px;
+
+}
+
+
+.episode-like-count {
+
+    min-width:
+        auto;
+
+    margin-left:
+        2px;
+
+    color:
+        #94a3b8;
+
+    font-size:
+        13px;
+
+    font-weight:
+        700;
+
+}
+
+
+.episode-like-button.liked
+.episode-like-count {
+
+    color:
+        #fb7185;
+
+}
 
 }
 
