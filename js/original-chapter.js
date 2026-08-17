@@ -151,6 +151,29 @@ const episodeCommentsCount =
         "episodeCommentsCount"
     );
 
+const episodeLikeButton =
+    document.getElementById(
+        "episodeLikeButton"
+    );
+
+
+const episodeLikeIcon =
+    document.getElementById(
+        "episodeLikeIcon"
+    );
+
+
+const episodeLikeText =
+    document.getElementById(
+        "episodeLikeText"
+    );
+
+
+const episodeLikeCount =
+    document.getElementById(
+        "episodeLikeCount"
+    );
+
 let lockedChapterData = null;
 
 let savedProgressPercent = 0;
@@ -249,6 +272,7 @@ async function initChapter() {
  */
 
 await Promise.all([
+    loadEpisodeLike(),
     loadEpisodeRating(),
     loadEpisodeComments()
 ]);
@@ -256,6 +280,7 @@ await Promise.all([
 
 initializeEpisodeCommentUI();
 initializeEpisodeRatingUI();
+initializeEpisodeLikeUI();
 
 }
 
@@ -453,6 +478,217 @@ function renderChapterInfo(
         }
 
     `;
+
+}
+
+/* =========================================================
+   EPISODE LIKES
+========================================================= */
+
+async function loadEpisodeLike() {
+
+    if (!chapterId) {
+        return;
+    }
+
+    try {
+
+        const token =
+            localStorage.getItem("token");
+
+        const headers = {};
+
+        if (token) {
+
+            headers.Authorization =
+                `Bearer ${token}`;
+
+        }
+
+        const response =
+            await fetch(
+                `${ORIGINAL_CHAPTER_API}/chapter/${chapterId}/like`,
+                {
+                    headers
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load episode likes."
+            );
+
+        }
+
+        updateEpisodeLikeUI(
+            Boolean(data.liked),
+            Number(data.like_count || 0)
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Episode like load error:",
+            error
+        );
+
+    }
+
+}
+
+
+function initializeEpisodeLikeUI() {
+
+    if (!episodeLikeButton) {
+        return;
+    }
+
+    episodeLikeButton.addEventListener(
+        "click",
+        toggleEpisodeLike
+    );
+
+}
+
+
+function updateEpisodeLikeUI(
+    liked,
+    likeCount
+) {
+
+    if (episodeLikeIcon) {
+
+        episodeLikeIcon.textContent =
+            liked ? "♥" : "♡";
+
+    }
+
+
+    if (episodeLikeText) {
+
+        episodeLikeText.textContent =
+            liked ? "Liked" : "Like";
+
+    }
+
+
+    if (episodeLikeCount) {
+
+        episodeLikeCount.textContent =
+            likeCount;
+
+    }
+
+
+    if (episodeLikeButton) {
+
+        episodeLikeButton.classList.toggle(
+            "liked",
+            liked
+        );
+
+        episodeLikeButton.setAttribute(
+            "aria-label",
+            liked
+                ? "Unlike this episode"
+                : "Like this episode"
+        );
+
+    }
+
+}
+
+
+async function toggleEpisodeLike() {
+
+    const token =
+        localStorage.getItem("token");
+
+
+    if (!token) {
+
+        window.location.href =
+            `login.html?redirect=${encodeURIComponent(
+                window.location.href
+            )}`;
+
+        return;
+
+    }
+
+
+    if (!episodeLikeButton) {
+        return;
+    }
+
+
+    episodeLikeButton.disabled =
+        true;
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${ORIGINAL_CHAPTER_API}/chapter/${chapterId}/like`,
+                {
+                    method: "POST",
+
+                    headers: {
+
+                        "Authorization":
+                            `Bearer ${token}`
+
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to update like."
+            );
+
+        }
+
+
+        updateEpisodeLikeUI(
+            Boolean(data.liked),
+            Number(data.like_count || 0)
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Episode like toggle error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Unable to update like."
+        );
+
+
+    } finally {
+
+        episodeLikeButton.disabled =
+            false;
+
+    }
 
 }
 
