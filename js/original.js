@@ -1609,6 +1609,7 @@ async function submitOriginalComment() {
             "originalCommentInput"
         );
 
+
     const submitButton =
         document.getElementById(
             "originalCommentSubmit"
@@ -1629,7 +1630,6 @@ async function submitOriginalComment() {
             )}`;
 
         return;
-
     }
 
 
@@ -1651,7 +1651,6 @@ async function submitOriginalComment() {
         input.focus();
 
         return;
-
     }
 
 
@@ -1662,7 +1661,6 @@ async function submitOriginalComment() {
         );
 
         return;
-
     }
 
 
@@ -1679,22 +1677,26 @@ async function submitOriginalComment() {
 
     try {
 
-const token =
-    localStorage.getItem("token");
+        const response =
+            await fetch(
+                `${API}/api/originals/${originalId}/comments`,
+                {
+                    method: "POST",
 
+                    headers: {
+                        "Content-Type":
+                            "application/json",
 
-const response =
-    await fetch(
-        `${API}/api/originals/${originalId}/comments`,
-        {
-            headers: token
-                ? {
-                    Authorization:
-                        `Bearer ${token}`
+                        Authorization:
+                            `Bearer ${token}`
+                    },
+
+                    body:
+                        JSON.stringify({
+                            comment
+                        })
                 }
-                : {}
-        }
-    );
+            );
 
 
         const data =
