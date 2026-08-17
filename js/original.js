@@ -2172,29 +2172,34 @@ function startReading() {
 
 async function shareOriginal() {
 
+    const shareDescription =
+        original.description
+            ? original.description
+                .replace(/\s+/g, " ")
+                .trim()
+                .slice(0, 140)
+            : "An exclusive MyLikith Original series.";
+
+
+    const shareText =
+        `🎬 Watch ${original.title} on MyLikith Originals!\n\n` +
+        `${shareDescription}\n\n` +
+        `▶️ Watch now on MyLikith`;
+
+
     const shareData = {
 
         title:
             original.title,
 
-        const shareDescription =
-    original.description
-        ? original.description
-            .replace(/\s+/g, " ")
-            .trim()
-            .slice(0, 140)
-        : "An exclusive MyLikith Original series.";
-
-
-const shareText =
-    `🎬 Watch ${original.title} on MyLikith Originals!\n\n` +
-    `${shareDescription}\n\n` +
-    `▶️ Watch now on MyLikith`;
+        text:
+            shareText,
 
         url:
             window.location.href
 
     };
+
 
     try {
 
@@ -2206,22 +2211,41 @@ const shareText =
                 shareData
             );
 
-        } else {
-
-            await navigator.clipboard.writeText(
-                window.location.href
-            );
-
-            alert(
-                "Original link copied."
-            );
+            return;
 
         }
 
+
+        /*
+         * Fallback for browsers
+         * without Web Share API.
+         */
+
+        await navigator.clipboard.writeText(
+            `${shareText}\n${window.location.href}`
+        );
+
+
+        alert(
+            "Share message copied to clipboard."
+        );
+
+
     } catch (error) {
 
-        console.log(
-            "Share cancelled."
+        if (
+            error.name ===
+            "AbortError"
+        ) {
+
+            return;
+
+        }
+
+
+        console.error(
+            "Original share error:",
+            error
         );
 
     }
