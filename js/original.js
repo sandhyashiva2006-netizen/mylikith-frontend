@@ -734,11 +734,92 @@ function renderOriginal() {
     ).textContent =
         original.title || "Untitled Original";
 
+const descriptionElement =
     document.getElementById(
         "originalDescription"
-    ).textContent =
-        original.description ||
-        "An exclusive MyLikith Original.";
+    );
+
+
+const descriptionToggle =
+    document.getElementById(
+        "originalDescriptionToggle"
+    );
+
+
+const fullDescription =
+    original.description ||
+    "An exclusive MyLikith Original.";
+
+
+descriptionElement.textContent =
+    fullDescription;
+
+
+/*
+ * Reset the description state
+ * every time an Original is loaded.
+ */
+
+descriptionElement.classList.remove(
+    "expanded"
+);
+
+
+descriptionToggle.textContent =
+    "Read More";
+
+
+/*
+ * Only show Read More when the
+ * description is actually long.
+ */
+
+if (
+    fullDescription.length > 280
+) {
+
+    descriptionElement.classList.add(
+        "collapsed"
+    );
+
+
+    descriptionToggle.hidden =
+        false;
+
+
+    descriptionToggle.onclick =
+        () => {
+
+            const expanded =
+                descriptionElement.classList.toggle(
+                    "expanded"
+                );
+
+
+            descriptionElement.classList.toggle(
+                "collapsed",
+                !expanded
+            );
+
+
+            descriptionToggle.textContent =
+                expanded
+                    ? "Read Less"
+                    : "Read More";
+
+        };
+
+} else {
+
+    descriptionElement.classList.remove(
+        "collapsed"
+    );
+
+
+    descriptionToggle.hidden =
+        true;
+
+}
 
     document.getElementById(
         "originalLanguage"
@@ -2172,6 +2253,13 @@ function startReading() {
 
 async function shareOriginal() {
 
+    const shareDescription =
+        original.description
+            ? original.description
+                .replace(/\s+/g, " ")
+                .trim()
+                .slice(0, 140)
+            : "An exclusive MyLikith Original series.";
 
 
     const shareText =
