@@ -121,9 +121,9 @@ export async function onRequest(context) {
             "MyLikith Original";
 
 
-        const description =
-            original.description ||
-            "Watch exclusive MyLikith Originals on MyLikith.";
+const description =
+    original.description ||
+    "Watch exclusive MyLikith Original episodes on MyLikith.";
 
 
         const coverImage =
@@ -152,11 +152,11 @@ export async function onRequest(context) {
          * within a safe preview length.
          */
 
-        const cleanDescription =
-            description
-                .replace(/\s+/g, " ")
-                .trim()
-                .slice(0, 300);
+const cleanDescription =
+    description
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, 140);
 
 
         /*
