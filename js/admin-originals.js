@@ -360,7 +360,7 @@ function renderOriginalReports(
 
 
     reports.forEach(
-        report => {
+        (report) => {
 
             const card =
                 document.createElement(
@@ -395,10 +395,13 @@ function renderOriginalReports(
                                 )}
                             </h3>
 
+
                             <span class="original-meta-pill">
+
                                 Report #${Number(
                                     report.report_id
                                 )}
+
                             </span>
 
                         </div>
@@ -413,6 +416,7 @@ function renderOriginalReports(
                                 Reported Comment
                             </strong>
 
+
                             <p>
                                 ${escapeHTML(
                                     report.comment ||
@@ -426,27 +430,33 @@ function renderOriginalReports(
                         <div class="original-card-meta">
 
                             <span class="original-meta-pill">
+
                                 👤 Commenter:
                                 ${escapeHTML(
                                     report.commenter_name ||
                                     "Unknown"
                                 )}
+
                             </span>
 
 
                             <span class="original-meta-pill">
+
                                 🚩 Reporter:
                                 ${escapeHTML(
                                     report.reporter_name ||
                                     "Unknown"
                                 )}
+
                             </span>
 
 
                             <span class="original-meta-pill">
+
                                 📅 ${escapeHTML(
                                     reportedDate
                                 )}
+
                             </span>
 
                         </div>
@@ -461,12 +471,35 @@ function renderOriginalReports(
                                 Report Reason
                             </strong>
 
+
                             <p>
                                 ${escapeHTML(
                                     report.report_reason ||
                                     "No reason provided."
                                 )}
                             </p>
+
+                        </div>
+
+
+                        <div class="original-report-actions">
+
+                            <button
+                                type="button"
+                                class="original-report-delete"
+                                data-report-id="${report.report_id}"
+                            >
+                                🗑 Delete Comment
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="original-report-dismiss"
+                                data-report-id="${report.report_id}"
+                            >
+                                ✓ Dismiss Report
+                            </button>
 
                         </div>
 
@@ -477,10 +510,190 @@ function renderOriginalReports(
             `;
 
 
-            container.appendChild(card);
+            container.appendChild(
+                card
+            );
 
         }
     );
+
+
+    const deleteButtons =
+        container.querySelectorAll(
+            ".original-report-delete"
+        );
+
+
+    deleteButtons.forEach(
+        (button) => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    deleteReportedOriginalComment(
+                        button.dataset.reportId
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    const dismissButtons =
+        container.querySelectorAll(
+            ".original-report-dismiss"
+        );
+
+
+    dismissButtons.forEach(
+        (button) => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    dismissOriginalCommentReport(
+                        button.dataset.reportId
+                    );
+
+                }
+            );
+
+        }
+    );
+
+}
+
+async function deleteReportedOriginalComment(
+    reportId
+) {
+
+    const confirmed =
+        confirm(
+            "Delete this comment permanently?\n\nThis will also remove all reports for this comment."
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await adminFetch(
+                `${API}/api/admin/originals/comment-reports/${reportId}/comment`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to delete comment."
+            );
+
+        }
+
+
+        alert(
+            "Comment deleted successfully."
+        );
+
+
+        await loadOriginalReports();
+
+
+    } catch (error) {
+
+        console.error(
+            "Admin Original comment delete error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Unable to delete comment."
+        );
+
+    }
+
+}
+
+async function dismissOriginalCommentReport(
+    reportId
+) {
+
+    const confirmed =
+        confirm(
+            "Dismiss this report?\n\nThe comment will remain."
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await adminFetch(
+                `${API}/api/admin/originals/comment-reports/${reportId}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to dismiss report."
+            );
+
+        }
+
+
+        alert(
+            "Report dismissed successfully."
+        );
+
+
+        await loadOriginalReports();
+
+
+    } catch (error) {
+
+        console.error(
+            "Admin Original report dismiss error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Unable to dismiss report."
+        );
+
+    }
 
 }
 
