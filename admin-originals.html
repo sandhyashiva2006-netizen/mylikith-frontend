@@ -445,19 +445,68 @@
                     </div>
 
 
-                    <div class="original-field">
+ <div class="original-field original-cover-field">
 
-                        <label for="originalCover">
-                            Cover Image URL
-                        </label>
+    <label for="originalCover">
+        Cover Image
+    </label>
 
-                        <input
-                            type="url"
-                            id="originalCover"
-                            placeholder="https://..."
-                        >
+    <div class="cover-upload-box">
 
-                    </div>
+        <div
+            id="coverPreview"
+            class="cover-preview"
+        >
+            <div class="cover-preview-placeholder">
+                🎬
+                <span>
+                    No cover selected
+                </span>
+            </div>
+        </div>
+
+        <div class="cover-upload-controls">
+
+            <input
+                type="file"
+                id="originalCoverFile"
+                accept="image/jpeg,image/png,image/webp"
+                hidden
+            >
+
+            <button
+                type="button"
+                id="chooseCoverBtn"
+                class="originals-secondary-btn"
+            >
+                Choose Cover
+            </button>
+
+            <button
+                type="button"
+                id="removeCoverBtn"
+                class="originals-secondary-btn"
+                hidden
+            >
+                Remove
+            </button>
+
+            <div
+                id="coverUploadStatus"
+                class="cover-upload-status"
+            ></div>
+
+        </div>
+
+    </div>
+
+    <!-- Existing database value -->
+    <input
+        type="hidden"
+        id="originalCover"
+    >
+
+</div>
 
 
                     <div class="original-field">

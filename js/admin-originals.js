@@ -1,5 +1,416 @@
 const API = "https://mylikith-backend.onrender.com";
 
+/* =========================================================
+   ORIGINAL COVER UPLOAD
+========================================================= */
+
+const originalCoverFile =
+    document.getElementById(
+        "originalCoverFile"
+    );
+
+const chooseCoverBtn =
+    document.getElementById(
+        "chooseCoverBtn"
+    );
+
+const removeCoverBtn =
+    document.getElementById(
+        "removeCoverBtn"
+    );
+
+const coverPreview =
+    document.getElementById(
+        "coverPreview"
+    );
+
+const coverUploadStatus =
+    document.getElementById(
+        "coverUploadStatus"
+    );
+
+
+let coverUploadRunning =
+    false;
+
+
+/* =========================================================
+   CHOOSE COVER
+========================================================= */
+
+chooseCoverBtn.addEventListener(
+    "click",
+    () => {
+
+        if (coverUploadRunning) {
+            return;
+        }
+
+        originalCoverFile.click();
+
+    }
+);
+
+
+/* =========================================================
+   FILE SELECTED
+========================================================= */
+
+originalCoverFile.addEventListener(
+    "change",
+    async () => {
+
+        const file =
+            originalCoverFile.files[0];
+
+        if (!file) {
+            return;
+        }
+
+
+        const allowedTypes = [
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+        ];
+
+
+        if (
+            !allowedTypes.includes(
+                file.type
+            )
+        ) {
+
+            showCoverUploadStatus(
+                "Only JPG, PNG and WebP images are allowed.",
+                "error"
+            );
+
+            originalCoverFile.value = "";
+
+            return;
+
+        }
+
+
+        if (
+            file.size >
+            5 * 1024 * 1024
+        ) {
+
+            showCoverUploadStatus(
+                "Cover image must be 5 MB or smaller.",
+                "error"
+            );
+
+            originalCoverFile.value = "";
+
+            return;
+
+        }
+
+
+        previewCoverFile(
+            file
+        );
+
+
+        await uploadOriginalCover(
+            file
+        );
+
+    }
+);
+
+
+/* =========================================================
+   PREVIEW LOCAL FILE
+========================================================= */
+
+function previewCoverFile(
+    file
+) {
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        event => {
+
+            coverPreview.innerHTML = `
+
+                <img
+                    src="${event.target.result}"
+                    alt="Cover preview"
+                >
+
+            `;
+
+        };
+
+
+    reader.readAsDataURL(
+        file
+    );
+
+}
+
+
+/* =========================================================
+   UPLOAD COVER
+========================================================= */
+
+async function uploadOriginalCover(
+    file
+) {
+
+    if (coverUploadRunning) {
+        return;
+    }
+
+
+    coverUploadRunning = true;
+
+    chooseCoverBtn.disabled = true;
+
+    removeCoverBtn.hidden = true;
+
+
+    showCoverUploadStatus(
+        "Uploading cover...",
+        "loading"
+    );
+
+
+    try {
+
+        const formData =
+            new FormData();
+
+
+        formData.append(
+            "cover",
+            file
+        );
+
+
+        const response =
+            await adminFetch(
+                `${API}/api/admin/originals/cover-upload`,
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Cover upload failed."
+            );
+
+        }
+
+
+        if (
+            !data.cover_url
+        ) {
+
+            throw new Error(
+                "Cover upload succeeded but no image URL was returned."
+            );
+
+        }
+
+
+        /*
+         * Store Worker URL in the existing
+         * cover_url field.
+         */
+
+        document.getElementById(
+            "originalCover"
+        ).value =
+            data.cover_url;
+
+
+        showCoverUploadStatus(
+            "✓ Cover uploaded successfully.",
+            "success"
+        );
+
+
+        removeCoverBtn.hidden =
+            false;
+
+
+    } catch (error) {
+
+        console.error(
+            "Cover upload error:",
+            error
+        );
+
+
+        document.getElementById(
+            "originalCover"
+        ).value = "";
+
+
+        showCoverUploadStatus(
+            error.message ||
+            "Unable to upload cover.",
+            "error"
+        );
+
+    } finally {
+
+        coverUploadRunning =
+            false;
+
+        chooseCoverBtn.disabled =
+            false;
+
+    }
+
+}
+
+
+/* =========================================================
+   REMOVE COVER
+========================================================= */
+
+removeCoverBtn.addEventListener(
+    "click",
+    () => {
+
+        if (coverUploadRunning) {
+            return;
+        }
+
+
+        originalCoverFile.value =
+            "";
+
+        document.getElementById(
+            "originalCover"
+        ).value =
+            "";
+
+
+        coverPreview.innerHTML = `
+
+            <div class="cover-preview-placeholder">
+
+                🎬
+
+                <span>
+                    No cover selected
+                </span>
+
+            </div>
+
+        `;
+
+
+        removeCoverBtn.hidden =
+            true;
+
+
+        showCoverUploadStatus(
+            "",
+            ""
+        );
+
+    }
+);
+
+/* =========================================================
+   RENDER EXISTING COVER
+========================================================= */
+
+function renderExistingCover(
+    coverUrl
+) {
+
+    if (!coverUrl) {
+
+        coverPreview.innerHTML = `
+
+            <div class="cover-preview-placeholder">
+
+                🎬
+
+                <span>
+                    No cover selected
+                </span>
+
+            </div>
+
+        `;
+
+        removeCoverBtn.hidden =
+            true;
+
+        return;
+
+    }
+
+
+    coverPreview.innerHTML = `
+
+        <img
+            src="${coverUrl}"
+            alt="Original cover"
+        >
+
+    `;
+
+
+    removeCoverBtn.hidden =
+        false;
+
+
+    showCoverUploadStatus(
+        "Current cover",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function showCoverUploadStatus(
+    message,
+    type
+) {
+
+    coverUploadStatus.textContent =
+        message;
+
+    coverUploadStatus.className =
+        "cover-upload-status";
+
+    if (type) {
+
+        coverUploadStatus.classList.add(
+            `is-${type}`
+        );
+
+    }
+
+}
+
 const PART_SIZE = 10 * 1024 * 1024;
 const MAX_RETRIES = 3;
 
@@ -1006,6 +1417,34 @@ function openNewOriginalForm() {
 
     originalForm.reset();
 
+document.getElementById(
+    "originalCover"
+).value = "";
+
+originalCoverFile.value = "";
+
+coverPreview.innerHTML = `
+
+    <div class="cover-preview-placeholder">
+
+        🎬
+
+        <span>
+            No cover selected
+        </span>
+
+    </div>
+
+`;
+
+removeCoverBtn.hidden =
+    true;
+
+showCoverUploadStatus(
+    "",
+    ""
+);
+
     document.getElementById(
         "originalId"
     ).value = "";
@@ -1084,6 +1523,10 @@ async function editOriginal(id) {
         document.getElementById(
             "originalCover"
         ).value = original.cover_url || "";
+
+renderExistingCover(
+    original.cover_url
+);
 
         document.getElementById(
             "originalStatus"
