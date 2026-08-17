@@ -186,6 +186,244 @@
 
 </div>
 
+<!-- =====================================================
+     EPISODE RATING
+===================================================== -->
+
+<section
+    id="episodeRatingSection"
+    class="episode-engagement-section"
+>
+
+    <div class="episode-engagement-card">
+
+        <div class="episode-engagement-header">
+
+            <div>
+
+                <span class="episode-engagement-label">
+                    ⭐ EPISODE RATING
+                </span>
+
+                <h2>
+                    Rate this Episode
+                </h2>
+
+            </div>
+
+
+            <div
+                id="episodeRatingSummary"
+                class="episode-rating-summary"
+            >
+                <strong id="episodeAverageRating">
+                    0.0
+                </strong>
+
+                <span>
+                    / 5
+                </span>
+
+                <small id="episodeRatingCount">
+                    0 ratings
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="episodeStars"
+            class="episode-stars"
+        >
+
+            <button
+                type="button"
+                class="episode-star"
+                data-rating="1"
+                aria-label="Rate 1 star"
+            >
+                ★
+            </button>
+
+            <button
+                type="button"
+                class="episode-star"
+                data-rating="2"
+                aria-label="Rate 2 stars"
+            >
+                ★
+            </button>
+
+            <button
+                type="button"
+                class="episode-star"
+                data-rating="3"
+                aria-label="Rate 3 stars"
+            >
+                ★
+            </button>
+
+            <button
+                type="button"
+                class="episode-star"
+                data-rating="4"
+                aria-label="Rate 4 stars"
+            >
+                ★
+            </button>
+
+            <button
+                type="button"
+                class="episode-star"
+                data-rating="5"
+                aria-label="Rate 5 stars"
+            >
+                ★
+            </button>
+
+        </div>
+
+
+        <p
+            id="episodeRatingMessage"
+            class="episode-rating-message"
+        ></p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     EPISODE COMMENTS
+===================================================== -->
+
+<section
+    id="episodeCommentsSection"
+    class="episode-comments-section"
+>
+
+    <div class="episode-comments-card">
+
+        <div class="episode-comments-header">
+
+            <div>
+
+                <span class="episode-engagement-label">
+                    💬 EPISODE DISCUSSION
+                </span>
+
+                <h2>
+                    Episode Comments
+                </h2>
+
+            </div>
+
+
+            <span
+                id="episodeCommentsCount"
+                class="episode-comments-count"
+            >
+                0 comments
+            </span>
+
+        </div>
+
+
+        <!-- Logged-in comment box -->
+
+        <div
+            id="episodeCommentForm"
+            class="episode-comment-form"
+            hidden
+        >
+
+            <textarea
+                id="episodeCommentInput"
+                class="episode-comment-input"
+                maxlength="1000"
+                rows="4"
+                placeholder="Share your thoughts about this episode..."
+            ></textarea>
+
+
+            <div class="episode-comment-form-bottom">
+
+                <span
+                    id="episodeCommentCharacters"
+                    class="episode-comment-characters"
+                >
+                    0 / 1000
+                </span>
+
+
+                <button
+                    type="button"
+                    id="episodeCommentSubmit"
+                    class="episode-comment-submit"
+                >
+                    Post Comment
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- Login prompt -->
+
+        <div
+            id="episodeCommentLogin"
+            class="episode-comment-login"
+            hidden
+        >
+
+            <span>
+                💬
+            </span>
+
+            <div>
+
+                <strong>
+                    Join the discussion
+                </strong>
+
+                <p>
+                    Login to comment on this episode.
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="episodeCommentLoginButton"
+            >
+                Login
+            </button>
+
+        </div>
+
+
+        <!-- Comments -->
+
+        <div
+            id="episodeCommentsList"
+            class="episode-comments-list"
+        >
+
+            <div class="episode-comments-loading">
+                Loading comments...
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
         </div>
 
 <div

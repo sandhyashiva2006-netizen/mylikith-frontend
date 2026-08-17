@@ -80,6 +80,77 @@ const nextEpisodeBtn =
         "nextEpisodeBtn"
     );
 
+const episodeAverageRating =
+    document.getElementById(
+        "episodeAverageRating"
+    );
+
+
+const episodeRatingCount =
+    document.getElementById(
+        "episodeRatingCount"
+    );
+
+
+const episodeStars =
+    document.querySelectorAll(
+        ".episode-star"
+    );
+
+
+const episodeRatingMessage =
+    document.getElementById(
+        "episodeRatingMessage"
+    );
+
+
+const episodeCommentForm =
+    document.getElementById(
+        "episodeCommentForm"
+    );
+
+
+const episodeCommentLogin =
+    document.getElementById(
+        "episodeCommentLogin"
+    );
+
+
+const episodeCommentLoginButton =
+    document.getElementById(
+        "episodeCommentLoginButton"
+    );
+
+
+const episodeCommentInput =
+    document.getElementById(
+        "episodeCommentInput"
+    );
+
+
+const episodeCommentCharacters =
+    document.getElementById(
+        "episodeCommentCharacters"
+    );
+
+
+const episodeCommentSubmit =
+    document.getElementById(
+        "episodeCommentSubmit"
+    );
+
+
+const episodeCommentsList =
+    document.getElementById(
+        "episodeCommentsList"
+    );
+
+
+const episodeCommentsCount =
+    document.getElementById(
+        "episodeCommentsCount"
+    );
+
 let lockedChapterData = null;
 
 let savedProgressPercent = 0;
@@ -167,6 +238,24 @@ async function initChapter() {
 
 
     await loadChapterVideo();
+
+
+/*
+ * Load episode engagement separately.
+ *
+ * This runs even if the episode is premium/locked,
+ * so users can still see the episode rating
+ * and discussion.
+ */
+
+await Promise.all([
+    loadEpisodeRating(),
+    loadEpisodeComments()
+]);
+
+
+initializeEpisodeCommentUI();
+initializeEpisodeRatingUI();
 
 }
 
@@ -366,6 +455,1101 @@ function renderChapterInfo(
     `;
 
 }
+
+/* =========================================================
+   EPISODE RATING
+========================================================= */
+
+async function loadEpisodeRating() {
+
+    if (!chapterId) {
+        return;
+    }
+
+
+    try {
+
+        const token =
+            localStorage.getItem(
+                "token"
+            );
+
+
+        const headers = {};
+
+
+        if (token) {
+
+            headers.Authorization =
+                `Bearer ${token}`;
+
+        }
+
+
+        const response =
+            await fetch(
+                `${ORIGINAL_CHAPTER_API}/chapter/${chapterId}/rating`,
+                {
+                    headers
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load episode rating."
+            );
+
+        }
+
+
+        const rating =
+            Number(
+                data.rating || 0
+            );
+
+
+        const ratingCount =
+            Number(
+                data.rating_count || 0
+            );
+
+
+        const userRating =
+            Number(
+                data.user_rating || 0
+            );
+
+
+        if (episodeAverageRating) {
+
+            episodeAverageRating.textContent =
+                rating.toFixed(1);
+
+        }
+
+
+        if (episodeRatingCount) {
+
+            episodeRatingCount.textContent =
+                `${ratingCount} ${
+                    ratingCount === 1
+                        ? "rating"
+                        : "ratings"
+                }`;
+
+        }
+
+
+        updateEpisodeStars(
+            userRating || rating
+        );
+
+
+        if (userRating > 0) {
+
+            episodeRatingMessage.textContent =
+                "You rated this episode.";
+
+        } else {
+
+            episodeRatingMessage.textContent =
+                "Tap a star to rate this episode.";
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Episode rating load error:",
+            error
+        );
+
+    }
+
+}
+
+
+function initializeEpisodeRatingUI() {
+
+    episodeStars.forEach(
+        star => {
+
+            star.addEventListener(
+                "mouseenter",
+                () => {
+
+                    updateEpisodeStars(
+                        Number(
+                            star.dataset.rating
+                        )
+                    );
+
+                }
+            );
+
+
+            star.addEventListener(
+                "click",
+                () => {
+
+                    rateEpisode(
+                        Number(
+                            star.dataset.rating
+                        )
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    const starsContainer =
+        document.getElementById(
+            "episodeStars"
+        );
+
+
+    if (starsContainer) {
+
+        starsContainer.addEventListener(
+            "mouseleave",
+            () => {
+
+                loadEpisodeRating();
+
+            }
+        );
+
+    }
+
+}
+
+
+function updateEpisodeStars(
+    rating
+) {
+
+    episodeStars.forEach(
+        star => {
+
+            const starRating =
+                Number(
+                    star.dataset.rating
+                );
+
+
+            star.classList.toggle(
+                "active",
+                starRating <= rating
+            );
+
+        }
+    );
+
+}
+
+
+async function rateEpisode(
+    rating
+) {
+
+    const token =
+        localStorage.getItem(
+            "token"
+        );
+
+
+    if (!token) {
+
+        window.location.href =
+            `login.html?redirect=${encodeURIComponent(
+                window.location.href
+            )}`;
+
+        return;
+
+    }
+
+
+    if (
+        !Number.isInteger(rating) ||
+        rating < 1 ||
+        rating > 5
+    ) {
+
+        return;
+
+    }
+
+
+    episodeStars.forEach(
+        star => {
+            star.disabled = true;
+        }
+    );
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${ORIGINAL_CHAPTER_API}/chapter/${chapterId}/rating`,
+                {
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            `Bearer ${token}`
+
+                    },
+
+                    body:
+                        JSON.stringify({
+                            rating
+                        })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to save rating."
+            );
+
+        }
+
+
+        if (episodeAverageRating) {
+
+            episodeAverageRating.textContent =
+                Number(
+                    data.rating || 0
+                ).toFixed(1);
+
+        }
+
+
+        if (episodeRatingCount) {
+
+            const count =
+                Number(
+                    data.rating_count || 0
+                );
+
+
+            episodeRatingCount.textContent =
+                `${count} ${
+                    count === 1
+                        ? "rating"
+                        : "ratings"
+                }`;
+
+        }
+
+
+        updateEpisodeStars(
+            Number(
+                data.user_rating ||
+                rating
+            )
+        );
+
+
+        episodeRatingMessage.textContent =
+            "Your rating has been saved.";
+
+
+    } catch (error) {
+
+        console.error(
+            "Episode rating save error:",
+            error
+        );
+
+
+        episodeRatingMessage.textContent =
+            error.message ||
+            "Unable to save rating.";
+
+    } finally {
+
+        episodeStars.forEach(
+            star => {
+                star.disabled = false;
+            }
+        );
+
+    }
+
+}
+
+/* =========================================================
+   EPISODE COMMENTS
+========================================================= */
+
+async function loadEpisodeComments() {
+
+    if (
+        !chapterId ||
+        !episodeCommentsList
+    ) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const token =
+            localStorage.getItem(
+                "token"
+            );
+
+
+        const headers = {};
+
+
+        if (token) {
+
+            headers.Authorization =
+                `Bearer ${token}`;
+
+        }
+
+
+        const response =
+            await fetch(
+                `${ORIGINAL_CHAPTER_API}/chapter/${chapterId}/comments`,
+                {
+                    headers
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load comments."
+            );
+
+        }
+
+
+        renderEpisodeComments(
+            data.comments || []
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Episode comments load error:",
+            error
+        );
+
+
+        episodeCommentsList.innerHTML =
+            `
+            <div class="episode-comments-empty">
+                Unable to load comments right now.
+            </div>
+            `;
+
+    }
+
+}
+
+
+function renderEpisodeComments(
+    comments
+) {
+
+    if (!episodeCommentsList) {
+        return;
+    }
+
+
+    if (episodeCommentsCount) {
+
+        episodeCommentsCount.textContent =
+            `${comments.length} ${
+                comments.length === 1
+                    ? "comment"
+                    : "comments"
+            }`;
+
+    }
+
+
+    if (!comments.length) {
+
+        episodeCommentsList.innerHTML =
+            `
+            <div class="episode-comments-empty">
+
+                <div class="episode-comments-empty-icon">
+                    💬
+                </div>
+
+                <strong>
+                    No comments yet
+                </strong>
+
+                <p>
+                    Be the first to share your thoughts about this episode.
+                </p>
+
+            </div>
+            `;
+
+        return;
+
+    }
+
+
+    episodeCommentsList.innerHTML =
+        comments
+            .map(
+                comment =>
+                    renderEpisodeComment(
+                        comment
+                    )
+            )
+            .join("");
+
+
+    episodeCommentsList
+        .querySelectorAll(
+            ".episode-comment-delete"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        deleteEpisodeComment(
+                            button.dataset.commentId
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+    episodeCommentsList
+        .querySelectorAll(
+            ".episode-comment-report"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        reportEpisodeComment(
+                            button.dataset.commentId,
+                            button
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+function renderEpisodeComment(
+    comment
+) {
+
+    const name =
+        comment.user_name ||
+        "Reader";
+
+
+    const initial =
+        name
+            .trim()
+            .charAt(0)
+            .toUpperCase() ||
+        "R";
+
+
+    const date =
+        comment.created_at
+            ? new Date(
+                comment.created_at
+            ).toLocaleDateString(
+                undefined,
+                {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                }
+            )
+            : "";
+
+
+    return `
+        <article
+            class="episode-comment"
+        >
+
+            <div class="episode-comment-avatar">
+                ${escapeHTML(initial)}
+            </div>
+
+
+            <div class="episode-comment-body">
+
+                <div class="episode-comment-header">
+
+                    <strong>
+                        ${escapeHTML(name)}
+                    </strong>
+
+                    <span>
+                        ${escapeHTML(date)}
+                    </span>
+
+                </div>
+
+
+                <p class="episode-comment-text">
+                    ${escapeHTML(
+                        comment.comment || ""
+                    )}
+                </p>
+
+
+                <div class="episode-comment-actions">
+
+                    ${
+                        comment.is_owner
+                            ? `
+                                <button
+                                    type="button"
+                                    class="episode-comment-delete"
+                                    data-comment-id="${Number(
+                                        comment.id
+                                    )}"
+                                >
+                                    🗑 Delete
+                                </button>
+                              `
+                            : ""
+                    }
+
+
+                    ${
+                        comment.is_reported
+                            ? `
+                                <span
+                                    class="episode-comment-reported"
+                                >
+                                    ✓ Reported
+                                </span>
+                              `
+                            : `
+                                <button
+                                    type="button"
+                                    class="episode-comment-report"
+                                    data-comment-id="${Number(
+                                        comment.id
+                                    )}"
+                                >
+                                    🚩 Report
+                                </button>
+                              `
+                    }
+
+                </div>
+
+            </div>
+
+        </article>
+    `;
+}
+
+
+function initializeEpisodeCommentUI() {
+
+    const token =
+        localStorage.getItem(
+            "token"
+        );
+
+
+    if (token) {
+
+        if (episodeCommentForm) {
+
+            episodeCommentForm.hidden =
+                false;
+
+        }
+
+
+        if (episodeCommentLogin) {
+
+            episodeCommentLogin.hidden =
+                true;
+
+        }
+
+    } else {
+
+        if (episodeCommentForm) {
+
+            episodeCommentForm.hidden =
+                true;
+
+        }
+
+
+        if (episodeCommentLogin) {
+
+            episodeCommentLogin.hidden =
+                false;
+
+        }
+
+    }
+
+
+    if (episodeCommentLoginButton) {
+
+        episodeCommentLoginButton.onclick =
+            () => {
+
+                window.location.href =
+                    `login.html?redirect=${encodeURIComponent(
+                        window.location.href
+                    )}`;
+
+            };
+
+    }
+
+
+    if (episodeCommentInput) {
+
+        episodeCommentInput.addEventListener(
+            "input",
+            () => {
+
+                if (episodeCommentCharacters) {
+
+                    episodeCommentCharacters.textContent =
+                        `${episodeCommentInput.value.length} / 1000`;
+
+                }
+
+            }
+        );
+
+    }
+
+
+    if (episodeCommentSubmit) {
+
+        episodeCommentSubmit.onclick =
+            postEpisodeComment;
+
+    }
+
+}
+
+
+async function postEpisodeComment() {
+
+    const token =
+        localStorage.getItem(
+            "token"
+        );
+
+
+    if (!token) {
+
+        window.location.href =
+            `login.html?redirect=${encodeURIComponent(
+                window.location.href
+            )}`;
+
+        return;
+
+    }
+
+
+    const comment =
+        episodeCommentInput.value
+            .trim();
+
+
+    if (!comment) {
+
+        alert(
+            "Please enter a comment."
+        );
+
+        return;
+
+    }
+
+
+    if (comment.length > 1000) {
+
+        alert(
+            "Comment is too long."
+        );
+
+        return;
+
+    }
+
+
+    episodeCommentSubmit.disabled =
+        true;
+
+
+    episodeCommentSubmit.textContent =
+        "Posting...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${ORIGINAL_CHAPTER_API}/chapter/${chapterId}/comments`,
+                {
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            `Bearer ${token}`
+
+                    },
+
+                    body:
+                        JSON.stringify({
+                            comment
+                        })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to post comment."
+            );
+
+        }
+
+
+        episodeCommentInput.value =
+            "";
+
+
+        if (episodeCommentCharacters) {
+
+            episodeCommentCharacters.textContent =
+                "0 / 1000";
+
+        }
+
+
+        await loadEpisodeComments();
+
+
+    } catch (error) {
+
+        console.error(
+            "Episode comment post error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Unable to post comment."
+        );
+
+    } finally {
+
+        episodeCommentSubmit.disabled =
+            false;
+
+        episodeCommentSubmit.textContent =
+            "Post Comment";
+
+    }
+
+}
+
+
+async function deleteEpisodeComment(
+    commentId
+) {
+
+    const confirmed =
+        confirm(
+            "Delete this comment?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    const token =
+        localStorage.getItem(
+            "token"
+        );
+
+
+    if (!token) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${ORIGINAL_CHAPTER_API}/chapter/${chapterId}/comments/${commentId}`,
+                {
+                    method: "DELETE",
+
+                    headers: {
+
+                        "Authorization":
+                            `Bearer ${token}`
+
+                    }
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to delete comment."
+            );
+
+        }
+
+
+        await loadEpisodeComments();
+
+
+    } catch (error) {
+
+        console.error(
+            "Episode comment delete error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Unable to delete comment."
+        );
+
+    }
+
+}
+
+
+async function reportEpisodeComment(
+    commentId,
+    button
+) {
+
+    const token =
+        localStorage.getItem(
+            "token"
+        );
+
+
+    if (!token) {
+
+        window.location.href =
+            `login.html?redirect=${encodeURIComponent(
+                window.location.href
+            )}`;
+
+        return;
+
+    }
+
+
+    const reason =
+        prompt(
+            "Why are you reporting this comment?"
+        );
+
+
+    if (
+        reason === null
+    ) {
+
+        return;
+
+    }
+
+
+    const trimmedReason =
+        reason.trim();
+
+
+    if (
+        trimmedReason.length > 1000
+    ) {
+
+        alert(
+            "Report reason is too long."
+        );
+
+        return;
+
+    }
+
+
+    button.disabled =
+        true;
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${ORIGINAL_CHAPTER_API}/chapter/${chapterId}/comments/${commentId}/report`,
+                {
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            `Bearer ${token}`
+
+                    },
+
+                    body:
+                        JSON.stringify({
+                            reason:
+                                trimmedReason
+                        })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            response.status === 409
+        ) {
+
+            await loadEpisodeComments();
+
+            return;
+
+        }
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Unable to report comment."
+            );
+
+        }
+
+
+        await loadEpisodeComments();
+
+
+    } catch (error) {
+
+        console.error(
+            "Episode comment report error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Unable to report comment."
+        );
+
+
+    } finally {
+
+        button.disabled =
+            false;
+
+    }
+
+}
+
 
 
 /* =========================================================

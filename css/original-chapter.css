@@ -565,3 +565,856 @@
 
 }
 
+/* =========================================================
+   EPISODE RATING & COMMENTS
+========================================================= */
+
+.episode-engagement-section,
+.episode-comments-section {
+
+    width:
+        min(1100px, 92%);
+
+    margin:
+        28px auto 0;
+
+}
+
+
+.episode-engagement-card,
+.episode-comments-card {
+
+    border:
+        1px solid
+        rgba(167,139,250,.18);
+
+    border-radius:
+        20px;
+
+    background:
+        rgba(15,23,42,.72);
+
+    box-shadow:
+        0 18px 55px
+        rgba(0,0,0,.25);
+
+}
+
+
+.episode-engagement-card {
+
+    padding:
+        26px;
+
+}
+
+
+.episode-engagement-header,
+.episode-comments-header {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+}
+
+
+.episode-engagement-label {
+
+    display:
+        block;
+
+    margin-bottom:
+        7px;
+
+    color:
+        #a78bfa;
+
+    font-size:
+        12px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        1.5px;
+
+}
+
+
+.episode-engagement-header h2,
+.episode-comments-header h2 {
+
+    margin:
+        0;
+
+    font-size:
+        22px;
+
+}
+
+
+.episode-rating-summary {
+
+    display:
+        flex;
+
+    align-items:
+        baseline;
+
+    gap:
+        4px;
+
+    color:
+        #aab4ce;
+
+}
+
+
+.episode-rating-summary strong {
+
+    color:
+        #fbbf24;
+
+    font-size:
+        28px;
+
+}
+
+
+.episode-rating-summary small {
+
+    margin-left:
+        8px;
+
+    color:
+        #929db8;
+
+}
+
+
+.episode-stars {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        5px;
+
+    margin-top:
+        18px;
+
+}
+
+
+.episode-star {
+
+    width:
+        42px;
+
+    height:
+        42px;
+
+    padding:
+        0;
+
+    border:
+        0;
+
+    background:
+        transparent;
+
+    color:
+        rgba(255,255,255,.18);
+
+    font-size:
+        30px;
+
+    line-height:
+        1;
+
+    cursor:
+        pointer;
+
+    transition:
+        transform .15s ease,
+        color .15s ease;
+
+}
+
+
+.episode-star:hover {
+
+    transform:
+        scale(1.12);
+
+    color:
+        #fbbf24;
+
+}
+
+
+.episode-star.active {
+
+    color:
+        #fbbf24;
+
+}
+
+
+.episode-star:disabled {
+
+    cursor:
+        wait;
+
+    opacity:
+        .7;
+
+}
+
+
+.episode-rating-message {
+
+    min-height:
+        20px;
+
+    margin:
+        10px 0 0;
+
+    color:
+        #929db8;
+
+    font-size:
+        13px;
+
+}
+
+
+/* =========================================================
+   COMMENTS
+========================================================= */
+
+.episode-comments-card {
+
+    padding:
+        28px;
+
+}
+
+
+.episode-comments-count {
+
+    padding:
+        7px 12px;
+
+    border:
+        1px solid
+        rgba(167,139,250,.18);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(124,58,237,.10);
+
+    color:
+        #c4b5fd;
+
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+
+}
+
+
+.episode-comment-form {
+
+    margin-top:
+        22px;
+
+    padding:
+        18px;
+
+    border:
+        1px solid
+        rgba(167,139,250,.15);
+
+    border-radius:
+        16px;
+
+    background:
+        rgba(2,6,23,.35);
+
+}
+
+
+.episode-comment-input {
+
+    width:
+        100%;
+
+    min-height:
+        105px;
+
+    padding:
+        14px;
+
+    border:
+        1px solid
+        rgba(167,139,250,.20);
+
+    border-radius:
+        12px;
+
+    outline:
+        none;
+
+    resize:
+        vertical;
+
+    background:
+        rgba(15,23,42,.8);
+
+    color:
+        #fff;
+
+    font:
+        inherit;
+
+    box-sizing:
+        border-box;
+
+}
+
+
+.episode-comment-input:focus {
+
+    border-color:
+        rgba(167,139,250,.55);
+
+}
+
+
+.episode-comment-form-bottom {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        15px;
+
+    margin-top:
+        10px;
+
+}
+
+
+.episode-comment-characters {
+
+    color:
+        #78839c;
+
+    font-size:
+        12px;
+
+}
+
+
+.episode-comment-submit,
+#episodeCommentLoginButton {
+
+    min-height:
+        42px;
+
+    padding:
+        0 18px;
+
+    border:
+        0;
+
+    border-radius:
+        10px;
+
+    background:
+        #7c3aed;
+
+    color:
+        #fff;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+}
+
+
+.episode-comment-submit:hover,
+#episodeCommentLoginButton:hover {
+
+    background:
+        #8b5cf6;
+
+}
+
+
+.episode-comment-submit:disabled {
+
+    cursor:
+        wait;
+
+    opacity:
+        .65;
+
+}
+
+
+.episode-comment-login {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        14px;
+
+    margin-top:
+        22px;
+
+    padding:
+        18px;
+
+    border:
+        1px solid
+        rgba(167,139,250,.15);
+
+    border-radius:
+        14px;
+
+    background:
+        rgba(124,58,237,.08);
+
+}
+
+
+.episode-comment-login > span {
+
+    font-size:
+        28px;
+
+}
+
+
+.episode-comment-login div {
+
+    flex:
+        1;
+
+}
+
+
+.episode-comment-login strong {
+
+    display:
+        block;
+
+    margin-bottom:
+        4px;
+
+}
+
+
+.episode-comment-login p {
+
+    margin:
+        0;
+
+    color:
+        #929db8;
+
+    font-size:
+        13px;
+
+}
+
+
+.episode-comments-list {
+
+    margin-top:
+        24px;
+
+}
+
+
+.episode-comments-loading,
+.episode-comments-empty {
+
+    padding:
+        35px 20px;
+
+    text-align:
+        center;
+
+    color:
+        #929db8;
+
+}
+
+
+.episode-comments-empty-icon {
+
+    margin-bottom:
+        8px;
+
+    font-size:
+        32px;
+
+}
+
+
+.episode-comments-empty strong {
+
+    display:
+        block;
+
+    color:
+        #fff;
+
+}
+
+
+.episode-comments-empty p {
+
+    margin:
+        7px 0 0;
+
+    font-size:
+        13px;
+
+}
+
+
+.episode-comment {
+
+    display:
+        flex;
+
+    gap:
+        14px;
+
+    padding:
+        20px 0;
+
+    border-bottom:
+        1px solid
+        rgba(148,163,184,.10);
+
+}
+
+
+.episode-comment:last-child {
+
+    border-bottom:
+        0;
+
+}
+
+
+.episode-comment-avatar {
+
+    flex:
+        0 0 42px;
+
+    width:
+        42px;
+
+    height:
+        42px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(124,58,237,.20);
+
+    border:
+        1px solid
+        rgba(167,139,250,.25);
+
+    color:
+        #c4b5fd;
+
+    font-weight:
+        800;
+
+}
+
+
+.episode-comment-body {
+
+    min-width:
+        0;
+
+    flex:
+        1;
+
+}
+
+
+.episode-comment-header {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        8px;
+
+}
+
+
+.episode-comment-header strong {
+
+    color:
+        #fff;
+
+}
+
+
+.episode-comment-header span {
+
+    color:
+        #6f7b94;
+
+    font-size:
+        12px;
+
+}
+
+
+.episode-comment-text {
+
+    margin:
+        8px 0 10px;
+
+    color:
+        #d2d8e6;
+
+    line-height:
+        1.65;
+
+    white-space:
+        pre-wrap;
+
+    overflow-wrap:
+        anywhere;
+
+}
+
+
+.episode-comment-actions {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        14px;
+
+}
+
+
+.episode-comment-actions button {
+
+    padding:
+        0;
+
+    border:
+        0;
+
+    background:
+        transparent;
+
+    color:
+        #7f8aa3;
+
+    font-size:
+        12px;
+
+    cursor:
+        pointer;
+
+}
+
+
+.episode-comment-actions button:hover {
+
+    color:
+        #c4b5fd;
+
+}
+
+
+.episode-comment-reported {
+
+    color:
+        #86efac;
+
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .episode-engagement-section,
+    .episode-comments-section {
+
+        width:
+            94%;
+
+        margin-top:
+            20px;
+
+    }
+
+
+    .episode-engagement-card,
+    .episode-comments-card {
+
+        padding:
+            20px;
+
+        border-radius:
+            16px;
+
+    }
+
+
+    .episode-engagement-header,
+    .episode-comments-header {
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .episode-rating-summary {
+
+        align-self:
+            flex-start;
+
+    }
+
+
+    .episode-stars {
+
+        justify-content:
+            center;
+
+    }
+
+
+    .episode-star {
+
+        width:
+            40px;
+
+        height:
+            40px;
+
+        font-size:
+            28px;
+
+    }
+
+
+    .episode-comment-form-bottom {
+
+        align-items:
+            flex-end;
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .episode-comment-submit {
+
+        width:
+            100%;
+
+    }
+
+
+    .episode-comment-login {
+
+        align-items:
+            flex-start;
+
+        flex-wrap:
+            wrap;
+
+    }
+
+
+    #episodeCommentLoginButton {
+
+        width:
+            100%;
+
+    }
+
+}
+
