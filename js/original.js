@@ -344,10 +344,387 @@ async function toggleOriginalLike() {
 }
 
 /* =========================================================
+   ORIGINAL SEO
+========================================================= */
+
+function updateOriginalSEO() {
+
+    if (!original) {
+        return;
+    }
+
+
+    const title =
+        original.title ||
+        "MyLikith Original";
+
+
+    const description =
+        original.description ||
+        "Watch exclusive MyLikith Originals on MyLikith.";
+
+
+    const language =
+        original.language ||
+        "Original";
+
+
+    const category =
+        original.category ||
+        "Story";
+
+
+    const coverImage =
+        original.cover_url ||
+        "https://mylikith.in/assets/images/og-image.jpg";
+
+
+    const pageUrl =
+        `${window.location.origin}/original?id=${encodeURIComponent(
+            originalId
+        )}`;
+
+
+    /*
+     * Keep descriptions reasonably sized
+     * for search/social previews.
+     */
+
+    const cleanDescription =
+        description
+            .replace(/\s+/g, " ")
+            .trim()
+            .slice(0, 300);
+
+
+    /*
+     * Browser title
+     */
+
+    document.title =
+        `${title} - MyLikith Originals`;
+
+
+    /*
+     * Description
+     */
+
+    const descriptionMeta =
+        document.getElementById(
+            "metaDescription"
+        );
+
+
+    if (descriptionMeta) {
+
+        descriptionMeta.setAttribute(
+            "content",
+            cleanDescription
+        );
+
+    }
+
+
+    /*
+     * Keywords
+     */
+
+    const keywordsMeta =
+        document.getElementById(
+            "metaKeywords"
+        );
+
+
+    if (keywordsMeta) {
+
+        keywordsMeta.setAttribute(
+            "content",
+            [
+                "MyLikith Originals",
+                title,
+                language,
+                category,
+                "MyLikith",
+                "original stories"
+            ].join(", ")
+        );
+
+    }
+
+
+    /*
+     * Canonical URL
+     */
+
+    const canonical =
+        document.getElementById(
+            "canonicalUrl"
+        );
+
+
+    if (canonical) {
+
+        canonical.setAttribute(
+            "href",
+            pageUrl
+        );
+
+    }
+
+
+    /*
+     * Open Graph title
+     */
+
+    const ogTitle =
+        document.getElementById(
+            "ogTitle"
+        );
+
+
+    if (ogTitle) {
+
+        ogTitle.setAttribute(
+            "content",
+            title
+        );
+
+    }
+
+
+    /*
+     * Open Graph description
+     */
+
+    const ogDescription =
+        document.getElementById(
+            "ogDescription"
+        );
+
+
+    if (ogDescription) {
+
+        ogDescription.setAttribute(
+            "content",
+            cleanDescription
+        );
+
+    }
+
+
+    /*
+     * Open Graph image
+     */
+
+    const ogImage =
+        document.getElementById(
+            "ogImage"
+        );
+
+
+    if (ogImage) {
+
+        ogImage.setAttribute(
+            "content",
+            coverImage
+        );
+
+    }
+
+
+    /*
+     * Open Graph URL
+     */
+
+    const ogUrl =
+        document.getElementById(
+            "ogUrl"
+        );
+
+
+    if (ogUrl) {
+
+        ogUrl.setAttribute(
+            "content",
+            pageUrl
+        );
+
+    }
+
+
+    /*
+     * Twitter / X title
+     */
+
+    const twitterTitle =
+        document.getElementById(
+            "twitterTitle"
+        );
+
+
+    if (twitterTitle) {
+
+        twitterTitle.setAttribute(
+            "content",
+            title
+        );
+
+    }
+
+
+    /*
+     * Twitter / X description
+     */
+
+    const twitterDescription =
+        document.getElementById(
+            "twitterDescription"
+        );
+
+
+    if (twitterDescription) {
+
+        twitterDescription.setAttribute(
+            "content",
+            cleanDescription
+        );
+
+    }
+
+
+    /*
+     * Twitter / X image
+     */
+
+    const twitterImage =
+        document.getElementById(
+            "twitterImage"
+        );
+
+
+    if (twitterImage) {
+
+        twitterImage.setAttribute(
+            "content",
+            coverImage
+        );
+
+    }
+
+
+    /*
+     * Structured data
+     */
+
+    updateOriginalStructuredData(
+        title,
+        cleanDescription,
+        coverImage,
+        pageUrl,
+        language,
+        category
+    );
+
+}
+
+/* =========================================================
+   ORIGINAL STRUCTURED DATA
+========================================================= */
+
+function updateOriginalStructuredData(
+    title,
+    description,
+    image,
+    url,
+    language,
+    category
+) {
+
+    let schema =
+        document.getElementById(
+            "originalStructuredData"
+        );
+
+
+    if (!schema) {
+
+        schema =
+            document.createElement(
+                "script"
+            );
+
+        schema.type =
+            "application/ld+json";
+
+        schema.id =
+            "originalStructuredData";
+
+
+        document.head.appendChild(
+            schema
+        );
+
+    }
+
+
+    const data = {
+
+        "@context":
+            "https://schema.org",
+
+        "@type":
+            "VideoObject",
+
+        name:
+            title,
+
+        description:
+            description,
+
+        image:
+            [
+                image
+            ],
+
+        url:
+            url,
+
+        inLanguage:
+            language,
+
+        genre:
+            category,
+
+        publisher: {
+
+            "@type":
+                "Organization",
+
+            name:
+                "MyLikith",
+
+            url:
+                "https://mylikith.in"
+
+        }
+
+    };
+
+
+    schema.textContent =
+        JSON.stringify(
+            data
+        );
+
+}
+
+/* =========================================================
    RENDER ORIGINAL
 ========================================================= */
 
 function renderOriginal() {
+
+    updateOriginalSEO();
 
     document.title =
         `${original.title} - MyLikith Originals`;
@@ -1800,8 +2177,10 @@ async function shareOriginal() {
         title:
             original.title,
 
-        text:
-            `Watch ${original.title} on MyLikith Originals.`,
+text:
+    original.description
+        ? `${original.description}\n\nRead ${original.title} on MyLikith Originals.`
+        : `Watch ${original.title} on MyLikith Originals.`,
 
         url:
             window.location.href
