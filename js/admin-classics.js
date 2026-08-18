@@ -434,7 +434,7 @@ function renderClassicImportPreview(importData) {
             <div class="classic-import-cover-info">
                 <span class="classic-import-kicker">COVER</span>
                 <h4>${coverIsSource ? "Source cover detected" : "Default MyLikith cover"}</h4>
-                <p>${coverIsSource ? "A Gutenberg cover was found automatically and will be saved with this Classic." : "No source cover was detected. MyLikith will use the default Classics cover."}</p>
+                <p>${coverIsSource ? "A source cover was found automatically and will be saved with this Classic." : "No source cover was detected. MyLikith will use the default Classics cover."}</p>
                 <label for="importCoverImage">Cover image URL</label>
                 <input id="importCoverImage" type="url" value="${escapeAttribute(suggestedCover)}">
             </div>
