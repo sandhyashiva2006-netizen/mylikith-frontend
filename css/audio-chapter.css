@@ -24,3 +24,89 @@
   .volume-control input{width:min(180px,60vw)}
   .speed-control{justify-content:center}
 }
+
+
+/* =========================================================
+   AUDIO CHAPTER ENGAGEMENT — LIKES
+   ========================================================= */
+
+.audio-engagement{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  margin:18px 0 28px;
+  padding:16px 18px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  background:rgba(18,26,46,.62);
+}
+
+.audio-like-wrap{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.audio-like-button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  min-height:44px;
+  padding:10px 17px;
+  border:1px solid rgba(167,139,250,.24);
+  border-radius:12px;
+  color:#e2e8f0;
+  background:rgba(15,23,42,.68);
+  cursor:pointer;
+  font-weight:750;
+  transition:.22s ease;
+}
+
+.audio-like-button:hover{
+  border-color:#8b5cf6;
+  background:rgba(124,58,237,.12);
+  transform:translateY(-1px);
+}
+
+.audio-like-button.liked{
+  color:#f5d0fe;
+  border-color:rgba(192,132,252,.48);
+  background:rgba(126,34,206,.18);
+}
+
+.audio-like-button.liked #audioLikeIcon{
+  color:#e879f9;
+}
+
+.audio-like-button:disabled{
+  opacity:.6;
+  cursor:wait;
+  transform:none;
+}
+
+#audioLikeIcon{
+  font-size:21px;
+  line-height:1;
+}
+
+.audio-like-count{
+  color:#94a3b8;
+  font-size:13px;
+  font-weight:650;
+}
+
+@media(max-width:600px){
+  .audio-engagement{
+    padding:13px;
+  }
+
+  .audio-like-wrap{
+    width:100%;
+    justify-content:space-between;
+  }
+
+  .audio-like-button{
+    min-height:42px;
+  }
+}

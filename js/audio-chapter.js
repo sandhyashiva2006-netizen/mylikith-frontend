@@ -10,6 +10,133 @@ let saveInFlight=false;
 const $=id=>document.getElementById(id);
 const token=()=>localStorage.getItem("token");
 
+let audioLiked=false;
+let audioLikeCount=0;
+
+async function loadAudioLike(){
+  const button=$("audioLikeButton");
+  const count=$("audioLikeCount");
+
+  if(!button||!count||!chapterId) return;
+
+  if(!token()){
+    button.disabled=false;
+    button.title="Login to like this chapter";
+    return;
+  }
+
+  try{
+    const response=await fetch(
+      `${AUDIO_API}/chapters/${chapterId}/like`,
+      {
+        headers:headers()
+      }
+    );
+
+    const data=await response.json();
+
+    if(!response.ok||!data.success){
+      throw new Error(
+        data.message||"Unable to load like status."
+      );
+    }
+
+    audioLiked=Boolean(data.liked);
+    audioLikeCount=Number(data.likes||0);
+
+    renderAudioLike();
+
+  }catch(error){
+    console.warn(
+      "Audio like status failed:",
+      error
+    );
+  }
+}
+
+function renderAudioLike(){
+  const button=$("audioLikeButton");
+  const icon=$("audioLikeIcon");
+  const label=$("audioLikeLabel");
+  const count=$("audioLikeCount");
+
+  if(!button||!icon||!label||!count) return;
+
+  button.classList.toggle(
+    "liked",
+    audioLiked
+  );
+
+  button.setAttribute(
+    "aria-pressed",
+    String(audioLiked)
+  );
+
+  button.title=audioLiked
+    ? "Unlike this chapter"
+    : "Like this chapter";
+
+  icon.textContent=
+    audioLiked ? "♥" : "♡";
+
+  label.textContent=
+    audioLiked ? "Liked" : "Like";
+
+  count.textContent=
+    `${audioLikeCount} ${audioLikeCount===1?"Like":"Likes"}`;
+}
+
+async function toggleAudioLike(){
+  if(!token()){
+    location.href=
+      `login.html?redirect=${encodeURIComponent(location.href)}`;
+    return;
+  }
+
+  const button=$("audioLikeButton");
+
+  if(!button||button.disabled) return;
+
+  button.disabled=true;
+
+  try{
+    const response=await fetch(
+      `${AUDIO_API}/chapters/${chapterId}/like`,
+      {
+        method:"POST",
+        headers:{
+          ...headers(),
+          "Content-Type":"application/json"
+        }
+      }
+    );
+
+    const data=await response.json();
+
+    if(!response.ok||!data.success){
+      throw new Error(
+        data.message||"Unable to update like."
+      );
+    }
+
+    audioLiked=Boolean(data.liked);
+    audioLikeCount=Number(data.likes||0);
+
+    renderAudioLike();
+
+  }catch(error){
+
+    console.error(
+      "Audio like update failed:",
+      error
+    );
+
+  }finally{
+
+    button.disabled=false;
+  }
+}
+
 function formatTime(value){const n=Number(value);if(!Number.isFinite(n)||n<0)return"00:00";const s=Math.floor(n),h=Math.floor(s/3600),m=Math.floor((s%3600)/60),r=s%60;return h?`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`:`${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`}
 function headers(){const h={};if(token())h.Authorization=`Bearer ${token()}`;return h}
 function setMeta(title,description){document.title=`${title} — MyLikith Audio`;$("metaDescription").content=description;$("ogTitle").content=title;$("ogDescription").content=description}
@@ -22,6 +149,10 @@ async function init(){
   $("loginButton").addEventListener("click",()=>location.href=`login.html?redirect=${encodeURIComponent(location.href)}`);
   $("walletButton").addEventListener("click",()=>location.href="wallet.html");
   $("unlockButton").addEventListener("click",unlockChapter);
+  $("audioLikeButton").addEventListener("click",toggleAudioLike);
+
+  renderAudioLike();
+  await loadAudioLike();
   await loadChapter();
 }
 
@@ -189,6 +320,7 @@ async function unlockChapter(){
     const r=await fetch(`${MEDIA_API}/chapters/${chapterId}/unlock`,{method:"POST",headers:{...headers(),"Content-Type":"application/json"}});const d=await r.json();
     if(!r.ok||!d.success)throw new Error(d.message||"Unable to unlock chapter.");
     await loadChapter();
+    await loadAudioLike();
   }catch(e){alert(e.message);button.disabled=false;button.textContent=`🪙 Unlock for ${Number((chapterData||{}).coins_required||0)} Coins`}
 }
 
