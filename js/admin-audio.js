@@ -206,7 +206,6 @@ function renderAdminAudioNovels(
         `;
 
         return;
-
     }
 
 
@@ -221,17 +220,25 @@ function renderAdminAudioNovels(
 
                 const premium =
                     item.premium_only
-                        ? `<span class="audio-admin-badge premium">
-                            👑 Premium
-                           </span>`
+                        ? `
+                            <span
+                                class="audio-admin-badge premium"
+                            >
+                                👑 Premium
+                            </span>
+                          `
                         : "";
 
 
                 const featured =
                     item.featured
-                        ? `<span class="audio-admin-badge featured">
-                            ⭐ Featured
-                           </span>`
+                        ? `
+                            <span
+                                class="audio-admin-badge featured"
+                            >
+                                ⭐ Featured
+                            </span>
+                          `
                         : "";
 
 
@@ -247,6 +254,11 @@ function renderAdminAudioNovels(
                         item.visibility ||
                         ""
                     ).toLowerCase();
+
+
+                const published =
+                    publishStatus ===
+                    "published";
 
 
                 return `
@@ -286,11 +298,15 @@ function renderAdminAudioNovels(
                                     )}
                                 </h3>
 
+
                                 <div
                                     class="audio-admin-badges"
                                 >
+
                                     ${premium}
+
                                     ${featured}
+
                                 </div>
 
                             </div>
@@ -299,7 +315,8 @@ function renderAdminAudioNovels(
                             <p
                                 class="audio-admin-writer"
                             >
-                                ✍ ${escapeAdminAudioHtml(
+                                ✍
+                                ${escapeAdminAudioHtml(
                                     item.writer_name ||
                                     "Unknown writer"
                                 )}
@@ -368,6 +385,7 @@ function renderAdminAudioNovels(
                                     )}
                                 </span>
 
+
                                 <span
                                     class="audio-admin-status visibility ${escapeAdminAudioHtml(
                                         visibility
@@ -379,11 +397,72 @@ function renderAdminAudioNovels(
                                     )}
                                 </span>
 
+
                                 <span
                                     class="audio-admin-id"
                                 >
                                     ID: ${item.id}
                                 </span>
+
+                            </div>
+
+
+                            <!-- ACTIONS -->
+
+                            <div
+                                class="audio-admin-novel-actions"
+                            >
+
+                                <button
+                                    type="button"
+                                    class="audio-novel-action edit"
+                                    data-audio-novel-action="edit"
+                                    data-audio-novel-id="${item.id}"
+                                >
+                                    ✏️ Edit
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="audio-novel-action publish"
+                                    data-audio-novel-action="publish"
+                                    data-audio-novel-id="${item.id}"
+                                    data-published="${published}"
+                                >
+                                    ${
+                                        published
+                                            ? "📢 Unpublish"
+                                            : "📢 Publish"
+                                    }
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="audio-novel-action feature"
+                                    data-audio-novel-action="featured"
+                                    data-audio-novel-id="${item.id}"
+                                    data-featured="${Boolean(
+                                        item.featured
+                                    )}"
+                                >
+                                    ${
+                                        item.featured
+                                            ? "⭐ Unfeature"
+                                            : "⭐ Feature"
+                                    }
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="audio-novel-action delete"
+                                    data-audio-novel-action="delete"
+                                    data-audio-novel-id="${item.id}"
+                                >
+                                    🗑 Delete
+                                </button>
 
                             </div>
 
@@ -396,6 +475,685 @@ function renderAdminAudioNovels(
             }
         )
         .join("");
+
+
+    bindAdminAudioNovelActions();
+
+}
+
+/* =========================================================
+   AUDIO NOVEL ACTIONS
+   ========================================================= */
+
+function bindAdminAudioNovelActions(){
+
+    document
+        .querySelectorAll(
+            "[data-audio-novel-action]"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    async () => {
+
+                        const action =
+                            button.dataset
+                                .audioNovelAction;
+
+                        const novelId =
+                            Number(
+                                button.dataset
+                                    .audioNovelId
+                            );
+
+
+                        if(
+                            !Number.isInteger(
+                                novelId
+                            ) ||
+                            novelId <= 0
+                        ){
+
+                            return;
+
+                        }
+
+
+                        if(
+                            action ===
+                            "edit"
+                        ){
+
+                            await editAdminAudioNovel(
+                                novelId
+                            );
+
+                            return;
+
+                        }
+
+
+                        if(
+                            action ===
+                            "publish"
+                        ){
+
+                            const published =
+                                button.dataset
+                                    .published ===
+                                "true";
+
+
+                            await toggleAdminAudioNovelPublish(
+                                novelId,
+                                !published
+                            );
+
+                            return;
+
+                        }
+
+
+                        if(
+                            action ===
+                            "featured"
+                        ){
+
+                            const featured =
+                                button.dataset
+                                    .featured ===
+                                "true";
+
+
+                            await toggleAdminAudioNovelFeatured(
+                                novelId,
+                                !featured
+                            );
+
+                            return;
+
+                        }
+
+
+                        if(
+                            action ===
+                            "delete"
+                        ){
+
+                            await deleteAdminAudioNovel(
+                                novelId
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   EDIT AUDIO NOVEL
+   ========================================================= */
+
+async function editAdminAudioNovel(
+    novelId
+){
+
+    try{
+
+        const listResponse =
+    await fetch(
+        `${ADMIN_AUDIO_API}/novels`,
+        {
+            headers: {
+
+                Authorization:
+                    "Bearer " +
+                    localStorage.getItem(
+                        "token"
+                    )
+
+            }
+        }
+    );
+
+
+        const data =
+            await listResponse.json();
+
+
+        if(
+            !listResponse.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Failed to load Audio Novel."
+            );
+
+        }
+
+
+        const novels =
+            Array.isArray(
+                data.audio
+            )
+                ? data.audio
+                : [];
+
+
+        const novel =
+            novels.find(
+                item =>
+                    Number(item.id) ===
+                    novelId
+            );
+
+
+        if(!novel){
+
+            throw new Error(
+                "Audio Novel not found."
+            );
+
+        }
+
+
+        editingAudioNovelId =
+            novelId;
+
+
+        document
+            .getElementById(
+                "audioNovelTitle"
+            )
+            .value =
+                novel.title || "";
+
+
+        document
+            .getElementById(
+                "audioNovelDescription"
+            )
+            .value =
+                novel.description || "";
+
+
+        document
+            .getElementById(
+                "audioNovelCover"
+            )
+            .value =
+                novel.cover_url || "";
+
+
+        document
+            .getElementById(
+                "audioNovelLanguage"
+            )
+            .value =
+                novel.language || "";
+
+
+        document
+            .getElementById(
+                "audioNovelCategory"
+            )
+            .value =
+                novel.category || "";
+
+
+        document
+            .getElementById(
+                "audioNovelCategories"
+            )
+            .value =
+                Array.isArray(
+                    novel.categories
+                )
+                    ? novel.categories.join(
+                        ", "
+                    )
+                    : "";
+
+
+        document
+            .getElementById(
+                "audioNovelContentType"
+            )
+            .value =
+                novel.content_type ||
+                "story";
+
+
+        document
+            .getElementById(
+                "audioNovelStatus"
+            )
+            .value =
+                novel.status ||
+                "ongoing";
+
+
+        document
+            .getElementById(
+                "audioNovelPublishStatus"
+            )
+            .value =
+                novel.publish_status ||
+                "draft";
+
+
+        document
+            .getElementById(
+                "audioNovelVisibility"
+            )
+            .value =
+                novel.visibility ||
+                "private";
+
+
+        document
+            .getElementById(
+                "audioNovelPremium"
+            )
+            .checked =
+                Boolean(
+                    novel.premium_only
+                );
+
+
+        document
+            .getElementById(
+                "audioNovelFeatured"
+            )
+            .checked =
+                Boolean(
+                    novel.featured
+                );
+
+
+        const releaseDate =
+            document
+                .getElementById(
+                    "audioNovelReleaseDate"
+                );
+
+
+        if(
+            novel.release_date
+        ){
+
+            const date =
+                new Date(
+                    novel.release_date
+                );
+
+
+            if(
+                !Number.isNaN(
+                    date.getTime()
+                )
+            ){
+
+                const local =
+                    new Date(
+                        date.getTime() -
+                        date.getTimezoneOffset()
+                        * 60000
+                    )
+                    .toISOString()
+                    .slice(
+                        0,
+                        16
+                    );
+
+
+                releaseDate.value =
+                    local;
+
+            }
+
+        }else{
+
+            releaseDate.value =
+                "";
+
+        }
+
+
+        const panel =
+            document.getElementById(
+                "audioNovelCreateForm"
+            );
+
+
+        panel.hidden =
+            false;
+
+
+        const heading =
+            panel.querySelector(
+                ".audio-create-header h2"
+            );
+
+
+        if(heading){
+
+            heading.textContent =
+                "Edit Audio Novel";
+
+        }
+
+
+        const submitButton =
+            document
+                .getElementById(
+                    "audioNovelForm"
+                )
+                .querySelector(
+                    'button[type="submit"]'
+                );
+
+
+        if(submitButton){
+
+            submitButton.textContent =
+                "Update Audio Novel";
+
+        }
+
+
+        panel.scrollIntoView({
+            behavior:
+                "smooth",
+            block:
+                "start"
+        });
+
+
+    }catch(error){
+
+        console.error(
+            "Audio Novel edit load error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Failed to load Audio Novel."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   PUBLISH / UNPUBLISH
+   ========================================================= */
+
+async function toggleAdminAudioNovelPublish(
+    novelId,
+    published
+){
+
+    const action =
+        published
+            ? "publish"
+            : "unpublish";
+
+
+    if(
+        !confirm(
+            `Are you sure you want to ${action} this Audio Novel?`
+        )
+    ){
+
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                `${ADMIN_AUDIO_API}/novels/${novelId}/publish`,
+                {
+
+                    method:
+                        "PATCH",
+
+                    headers: {
+
+                        Authorization:
+                            "Bearer " +
+                            localStorage.getItem(
+                                "token"
+                            ),
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+                            published
+                        })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Failed to update publish status."
+            );
+
+        }
+
+
+        await loadAdminAudioNovels();
+
+
+    }catch(error){
+
+        console.error(
+            "Audio Novel publish error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Failed to update publish status."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   FEATURE / UNFEATURE
+   ========================================================= */
+
+async function toggleAdminAudioNovelFeatured(
+    novelId,
+    featured
+){
+
+    try{
+
+        const response =
+            await fetch(
+                `${ADMIN_AUDIO_API}/novels/${novelId}/featured`,
+                {
+
+                    method:
+                        "PATCH",
+
+                    headers: {
+
+                        Authorization:
+                            "Bearer " +
+                            localStorage.getItem(
+                                "token"
+                            ),
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+                            featured
+                        })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Failed to update featured status."
+            );
+
+        }
+
+
+        await loadAdminAudioNovels();
+
+
+    }catch(error){
+
+        console.error(
+            "Audio Novel featured error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Failed to update featured status."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   DELETE AUDIO NOVEL
+   ========================================================= */
+
+async function deleteAdminAudioNovel(
+    novelId
+){
+
+    if(
+        !confirm(
+            "Delete this Audio Novel?\n\nThis is allowed only when the novel has no chapters."
+        )
+    ){
+
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                `${ADMIN_AUDIO_API}/novels/${novelId}`,
+                {
+
+                    method:
+                        "DELETE",
+
+                    headers: {
+
+                        Authorization:
+                            "Bearer " +
+                            localStorage.getItem(
+                                "token"
+                            )
+
+                    }
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Failed to delete Audio Novel."
+            );
+
+        }
+
+
+        alert(
+            "Audio Novel deleted successfully."
+        );
+
+
+        await loadAdminAudioNovels();
+
+
+    }catch(error){
+
+        console.error(
+            "Audio Novel delete error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Failed to delete Audio Novel."
+        );
+
+    }
 
 }
 
@@ -1837,6 +2595,12 @@ async function updateAdminAudioReport(
 }
 
 /* =========================================================
+   AUDIO NOVEL EDIT STATE
+   ========================================================= */
+
+let editingAudioNovelId = null;
+
+/* =========================================================
    AUDIO NOVEL CREATE FORM
    ========================================================= */
 
@@ -1893,43 +2657,104 @@ function bindAudioNovelCreateForm(){
     }
 
 
-    function closeForm(){
+function closeForm(){
 
-        panel.hidden = true;
+    editingAudioNovelId = null;
 
-        form.reset();
+    panel.hidden = true;
 
-        document
-            .getElementById(
-                "audioNovelContentType"
-            )
-            .value = "story";
+    form.reset();
 
-        document
-            .getElementById(
-                "audioNovelStatus"
-            )
-            .value = "ongoing";
+    document
+        .getElementById(
+            "audioNovelContentType"
+        )
+        .value = "story";
 
-        document
-            .getElementById(
-                "audioNovelPublishStatus"
-            )
-            .value = "draft";
+    document
+        .getElementById(
+            "audioNovelStatus"
+        )
+        .value = "ongoing";
 
-        document
-            .getElementById(
-                "audioNovelVisibility"
-            )
-            .value = "private";
+    document
+        .getElementById(
+            "audioNovelPublishStatus"
+        )
+        .value = "draft";
+
+    document
+        .getElementById(
+            "audioNovelVisibility"
+        )
+        .value = "private";
+
+
+    const heading =
+        panel.querySelector(
+            ".audio-create-header h2"
+        );
+
+    if(heading){
+
+        heading.textContent =
+            "Create Audio Novel";
 
     }
 
 
+    const submitButton =
+        form.querySelector(
+            'button[type="submit"]'
+        );
+
+    if(submitButton){
+
+        submitButton.textContent =
+            "Create Audio Novel";
+
+    }
+
+}
+
+
     openButton.addEventListener(
-        "click",
-        openForm
-    );
+    "click",
+    () => {
+
+        editingAudioNovelId =
+            null;
+
+        const heading =
+            panel.querySelector(
+                ".audio-create-header h2"
+            );
+
+        if(heading){
+
+            heading.textContent =
+                "Create Audio Novel";
+
+        }
+
+
+        const submitButton =
+            form.querySelector(
+                'button[type="submit"]'
+            );
+
+        if(submitButton){
+
+            submitButton.textContent =
+                "Create Audio Novel";
+
+        }
+
+
+        openForm();
+
+    }
+);
 
 
     closeButton.addEventListener(
@@ -2006,21 +2831,28 @@ function bindAudioNovelCreateForm(){
                 );
 
 
-            submitButton.disabled =
-                true;
+submitButton.disabled =
+    true;
 
-            submitButton.textContent =
-                "Creating...";
+submitButton.textContent =
+    editingAudioNovelId
+        ? "Updating..."
+        : "Creating...";
 
 
             try{
 
-                const response =
-                    await fetch(
-                        `${ADMIN_AUDIO_API}/novels`,
-                        {
-                            method:
-                                "POST",
+const response =
+    await fetch(
+        editingAudioNovelId
+            ? `${ADMIN_AUDIO_API}/novels/${editingAudioNovelId}`
+            : `${ADMIN_AUDIO_API}/novels`,
+        {
+
+            method:
+                editingAudioNovelId
+                    ? "PUT"
+                    : "POST",
 
                             headers: {
 
@@ -2142,9 +2974,11 @@ function bindAudioNovelCreateForm(){
                 }
 
 
-                alert(
-                    "Audio Novel created successfully."
-                );
+               alert(
+    editingAudioNovelId
+        ? "Audio Novel updated successfully."
+        : "Audio Novel created successfully."
+);
 
 
                 closeForm();
@@ -2181,6 +3015,8 @@ function bindAudioNovelCreateForm(){
     );
 
 }
+
+
 
 /* =========================================================
    AUDIO CHAPTER CREATION
@@ -2246,9 +3082,9 @@ function bindAudioChapterCreateForm(){
     );
 
 
-    function closeForm(){
+function closeForm(){
 
-        panel.hidden = true;
+    panel.hidden = true;
 
         form.reset();
 
