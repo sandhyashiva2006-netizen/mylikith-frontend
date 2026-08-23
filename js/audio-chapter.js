@@ -1143,6 +1143,392 @@ function bindAudioComments(){
 
 }
 
+/* =========================================================
+   AUDIO SHARING
+   ========================================================= */
+
+function getAudioShareUrl(){
+
+  return window.location.href;
+
+}
+
+
+function getAudioShareTitle(){
+
+  const title =
+    $("chapterTitle")?.textContent?.trim();
+
+  const novel =
+    $("novelTitle")?.textContent?.trim();
+
+  if(title && novel){
+
+    return `${title} — ${novel} | MyLikith Audio`;
+
+  }
+
+  if(title){
+
+    return `${title} | MyLikith Audio`;
+
+  }
+
+  return "Listen on MyLikith Audio";
+
+}
+
+
+function getAudioShareText(){
+
+  const title =
+    getAudioShareTitle();
+
+  return `Listen to ${title} on MyLikith.`;
+
+}
+
+
+function openAudioShare(){
+
+  const modal =
+    $("audioShareModal");
+
+  if(!modal){
+    return;
+  }
+
+  const title =
+    $("audioShareTitle");
+
+  const description =
+    $("audioShareDescription");
+
+  if(title){
+    title.textContent =
+      getAudioShareTitle();
+  }
+
+  if(description){
+    description.textContent =
+      "Share this audio chapter with your friends.";
+  }
+
+  const copied =
+    $("audioShareCopied");
+
+  if(copied){
+    copied.hidden = true;
+  }
+
+  modal.hidden = false;
+
+  document.body.classList.add(
+    "audio-share-open"
+  );
+
+}
+
+
+function closeAudioShare(){
+
+  const modal =
+    $("audioShareModal");
+
+  if(!modal){
+    return;
+  }
+
+  modal.hidden = true;
+
+  document.body.classList.remove(
+    "audio-share-open"
+  );
+
+}
+
+
+async function nativeAudioShare(){
+
+  const url =
+    getAudioShareUrl();
+
+  const title =
+    getAudioShareTitle();
+
+  const text =
+    getAudioShareText();
+
+  if(
+    navigator.share
+  ){
+
+    try{
+
+      await navigator.share({
+        title,
+        text,
+        url
+      });
+
+      closeAudioShare();
+
+      return;
+
+    }catch(error){
+
+      if(
+        error.name === "AbortError"
+      ){
+
+        return;
+
+      }
+
+    }
+
+  }
+
+  await copyAudioShareLink();
+
+}
+
+
+async function copyAudioShareLink(){
+
+  const url =
+    getAudioShareUrl();
+
+  try{
+
+    await navigator.clipboard.writeText(
+      url
+    );
+
+  }catch(error){
+
+    const textarea =
+      document.createElement("textarea");
+
+    textarea.value =
+      url;
+
+    textarea.style.position =
+      "fixed";
+
+    textarea.style.opacity =
+      "0";
+
+    document.body.appendChild(
+      textarea
+    );
+
+    textarea.focus();
+
+    textarea.select();
+
+    document.execCommand(
+      "copy"
+    );
+
+    textarea.remove();
+
+  }
+
+
+  const copied =
+    $("audioShareCopied");
+
+  if(copied){
+
+    copied.textContent =
+      "✓ Link copied";
+
+    copied.hidden = false;
+
+    setTimeout(
+      () => {
+
+        copied.hidden = true;
+
+      },
+      2200
+    );
+
+  }
+
+}
+
+
+function openAudioExternalShare(
+  platform
+){
+
+  const url =
+    encodeURIComponent(
+      getAudioShareUrl()
+    );
+
+  const text =
+    encodeURIComponent(
+      getAudioShareText()
+    );
+
+
+  let shareUrl = "";
+
+
+  if(platform === "whatsapp"){
+
+    shareUrl =
+      `https://wa.me/?text=${text}%20${url}`;
+
+  }
+
+
+  if(platform === "facebook"){
+
+    shareUrl =
+      `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+
+  }
+
+
+  if(platform === "x"){
+
+    shareUrl =
+      `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+
+  }
+
+
+  if(!shareUrl){
+    return;
+  }
+
+
+  window.open(
+    shareUrl,
+    "_blank",
+    "noopener,noreferrer,width=700,height=600"
+  );
+
+}
+
+
+function bindAudioSharing(){
+
+  const shareButton =
+    $("audioShareButton");
+
+  const closeButton =
+    $("audioShareClose");
+
+  const backdrop =
+    $("audioShareBackdrop");
+
+
+  if(shareButton){
+
+    shareButton.addEventListener(
+      "click",
+      openAudioShare
+    );
+
+  }
+
+
+  if(closeButton){
+
+    closeButton.addEventListener(
+      "click",
+      closeAudioShare
+    );
+
+  }
+
+
+  if(backdrop){
+
+    backdrop.addEventListener(
+      "click",
+      closeAudioShare
+    );
+
+  }
+
+
+  document
+    .querySelectorAll(
+      ".audio-share-option"
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          async () => {
+
+            const type =
+              button.dataset.share;
+
+
+            if(type === "native"){
+
+              await nativeAudioShare();
+
+              return;
+
+            }
+
+
+            if(type === "copy"){
+
+              await copyAudioShareLink();
+
+              return;
+
+            }
+
+
+            openAudioExternalShare(
+              type
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+  document.addEventListener(
+    "keydown",
+    event => {
+
+      if(
+        event.key === "Escape"
+      ){
+
+        const modal =
+          $("audioShareModal");
+
+        if(
+          modal &&
+          !modal.hidden
+        ){
+
+          closeAudioShare();
+
+        }
+
+      }
+
+    }
+  );
+
+}
+
 function formatTime(value){const n=Number(value);if(!Number.isFinite(n)||n<0)return"00:00";const s=Math.floor(n),h=Math.floor(s/3600),m=Math.floor((s%3600)/60),r=s%60;return h?`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`:`${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`}
 function headers(){const h={};if(token())h.Authorization=`Bearer ${token()}`;return h}
 function setMeta(title,description){document.title=`${title} — MyLikith Audio`;$("metaDescription").content=description;$("ogTitle").content=title;$("ogDescription").content=description}
@@ -1164,6 +1550,8 @@ await loadAudioRating();
 bindAudioComments();
 
 await loadAudioComments();
+
+bindAudioSharing();
 
   renderAudioLike();
   await loadAudioLike();

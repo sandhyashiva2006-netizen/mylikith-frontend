@@ -221,6 +221,22 @@
 
   </div>
 
+<!-- SHARE -->
+
+<div class="audio-share-wrap">
+
+  <button
+    id="audioShareButton"
+    class="audio-share-button"
+    type="button"
+    aria-label="Share this audio chapter"
+  >
+    <span aria-hidden="true">↗</span>
+    <span>Share</span>
+  </button>
+
+</div>
+
 </section>
 
 <section
@@ -349,12 +365,115 @@
       <button id="nextButton" type="button" class="nav-button">Next Chapter →</button>
     </div>
   </section>
+
+<!-- AUDIO SHARE MODAL -->
+
+<div
+  id="audioShareModal"
+  class="audio-share-modal"
+  hidden
+>
+
+  <div
+    class="audio-share-backdrop"
+    id="audioShareBackdrop"
+  ></div>
+
+  <div
+    class="audio-share-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="audioShareTitle"
+  >
+
+    <button
+      id="audioShareClose"
+      class="audio-share-close"
+      type="button"
+      aria-label="Close share dialog"
+    >
+      ×
+    </button>
+
+    <span class="audio-share-label">
+      MYLIKITH AUDIO
+    </span>
+
+    <h2 id="audioShareTitle">
+      Share this chapter
+    </h2>
+
+    <p id="audioShareDescription">
+      Share this audio chapter with your friends.
+    </p>
+
+    <div class="audio-share-options">
+
+      <button
+        class="audio-share-option"
+        type="button"
+        data-share="native"
+      >
+        <span>📱</span>
+        <span>Share</span>
+      </button>
+
+      <button
+        class="audio-share-option"
+        type="button"
+        data-share="whatsapp"
+      >
+        <span>💬</span>
+        <span>WhatsApp</span>
+      </button>
+
+      <button
+        class="audio-share-option"
+        type="button"
+        data-share="facebook"
+      >
+        <span>f</span>
+        <span>Facebook</span>
+      </button>
+
+      <button
+        class="audio-share-option"
+        type="button"
+        data-share="x"
+      >
+        <span>𝕏</span>
+        <span>X</span>
+      </button>
+
+      <button
+        class="audio-share-option"
+        type="button"
+        data-share="copy"
+      >
+        <span>🔗</span>
+        <span>Copy Link</span>
+      </button>
+
+    </div>
+
+    <div
+      id="audioShareCopied"
+      class="audio-share-copied"
+      hidden
+    >
+      ✓ Link copied
+    </div>
+
+  </div>
+
+</div>
+
 </main>
 
 <div id="footer"></div>
 <script src="js/session.js"></script>
 <script src="js/navbar.js"></script>
 <script src="js/footer.js"></script>
-<script src="js/audio-chapter.js?v=20260823-7"></script>
+<script src="js/audio-chapter.js?v=20260823-8"></script>
 </body>
 </html>

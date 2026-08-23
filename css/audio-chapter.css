@@ -499,3 +499,176 @@
 
 }
 
+/* =========================================================
+   AUDIO SHARING
+   ========================================================= */
+
+.audio-share-wrap{
+  display:flex;
+  align-items:center;
+  padding-left:16px;
+  border-left:1px solid rgba(148,163,184,.15);
+}
+
+.audio-share-button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  min-height:42px;
+  padding:9px 16px;
+  border:1px solid rgba(167,139,250,.24);
+  border-radius:11px;
+  color:#cbd5e1;
+  background:rgba(15,23,42,.68);
+  cursor:pointer;
+  font-weight:750;
+  transition:.2s ease;
+}
+
+.audio-share-button:hover{
+  border-color:#8b5cf6;
+  color:#ddd6fe;
+  background:rgba(124,58,237,.12);
+  transform:translateY(-1px);
+}
+
+.audio-share-modal{
+  position:fixed;
+  inset:0;
+  z-index:999999;
+}
+
+.audio-share-backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(2,6,23,.78);
+  backdrop-filter:blur(7px);
+}
+
+.audio-share-dialog{
+  position:relative;
+  width:min(92vw,470px);
+  margin:12vh auto 0;
+  padding:27px;
+  border:1px solid rgba(167,139,250,.2);
+  border-radius:20px;
+  background:rgba(15,23,42,.97);
+  box-shadow:0 25px 80px rgba(0,0,0,.45);
+}
+
+.audio-share-close{
+  position:absolute;
+  top:12px;
+  right:14px;
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:50%;
+  color:#94a3b8;
+  background:transparent;
+  cursor:pointer;
+  font-size:25px;
+}
+
+.audio-share-close:hover{
+  color:#f8fafc;
+  background:rgba(255,255,255,.06);
+}
+
+.audio-share-label{
+  color:#a78bfa;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.13em;
+}
+
+.audio-share-dialog h2{
+  margin:7px 40px 5px 0;
+  color:#f8fafc;
+  font-size:23px;
+}
+
+.audio-share-dialog p{
+  margin:0 0 20px;
+  color:#94a3b8;
+  font-size:13px;
+}
+
+.audio-share-options{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+}
+
+.audio-share-option{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  min-height:82px;
+  padding:10px 5px;
+  border:1px solid rgba(148,163,184,.12);
+  border-radius:12px;
+  color:#cbd5e1;
+  background:rgba(2,6,23,.35);
+  cursor:pointer;
+  font-size:11px;
+  font-weight:700;
+  transition:.2s ease;
+}
+
+.audio-share-option span:first-child{
+  font-size:22px;
+}
+
+.audio-share-option:hover{
+  border-color:rgba(139,92,246,.5);
+  color:#ddd6fe;
+  background:rgba(124,58,237,.12);
+  transform:translateY(-2px);
+}
+
+.audio-share-copied{
+  margin-top:15px;
+  padding:9px;
+  border-radius:9px;
+  text-align:center;
+  color:#c4b5fd;
+  background:rgba(124,58,237,.1);
+  font-size:12px;
+  font-weight:700;
+}
+
+body.audio-share-open{
+  overflow:hidden;
+}
+
+@media(max-width:800px){
+
+  .audio-share-wrap{
+    padding-left:0;
+    padding-top:15px;
+    border-left:0;
+  }
+
+}
+
+@media(max-width:500px){
+
+  .audio-share-dialog{
+    margin-top:8vh;
+    padding:23px 17px;
+  }
+
+  .audio-share-options{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .audio-share-option{
+    min-height:75px;
+  }
+
+}
+
