@@ -16,17 +16,6 @@ function setMeta(title,description){document.title=`${title} — MyLikith Audio`
 function show(id){$(id).hidden=false}function hide(id){$(id).hidden=true}
 
 async function init(){
-
-console.log(
-    "🎧 AUDIO CHAPTER V2",
-    "URL:",
-    location.href,
-    "ID:",
-    new URLSearchParams(location.search).get("id"),
-    "chapterId:",
-    new URLSearchParams(location.search).get("chapterId")
-);
-
   const params=new URLSearchParams(location.search);chapterId=Number(params.get("id")||params.get("chapterId")||params.get("chapter")||0);
   if(!chapterId){return fail("Missing audio chapter ID.")}
   $("retryButton").addEventListener("click",loadChapter);
@@ -71,22 +60,116 @@ function renderLocked(data){
 }
 
 async function setupPlayer(data){
-  hide("playerLoading");show("audioPlayerWrap");
-  audio=$("audioPlayer");audio.src=data.url;audio.load();
+  hide("playerLoading");
+  show("audioPlayerWrap");
+
+  audio=$("audioPlayer");
+  audio.src=data.url;
+  audio.load();
+
+  bindPlayerControls();
+
   audio.addEventListener("loadedmetadata",async()=>{
-    $("durationText").textContent=formatTime(audio.duration);await restoreProgress();
+    $("durationText").textContent=formatTime(audio.duration);
+    $("progressRange").max=audio.duration;
+    $("playerStatusText").textContent="Ready";
+    await restoreProgress();
   },{once:true});
-  audio.addEventListener("timeupdate",()=>{if(audio&&!audio.paused)saveProgress(false)});
-  audio.addEventListener("pause",()=>saveProgress(true));
-  audio.addEventListener("ended",()=>saveProgress(true));
+
+  audio.addEventListener("timeupdate",()=>{
+    if(!audio) return;
+
+    $("currentTimeText").textContent=formatTime(audio.currentTime);
+    $("progressRange").value=audio.currentTime;
+
+    if(!audio.paused) saveProgress(false);
+  });
+
+  audio.addEventListener("play",()=>{
+    $("playPauseButton").textContent="❚❚";
+    $("playPauseButton").setAttribute("aria-label","Pause audio");
+    $("playPauseButton").title="Pause";
+    $("playerStatusText").textContent="Playing";
+  });
+
+  audio.addEventListener("pause",()=>{
+    $("playPauseButton").textContent="▶";
+    $("playPauseButton").setAttribute("aria-label","Play audio");
+    $("playPauseButton").title="Play";
+    if(audio.currentTime < audio.duration) $("playerStatusText").textContent="Paused";
+    saveProgress(true);
+  });
+
+  audio.addEventListener("ended",()=>{
+    $("playPauseButton").textContent="▶";
+    $("playPauseButton").setAttribute("aria-label","Play audio");
+    $("playerStatusText").textContent="Completed";
+    $("progressRange").value=audio.duration;
+    saveProgress(true);
+  });
+
   window.addEventListener("pagehide",()=>saveProgress(true),{once:false});
+}
+
+function bindPlayerControls(){
+  const playButton=$("playPauseButton");
+  const backButton=$("skipBackButton");
+  const forwardButton=$("skipForwardButton");
+  const progress=$("progressRange");
+  const volume=$("volumeRange");
+  const speed=$("speedSelect");
+
+  if(playButton.dataset.bound==="1") return;
+  playButton.dataset.bound="1";
+
+  playButton.addEventListener("click",async()=>{
+    if(!audio) return;
+
+    try{
+      if(audio.paused){
+        await audio.play();
+      }else{
+        audio.pause();
+      }
+    }catch(error){
+      console.warn("Audio play failed:",error);
+      $("playerStatusText").textContent="Unable to play";
+    }
+  });
+
+  backButton.addEventListener("click",()=>{
+    if(!audio) return;
+    audio.currentTime=Math.max(0,audio.currentTime-10);
+  });
+
+  forwardButton.addEventListener("click",()=>{
+    if(!audio) return;
+    audio.currentTime=Math.min(audio.duration||0,audio.currentTime+10);
+  });
+
+  progress.addEventListener("input",()=>{
+    if(!audio) return;
+    audio.currentTime=Number(progress.value);
+    $("currentTimeText").textContent=formatTime(audio.currentTime);
+  });
+
+  volume.addEventListener("input",()=>{
+    if(!audio) return;
+    audio.volume=Number(volume.value);
+    audio.muted=audio.volume===0;
+  });
+
+  speed.addEventListener("change",()=>{
+    if(!audio) return;
+    audio.playbackRate=Number(speed.value);
+  });
 }
 
 async function restoreProgress(){
   if(!token()){$("resumeText").textContent="Login to save your listening progress";return}
   try{
     const r=await fetch(`${AUDIO_API}/chapters/${chapterId}/progress`,{headers:headers()});const d=await r.json();const p=d.progress;
-    if(p&&!p.completed&&Number(p.position_seconds)>0&&Number(p.position_seconds)<audio.duration-1){audio.currentTime=Number(p.position_seconds);$("resumeText").textContent=`Resumed from ${formatTime(p.position_seconds)}`}
+    if(p&&!p.completed&&Number(p.position_seconds)>0&&Number(p.position_seconds)<audio.duration-1){audio.currentTime=Number(p.position_seconds);$("progressRange").value=audio.currentTime;$("currentTimeText").textContent=formatTime(audio.currentTime);$("resumeText").textContent=`Resumed from ${formatTime(p.position_seconds)}`}
     else $("resumeText").textContent="Ready to listen";
   }catch(e){console.warn("Progress restore failed",e)}
 }

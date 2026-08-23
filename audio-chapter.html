@@ -19,7 +19,7 @@
 <nav
     id="navbar"
     class="navbar">
-</nav>	
+</nav>
 
 <main class="audio-chapter-page">
   <section class="audio-shell">
@@ -65,10 +65,64 @@
 
       <div id="audioPlayerWrap" hidden>
         <div class="player-art">🎧</div>
-        <audio id="audioPlayer" controls preload="metadata" playsinline></audio>
-        <div class="resume-row">
-          <span id="resumeText">Ready to listen</span>
-          <span id="durationText">--:--</span>
+
+        <audio id="audioPlayer" preload="metadata" playsinline></audio>
+
+        <div class="custom-player" aria-label="MyLikith Audio player">
+          <div class="audio-time-row">
+            <span id="currentTimeText">00:00</span>
+            <span id="durationText">00:00</span>
+          </div>
+
+          <input
+            id="progressRange"
+            class="audio-progress"
+            type="range"
+            min="0"
+            max="0"
+            step="0.01"
+            value="0"
+            aria-label="Audio progress"
+          >
+
+          <div class="audio-main-controls">
+            <button id="skipBackButton" class="audio-control secondary" type="button" aria-label="Skip back 10 seconds" title="Back 10 seconds">↶ 10</button>
+
+            <button id="playPauseButton" class="audio-control play" type="button" aria-label="Play audio" title="Play">▶</button>
+
+            <button id="skipForwardButton" class="audio-control secondary" type="button" aria-label="Skip forward 10 seconds" title="Forward 10 seconds">10 ↷</button>
+          </div>
+
+          <div class="audio-extra-controls">
+            <div class="volume-control">
+              <span aria-hidden="true">🔊</span>
+              <input
+                id="volumeRange"
+                type="range"
+                min="0"
+                max="1"
+                step="0.05"
+                value="1"
+                aria-label="Volume"
+              >
+            </div>
+
+            <label class="speed-control">
+              <span>Speed</span>
+              <select id="speedSelect" aria-label="Playback speed">
+                <option value="0.75">0.75×</option>
+                <option value="1" selected>1×</option>
+                <option value="1.25">1.25×</option>
+                <option value="1.5">1.5×</option>
+                <option value="2">2×</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="resume-row">
+            <span id="resumeText">Ready to listen</span>
+            <span id="playerStatusText">Ready</span>
+          </div>
         </div>
       </div>
     </div>
@@ -92,6 +146,6 @@
 <script src="js/session.js"></script>
 <script src="js/navbar.js"></script>
 <script src="js/footer.js"></script>
-<script src="js/audio-chapter.js?v=20260823-2"></script>
+<script src="js/audio-chapter.js?v=20260823-4"></script>
 </body>
 </html>
