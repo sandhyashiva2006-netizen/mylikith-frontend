@@ -9,7 +9,7 @@ let saveInFlight=false;
 
 const $=id=>document.getElementById(id);
 const token=()=>localStorage.getItem("token");
-const currentUser=()=>{try{return JSON.parse(localStorage.getItem("user")||"null")}catch{return null}};
+
 
 function formatTime(value){const n=Number(value);if(!Number.isFinite(n)||n<0)return"00:00";const s=Math.floor(n),h=Math.floor(s/3600),m=Math.floor((s%3600)/60),r=s%60;return h?`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`:`${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`}
 function headers(){const h={};if(token())h.Authorization=`Bearer ${token()}`;return h}
