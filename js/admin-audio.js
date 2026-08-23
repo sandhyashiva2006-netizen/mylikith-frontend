@@ -4,6 +4,8 @@ document.addEventListener(
 
         bindAudioAdminTabs();
 
+	bindAudioNovelCreateForm();
+
         loadAdminAudioNovels();
 
         loadAdminAudioChapters();
@@ -1829,6 +1831,352 @@ async function updateAdminAudioReport(
         );
 
     }
+
+}
+
+/* =========================================================
+   AUDIO NOVEL CREATE FORM
+   ========================================================= */
+
+function bindAudioNovelCreateForm(){
+
+    const openButton =
+        document.getElementById(
+            "createAudioNovelBtn"
+        );
+
+    const closeButton =
+        document.getElementById(
+            "closeAudioNovelForm"
+        );
+
+    const cancelButton =
+        document.getElementById(
+            "cancelAudioNovelBtn"
+        );
+
+    const form =
+        document.getElementById(
+            "audioNovelForm"
+        );
+
+    const panel =
+        document.getElementById(
+            "audioNovelCreateForm"
+        );
+
+
+    if(
+        !openButton ||
+        !closeButton ||
+        !cancelButton ||
+        !form ||
+        !panel
+    ){
+
+        return;
+
+    }
+
+
+    function openForm(){
+
+        panel.hidden = false;
+
+        panel.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    }
+
+
+    function closeForm(){
+
+        panel.hidden = true;
+
+        form.reset();
+
+        document
+            .getElementById(
+                "audioNovelContentType"
+            )
+            .value = "story";
+
+        document
+            .getElementById(
+                "audioNovelStatus"
+            )
+            .value = "ongoing";
+
+        document
+            .getElementById(
+                "audioNovelPublishStatus"
+            )
+            .value = "draft";
+
+        document
+            .getElementById(
+                "audioNovelVisibility"
+            )
+            .value = "private";
+
+    }
+
+
+    openButton.addEventListener(
+        "click",
+        openForm
+    );
+
+
+    closeButton.addEventListener(
+        "click",
+        closeForm
+    );
+
+
+    cancelButton.addEventListener(
+        "click",
+        closeForm
+    );
+
+
+    form.addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
+
+
+            const title =
+                document
+                    .getElementById(
+                        "audioNovelTitle"
+                    )
+                    .value
+                    .trim();
+
+
+            if(!title){
+
+                alert(
+                    "Audio Novel title is required."
+                );
+
+                return;
+
+            }
+
+
+            const categoriesText =
+                document
+                    .getElementById(
+                        "audioNovelCategories"
+                    )
+                    .value
+                    .trim();
+
+
+            const categories =
+                categoriesText
+                    ? categoriesText
+                        .split(",")
+                        .map(
+                            item =>
+                                item.trim()
+                        )
+                        .filter(Boolean)
+                    : [];
+
+
+            const releaseDate =
+                document
+                    .getElementById(
+                        "audioNovelReleaseDate"
+                    )
+                    .value;
+
+
+            const submitButton =
+                form.querySelector(
+                    'button[type="submit"]'
+                );
+
+
+            submitButton.disabled =
+                true;
+
+            submitButton.textContent =
+                "Creating...";
+
+
+            try{
+
+                const response =
+                    await fetch(
+                        `${ADMIN_AUDIO_API}/novels`,
+                        {
+                            method:
+                                "POST",
+
+                            headers: {
+
+                                Authorization:
+                                    "Bearer " +
+                                    localStorage.getItem(
+                                        "token"
+                                    ),
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    title,
+
+                                    description:
+                                        document
+                                            .getElementById(
+                                                "audioNovelDescription"
+                                            )
+                                            .value
+                                            .trim(),
+
+                                    cover_url:
+                                        document
+                                            .getElementById(
+                                                "audioNovelCover"
+                                            )
+                                            .value
+                                            .trim(),
+
+                                    language:
+                                        document
+                                            .getElementById(
+                                                "audioNovelLanguage"
+                                            )
+                                            .value,
+
+                                    category:
+                                        document
+                                            .getElementById(
+                                                "audioNovelCategory"
+                                            )
+                                            .value
+                                            .trim(),
+
+                                    categories,
+
+                                    content_type:
+                                        document
+                                            .getElementById(
+                                                "audioNovelContentType"
+                                            )
+                                            .value,
+
+                                    status:
+                                        document
+                                            .getElementById(
+                                                "audioNovelStatus"
+                                            )
+                                            .value,
+
+                                    publish_status:
+                                        document
+                                            .getElementById(
+                                                "audioNovelPublishStatus"
+                                            )
+                                            .value,
+
+                                    visibility:
+                                        document
+                                            .getElementById(
+                                                "audioNovelVisibility"
+                                            )
+                                            .value,
+
+                                    premium_only:
+                                        document
+                                            .getElementById(
+                                                "audioNovelPremium"
+                                            )
+                                            .checked,
+
+                                    featured:
+                                        document
+                                            .getElementById(
+                                                "audioNovelFeatured"
+                                            )
+                                            .checked,
+
+                                    release_date:
+                                        releaseDate ||
+                                        null
+
+                                })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if(
+                    !response.ok ||
+                    !data.success
+                ){
+
+                    throw new Error(
+                        data.message ||
+                        "Failed to create Audio Novel."
+                    );
+
+                }
+
+
+                alert(
+                    "Audio Novel created successfully."
+                );
+
+
+                closeForm();
+
+
+                await loadAdminAudioNovels();
+
+
+            }catch(error){
+
+                console.error(
+                    "Audio Novel creation error:",
+                    error
+                );
+
+
+                alert(
+                    error.message ||
+                    "Failed to create Audio Novel."
+                );
+
+
+            }finally{
+
+                submitButton.disabled =
+                    false;
+
+                submitButton.textContent =
+                    "Create Audio Novel";
+
+            }
+
+        }
+    );
 
 }
 

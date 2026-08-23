@@ -354,21 +354,424 @@
             class="audio-admin-section active"
         >
 
-            <div class="audio-admin-section-header">
+<div class="audio-admin-section-header">
 
-                <div>
+    <div>
 
-                    <h2>
-                        🎧 Audio Novels
-                    </h2>
+        <h2>
+            🎧 Audio Novels
+        </h2>
 
-                    <p>
-                        Manage published and uploaded audio novels.
-                    </p>
+        <p>
+            Create and manage MyLikith Audio novels.
+        </p>
 
-                </div>
+    </div>
 
-            </div>
+    <button
+        type="button"
+        id="createAudioNovelBtn"
+        class="audio-admin-primary-btn"
+    >
+        + New Audio Novel
+    </button>
+
+</div>
+
+<section
+    id="audioNovelCreateForm"
+    class="audio-create-panel"
+    hidden
+>
+
+    <div class="audio-create-header">
+
+        <div>
+
+            <span class="audio-create-eyebrow">
+                AUDIO STUDIO
+            </span>
+
+            <h2>
+                Create Audio Novel
+            </h2>
+
+            <p>
+                Add the basic details for a new MyLikith Audio story.
+            </p>
+
+        </div>
+
+
+        <button
+            type="button"
+            id="closeAudioNovelForm"
+            class="audio-create-close"
+        >
+            ✕
+        </button>
+
+    </div>
+
+
+    <form
+        id="audioNovelForm"
+        autocomplete="off"
+    >
+
+
+        <!-- TITLE -->
+
+        <div class="audio-create-field audio-create-wide">
+
+            <label for="audioNovelTitle">
+                Title *
+            </label>
+
+            <input
+                type="text"
+                id="audioNovelTitle"
+                maxlength="255"
+                required
+                placeholder="Enter Audio Novel title"
+            >
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="audio-create-field audio-create-wide">
+
+            <label for="audioNovelDescription">
+                Description
+            </label>
+
+            <textarea
+                id="audioNovelDescription"
+                rows="5"
+                placeholder="Describe this Audio Novel..."
+            ></textarea>
+
+        </div>
+
+
+        <!-- COVER -->
+
+        <div class="audio-create-field audio-create-wide">
+
+            <label for="audioNovelCover">
+                Cover Image URL
+            </label>
+
+            <input
+                type="url"
+                id="audioNovelCover"
+                placeholder="https://..."
+            >
+
+            <small>
+                Use the image URL for the Audio Novel cover.
+            </small>
+
+        </div>
+
+
+        <!-- LANGUAGE -->
+
+        <div class="audio-create-field">
+
+            <label for="audioNovelLanguage">
+                Language
+            </label>
+
+            <select
+                id="audioNovelLanguage"
+            >
+
+                <option value="">
+                    Select Language
+                </option>
+
+                <option value="English">
+                    English
+                </option>
+
+                <option value="Telugu">
+                    Telugu
+                </option>
+
+                <option value="Hindi">
+                    Hindi
+                </option>
+
+                <option value="Tamil">
+                    Tamil
+                </option>
+
+                <option value="Kannada">
+                    Kannada
+                </option>
+
+                <option value="Malayalam">
+                    Malayalam
+                </option>
+
+                <option value="Bengali">
+                    Bengali
+                </option>
+
+                <option value="Marathi">
+                    Marathi
+                </option>
+
+                <option value="Sanskrit">
+                    Sanskrit
+                </option>
+
+                <option value="Japanese">
+                    Japanese
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- CATEGORY -->
+
+        <div class="audio-create-field">
+
+            <label for="audioNovelCategory">
+                Category
+            </label>
+
+            <input
+                type="text"
+                id="audioNovelCategory"
+                maxlength="150"
+                placeholder="Fantasy, Romance, Mystery..."
+            >
+
+        </div>
+
+
+        <!-- ADDITIONAL CATEGORIES -->
+
+        <div class="audio-create-field audio-create-wide">
+
+            <label for="audioNovelCategories">
+                Additional Categories
+            </label>
+
+            <input
+                type="text"
+                id="audioNovelCategories"
+                placeholder="Fantasy, Mystery, Thriller"
+            >
+
+            <small>
+                Separate multiple categories with commas.
+            </small>
+
+        </div>
+
+
+        <!-- CONTENT TYPE -->
+
+        <div class="audio-create-field">
+
+            <label for="audioNovelContentType">
+                Content Type
+            </label>
+
+            <select
+                id="audioNovelContentType"
+            >
+
+                <option value="story">
+                    Story
+                </option>
+
+                <option value="novel">
+                    Novel
+                </option>
+
+                <option value="series">
+                    Series
+                </option>
+
+                <option value="podcast">
+                    Podcast
+                </option>
+
+                <option value="other">
+                    Other
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div class="audio-create-field">
+
+            <label for="audioNovelStatus">
+                Status
+            </label>
+
+            <select
+                id="audioNovelStatus"
+            >
+
+                <option value="ongoing">
+                    Ongoing
+                </option>
+
+                <option value="completed">
+                    Completed
+                </option>
+
+                <option value="hiatus">
+                    Hiatus
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- PUBLISH STATUS -->
+
+        <div class="audio-create-field">
+
+            <label for="audioNovelPublishStatus">
+                Publish Status
+            </label>
+
+            <select
+                id="audioNovelPublishStatus"
+            >
+
+                <option value="draft">
+                    Draft
+                </option>
+
+                <option value="published">
+                    Published
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- VISIBILITY -->
+
+        <div class="audio-create-field">
+
+            <label for="audioNovelVisibility">
+                Visibility
+            </label>
+
+            <select
+                id="audioNovelVisibility"
+            >
+
+                <option value="private">
+                    Private
+                </option>
+
+                <option value="public">
+                    Public
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- RELEASE DATE -->
+
+        <div class="audio-create-field">
+
+            <label for="audioNovelReleaseDate">
+                Release Date
+            </label>
+
+            <input
+                type="datetime-local"
+                id="audioNovelReleaseDate"
+            >
+
+        </div>
+
+
+        <!-- OPTIONS -->
+
+        <div class="audio-create-options audio-create-wide">
+
+            <label class="audio-create-checkbox">
+
+                <input
+                    type="checkbox"
+                    id="audioNovelPremium"
+                >
+
+                <span>
+                    👑 Premium Only
+                </span>
+
+            </label>
+
+
+            <label class="audio-create-checkbox">
+
+                <input
+                    type="checkbox"
+                    id="audioNovelFeatured"
+                >
+
+                <span>
+                    ⭐ Featured
+                </span>
+
+            </label>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div class="audio-create-actions">
+
+            <button
+                type="button"
+                id="cancelAudioNovelBtn"
+                class="audio-create-secondary-btn"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="submit"
+                class="audio-admin-primary-btn"
+            >
+                Create Audio Novel
+            </button>
+
+        </div>
+
+
+    </form>
+
+</section>
 
 
             <div

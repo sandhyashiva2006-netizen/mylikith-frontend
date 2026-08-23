@@ -757,3 +757,203 @@
 
 }
 
+/* =========================================================
+   AUDIO NOVEL CREATE FORM
+   ========================================================= */
+
+.audio-admin-primary-btn{
+    padding:10px 15px;
+    border:1px solid rgba(139,92,246,.35);
+    border-radius:9px;
+    color:#f5f3ff;
+    background:rgba(124,58,237,.18);
+    cursor:pointer;
+    font:inherit;
+    font-size:12px;
+    font-weight:700;
+}
+
+.audio-admin-primary-btn:hover{
+    background:rgba(124,58,237,.28);
+}
+
+.audio-admin-primary-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.audio-create-panel{
+    margin-bottom:22px;
+    padding:20px;
+    border:1px solid rgba(124,58,237,.18);
+    border-radius:16px;
+    background:rgba(124,58,237,.035);
+}
+
+.audio-create-header{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:22px;
+}
+
+.audio-create-eyebrow{
+    color:#a78bfa;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:.08em;
+}
+
+.audio-create-header h2{
+    margin:5px 0 0;
+    color:#f8fafc;
+    font-size:20px;
+}
+
+.audio-create-header p{
+    margin:5px 0 0;
+    color:#64748b;
+    font-size:12px;
+}
+
+.audio-create-close{
+    width:34px;
+    height:34px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:9px;
+    color:#94a3b8;
+    background:rgba(255,255,255,.04);
+    cursor:pointer;
+}
+
+.audio-create-close:hover{
+    color:#f8fafc;
+    background:rgba(255,255,255,.08);
+}
+
+.audio-create-field{
+    min-width:0;
+}
+
+.audio-create-wide{
+    grid-column:1 / -1;
+}
+
+.audio-create-field label{
+    display:block;
+    margin-bottom:7px;
+    color:#cbd5e1;
+    font-size:11px;
+    font-weight:600;
+}
+
+.audio-create-field input,
+.audio-create-field textarea,
+.audio-create-field select{
+    width:100%;
+    box-sizing:border-box;
+    padding:10px 12px;
+    border:1px solid rgba(148,163,184,.14);
+    border-radius:9px;
+    outline:none;
+    color:#e2e8f0;
+    background:#0f172a;
+    font:inherit;
+    font-size:12px;
+}
+
+.audio-create-field textarea{
+    resize:vertical;
+}
+
+.audio-create-field input:focus,
+.audio-create-field textarea:focus,
+.audio-create-field select:focus{
+    border-color:rgba(139,92,246,.55);
+}
+
+.audio-create-field small{
+    display:block;
+    margin-top:5px;
+    color:#64748b;
+    font-size:10px;
+}
+
+#audioNovelForm{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:16px;
+}
+
+.audio-create-options{
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+    padding:13px;
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:10px;
+    background:rgba(255,255,255,.02);
+}
+
+.audio-create-checkbox{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#cbd5e1;
+    cursor:pointer;
+    font-size:12px;
+}
+
+.audio-create-checkbox input{
+    width:15px;
+    height:15px;
+    accent-color:#7c3aed;
+}
+
+.audio-create-actions{
+    grid-column:1 / -1;
+    display:flex;
+    justify-content:flex-end;
+    gap:9px;
+    margin-top:4px;
+}
+
+.audio-create-secondary-btn{
+    padding:10px 15px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:9px;
+    color:#94a3b8;
+    background:rgba(255,255,255,.04);
+    cursor:pointer;
+    font:inherit;
+    font-size:12px;
+    font-weight:600;
+}
+
+.audio-create-secondary-btn:hover{
+    color:#e2e8f0;
+    background:rgba(255,255,255,.07);
+}
+
+@media(max-width:700px){
+
+    #audioNovelForm{
+        grid-template-columns:1fr;
+    }
+
+    .audio-create-wide{
+        grid-column:auto;
+    }
+
+    .audio-create-actions{
+        grid-column:auto;
+        flex-direction:column-reverse;
+    }
+
+    .audio-create-actions button{
+        width:100%;
+    }
+
+}
+
