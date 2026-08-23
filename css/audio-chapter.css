@@ -672,3 +672,207 @@ body.audio-share-open{
 
 }
 
+/* =========================================================
+   AUDIO COMMENT REPORTING
+   ========================================================= */
+
+.audio-comment-report{
+  flex-shrink:0;
+  padding:4px 7px;
+  border:0;
+  color:#64748b;
+  background:transparent;
+  cursor:pointer;
+  font-size:11px;
+}
+
+.audio-comment-report:hover{
+  color:#f87171;
+}
+
+.audio-report-modal{
+  position:fixed;
+  inset:0;
+  z-index:1000000;
+}
+
+.audio-report-backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(2,6,23,.78);
+  backdrop-filter:blur(7px);
+}
+
+.audio-report-dialog{
+  position:relative;
+  width:min(92vw,480px);
+  margin:9vh auto 0;
+  padding:27px;
+  border:1px solid rgba(248,113,113,.16);
+  border-radius:20px;
+  background:rgba(15,23,42,.98);
+  box-shadow:0 25px 80px rgba(0,0,0,.5);
+}
+
+.audio-report-close{
+  position:absolute;
+  top:12px;
+  right:14px;
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:50%;
+  color:#94a3b8;
+  background:transparent;
+  cursor:pointer;
+  font-size:25px;
+}
+
+.audio-report-close:hover{
+  color:#f8fafc;
+  background:rgba(255,255,255,.06);
+}
+
+.audio-report-label{
+  color:#f87171;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.13em;
+}
+
+.audio-report-dialog h2{
+  margin:7px 40px 5px 0;
+  color:#f8fafc;
+  font-size:23px;
+}
+
+.audio-report-dialog > p{
+  margin:0 0 20px;
+  color:#94a3b8;
+  font-size:13px;
+}
+
+.audio-report-reasons{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.audio-report-reasons label{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border:1px solid rgba(148,163,184,.1);
+  border-radius:10px;
+  color:#cbd5e1;
+  background:rgba(2,6,23,.3);
+  cursor:pointer;
+  font-size:13px;
+}
+
+.audio-report-reasons label:hover{
+  border-color:rgba(248,113,113,.25);
+  background:rgba(127,29,29,.08);
+}
+
+.audio-report-reasons input{
+  accent-color:#ef4444;
+}
+
+.audio-report-custom{
+  display:block;
+  width:100%;
+  box-sizing:border-box;
+  min-height:75px;
+  margin-top:12px;
+  padding:11px 12px;
+  resize:vertical;
+  border:1px solid rgba(148,163,184,.14);
+  border-radius:10px;
+  outline:none;
+  color:#e2e8f0;
+  background:rgba(2,6,23,.45);
+  font:inherit;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.audio-report-custom:focus{
+  border-color:rgba(248,113,113,.4);
+}
+
+.audio-report-error{
+  margin-top:12px;
+  padding:9px 11px;
+  border:1px solid rgba(248,113,113,.2);
+  border-radius:9px;
+  color:#fca5a5;
+  background:rgba(127,29,29,.12);
+  font-size:12px;
+}
+
+.audio-report-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:9px;
+  margin-top:18px;
+}
+
+.audio-report-cancel,
+.audio-report-submit{
+  min-height:40px;
+  padding:9px 16px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:750;
+}
+
+.audio-report-cancel{
+  border:1px solid rgba(148,163,184,.16);
+  color:#94a3b8;
+  background:transparent;
+}
+
+.audio-report-cancel:hover{
+  color:#e2e8f0;
+  background:rgba(255,255,255,.05);
+}
+
+.audio-report-submit{
+  border:0;
+  color:#fff;
+  background:#dc2626;
+}
+
+.audio-report-submit:hover{
+  background:#ef4444;
+}
+
+.audio-report-submit:disabled{
+  opacity:.6;
+  cursor:wait;
+}
+
+body.audio-report-open{
+  overflow:hidden;
+}
+
+@media(max-width:500px){
+
+  .audio-report-dialog{
+    margin-top:5vh;
+    padding:22px 17px;
+  }
+
+  .audio-report-actions{
+    flex-direction:column-reverse;
+  }
+
+  .audio-report-cancel,
+  .audio-report-submit{
+    width:100%;
+  }
+
+}
+

@@ -468,12 +468,140 @@
 
 </div>
 
+<!-- AUDIO COMMENT REPORT MODAL -->
+
+<div
+  id="audioReportModal"
+  class="audio-report-modal"
+  hidden
+>
+
+  <div
+    id="audioReportBackdrop"
+    class="audio-report-backdrop"
+  ></div>
+
+  <div
+    class="audio-report-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="audioReportTitle"
+  >
+
+    <button
+      id="audioReportClose"
+      class="audio-report-close"
+      type="button"
+      aria-label="Close report dialog"
+    >
+      ×
+    </button>
+
+    <span class="audio-report-label">
+      REPORT COMMENT
+    </span>
+
+    <h2 id="audioReportTitle">
+      Report this comment
+    </h2>
+
+    <p>
+      Help us keep MyLikith respectful and safe.
+    </p>
+
+    <div class="audio-report-reasons">
+
+      <label>
+        <input
+          type="radio"
+          name="audioReportReason"
+          value="Spam or advertising"
+        >
+        <span>Spam or advertising</span>
+      </label>
+
+      <label>
+        <input
+          type="radio"
+          name="audioReportReason"
+          value="Harassment or bullying"
+        >
+        <span>Harassment or bullying</span>
+      </label>
+
+      <label>
+        <input
+          type="radio"
+          name="audioReportReason"
+          value="Hate speech or abusive content"
+        >
+        <span>Hate speech or abusive content</span>
+      </label>
+
+      <label>
+        <input
+          type="radio"
+          name="audioReportReason"
+          value="Sexual or inappropriate content"
+        >
+        <span>Sexual or inappropriate content</span>
+      </label>
+
+      <label>
+        <input
+          type="radio"
+          name="audioReportReason"
+          value="Other"
+        >
+        <span>Other</span>
+      </label>
+
+    </div>
+
+    <textarea
+      id="audioReportCustomReason"
+      class="audio-report-custom"
+      maxlength="1000"
+      rows="3"
+      placeholder="Additional details (optional)"
+    ></textarea>
+
+    <div
+      id="audioReportError"
+      class="audio-report-error"
+      hidden
+    ></div>
+
+    <div class="audio-report-actions">
+
+      <button
+        id="audioReportCancel"
+        class="audio-report-cancel"
+        type="button"
+      >
+        Cancel
+      </button>
+
+      <button
+        id="audioReportSubmit"
+        class="audio-report-submit"
+        type="button"
+      >
+        Submit Report
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
 </main>
 
 <div id="footer"></div>
 <script src="js/session.js"></script>
 <script src="js/navbar.js"></script>
 <script src="js/footer.js"></script>
-<script src="js/audio-chapter.js?v=20260823-8"></script>
+<script src="js/audio-chapter.js?v=20260823-9"></script>
 </body>
 </html>

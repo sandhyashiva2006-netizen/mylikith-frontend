@@ -17,6 +17,7 @@ let audioUserRating = null;
 let audioAverageRating = 0;
 let audioRatingCount = 0;
 let audioComments = [];
+let audioReportCommentId = null;
 
 async function loadAudioLike(){
   const button=$("audioLikeButton");
@@ -661,18 +662,26 @@ function renderAudioComments(){
             </div>
 
             ${
-              isOwner
-                ? `
-                  <button
-                    class="audio-comment-delete"
-                    type="button"
-                    data-comment-id="${comment.id}"
-                  >
-                    Delete
-                  </button>
-                `
-                : ""
-            }
+  isOwner
+    ? `
+      <button
+        class="audio-comment-delete"
+        type="button"
+        data-comment-id="${comment.id}"
+      >
+        Delete
+      </button>
+    `
+    : `
+      <button
+        class="audio-comment-report"
+        type="button"
+        data-comment-id="${comment.id}"
+      >
+        Report
+      </button>
+    `
+}
 
           </div>
 
@@ -705,6 +714,25 @@ function renderAudioComments(){
 
       }
 
+const reportButton =
+  article.querySelector(
+    ".audio-comment-report"
+  );
+
+if(reportButton){
+
+  reportButton.addEventListener(
+    "click",
+    () => {
+
+      openAudioReport(
+        comment.id
+      );
+
+    }
+  );
+
+}
 
       list.appendChild(article);
 
@@ -1144,6 +1172,375 @@ function bindAudioComments(){
 }
 
 /* =========================================================
+   AUDIO COMMENT REPORTING
+   ========================================================= */
+
+function openAudioReport(
+  commentId
+){
+
+  const modal =
+    $("audioReportModal");
+
+  if(!modal){
+    return;
+  }
+
+  audioReportCommentId =
+    Number(commentId);
+
+  document
+    .querySelectorAll(
+      'input[name="audioReportReason"]'
+    )
+    .forEach(
+      input => {
+        input.checked = false;
+      }
+    );
+
+  const custom =
+    $("audioReportCustomReason");
+
+  if(custom){
+    custom.value = "";
+  }
+
+  hideAudioReportError();
+
+  modal.hidden = false;
+
+  document.body.classList.add(
+    "audio-report-open"
+  );
+
+}
+
+
+function closeAudioReport(){
+
+  const modal =
+    $("audioReportModal");
+
+  if(!modal){
+    return;
+  }
+
+  modal.hidden = true;
+
+  document.body.classList.remove(
+    "audio-report-open"
+  );
+
+  audioReportCommentId =
+    null;
+
+}
+
+
+function getSelectedAudioReportReason(){
+
+  const selected =
+    document.querySelector(
+      'input[name="audioReportReason"]:checked'
+    );
+
+  if(!selected){
+    return "";
+  }
+
+  return selected.value;
+
+}
+
+
+async function submitAudioReport(){
+
+  if(!token()){
+
+    location.href =
+      `login.html?redirect=${encodeURIComponent(
+        location.href
+      )}`;
+
+    return;
+
+  }
+
+  if(!audioReportCommentId){
+
+    showAudioReportError(
+      "Invalid comment."
+    );
+
+    return;
+
+  }
+
+
+  const selectedReason =
+    getSelectedAudioReportReason();
+
+  const customReason =
+    $("audioReportCustomReason")
+      ?.value
+      ?.trim() || "";
+
+
+  if(!selectedReason){
+
+    showAudioReportError(
+      "Please select a reason."
+    );
+
+    return;
+
+  }
+
+
+  let reason =
+    selectedReason;
+
+
+  if(
+    selectedReason === "Other" &&
+    customReason
+  ){
+
+    reason =
+      `Other: ${customReason}`;
+
+  }else if(
+    selectedReason !== "Other" &&
+    customReason
+  ){
+
+    reason =
+      `${selectedReason}: ${customReason}`;
+
+  }
+
+
+  if(reason.length > 1000){
+
+    showAudioReportError(
+      "Report reason cannot exceed 1000 characters."
+    );
+
+    return;
+
+  }
+
+
+  const button =
+    $("audioReportSubmit");
+
+
+  if(button){
+
+    button.disabled = true;
+    button.textContent =
+      "Submitting...";
+  }
+
+
+  hideAudioReportError();
+
+
+  try{
+
+    const response =
+      await fetch(
+        `${AUDIO_API}/comments/${audioReportCommentId}/report`,
+        {
+          method: "POST",
+
+          headers: {
+            ...headers(),
+            "Content-Type":
+              "application/json"
+          },
+
+          body: JSON.stringify({
+            reason
+          })
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(
+      !response.ok ||
+      !data.success
+    ){
+
+      throw new Error(
+        data.message ||
+        "Unable to submit report."
+      );
+
+    }
+
+
+    closeAudioReport();
+
+
+    alert(
+      "Thank you. Your report has been submitted."
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "Audio comment report failed:",
+      error
+    );
+
+    showAudioReportError(
+      error.message ||
+      "Unable to submit report."
+    );
+
+
+  }finally{
+
+    if(button){
+
+      button.disabled = false;
+      button.textContent =
+        "Submit Report";
+
+    }
+
+  }
+
+}
+
+
+function showAudioReportError(
+  message
+){
+
+  const element =
+    $("audioReportError");
+
+  if(!element){
+    return;
+  }
+
+  element.textContent =
+    message;
+
+  element.hidden = false;
+
+}
+
+
+function hideAudioReportError(){
+
+  const element =
+    $("audioReportError");
+
+  if(element){
+
+    element.hidden = true;
+
+    element.textContent = "";
+
+  }
+
+}
+
+
+function bindAudioReporting(){
+
+  const close =
+    $("audioReportClose");
+
+  const cancel =
+    $("audioReportCancel");
+
+  const backdrop =
+    $("audioReportBackdrop");
+
+  const submit =
+    $("audioReportSubmit");
+
+
+  if(close){
+
+    close.addEventListener(
+      "click",
+      closeAudioReport
+    );
+
+  }
+
+
+  if(cancel){
+
+    cancel.addEventListener(
+      "click",
+      closeAudioReport
+    );
+
+  }
+
+
+  if(backdrop){
+
+    backdrop.addEventListener(
+      "click",
+      closeAudioReport
+    );
+
+  }
+
+
+  if(submit){
+
+    submit.addEventListener(
+      "click",
+      submitAudioReport
+    );
+
+  }
+
+
+  document.addEventListener(
+    "keydown",
+    event => {
+
+      if(
+        event.key !== "Escape"
+      ){
+        return;
+      }
+
+
+      const modal =
+        $("audioReportModal");
+
+
+      if(
+        modal &&
+        !modal.hidden
+      ){
+
+        closeAudioReport();
+
+      }
+
+    }
+  );
+
+}
+
+/* =========================================================
    AUDIO SHARING
    ========================================================= */
 
@@ -1552,6 +1949,8 @@ bindAudioComments();
 await loadAudioComments();
 
 bindAudioSharing();
+
+bindAudioReporting();
 
   renderAudioLike();
   await loadAudioLike();
