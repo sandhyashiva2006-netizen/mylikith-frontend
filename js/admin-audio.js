@@ -8,6 +8,8 @@ document.addEventListener(
 
         loadAdminAudioChapters();
 
+        loadAdminAudioComments();
+
     }
 );
 
@@ -926,6 +928,374 @@ function formatAdminAudioDuration(
     return `${minutes}:${String(
         remaining
     ).padStart(2,"0")}`;
+
+}
+
+/* =========================================================
+   LOAD AUDIO COMMENTS
+   ========================================================= */
+
+async function loadAdminAudioComments(){
+
+    const container =
+        document.getElementById(
+            "audioCommentsList"
+        );
+
+    const count =
+        document.getElementById(
+            "audioCommentCount"
+        );
+
+    if(!container){
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="audio-admin-loading">
+            Loading Audio Comments...
+        </div>
+    `;
+
+    try{
+
+        const response =
+            await fetch(
+                `${ADMIN_AUDIO_API}/comments`,
+                {
+                    headers: {
+                        Authorization:
+                            "Bearer " +
+                            localStorage.getItem("token")
+                    }
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Failed to load Audio Comments."
+            );
+
+        }
+
+        const comments =
+            Array.isArray(data.comments)
+                ? data.comments
+                : [];
+
+        if(count){
+            count.textContent =
+                comments.length;
+        }
+
+        renderAdminAudioComments(
+            comments
+        );
+
+    }catch(error){
+
+        console.error(
+            "Admin Audio Comments load error:",
+            error
+        );
+
+        container.innerHTML = `
+            <div class="audio-admin-loading">
+                Failed to load Audio Comments.
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER AUDIO COMMENTS
+   ========================================================= */
+
+function renderAdminAudioComments(
+    comments
+){
+
+    const container =
+        document.getElementById(
+            "audioCommentsList"
+        );
+
+    if(!container){
+        return;
+    }
+
+    if(!comments.length){
+
+        container.innerHTML = `
+            <div class="audio-admin-loading">
+                No Audio Comments found.
+            </div>
+        `;
+
+        return;
+    }
+
+    container.innerHTML =
+        comments.map(
+            comment => {
+
+                const date =
+                    comment.created_at
+                        ? new Date(
+                            comment.created_at
+                          ).toLocaleString()
+                        : "—";
+
+                return `
+
+                    <article
+                        class="audio-admin-comment-card"
+                    >
+
+                        <div
+                            class="audio-admin-comment-avatar"
+                        >
+
+                            ${
+                                comment.profile_image
+                                    ? `
+                                        <img
+                                            src="${escapeAdminAudioHtml(
+                                                comment.profile_image
+                                            )}"
+                                            alt=""
+                                        >
+                                      `
+                                    : `
+                                        <span>
+                                            ${
+                                                escapeAdminAudioHtml(
+                                                    (
+                                                        comment.user_name ||
+                                                        "R"
+                                                    )
+                                                    .charAt(0)
+                                                    .toUpperCase()
+                                                )
+                                            }
+                                        </span>
+                                      `
+                            }
+
+                        </div>
+
+
+                        <div
+                            class="audio-admin-comment-info"
+                        >
+
+                            <div
+                                class="audio-admin-comment-header"
+                            >
+
+                                <div>
+
+                                    <strong>
+                                        ${escapeAdminAudioHtml(
+                                            comment.user_name ||
+                                            "Reader"
+                                        )}
+                                    </strong>
+
+                                    <span>
+                                        ${date}
+                                    </span>
+
+                                </div>
+
+                                <span
+                                    class="audio-admin-id"
+                                >
+                                    ID:
+                                    ${comment.id}
+                                </span>
+
+                            </div>
+
+
+                            <div
+                                class="audio-admin-comment-context"
+                            >
+
+                                🎧
+                                ${escapeAdminAudioHtml(
+                                    comment.audio_novel_title ||
+                                    "Unknown Audio"
+                                )}
+
+                                →
+
+                                Chapter
+                                ${Number(
+                                    comment.chapter_no || 0
+                                )}
+
+                                :
+                                ${escapeAdminAudioHtml(
+                                    comment.chapter_title ||
+                                    "Untitled"
+                                )}
+
+                            </div>
+
+
+                            <p
+                                class="audio-admin-comment-text"
+                            >
+                                ${escapeAdminAudioHtml(
+                                    comment.comment
+                                )}
+                            </p>
+
+
+                            <div
+                                class="audio-admin-comment-actions"
+                            >
+
+                                <button
+                                    type="button"
+                                    class="audio-admin-delete-comment"
+                                    data-comment-id="${comment.id}"
+                                >
+                                    🗑 Delete Comment
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                `;
+
+            }
+        )
+        .join("");
+
+
+    bindAdminAudioCommentActions();
+
+}
+
+
+/* =========================================================
+   COMMENT ACTIONS
+   ========================================================= */
+
+function bindAdminAudioCommentActions(){
+
+    document
+        .querySelectorAll(
+            ".audio-admin-delete-comment"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    async () => {
+
+                        const commentId =
+                            Number(
+                                button.dataset.commentId
+                            );
+
+                        if(
+                            !Number.isInteger(
+                                commentId
+                            ) ||
+                            commentId <= 0
+                        ){
+                            return;
+                        }
+
+
+                        const confirmed =
+                            confirm(
+                                "Delete this audio comment? This action cannot be undone."
+                            );
+
+
+                        if(!confirmed){
+                            return;
+                        }
+
+
+                        try{
+
+                            const response =
+                                await fetch(
+                                    `${ADMIN_AUDIO_API}/comments/${commentId}`,
+                                    {
+                                        method:
+                                            "DELETE",
+
+                                        headers: {
+                                            Authorization:
+                                                "Bearer " +
+                                                localStorage.getItem(
+                                                    "token"
+                                                )
+                                        }
+                                    }
+                                );
+
+
+                            const data =
+                                await response.json();
+
+
+                            if(
+                                !response.ok ||
+                                !data.success
+                            ){
+
+                                throw new Error(
+                                    data.message ||
+                                    "Failed to delete comment."
+                                );
+
+                            }
+
+
+                            await loadAdminAudioComments();
+
+
+                        }catch(error){
+
+                            console.error(
+                                "Admin Audio Comment delete error:",
+                                error
+                            );
+
+                            alert(
+                                error.message ||
+                                "Failed to delete comment."
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
 
 }
 

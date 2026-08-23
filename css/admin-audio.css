@@ -452,3 +452,115 @@
 
 }
 
+/* =========================================================
+   AUDIO COMMENTS
+   ========================================================= */
+
+.audio-admin-comment-card{
+    display:flex;
+    gap:13px;
+    margin-bottom:12px;
+    padding:15px;
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:14px;
+    background:rgba(255,255,255,.025);
+}
+
+.audio-admin-comment-card:last-child{
+    margin-bottom:0;
+}
+
+.audio-admin-comment-avatar{
+    flex:0 0 40px;
+    width:40px;
+    height:40px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    color:#ddd6fe;
+    background:rgba(124,58,237,.16);
+    font-weight:700;
+}
+
+.audio-admin-comment-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.audio-admin-comment-info{
+    min-width:0;
+    flex:1;
+}
+
+.audio-admin-comment-header{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.audio-admin-comment-header strong{
+    color:#f8fafc;
+    font-size:13px;
+}
+
+.audio-admin-comment-header span{
+    display:block;
+    margin-top:3px;
+    color:#64748b;
+    font-size:10px;
+}
+
+.audio-admin-comment-context{
+    margin-top:9px;
+    color:#a78bfa;
+    font-size:11px;
+}
+
+.audio-admin-comment-text{
+    margin:9px 0;
+    color:#cbd5e1;
+    font-size:13px;
+    line-height:1.6;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+}
+
+.audio-admin-comment-actions{
+    display:flex;
+    justify-content:flex-end;
+}
+
+.audio-admin-delete-comment{
+    padding:7px 10px;
+    border:1px solid rgba(239,68,68,.18);
+    border-radius:8px;
+    color:#fca5a5;
+    background:rgba(239,68,68,.07);
+    cursor:pointer;
+    font-size:11px;
+    font-weight:600;
+}
+
+.audio-admin-delete-comment:hover{
+    background:rgba(239,68,68,.14);
+}
+
+@media(max-width:600px){
+
+    .audio-admin-comment-card{
+        padding:12px;
+    }
+
+    .audio-admin-comment-header{
+        display:block;
+    }
+
+    .audio-admin-comment-header .audio-admin-id{
+        margin-top:6px;
+    }
+
+}
+
