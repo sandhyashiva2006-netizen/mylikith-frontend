@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Audio Management - MyLikith</title>
+
+    <link
+        rel="stylesheet"
+        href="css/admin.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/admin-audio.css"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+</head>
+
+
+<body>
+
+
+<button
+    id="menuToggle"
+    class="menu-toggle"
+    type="button"
+>
+    ☰
+</button>
+
+
+<div
+    id="sidebarOverlay"
+    class="sidebar-overlay"
+></div>
+
+
+<div class="admin-layout">
+
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-header">
+
+            <button
+                id="closeSidebar"
+                class="close-sidebar"
+                type="button"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="logo">
+
+            <h2>MyLikith</h2>
+
+            <p>Admin Panel</p>
+
+        </div>
+
+
+        <nav>
+
+            <a href="admin-dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="admin-users.html">
+                👥 Users
+            </a>
+
+            <a href="admin-writers.html">
+                ✍ Writers
+            </a>
+
+            <a href="admin-writer-applications.html">
+                Writer Applications
+            </a>
+
+            <a href="admin-manual-payments.html">
+                Manual Payments
+            </a>
+
+            <a href="admin-novels.html">
+                📚 Novels
+            </a>
+
+            <a href="admin-contests.html">
+                🏆 Contests
+            </a>
+
+            <a href="admin-novel-approvals.html">
+                📖 Novel Approvals
+            </a>
+
+            <a href="admin-chapters.html">
+                📝 Chapters
+            </a>
+
+            <a href="admin-reviews.html">
+                ⭐ Reviews
+            </a>
+
+            <a href="admin-comments.html">
+                💬 Comments
+            </a>
+
+            <a href="admin-reports.html">
+                🚩 Reports
+            </a>
+
+            <a href="admin-analytics.html">
+                📈 Analytics
+            </a>
+
+            <a href="admin-revenue.html">
+                💰 Revenue
+            </a>
+
+            <a href="admin-withdrawals.html">
+                💸 Withdrawals
+            </a>
+
+            <a href="admin-settings.html">
+                ⚙ Settings
+            </a>
+
+            <a href="admin-pages.html">
+                📄 Site Pages
+            </a>
+
+            <a href="admin-universe.html">
+                🌌 Universe
+            </a>
+
+            <a href="admin-classics.html">
+                📖 Classics
+            </a>
+
+            <a href="admin-originals.html">
+                🎬 Originals
+            </a>
+
+            <a
+                href="admin-audio.html"
+                class="active"
+            >
+                🎧 Audio
+            </a>
+
+            <a
+                href="admin-login.html"
+                id="logoutBtn"
+            >
+                🚪 Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <main class="main-content">
+
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    🎧 MyLikith Audio
+                </h1>
+
+                <p>
+                    Manage audio novels, chapters and moderation
+                </p>
+
+            </div>
+
+
+            <div class="admin-profile">
+
+                <span>
+                    Admin
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- AUDIO OVERVIEW -->
+
+        <section class="audio-admin-overview">
+
+            <div class="audio-admin-stat">
+
+                <span class="audio-admin-stat-icon">
+                    🎧
+                </span>
+
+                <div>
+
+                    <strong id="audioNovelCount">
+                        0
+                    </strong>
+
+                    <span>
+                        Audio Novels
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="audio-admin-stat">
+
+                <span class="audio-admin-stat-icon">
+                    📖
+                </span>
+
+                <div>
+
+                    <strong id="audioChapterCount">
+                        0
+                    </strong>
+
+                    <span>
+                        Audio Chapters
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="audio-admin-stat">
+
+                <span class="audio-admin-stat-icon">
+                    💬
+                </span>
+
+                <div>
+
+                    <strong id="audioCommentCount">
+                        0
+                    </strong>
+
+                    <span>
+                        Comments
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="audio-admin-stat">
+
+                <span class="audio-admin-stat-icon">
+                    🚩
+                </span>
+
+                <div>
+
+                    <strong id="audioReportCount">
+                        0
+                    </strong>
+
+                    <span>
+                        Pending Reports
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- AUDIO NAVIGATION -->
+
+        <section class="audio-admin-navigation">
+
+            <button
+                type="button"
+                class="audio-admin-tab active"
+                data-section="audioNovelsSection"
+            >
+                🎧 Audio Novels
+            </button>
+
+            <button
+                type="button"
+                class="audio-admin-tab"
+                data-section="audioChaptersSection"
+            >
+                📖 Chapters
+            </button>
+
+            <button
+                type="button"
+                class="audio-admin-tab"
+                data-section="audioCommentsSection"
+            >
+                💬 Comments
+            </button>
+
+            <button
+                type="button"
+                class="audio-admin-tab"
+                data-section="audioReportsSection"
+            >
+                🚩 Reports
+            </button>
+
+        </section>
+
+
+        <!-- AUDIO NOVELS -->
+
+        <section
+            id="audioNovelsSection"
+            class="audio-admin-section active"
+        >
+
+            <div class="audio-admin-section-header">
+
+                <div>
+
+                    <h2>
+                        🎧 Audio Novels
+                    </h2>
+
+                    <p>
+                        Manage published and uploaded audio novels.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="audioNovelsList"
+                class="audio-admin-list"
+            >
+
+                <div class="audio-admin-loading">
+                    Loading Audio Novels...
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- AUDIO CHAPTERS -->
+
+        <section
+            id="audioChaptersSection"
+            class="audio-admin-section"
+        >
+
+            <div class="audio-admin-section-header">
+
+                <div>
+
+                    <h2>
+                        📖 Audio Chapters
+                    </h2>
+
+                    <p>
+                        Manage audio chapters and playback status.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="audioChaptersList"
+                class="audio-admin-list"
+            >
+
+                <div class="audio-admin-loading">
+                    Select Chapters to load audio chapters.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- AUDIO COMMENTS -->
+
+        <section
+            id="audioCommentsSection"
+            class="audio-admin-section"
+        >
+
+            <div class="audio-admin-section-header">
+
+                <div>
+
+                    <h2>
+                        💬 Audio Comments
+                    </h2>
+
+                    <p>
+                        Review comments posted on audio chapters.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="audioCommentsList"
+                class="audio-admin-list"
+            >
+
+                <div class="audio-admin-loading">
+                    Select Comments to load audio comments.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- AUDIO REPORTS -->
+
+        <section
+            id="audioReportsSection"
+            class="audio-admin-section"
+        >
+
+            <div class="audio-admin-section-header">
+
+                <div>
+
+                    <h2>
+                        🚩 Audio Comment Reports
+                    </h2>
+
+                    <p>
+                        Review and moderate reported audio comments.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="audioReportsList"
+                class="audio-admin-list"
+            >
+
+                <div class="audio-admin-loading">
+                    Select Reports to load audio reports.
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+<script src="js/admin-auth.js"></script>
+
+<script src="js/admin-audio.js"></script>
+
+
+</body>
+
+</html>

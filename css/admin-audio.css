@@ -1,0 +1,144 @@
+/* =========================================================
+   AUDIO ADMIN
+   ========================================================= */
+
+.audio-admin-overview{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:24px;
+}
+
+.audio-admin-stat{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:20px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:16px;
+    background:rgba(255,255,255,.03);
+}
+
+.audio-admin-stat-icon{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:46px;
+    height:46px;
+    border-radius:12px;
+    background:rgba(124,58,237,.14);
+    font-size:22px;
+}
+
+.audio-admin-stat strong{
+    display:block;
+    color:#f8fafc;
+    font-size:22px;
+}
+
+.audio-admin-stat div span{
+    display:block;
+    margin-top:2px;
+    color:#94a3b8;
+    font-size:12px;
+}
+
+.audio-admin-navigation{
+    display:flex;
+    gap:8px;
+    margin-bottom:22px;
+    padding:6px;
+    overflow-x:auto;
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:12px;
+    background:rgba(255,255,255,.025);
+}
+
+.audio-admin-tab{
+    padding:10px 15px;
+    border:0;
+    border-radius:9px;
+    color:#94a3b8;
+    background:transparent;
+    cursor:pointer;
+    white-space:nowrap;
+    font:inherit;
+    font-size:13px;
+    font-weight:600;
+}
+
+.audio-admin-tab:hover{
+    color:#e2e8f0;
+    background:rgba(255,255,255,.05);
+}
+
+.audio-admin-tab.active{
+    color:#ddd6fe;
+    background:rgba(124,58,237,.18);
+}
+
+.audio-admin-section{
+    display:none;
+}
+
+.audio-admin-section.active{
+    display:block;
+}
+
+.audio-admin-section-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:18px;
+}
+
+.audio-admin-section-header h2{
+    margin:0;
+    color:#f8fafc;
+    font-size:21px;
+}
+
+.audio-admin-section-header p{
+    margin:5px 0 0;
+    color:#64748b;
+    font-size:12px;
+}
+
+.audio-admin-list{
+    min-height:120px;
+    padding:20px;
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:16px;
+    background:rgba(255,255,255,.025);
+}
+
+.audio-admin-loading{
+    padding:35px 15px;
+    text-align:center;
+    color:#64748b;
+    font-size:13px;
+}
+
+@media(max-width:900px){
+
+    .audio-admin-overview{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:600px){
+
+    .audio-admin-overview{
+        grid-template-columns:1fr;
+    }
+
+    .audio-admin-stat{
+        padding:16px;
+    }
+
+    .audio-admin-section-header{
+        align-items:flex-start;
+    }
+
+}
