@@ -1,0 +1,824 @@
+/* =========================================================
+   MYLIKITH AUDIO V1
+   Discovery / Search / Novel Listing
+   ========================================================= */
+
+.audio-page{
+    max-width:1280px;
+    margin:0 auto;
+    padding:100px 28px 80px;
+}
+
+.audio-hero{
+    position:relative;
+    overflow:hidden;
+    min-height:470px;
+    display:flex;
+    align-items:center;
+    border:1px solid rgba(139,92,246,.22);
+    border-radius:28px;
+    background:
+        radial-gradient(circle at 75% 30%,rgba(124,58,237,.18),transparent 38%),
+        linear-gradient(135deg,rgba(17,24,39,.96),rgba(23,18,48,.96));
+    box-shadow:0 25px 80px rgba(0,0,0,.28);
+    margin-bottom:42px;
+}
+
+.audio-hero-glow{
+    position:absolute;
+    width:420px;
+    height:420px;
+    right:-120px;
+    top:-110px;
+    border-radius:50%;
+    background:rgba(124,58,237,.18);
+    filter:blur(30px);
+}
+
+.audio-hero-content{
+    position:relative;
+    z-index:1;
+    max-width:760px;
+    padding:70px;
+}
+
+.audio-eyebrow,
+.audio-section-label{
+    display:inline-block;
+    color:#a78bfa;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:2px;
+}
+
+.audio-hero h1{
+    margin:18px 0;
+    font-size:clamp(44px,6vw,76px);
+    line-height:1.02;
+    color:#f8fafc;
+}
+
+.audio-hero h1 span{
+    display:block;
+    background:linear-gradient(90deg,#a78bfa,#c4b5fd,#67e8f9);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.audio-hero p{
+    max-width:620px;
+    color:#cbd5e1;
+    font-size:19px;
+    line-height:1.75;
+}
+
+.audio-hero-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-top:30px;
+}
+
+.audio-primary-btn,
+.audio-secondary-btn,
+.audio-outline-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    min-height:46px;
+    padding:12px 20px;
+    border-radius:13px;
+    text-decoration:none;
+    font-weight:750;
+    cursor:pointer;
+    transition:.25s ease;
+    box-sizing:border-box;
+}
+
+.audio-primary-btn{
+    border:1px solid transparent;
+    color:#fff;
+    background:linear-gradient(135deg,#7c3aed,#5b21b6);
+    box-shadow:0 12px 30px rgba(124,58,237,.22);
+}
+
+.audio-primary-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 16px 36px rgba(124,58,237,.30);
+}
+
+.audio-secondary-btn,
+.audio-outline-btn{
+    color:#e2e8f0;
+    border:1px solid rgba(167,139,250,.25);
+    background:rgba(15,23,42,.58);
+}
+
+.audio-secondary-btn:hover,
+.audio-outline-btn:hover{
+    border-color:#8b5cf6;
+    background:rgba(124,58,237,.12);
+}
+
+.audio-discovery-bar{
+    position:sticky;
+    top:82px;
+    z-index:20;
+    display:grid;
+    grid-template-columns:minmax(260px,1fr) 180px 180px 160px auto;
+    gap:12px;
+    padding:14px;
+    margin-bottom:48px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;
+    background:rgba(9,14,29,.90);
+    backdrop-filter:blur(20px);
+    box-shadow:0 15px 45px rgba(0,0,0,.22);
+}
+
+.audio-search-box{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width:0;
+    padding:0 15px;
+    border:1px solid rgba(148,163,184,.16);
+    border-radius:12px;
+    background:rgba(30,41,59,.45);
+}
+
+.audio-search-box input{
+    width:100%;
+    min-width:0;
+    padding:13px 0;
+    border:0;
+    outline:0;
+    color:#f8fafc;
+    background:transparent;
+    font-size:15px;
+}
+
+.audio-discovery-bar select{
+    width:100%;
+    min-height:48px;
+    padding:0 12px;
+    color:#e2e8f0;
+    border:1px solid rgba(148,163,184,.16);
+    border-radius:12px;
+    background:#111827;
+    outline:0;
+}
+
+.audio-search-button{
+    border:0;
+}
+
+.audio-section{
+    margin:0 0 62px;
+}
+
+.audio-section-heading{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:25px;
+    margin-bottom:24px;
+}
+
+.audio-section-heading h2{
+    margin:6px 0 5px;
+    color:#f8fafc;
+    font-size:32px;
+}
+
+.audio-section-heading p{
+    margin:0;
+    color:#94a3b8;
+}
+
+.audio-card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:24px;
+}
+
+.audio-card{
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+    color:#fff;
+    text-decoration:none;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;
+    background:rgba(18,26,46,.72);
+    backdrop-filter:blur(18px);
+    box-shadow:0 15px 40px rgba(0,0,0,.25);
+    transition:.3s ease;
+}
+
+.audio-card:hover{
+    transform:translateY(-7px);
+    border-color:#7c3aed;
+    box-shadow:0 20px 50px rgba(124,58,237,.20);
+}
+
+.audio-card-cover-wrap{
+    position:relative;
+    aspect-ratio:1/1;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 50% 35%,rgba(124,58,237,.25),transparent 55%),
+        #10172a;
+}
+
+.audio-card-cover{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.audio-card-cover-fallback{
+    position:absolute;
+    inset:0;
+    display:grid;
+    place-items:center;
+    font-size:58px;
+    background:
+        radial-gradient(circle at 50% 40%,rgba(124,58,237,.28),transparent 55%),
+        linear-gradient(145deg,#111827,#1e1b4b);
+}
+
+.audio-card-badges{
+    position:absolute;
+    left:12px;
+    top:12px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.audio-badge{
+    padding:6px 9px;
+    border-radius:999px;
+    font-size:11px;
+    font-weight:800;
+    backdrop-filter:blur(10px);
+}
+
+.audio-badge.premium{
+    color:#fde68a;
+    background:rgba(120,53,15,.78);
+}
+
+.audio-badge.featured{
+    color:#ddd6fe;
+    background:rgba(76,29,149,.78);
+}
+
+.audio-card-play{
+    position:absolute;
+    right:14px;
+    bottom:14px;
+    display:grid;
+    place-items:center;
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    color:#fff;
+    background:#7c3aed;
+    box-shadow:0 10px 25px rgba(124,58,237,.35);
+    opacity:0;
+    transform:translateY(5px);
+    transition:.25s ease;
+}
+
+.audio-card:hover .audio-card-play{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.audio-card-body{
+    display:flex;
+    flex-direction:column;
+    flex:1;
+    padding:18px;
+}
+
+.audio-card-body h3{
+    margin:0 0 8px;
+    font-size:19px;
+    line-height:1.35;
+    color:#f8fafc;
+}
+
+.audio-card-writer{
+    margin:0 0 14px;
+    color:#a78bfa;
+    font-size:13px;
+}
+
+.audio-card-meta,
+.audio-card-stats{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.audio-card-meta{
+    margin-top:auto;
+    color:#94a3b8;
+    font-size:12px;
+}
+
+.audio-card-stats{
+    margin-top:13px;
+    padding-top:12px;
+    border-top:1px solid rgba(148,163,184,.10);
+    color:#cbd5e1;
+    font-size:12px;
+}
+
+.audio-card-meta span,
+.audio-card-stats span{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.continue-audio-grid{
+    display:grid;
+    gap:16px;
+}
+
+.continue-audio-card{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    padding:17px;
+    color:#fff;
+    text-decoration:none;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;
+    background:rgba(18,26,46,.72);
+    transition:.25s ease;
+}
+
+.continue-audio-card:hover{
+    border-color:#7c3aed;
+    transform:translateY(-2px);
+}
+
+.continue-cover-wrap{
+    position:relative;
+    flex:0 0 82px;
+    width:82px;
+    height:82px;
+    overflow:hidden;
+    border-radius:13px;
+}
+
+.continue-cover-wrap .audio-card-cover{
+    width:100%;
+    height:100%;
+}
+
+.continue-cover-wrap .audio-card-cover-fallback{
+    font-size:30px;
+}
+
+.continue-info{
+    min-width:0;
+    flex:1;
+}
+
+.continue-info h3{
+    margin:5px 0;
+    font-size:20px;
+}
+
+.continue-info p{
+    margin:0 0 13px;
+    color:#94a3b8;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.continue-progress{
+    height:5px;
+    overflow:hidden;
+    border-radius:99px;
+    background:#1e293b;
+}
+
+.continue-progress span{
+    display:block;
+    height:100%;
+    border-radius:inherit;
+    background:#8b5cf6;
+}
+
+.continue-meta{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    margin-top:8px;
+    color:#94a3b8;
+    font-size:12px;
+}
+
+.continue-play{
+    flex:0 0 auto;
+    display:grid;
+    place-items:center;
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    background:#7c3aed;
+}
+
+.novel-details-section{
+    scroll-margin-top:110px;
+}
+
+.novel-detail-card{
+    display:grid;
+    grid-template-columns:210px 1fr;
+    gap:30px;
+    padding:30px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:24px;
+    background:
+        radial-gradient(circle at 15% 20%,rgba(124,58,237,.12),transparent 35%),
+        rgba(18,26,46,.72);
+    box-shadow:0 20px 60px rgba(0,0,0,.22);
+}
+
+.novel-detail-cover-wrap{
+    position:relative;
+    width:210px;
+    height:210px;
+    overflow:hidden;
+    border-radius:18px;
+    background:#111827;
+}
+
+.novel-detail-cover{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.novel-detail-cover-fallback{
+    width:100%;
+    height:100%;
+    display:grid;
+    place-items:center;
+    font-size:68px;
+    background:
+        radial-gradient(circle at 50% 35%,rgba(124,58,237,.30),transparent 55%),
+        #111827;
+}
+
+.novel-detail-info h2{
+    margin:7px 0 12px;
+    color:#f8fafc;
+    font-size:38px;
+}
+
+.novel-detail-info p{
+    max-width:800px;
+    margin:0 0 18px;
+    color:#cbd5e1;
+    line-height:1.75;
+}
+
+.novel-detail-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+    margin-bottom:22px;
+}
+
+.novel-detail-meta span{
+    padding:7px 10px;
+    color:#cbd5e1;
+    border:1px solid rgba(148,163,184,.14);
+    border-radius:999px;
+    background:rgba(15,23,42,.55);
+    font-size:12px;
+}
+
+.chapters-heading{
+    margin:34px 0 18px;
+}
+
+.chapters-heading h2{
+    margin:6px 0 0;
+    color:#f8fafc;
+}
+
+.audio-chapter-list{
+    display:grid;
+    gap:10px;
+}
+
+.audio-chapter-row{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding:17px 18px;
+    color:#fff;
+    text-decoration:none;
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:16px;
+    background:rgba(15,23,42,.68);
+    transition:.25s ease;
+}
+
+.audio-chapter-row:hover{
+    border-color:#7c3aed;
+    background:rgba(124,58,237,.08);
+    transform:translateX(3px);
+}
+
+.chapter-number{
+    flex:0 0 48px;
+    color:#a78bfa;
+    font-size:14px;
+    font-weight:800;
+    text-align:center;
+}
+
+.chapter-main{
+    flex:1;
+    min-width:0;
+}
+
+.chapter-main h3{
+    margin:0 0 6px;
+    color:#f8fafc;
+    font-size:16px;
+}
+
+.chapter-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    color:#94a3b8;
+    font-size:12px;
+}
+
+.chapter-lock{
+    color:#fbbf24;
+}
+
+.chapter-free{
+    color:#34d399;
+}
+
+.chapter-play{
+    display:grid;
+    place-items:center;
+    flex:0 0 38px;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    color:#fff;
+    background:#7c3aed;
+}
+
+.audio-pagination{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    margin-top:30px;
+}
+
+.audio-pagination span{
+    color:#cbd5e1;
+    font-size:14px;
+}
+
+.audio-outline-btn:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+}
+
+.audio-loading,
+.audio-empty{
+    grid-column:1/-1;
+    padding:45px 20px;
+    text-align:center;
+    color:#94a3b8;
+    border:1px dashed rgba(148,163,184,.16);
+    border-radius:18px;
+    background:rgba(15,23,42,.35);
+}
+
+.audio-empty>div{
+    margin-bottom:10px;
+    font-size:34px;
+}
+
+.audio-empty h3{
+    margin:0 0 7px;
+    color:#e2e8f0;
+}
+
+.audio-empty p{
+    margin:0;
+}
+
+.audio-empty.compact{
+    padding:30px;
+}
+
+.audio-global-message{
+    padding:18px;
+    margin-bottom:30px;
+    color:#cbd5e1;
+    border:1px solid rgba(239,68,68,.22);
+    border-radius:14px;
+    background:rgba(127,29,29,.12);
+}
+
+/* Mobile */
+@media(max-width:1000px){
+    .audio-discovery-bar{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .audio-search-box{
+        grid-column:1/-1;
+    }
+
+    .audio-search-button{
+        width:100%;
+    }
+}
+
+@media(max-width:700px){
+    .audio-page{
+        padding:92px 16px 60px;
+    }
+
+    .audio-hero{
+        min-height:430px;
+        border-radius:22px;
+    }
+
+    .audio-hero-content{
+        padding:42px 25px;
+    }
+
+    .audio-hero h1{
+        font-size:44px;
+    }
+
+    .audio-hero p{
+        font-size:16px;
+    }
+
+    .audio-hero-actions{
+        flex-direction:column;
+    }
+
+    .audio-hero-actions a{
+        width:100%;
+    }
+
+    .audio-discovery-bar{
+        position:static;
+        grid-template-columns:1fr;
+        padding:12px;
+        border-radius:16px;
+    }
+
+    .audio-search-box{
+        grid-column:auto;
+    }
+
+    .audio-section-heading{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .audio-section-heading h2{
+        font-size:27px;
+    }
+
+    .audio-card-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:13px;
+    }
+
+    .audio-card{
+        border-radius:15px;
+    }
+
+    .audio-card-body{
+        padding:13px;
+    }
+
+    .audio-card-body h3{
+        font-size:16px;
+    }
+
+    .audio-card-writer{
+        font-size:12px;
+    }
+
+    .audio-card-stats{
+        gap:5px;
+        font-size:10px;
+    }
+
+    .audio-card-play{
+        opacity:1;
+        transform:none;
+        width:38px;
+        height:38px;
+        right:9px;
+        bottom:9px;
+    }
+
+    .continue-audio-card{
+        gap:12px;
+        padding:13px;
+    }
+
+    .continue-cover-wrap{
+        flex-basis:68px;
+        width:68px;
+        height:68px;
+    }
+
+    .continue-info h3{
+        font-size:17px;
+    }
+
+    .continue-info p{
+        font-size:12px;
+    }
+
+    .continue-play{
+        width:40px;
+        height:40px;
+    }
+
+    .novel-detail-card{
+        grid-template-columns:1fr;
+        padding:20px;
+    }
+
+    .novel-detail-cover-wrap{
+        width:160px;
+        height:160px;
+    }
+
+    .novel-detail-info h2{
+        font-size:30px;
+    }
+
+    .audio-chapter-row{
+        gap:11px;
+        padding:14px;
+    }
+
+    .chapter-number{
+        flex-basis:34px;
+    }
+
+    .chapter-play{
+        flex-basis:34px;
+        width:34px;
+        height:34px;
+    }
+}
+
+@media(max-width:430px){
+    .audio-card-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .audio-card-meta{
+        display:block;
+        line-height:1.6;
+    }
+
+    .audio-card-meta span{
+        display:block;
+    }
+
+    .audio-card-stats{
+        display:grid;
+        grid-template-columns:1fr;
+    }
+}

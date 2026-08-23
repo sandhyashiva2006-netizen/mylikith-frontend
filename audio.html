@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>MyLikith Audio — Listen to Audio Novels & Stories</title>
+
+<meta
+    name="description"
+    content="Discover audio novels and stories on MyLikith Audio. Listen to featured, latest and premium audio stories."
+>
+<meta property="og:type" content="website">
+<meta property="og:title" content="MyLikith Audio">
+<meta
+    property="og:description"
+    content="Listen to audio novels and stories on MyLikith."
+>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/audio.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+<nav id="navbar" class="navbar"></nav>
+
+<main class="audio-page">
+
+    <!-- HERO -->
+    <section class="audio-hero">
+        <div class="audio-hero-glow"></div>
+
+        <div class="audio-hero-content">
+            <span class="audio-eyebrow">🎧 MYLIKITH AUDIO</span>
+
+            <h1>
+                Stories you can
+                <span>listen to.</span>
+            </h1>
+
+            <p>
+                Discover audio novels, stories and episodes
+                across the MyLikith Universe.
+            </p>
+
+            <div class="audio-hero-actions">
+                <a href="#browseAudio" class="audio-primary-btn">
+                    🎧 Explore Audio
+                </a>
+                <a href="#continueListening" class="audio-secondary-btn" id="continueHeroButton">
+                    ▶ Continue Listening
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- SEARCH / FILTER -->
+    <section class="audio-discovery-bar" id="browseAudio">
+
+        <div class="audio-search-box">
+            <span>🔍</span>
+            <input
+                id="audioSearch"
+                type="search"
+                placeholder="Search audio novels, stories..."
+                autocomplete="off"
+            >
+        </div>
+
+        <select id="languageFilter" aria-label="Language">
+            <option value="">All Languages</option>
+        </select>
+
+        <select id="categoryFilter" aria-label="Category">
+            <option value="">All Categories</option>
+        </select>
+
+        <select id="sortFilter" aria-label="Sort">
+            <option value="latest">Latest</option>
+            <option value="popular">Popular</option>
+            <option value="rating">Highest Rated</option>
+            <option value="likes">Most Liked</option>
+            <option value="oldest">Oldest</option>
+        </select>
+
+        <button id="searchButton" class="audio-primary-btn audio-search-button">
+            Search
+        </button>
+    </section>
+
+
+    <!-- CONTINUE LISTENING -->
+    <section class="audio-section" id="continueListeningSection" hidden>
+        <div class="audio-section-heading">
+            <div>
+                <span class="audio-section-label">YOUR LISTENING</span>
+                <h2>Continue Listening</h2>
+                <p>Pick up where you left off.</p>
+            </div>
+        </div>
+
+        <div id="continueListening" class="continue-audio-grid"></div>
+    </section>
+
+
+    <!-- FEATURED -->
+    <section class="audio-section">
+        <div class="audio-section-heading">
+            <div>
+                <span class="audio-section-label">FEATURED</span>
+                <h2>Featured Audio</h2>
+                <p>Stories worth listening to.</p>
+            </div>
+        </div>
+
+        <div id="featuredAudio" class="audio-card-grid">
+            <div class="audio-loading">Loading featured audio...</div>
+        </div>
+    </section>
+
+
+    <!-- SELECTED NOVEL -->
+    <section id="novelDetailsSection" class="audio-section novel-details-section" hidden>
+
+        <div class="novel-detail-card">
+
+            <div class="novel-detail-cover-wrap">
+                <div id="novelDetailCoverFallback" class="novel-detail-cover-fallback">🎧</div>
+                <img id="novelDetailCover" class="novel-detail-cover" alt="" hidden>
+            </div>
+
+            <div class="novel-detail-info">
+                <span class="audio-section-label">AUDIO NOVEL</span>
+
+                <h2 id="novelDetailTitle">Loading...</h2>
+
+                <p id="novelDetailDescription"></p>
+
+                <div id="novelDetailMeta" class="novel-detail-meta"></div>
+
+                <a id="novelFirstChapterButton" class="audio-primary-btn" href="#" hidden>
+                    ▶ Start Listening
+                </a>
+            </div>
+        </div>
+
+        <div class="chapters-heading">
+            <div>
+                <span class="audio-section-label">EPISODES</span>
+                <h2>Chapters</h2>
+            </div>
+        </div>
+
+        <div id="audioChapters" class="audio-chapter-list"></div>
+
+    </section>
+
+
+    <!-- ALL AUDIO -->
+    <section class="audio-section">
+
+        <div class="audio-section-heading audio-results-heading">
+            <div>
+                <span class="audio-section-label">DISCOVER</span>
+                <h2 id="resultsTitle">Latest Audio</h2>
+                <p id="resultsSummary">Explore published audio stories.</p>
+            </div>
+
+            <button id="clearFiltersButton" class="audio-outline-btn">
+                Clear Filters
+            </button>
+        </div>
+
+        <div id="audioResults" class="audio-card-grid">
+            <div class="audio-loading">Loading audio...</div>
+        </div>
+
+        <div id="audioPagination" class="audio-pagination" hidden>
+            <button id="previousPage" class="audio-outline-btn">← Previous</button>
+            <span id="pageInfo"></span>
+            <button id="nextPage" class="audio-outline-btn">Next →</button>
+        </div>
+
+    </section>
+
+
+    <!-- EMPTY / ERROR -->
+    <div id="audioGlobalMessage" class="audio-global-message" hidden></div>
+
+</main>
+
+<div id="footer"></div>
+
+<script src="js/session.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/footer.js"></script>
+<script src="js/audio.js?v=20260823-1"></script>
+
+</body>
+</html>
