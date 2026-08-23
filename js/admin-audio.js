@@ -10,6 +10,8 @@ document.addEventListener(
 
         loadAdminAudioComments();
 
+        loadAdminAudioReports();
+
     }
 );
 
@@ -1296,6 +1298,537 @@ function bindAdminAudioCommentActions(){
 
             }
         );
+
+}
+
+/* =========================================================
+   LOAD AUDIO REPORTS
+   ========================================================= */
+
+async function loadAdminAudioReports(){
+
+    const container =
+        document.getElementById(
+            "audioReportsList"
+        );
+
+    const count =
+        document.getElementById(
+            "audioReportCount"
+        );
+
+
+    if(!container){
+        return;
+    }
+
+
+    container.innerHTML = `
+        <div class="audio-admin-loading">
+            Loading Audio Reports...
+        </div>
+    `;
+
+
+    try{
+
+        const response =
+            await fetch(
+                `${ADMIN_AUDIO_API}/reports`,
+                {
+                    headers: {
+                        Authorization:
+                            "Bearer " +
+                            localStorage.getItem(
+                                "token"
+                            )
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Failed to load Audio Reports."
+            );
+
+        }
+
+
+        const reports =
+            Array.isArray(
+                data.reports
+            )
+                ? data.reports
+                : [];
+
+
+        if(count){
+
+            const pending =
+                reports.filter(
+                    report =>
+                        String(
+                            report.status ||
+                            "pending"
+                        ).toLowerCase() ===
+                        "pending"
+                ).length;
+
+            count.textContent =
+                pending;
+
+        }
+
+
+        renderAdminAudioReports(
+            reports
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Admin Audio Reports load error:",
+            error
+        );
+
+
+        container.innerHTML = `
+            <div class="audio-admin-loading">
+                Failed to load Audio Reports.
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER AUDIO REPORTS
+   ========================================================= */
+
+function renderAdminAudioReports(
+    reports
+){
+
+    const container =
+        document.getElementById(
+            "audioReportsList"
+        );
+
+
+    if(!container){
+        return;
+    }
+
+
+    if(!reports.length){
+
+        container.innerHTML = `
+            <div class="audio-admin-loading">
+                🎉 No Audio Reports found.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        reports.map(
+            report => {
+
+                const status =
+                    String(
+                        report.status ||
+                        "pending"
+                    ).toLowerCase();
+
+
+                const date =
+                    report.created_at
+                        ? new Date(
+                            report.created_at
+                          ).toLocaleString()
+                        : "—";
+
+
+                const isChapterReport =
+                    report.report_type ===
+                    "audio_chapter_comment";
+
+
+                const location =
+                    isChapterReport
+                        ? `
+                            Chapter
+                            ${Number(
+                                report.chapter_no || 0
+                            )}
+                            :
+                            ${escapeAdminAudioHtml(
+                                report.chapter_title ||
+                                "Untitled"
+                            )}
+                          `
+                        : "Audio Novel Comment";
+
+
+                return `
+
+                    <article
+                        class="audio-admin-report-card"
+                    >
+
+                        <div
+                            class="audio-admin-report-header"
+                        >
+
+                            <div>
+
+                                <span
+                                    class="audio-admin-report-type"
+                                >
+                                    ${
+                                        isChapterReport
+                                            ? "🎧 Chapter Comment"
+                                            : "🎧 Audio Comment"
+                                    }
+                                </span>
+
+                                <h3>
+                                    ${escapeAdminAudioHtml(
+                                        report.audio_novel_title ||
+                                        "Unknown Audio"
+                                    )}
+                                </h3>
+
+                            </div>
+
+
+                            <span
+                                class="audio-admin-report-status ${escapeAdminAudioHtml(
+                                    status
+                                )}"
+                            >
+                                ${escapeAdminAudioHtml(
+                                    status
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="audio-admin-report-context"
+                        >
+
+                            📖
+                            ${location}
+
+                        </div>
+
+
+                        <div
+                            class="audio-admin-report-comment"
+                        >
+
+                            <span>
+                                Reported Comment
+                            </span>
+
+                            <p>
+                                ${escapeAdminAudioHtml(
+                                    report.comment
+                                )}
+                            </p>
+
+                        </div>
+
+
+                        <div
+                            class="audio-admin-report-details"
+                        >
+
+                            <div>
+
+                                <span>
+                                    👤 Commenter
+                                </span>
+
+                                <strong>
+                                    ${escapeAdminAudioHtml(
+                                        report.commenter_name ||
+                                        "Reader"
+                                    )}
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    🚩 Reporter
+                                </span>
+
+                                <strong>
+                                    ${escapeAdminAudioHtml(
+                                        report.reporter_name ||
+                                        "Reader"
+                                    )}
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    📝 Reason
+                                </span>
+
+                                <strong>
+                                    ${escapeAdminAudioHtml(
+                                        report.reason ||
+                                        "No reason provided"
+                                    )}
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    📅 Reported
+                                </span>
+
+                                <strong>
+                                    ${escapeAdminAudioHtml(
+                                        date
+                                    )}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="audio-admin-report-actions"
+                        >
+
+                            ${
+                                status === "pending"
+                                    ? `
+
+                                        <button
+                                            type="button"
+                                            class="audio-report-resolve"
+                                            data-report-id="${report.report_id}"
+                                            data-report-type="${report.report_type}"
+                                        >
+                                            ✅ Resolve
+                                        </button>
+
+
+                                        <button
+                                            type="button"
+                                            class="audio-report-reject"
+                                            data-report-id="${report.report_id}"
+                                            data-report-type="${report.report_type}"
+                                        >
+                                            ❌ Reject
+                                        </button>
+
+                                      `
+                                    : `
+                                        <span
+                                            class="audio-admin-reviewed-label"
+                                        >
+                                            Reviewed
+                                        </span>
+                                      `
+                            }
+
+                        </div>
+
+                    </article>
+
+                `;
+
+            }
+        )
+        .join("");
+
+
+    bindAdminAudioReportActions();
+
+}
+
+
+/* =========================================================
+   REPORT ACTIONS
+   ========================================================= */
+
+function bindAdminAudioReportActions(){
+
+    document
+        .querySelectorAll(
+            ".audio-report-resolve"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        updateAdminAudioReport(
+                            button.dataset.reportType,
+                            button.dataset.reportId,
+                            "resolved"
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+    document
+        .querySelectorAll(
+            ".audio-report-reject"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        updateAdminAudioReport(
+                            button.dataset.reportType,
+                            button.dataset.reportId,
+                            "rejected"
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   UPDATE REPORT STATUS
+   ========================================================= */
+
+async function updateAdminAudioReport(
+    reportType,
+    reportId,
+    status
+){
+
+    const action =
+        status === "resolved"
+            ? "resolve"
+            : "reject";
+
+
+    const confirmed =
+        confirm(
+            `Are you sure you want to ${action} this report?`
+        );
+
+
+    if(!confirmed){
+        return;
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                `${ADMIN_AUDIO_API}/reports/${encodeURIComponent(
+                    reportType
+                )}/${encodeURIComponent(
+                    reportId
+                )}`,
+                {
+                    method:
+                        "PATCH",
+
+                    headers: {
+                        Authorization:
+                            "Bearer " +
+                            localStorage.getItem(
+                                "token"
+                            ),
+
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            status
+                        })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Failed to update report."
+            );
+
+        }
+
+
+        await loadAdminAudioReports();
+
+
+    }catch(error){
+
+        console.error(
+            "Admin Audio Report update error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Failed to update report."
+        );
+
+    }
 
 }
 

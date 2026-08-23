@@ -564,3 +564,196 @@
 
 }
 
+/* =========================================================
+   AUDIO REPORTS
+   ========================================================= */
+
+.audio-admin-report-card{
+    margin-bottom:14px;
+    padding:17px;
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:15px;
+    background:rgba(255,255,255,.025);
+}
+
+.audio-admin-report-card:last-child{
+    margin-bottom:0;
+}
+
+.audio-admin-report-header{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.audio-admin-report-header h3{
+    margin:6px 0 0;
+    color:#f8fafc;
+    font-size:15px;
+}
+
+.audio-admin-report-type{
+    color:#a78bfa;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+}
+
+.audio-admin-report-status{
+    padding:5px 9px;
+    border-radius:7px;
+    font-size:10px;
+    font-weight:800;
+    text-transform:capitalize;
+}
+
+.audio-admin-report-status.pending{
+    color:#fcd34d;
+    background:rgba(234,179,8,.10);
+}
+
+.audio-admin-report-status.resolved{
+    color:#86efac;
+    background:rgba(34,197,94,.10);
+}
+
+.audio-admin-report-status.rejected{
+    color:#fca5a5;
+    background:rgba(239,68,68,.10);
+}
+
+.audio-admin-report-context{
+    margin-top:12px;
+    color:#94a3b8;
+    font-size:11px;
+}
+
+.audio-admin-report-comment{
+    margin-top:13px;
+    padding:12px;
+    border-radius:10px;
+    background:rgba(2,6,23,.35);
+}
+
+.audio-admin-report-comment span{
+    color:#64748b;
+    font-size:10px;
+    font-weight:700;
+    text-transform:uppercase;
+}
+
+.audio-admin-report-comment p{
+    margin:6px 0 0;
+    color:#cbd5e1;
+    font-size:13px;
+    line-height:1.55;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+}
+
+.audio-admin-report-details{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-top:13px;
+}
+
+.audio-admin-report-details div{
+    padding:9px;
+    border:1px solid rgba(255,255,255,.05);
+    border-radius:9px;
+}
+
+.audio-admin-report-details span{
+    display:block;
+    margin-bottom:4px;
+    color:#64748b;
+    font-size:9px;
+    text-transform:uppercase;
+}
+
+.audio-admin-report-details strong{
+    display:block;
+    color:#cbd5e1;
+    font-size:11px;
+    font-weight:600;
+    overflow-wrap:anywhere;
+}
+
+.audio-admin-report-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:14px;
+}
+
+.audio-report-resolve,
+.audio-report-reject{
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:11px;
+    font-weight:700;
+}
+
+.audio-report-resolve{
+    border:1px solid rgba(34,197,94,.18);
+    color:#86efac;
+    background:rgba(34,197,94,.07);
+}
+
+.audio-report-resolve:hover{
+    background:rgba(34,197,94,.14);
+}
+
+.audio-report-reject{
+    border:1px solid rgba(239,68,68,.18);
+    color:#fca5a5;
+    background:rgba(239,68,68,.07);
+}
+
+.audio-report-reject:hover{
+    background:rgba(239,68,68,.14);
+}
+
+.audio-admin-reviewed-label{
+    color:#64748b;
+    font-size:11px;
+}
+
+@media(max-width:800px){
+
+    .audio-admin-report-details{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:600px){
+
+    .audio-admin-report-header{
+        display:block;
+    }
+
+    .audio-admin-report-status{
+        display:inline-block;
+        margin-top:9px;
+    }
+
+    .audio-admin-report-details{
+        grid-template-columns:1fr;
+    }
+
+    .audio-admin-report-actions{
+        justify-content:stretch;
+    }
+
+    .audio-report-resolve,
+    .audio-report-reject{
+        flex:1;
+    }
+
+}
+
