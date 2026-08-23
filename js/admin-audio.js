@@ -1883,15 +1883,16 @@ async function editAdminAudioChapter(
             false;
 
 
-        document
-            .getElementById(
-                "audioChapterNovel"
-            )
-            .value =
-                String(
-                    chapter.audio_novel_id
-                );
+ await loadAudioNovelOptions();
 
+document
+    .getElementById(
+        "audioChapterNovel"
+    )
+    .value =
+        String(
+            chapter.audio_novel_id
+        );
 
         document
             .getElementById(
