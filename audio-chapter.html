@@ -223,6 +223,119 @@
 
 </section>
 
+<section
+  id="audioCommentsSection"
+  class="audio-comments-section"
+  aria-label="Audio comments"
+>
+
+  <div class="audio-comments-header">
+
+    <div>
+      <span class="audio-comments-label">
+        💬 DISCUSSION
+      </span>
+
+      <h2>
+        Comments
+        <span
+          id="audioCommentsCount"
+          class="audio-comments-count"
+        >
+          0
+        </span>
+      </h2>
+    </div>
+
+  </div>
+
+
+  <!-- COMMENT FORM -->
+
+  <div
+    id="audioCommentForm"
+    class="audio-comment-form"
+  >
+
+    <textarea
+      id="audioCommentInput"
+      class="audio-comment-input"
+      rows="3"
+      maxlength="2000"
+      placeholder="Share your thoughts about this audio..."
+    ></textarea>
+
+    <div class="audio-comment-form-bottom">
+
+      <span
+        id="audioCommentChars"
+        class="audio-comment-chars"
+      >
+        0 / 2000
+      </span>
+
+      <button
+        id="audioCommentSubmit"
+        class="audio-comment-submit"
+        type="button"
+      >
+        Post Comment
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- LOGIN MESSAGE -->
+
+  <div
+    id="audioCommentLogin"
+    class="audio-comment-login"
+    hidden
+  >
+    <span>🔐 Login to join the discussion.</span>
+
+    <button
+      id="audioCommentLoginButton"
+      type="button"
+    >
+      Login
+    </button>
+  </div>
+
+
+  <!-- COMMENT ERROR -->
+
+  <div
+    id="audioCommentError"
+    class="audio-comment-error"
+    hidden
+  ></div>
+
+
+  <!-- COMMENTS -->
+
+  <div
+    id="audioCommentsList"
+    class="audio-comments-list"
+  ></div>
+
+
+  <!-- EMPTY STATE -->
+
+  <div
+    id="audioCommentsEmpty"
+    class="audio-comments-empty"
+    hidden
+  >
+    <div>💬</div>
+    <p>No comments yet.</p>
+    <span>Be the first to share your thoughts.</span>
+  </div>
+
+</section>
+
     <section class="chapter-details">
       <div class="section-heading">
         <span>🎧 LISTENING</span>
@@ -242,6 +355,6 @@
 <script src="js/session.js"></script>
 <script src="js/navbar.js"></script>
 <script src="js/footer.js"></script>
-<script src="js/audio-chapter.js?v=20260823-6"></script>
+<script src="js/audio-chapter.js?v=20260823-7"></script>
 </body>
 </html>

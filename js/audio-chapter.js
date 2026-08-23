@@ -16,7 +16,8 @@ let audioLikeCount=0;
 let audioUserRating = null;
 let audioAverageRating = 0;
 let audioRatingCount = 0;
-	
+let audioComments = [];
+
 async function loadAudioLike(){
   const button=$("audioLikeButton");
   const count=$("audioLikeCount");
@@ -412,7 +413,6 @@ async function submitAudioRating(
 
 }
 
-
 function bindAudioRating(){
 
   const stars =
@@ -492,6 +492,657 @@ function bindAudioRating(){
 
 }
 
+/* =========================================================
+   AUDIO COMMENTS
+   ========================================================= */
+
+async function loadAudioComments(){
+
+  const list =
+    $("audioCommentsList");
+
+  const empty =
+    $("audioCommentsEmpty");
+
+  const count =
+    $("audioCommentsCount");
+
+  if(
+    !list ||
+    !empty ||
+    !count ||
+    !chapterId
+  ){
+    return;
+  }
+
+  try{
+
+    const response =
+      await fetch(
+        `${AUDIO_API}/chapters/${chapterId}/comments`
+      );
+
+    const data =
+      await response.json();
+
+    if(
+      !response.ok ||
+      !data.success
+    ){
+
+      throw new Error(
+        data.message ||
+        "Unable to load comments."
+      );
+
+    }
+
+    audioComments =
+      Array.isArray(data.comments)
+        ? data.comments
+        : [];
+
+    renderAudioComments();
+
+  }catch(error){
+
+    console.error(
+      "Audio comments load failed:",
+      error
+    );
+
+    showAudioCommentError(
+      "Unable to load comments right now."
+    );
+
+  }
+
+}
+
+
+function renderAudioComments(){
+
+  const list =
+    $("audioCommentsList");
+
+  const empty =
+    $("audioCommentsEmpty");
+
+  const count =
+    $("audioCommentsCount");
+
+  if(
+    !list ||
+    !empty ||
+    !count
+  ){
+    return;
+  }
+
+
+  count.textContent =
+    String(audioComments.length);
+
+
+  list.innerHTML = "";
+
+
+  if(!audioComments.length){
+
+    empty.hidden = false;
+
+    return;
+
+  }
+
+
+  empty.hidden = true;
+
+
+  audioComments.forEach(
+    comment => {
+
+      const article =
+        document.createElement("article");
+
+      article.className =
+        "audio-comment";
+
+
+      const userName =
+        escapeAudioCommentHtml(
+          comment.name ||
+          `User ${comment.user_id}`
+        );
+
+
+      const text =
+        escapeAudioCommentHtml(
+          comment.comment || ""
+        );
+
+
+      const date =
+        formatAudioCommentDate(
+          comment.created_at
+        );
+
+
+      const isOwner =
+        token() &&
+        Number(comment.user_id) ===
+          getCurrentAudioUserId();
+
+
+      article.innerHTML = `
+
+        <div class="audio-comment-avatar">
+          ${getAudioCommentInitial(
+            comment.name ||
+            "U"
+          )}
+        </div>
+
+        <div class="audio-comment-body">
+
+          <div class="audio-comment-top">
+
+            <div>
+
+              <strong class="audio-comment-name">
+                ${userName}
+              </strong>
+
+              <span class="audio-comment-date">
+                ${date}
+              </span>
+
+            </div>
+
+            ${
+              isOwner
+                ? `
+                  <button
+                    class="audio-comment-delete"
+                    type="button"
+                    data-comment-id="${comment.id}"
+                  >
+                    Delete
+                  </button>
+                `
+                : ""
+            }
+
+          </div>
+
+          <p class="audio-comment-text">
+            ${text}
+          </p>
+
+        </div>
+      `;
+
+
+      const deleteButton =
+        article.querySelector(
+          ".audio-comment-delete"
+        );
+
+
+      if(deleteButton){
+
+        deleteButton.addEventListener(
+          "click",
+          () => {
+
+            deleteAudioComment(
+              comment.id
+            );
+
+          }
+        );
+
+      }
+
+
+      list.appendChild(article);
+
+    }
+  );
+
+}
+
+
+function getCurrentAudioUserId(){
+
+  /*
+   * MyLikith stores the JWT in localStorage.
+   * Decode only the payload to identify the
+   * current user's ID for the delete button.
+   */
+
+  const currentToken =
+    token();
+
+  if(!currentToken){
+    return null;
+  }
+
+  try{
+
+    const payload =
+      currentToken.split(".")[1];
+
+    const decoded =
+      JSON.parse(
+        atob(
+          payload
+            .replace(/-/g, "+")
+            .replace(/_/g, "/")
+        )
+      );
+
+    return Number(
+      decoded.id ??
+      decoded.user_id ??
+      decoded.userId ??
+      0
+    );
+
+  }catch(error){
+
+    return null;
+
+  }
+
+}
+
+
+function getAudioCommentInitial(
+  name
+){
+
+  const value =
+    String(name || "U")
+      .trim();
+
+  return escapeAudioCommentHtml(
+    value.charAt(0).toUpperCase()
+  );
+
+}
+
+
+function escapeAudioCommentHtml(
+  value
+){
+
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+function formatAudioCommentDate(
+  value
+){
+
+  if(!value){
+    return "";
+  }
+
+  const date =
+    new Date(value);
+
+  if(
+    Number.isNaN(
+      date.getTime()
+    )
+  ){
+    return "";
+  }
+
+  return date.toLocaleDateString(
+    undefined,
+    {
+      day: "numeric",
+      month: "short",
+      year: "numeric"
+    }
+  );
+
+}
+
+
+async function submitAudioComment(){
+
+  if(!token()){
+
+    location.href =
+      `login.html?redirect=${encodeURIComponent(
+        location.href
+      )}`;
+
+    return;
+
+  }
+
+
+  const input =
+    $("audioCommentInput");
+
+  const button =
+    $("audioCommentSubmit");
+
+
+  if(!input || !button){
+    return;
+  }
+
+
+  const comment =
+    input.value.trim();
+
+
+  if(!comment){
+
+    showAudioCommentError(
+      "Please enter a comment."
+    );
+
+    input.focus();
+
+    return;
+
+  }
+
+
+  if(comment.length > 2000){
+
+    showAudioCommentError(
+      "Comment cannot exceed 2000 characters."
+    );
+
+    return;
+
+  }
+
+
+  hideAudioCommentError();
+
+  button.disabled = true;
+  button.textContent = "Posting...";
+
+
+  try{
+
+    const response =
+      await fetch(
+        `${AUDIO_API}/chapters/${chapterId}/comments`,
+        {
+          method: "POST",
+
+          headers: {
+            ...headers(),
+            "Content-Type":
+              "application/json"
+          },
+
+          body: JSON.stringify({
+            comment
+          })
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(
+      !response.ok ||
+      !data.success
+    ){
+
+      throw new Error(
+        data.message ||
+        "Unable to post comment."
+      );
+
+    }
+
+
+    input.value = "";
+
+    updateAudioCommentCharacters();
+
+    await loadAudioComments();
+
+
+  }catch(error){
+
+    console.error(
+      "Audio comment submit failed:",
+      error
+    );
+
+    showAudioCommentError(
+      error.message ||
+      "Unable to post comment."
+    );
+
+  }finally{
+
+    button.disabled = false;
+    button.textContent = "Post Comment";
+
+  }
+
+}
+
+
+async function deleteAudioComment(
+  commentId
+){
+
+  if(!token()){
+    return;
+  }
+
+
+  const confirmed =
+    window.confirm(
+      "Delete this comment?"
+    );
+
+
+  if(!confirmed){
+    return;
+  }
+
+
+  try{
+
+    const response =
+      await fetch(
+        `${AUDIO_API}/chapters/${chapterId}/comments/${commentId}`,
+        {
+          method: "DELETE",
+          headers: headers()
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(
+      !response.ok ||
+      !data.success
+    ){
+
+      throw new Error(
+        data.message ||
+        "Unable to delete comment."
+      );
+
+    }
+
+
+    await loadAudioComments();
+
+
+  }catch(error){
+
+    console.error(
+      "Audio comment delete failed:",
+      error
+    );
+
+    showAudioCommentError(
+      error.message ||
+      "Unable to delete comment."
+    );
+
+  }
+
+}
+
+
+function updateAudioCommentCharacters(){
+
+  const input =
+    $("audioCommentInput");
+
+  const counter =
+    $("audioCommentChars");
+
+  if(!input || !counter){
+    return;
+  }
+
+  counter.textContent =
+    `${input.value.length} / 2000`;
+
+}
+
+
+function showAudioCommentError(
+  message
+){
+
+  const element =
+    $("audioCommentError");
+
+  if(!element){
+    return;
+  }
+
+  element.textContent =
+    message;
+
+  element.hidden = false;
+
+}
+
+
+function hideAudioCommentError(){
+
+  const element =
+    $("audioCommentError");
+
+  if(element){
+    element.hidden = true;
+  }
+
+}
+
+
+function bindAudioComments(){
+
+  const input =
+    $("audioCommentInput");
+
+  const submit =
+    $("audioCommentSubmit");
+
+  const login =
+    $("audioCommentLoginButton");
+
+  if(input){
+
+    input.addEventListener(
+      "input",
+      updateAudioCommentCharacters
+    );
+
+  }
+
+
+  if(submit){
+
+    submit.addEventListener(
+      "click",
+      submitAudioComment
+    );
+
+  }
+
+
+  if(login){
+
+    login.addEventListener(
+      "click",
+      () => {
+
+        location.href =
+          `login.html?redirect=${encodeURIComponent(
+            location.href
+          )}`;
+
+      }
+    );
+
+  }
+
+
+  const form =
+    $("audioCommentForm");
+
+  const loginBox =
+    $("audioCommentLogin");
+
+
+  if(token()){
+
+    if(form){
+      form.hidden = false;
+    }
+
+    if(loginBox){
+      loginBox.hidden = true;
+    }
+
+  }else{
+
+    if(form){
+      form.hidden = true;
+    }
+
+    if(loginBox){
+      loginBox.hidden = false;
+    }
+
+  }
+
+}
+
 function formatTime(value){const n=Number(value);if(!Number.isFinite(n)||n<0)return"00:00";const s=Math.floor(n),h=Math.floor(s/3600),m=Math.floor((s%3600)/60),r=s%60;return h?`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`:`${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`}
 function headers(){const h={};if(token())h.Authorization=`Bearer ${token()}`;return h}
 function setMeta(title,description){document.title=`${title} — MyLikith Audio`;$("metaDescription").content=description;$("ogTitle").content=title;$("ogDescription").content=description}
@@ -509,6 +1160,10 @@ async function init(){
 bindAudioRating();
 renderAudioRating();
 await loadAudioRating();
+
+bindAudioComments();
+
+await loadAudioComments();
 
   renderAudioLike();
   await loadAudioLike();
@@ -681,6 +1336,7 @@ async function unlockChapter(){
     await loadChapter();
 await loadAudioLike();
 await loadAudioRating();
+await loadAudioComments();
   }catch(e){alert(e.message);button.disabled=false;button.textContent=`🪙 Unlock for ${Number((chapterData||{}).coins_required||0)} Coins`}
 }
 
