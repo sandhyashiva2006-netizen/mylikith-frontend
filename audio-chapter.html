@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audio Chapter — MyLikith</title>
+<meta name="description" id="metaDescription" content="Listen to MyLikith Audio stories and chapters.">
+<meta property="og:type" content="website">
+<meta property="og:title" id="ogTitle" content="MyLikith Audio">
+<meta property="og:description" id="ogDescription" content="Listen to MyLikith Audio stories and chapters.">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="css/audio-chapter.css">
+</head>
+<body>
+<nav id="navbar" class="navbar"></nav>
+
+<main class="audio-chapter-page">
+  <section class="audio-shell">
+    <a id="backLink" class="back-link" href="javascript:history.back()">← Back</a>
+
+    <div class="audio-hero-card">
+      <div class="audio-cover-wrap">
+        <div id="audioCoverFallback" class="audio-cover-fallback">🎧</div>
+        <img id="audioCover" class="audio-cover" alt="" hidden>
+      </div>
+
+      <div class="audio-info">
+        <span class="audio-label">MYLIKITH AUDIO</span>
+        <h1 id="chapterTitle">Loading...</h1>
+        <h2 id="novelTitle">Preparing audio...</h2>
+        <div id="chapterMeta" class="chapter-meta"></div>
+      </div>
+    </div>
+
+    <div id="playerCard" class="player-card">
+      <div id="playerLoading" class="player-state">
+        <div class="player-spinner"></div>
+        <p>Preparing audio...</p>
+      </div>
+
+      <div id="lockedState" class="player-state locked-state" hidden>
+        <div class="locked-icon">🔒</div>
+        <h2 id="lockedTitle">Premium Audio</h2>
+        <p id="lockedMessage">This chapter requires access.</p>
+        <div class="player-actions">
+          <button id="loginButton" class="primary-button" type="button" hidden>🔐 Login</button>
+          <button id="unlockButton" class="primary-button" type="button" hidden>🪙 Unlock</button>
+          <button id="walletButton" class="secondary-button" type="button" hidden>Buy Coins</button>
+        </div>
+      </div>
+
+      <div id="errorState" class="player-state" hidden>
+        <div class="locked-icon">⚠️</div>
+        <h2>Audio unavailable</h2>
+        <p id="errorMessage">Unable to load this chapter.</p>
+        <button id="retryButton" class="primary-button" type="button">Try Again</button>
+      </div>
+
+      <div id="audioPlayerWrap" hidden>
+        <div class="player-art">🎧</div>
+        <audio id="audioPlayer" controls preload="metadata" playsinline></audio>
+        <div class="resume-row">
+          <span id="resumeText">Ready to listen</span>
+          <span id="durationText">--:--</span>
+        </div>
+      </div>
+    </div>
+
+    <section class="chapter-details">
+      <div class="section-heading">
+        <span>🎧 LISTENING</span>
+        <h2>Audio Chapter</h2>
+      </div>
+      <p id="chapterDescription">Listen to this chapter on MyLikith Audio.</p>
+    </section>
+
+    <div id="chapterNavigation" class="chapter-navigation" hidden>
+      <button id="previousButton" type="button" class="nav-button">← Previous Chapter</button>
+      <button id="nextButton" type="button" class="nav-button">Next Chapter →</button>
+    </div>
+  </section>
+</main>
+
+<div id="footer"></div>
+<script src="js/session.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/footer.js"></script>
+<script src="js/audio-chapter.js"></script>
+</body>
+</html>
