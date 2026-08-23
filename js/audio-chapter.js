@@ -16,6 +16,17 @@ function setMeta(title,description){document.title=`${title} — MyLikith Audio`
 function show(id){$(id).hidden=false}function hide(id){$(id).hidden=true}
 
 async function init(){
+
+console.log(
+    "🎧 AUDIO CHAPTER V2",
+    "URL:",
+    location.href,
+    "ID:",
+    new URLSearchParams(location.search).get("id"),
+    "chapterId:",
+    new URLSearchParams(location.search).get("chapterId")
+);
+
   const params=new URLSearchParams(location.search);chapterId=Number(params.get("id")||params.get("chapterId")||params.get("chapter")||0);
   if(!chapterId){return fail("Missing audio chapter ID.")}
   $("retryButton").addEventListener("click",loadChapter);
