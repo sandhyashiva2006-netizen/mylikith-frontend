@@ -1,8 +1,6 @@
 const AUDIO_API_BASE =
     "https://mylikith-backend.onrender.com/api/audio";
 
-let audioPageNumber = 1;
-let audioTotalPages = 1;
 let audioSearchTimer = null;
 
 const audio$ = (id) => document.getElementById(id);
@@ -379,7 +377,6 @@ async function loadAudioResults() {
     }
 
     params.set("sort", sort);
-    params.set("page", String(audioPageNumber));
     params.set("limit", "20");
 
     const container = audio$("audioResults");
@@ -407,14 +404,6 @@ async function loadAudioResults() {
             : [];
 
         renderAudioResults(items);
-
-        audioTotalPages =
-            Number(data.pagination?.totalPages || 1);
-
-        updatePagination(
-            Number(data.pagination?.page || audioPageNumber),
-            audioTotalPages
-        );
 
         const title = search
             ? `Search results for “${audioEscape(search)}”`
@@ -665,8 +654,6 @@ function clearAudioFilters() {
     if (audio$("sortFilter")) {
         audio$("sortFilter").value = "latest";
     }
-
-    audioPageNumber = 1;
     loadAudioResults();
 }
 
@@ -674,7 +661,6 @@ function bindAudioEvents() {
     audio$("searchButton")?.addEventListener(
         "click",
         () => {
-            audioPageNumber = 1;
             loadAudioResults();
         }
     );
@@ -683,7 +669,6 @@ function bindAudioEvents() {
         "keydown",
         event => {
             if (event.key === "Enter") {
-                audioPageNumber = 1;
                 loadAudioResults();
             }
         }
@@ -695,7 +680,6 @@ function bindAudioEvents() {
             clearTimeout(audioSearchTimer);
 
             audioSearchTimer = setTimeout(() => {
-                audioPageNumber = 1;
                 loadAudioResults();
             }, 500);
         }
@@ -704,7 +688,6 @@ function bindAudioEvents() {
     audio$("languageFilter")?.addEventListener(
         "change",
         () => {
-            audioPageNumber = 1;
             loadAudioResults();
         }
     );
@@ -712,7 +695,6 @@ function bindAudioEvents() {
     audio$("categoryFilter")?.addEventListener(
         "change",
         () => {
-            audioPageNumber = 1;
             loadAudioResults();
         }
     );
@@ -720,7 +702,6 @@ function bindAudioEvents() {
     audio$("sortFilter")?.addEventListener(
         "change",
         () => {
-            audioPageNumber = 1;
             loadAudioResults();
         }
     );
@@ -728,38 +709,6 @@ function bindAudioEvents() {
     audio$("clearFiltersButton")?.addEventListener(
         "click",
         clearAudioFilters
-    );
-
-    audio$("previousPage")?.addEventListener(
-        "click",
-        () => {
-            if (audioPageNumber <= 1) {
-                return;
-            }
-
-            audioPageNumber--;
-            loadAudioResults();
-            audio$("browseAudio")?.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
-        }
-    );
-
-    audio$("nextPage")?.addEventListener(
-        "click",
-        () => {
-            if (audioPageNumber >= audioTotalPages) {
-                return;
-            }
-
-            audioPageNumber++;
-            loadAudioResults();
-            audio$("browseAudio")?.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
-        }
     );
 }
 

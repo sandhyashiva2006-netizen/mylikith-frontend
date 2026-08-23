@@ -593,18 +593,6 @@
     background:#7c3aed;
 }
 
-.audio-pagination{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:18px;
-    margin-top:30px;
-}
-
-.audio-pagination span{
-    color:#cbd5e1;
-    font-size:14px;
-}
 
 .audio-outline-btn:disabled{
     opacity:.45;
