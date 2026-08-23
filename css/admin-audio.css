@@ -142,3 +142,163 @@
     }
 
 }
+
+/* =========================================================
+   AUDIO NOVEL CARDS
+   ========================================================= */
+
+.audio-admin-novel-card{
+    display:flex;
+    gap:18px;
+    margin-bottom:14px;
+    padding:16px;
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:15px;
+    background:rgba(255,255,255,.025);
+}
+
+.audio-admin-novel-card:last-child{
+    margin-bottom:0;
+}
+
+.audio-admin-novel-cover{
+    flex:0 0 90px;
+    width:90px;
+    height:120px;
+    overflow:hidden;
+    border-radius:10px;
+    background:rgba(255,255,255,.05);
+}
+
+.audio-admin-novel-cover img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+}
+
+.audio-admin-novel-info{
+    min-width:0;
+    flex:1;
+}
+
+.audio-admin-novel-title-row{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+}
+
+.audio-admin-novel-title-row h3{
+    margin:0;
+    color:#f8fafc;
+    font-size:17px;
+}
+
+.audio-admin-badges{
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+}
+
+.audio-admin-badge{
+    padding:4px 7px;
+    border-radius:6px;
+    font-size:10px;
+    font-weight:700;
+}
+
+.audio-admin-badge.premium{
+    color:#ddd6fe;
+    background:rgba(124,58,237,.15);
+}
+
+.audio-admin-badge.featured{
+    color:#fde68a;
+    background:rgba(234,179,8,.10);
+}
+
+.audio-admin-writer{
+    margin:7px 0 12px;
+    color:#94a3b8;
+    font-size:12px;
+}
+
+.audio-admin-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px 14px;
+    color:#94a3b8;
+    font-size:11px;
+}
+
+.audio-admin-status-row{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:13px;
+}
+
+.audio-admin-status{
+    padding:4px 8px;
+    border-radius:6px;
+    color:#cbd5e1;
+    background:rgba(255,255,255,.06);
+    font-size:10px;
+    font-weight:700;
+    text-transform:capitalize;
+}
+
+.audio-admin-status.published{
+    color:#86efac;
+    background:rgba(34,197,94,.10);
+}
+
+.audio-admin-status.draft{
+    color:#fcd34d;
+    background:rgba(234,179,8,.10);
+}
+
+.audio-admin-status.private{
+    color:#fca5a5;
+    background:rgba(239,68,68,.10);
+}
+
+.audio-admin-status.public{
+    color:#86efac;
+    background:rgba(34,197,94,.10);
+}
+
+.audio-admin-id{
+    color:#475569;
+    font-size:10px;
+}
+
+@media(max-width:600px){
+
+    .audio-admin-novel-card{
+        gap:12px;
+        padding:12px;
+    }
+
+    .audio-admin-novel-cover{
+        flex-basis:65px;
+        width:65px;
+        height:90px;
+    }
+
+    .audio-admin-novel-title-row{
+        display:block;
+    }
+
+    .audio-admin-badges{
+        margin-top:7px;
+    }
+
+    .audio-admin-meta{
+        gap:7px 10px;
+    }
+
+}
+
