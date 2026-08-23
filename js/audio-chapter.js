@@ -10,20 +10,13 @@ let saveInFlight=false;
 const $=id=>document.getElementById(id);
 const token=()=>localStorage.getItem("token");
 
-
 function formatTime(value){const n=Number(value);if(!Number.isFinite(n)||n<0)return"00:00";const s=Math.floor(n),h=Math.floor(s/3600),m=Math.floor((s%3600)/60),r=s%60;return h?`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`:`${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`}
 function headers(){const h={};if(token())h.Authorization=`Bearer ${token()}`;return h}
 function setMeta(title,description){document.title=`${title} — MyLikith Audio`;$("metaDescription").content=description;$("ogTitle").content=title;$("ogDescription").content=description}
 function show(id){$(id).hidden=false}function hide(id){$(id).hidden=true}
 
 async function init(){
-  const params=new URLSearchParams(location.search);
-chapterId=Number(
-    params.get("id") ||
-    params.get("chapterId") ||
-    params.get("chapter") ||
-    0
-);
+  const params=new URLSearchParams(location.search);chapterId=Number(params.get("id")||params.get("chapterId")||params.get("chapter")||0);
   if(!chapterId){return fail("Missing audio chapter ID.")}
   $("retryButton").addEventListener("click",loadChapter);
   $("loginButton").addEventListener("click",()=>location.href=`login.html?redirect=${encodeURIComponent(location.href)}`);
