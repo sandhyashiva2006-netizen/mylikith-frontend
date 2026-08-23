@@ -1102,3 +1102,71 @@
 
 }
 
+/* =========================================================
+   AUDIO CHAPTER MANAGEMENT ACTIONS
+   ========================================================= */
+
+.audio-admin-chapter-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:14px;
+    padding-top:12px;
+    border-top:1px solid rgba(255,255,255,.06);
+}
+
+.audio-chapter-action{
+    padding:7px 10px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:8px;
+    color:#cbd5e1;
+    background:rgba(255,255,255,.035);
+    cursor:pointer;
+    font:inherit;
+    font-size:10px;
+    font-weight:700;
+    transition:
+        background .2s ease,
+        border-color .2s ease;
+}
+
+.audio-chapter-action:hover{
+    background:rgba(255,255,255,.08);
+}
+
+.audio-chapter-action.edit{
+    color:#c4b5fd;
+    border-color:rgba(139,92,246,.20);
+    background:rgba(139,92,246,.06);
+}
+
+.audio-chapter-action.publish{
+    color:#86efac;
+    border-color:rgba(34,197,94,.18);
+    background:rgba(34,197,94,.06);
+}
+
+.audio-chapter-action.delete{
+    color:#fca5a5;
+    border-color:rgba(239,68,68,.18);
+    background:rgba(239,68,68,.06);
+}
+
+.audio-chapter-action.delete:hover{
+    background:rgba(239,68,68,.13);
+}
+
+@media(max-width:600px){
+
+    .audio-admin-chapter-actions{
+        display:grid;
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+    }
+
+    .audio-chapter-action{
+        width:100%;
+    }
+
+}
+

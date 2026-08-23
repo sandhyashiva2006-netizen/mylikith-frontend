@@ -1416,7 +1416,6 @@ function renderAdminAudioChapters(
         `;
 
         return;
-
     }
 
 
@@ -1513,6 +1512,7 @@ function renderAdminAudioChapters(
                                               `
                                             : ""
                                     }
+
 
                                     ${
                                         draft
@@ -1640,6 +1640,49 @@ function renderAdminAudioChapters(
 
                             </div>
 
+
+                            <!-- CHAPTER ACTIONS -->
+
+                            <div
+                                class="audio-admin-chapter-actions"
+                            >
+
+                                <button
+                                    type="button"
+                                    class="audio-chapter-action edit"
+                                    data-audio-chapter-action="edit"
+                                    data-audio-chapter-id="${chapter.id}"
+                                >
+                                    ✏️ Edit
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="audio-chapter-action publish"
+                                    data-audio-chapter-action="publish"
+                                    data-audio-chapter-id="${chapter.id}"
+                                    data-published="${published}"
+                                >
+                                    ${
+                                        published
+                                            ? "📢 Unpublish"
+                                            : "📢 Publish"
+                                    }
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="audio-chapter-action delete"
+                                    data-audio-chapter-action="delete"
+                                    data-audio-chapter-id="${chapter.id}"
+                                >
+                                    🗑 Delete
+                                </button>
+
+                            </div>
+
                         </div>
 
                     </article>
@@ -1649,6 +1692,633 @@ function renderAdminAudioChapters(
             }
         )
         .join("");
+
+
+    bindAdminAudioChapterActions();
+
+}
+
+/* =========================================================
+   AUDIO CHAPTER ACTIONS
+   ========================================================= */
+
+function bindAdminAudioChapterActions(){
+
+    document
+        .querySelectorAll(
+            "[data-audio-chapter-action]"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    async () => {
+
+                        const action =
+                            button.dataset
+                                .audioChapterAction;
+
+
+                        const chapterId =
+                            Number(
+                                button.dataset
+                                    .audioChapterId
+                            );
+
+
+                        if(
+                            !Number.isInteger(
+                                chapterId
+                            ) ||
+                            chapterId <= 0
+                        ){
+
+                            return;
+
+                        }
+
+
+                        if(
+                            action ===
+                            "edit"
+                        ){
+
+                            await editAdminAudioChapter(
+                                chapterId
+                            );
+
+                            return;
+
+                        }
+
+
+                        if(
+                            action ===
+                            "publish"
+                        ){
+
+                            const published =
+                                button.dataset
+                                    .published ===
+                                "true";
+
+
+                            await toggleAdminAudioChapterPublish(
+                                chapterId,
+                                !published
+                            );
+
+                            return;
+
+                        }
+
+
+                        if(
+                            action ===
+                            "delete"
+                        ){
+
+                            await deleteAdminAudioChapter(
+                                chapterId
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   EDIT AUDIO CHAPTER
+   ========================================================= */
+
+async function editAdminAudioChapter(
+    chapterId
+){
+
+    try{
+
+        const response =
+            await fetch(
+                `${ADMIN_AUDIO_API}/chapters`,
+                {
+                    headers: {
+
+                        Authorization:
+                            "Bearer " +
+                            localStorage.getItem(
+                                "token"
+                            )
+
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Failed to load Audio Chapters."
+            );
+
+        }
+
+
+        const chapters =
+            Array.isArray(
+                data.chapters
+            )
+                ? data.chapters
+                : [];
+
+
+        const chapter =
+            chapters.find(
+                item =>
+                    Number(item.id) ===
+                    chapterId
+            );
+
+
+        if(!chapter){
+
+            throw new Error(
+                "Audio Chapter not found."
+            );
+
+        }
+
+
+        editingAudioChapterId =
+            chapterId;
+
+
+        const panel =
+            document.getElementById(
+                "audioChapterCreateForm"
+            );
+
+
+        const form =
+            document.getElementById(
+                "audioChapterForm"
+            );
+
+
+        panel.hidden =
+            false;
+
+
+        document
+            .getElementById(
+                "audioChapterNovel"
+            )
+            .value =
+                String(
+                    chapter.audio_novel_id
+                );
+
+
+        document
+            .getElementById(
+                "audioChapterNumber"
+            )
+            .value =
+                chapter.chapter_no || "";
+
+
+        document
+            .getElementById(
+                "audioChapterTitle"
+            )
+            .value =
+                chapter.title || "";
+
+
+        document
+            .getElementById(
+                "audioChapterPremium"
+            )
+            .value =
+                chapter.is_premium
+                    ? "premium"
+                    : "free";
+
+
+        document
+            .getElementById(
+                "audioChapterCoins"
+            )
+            .value =
+                Number(
+                    chapter.coins_required || 0
+                );
+
+
+        document
+            .getElementById(
+                "audioChapterEarlyAccess"
+            )
+            .checked =
+                Boolean(
+                    chapter.early_access
+                );
+
+
+        document
+            .getElementById(
+                "audioChapterPublishStatus"
+            )
+            .value =
+                chapter.is_published
+                    ? "published"
+                    : "draft";
+
+
+        const publishAt =
+            document
+                .getElementById(
+                    "audioChapterPublishAt"
+                );
+
+
+        if(
+            chapter.publish_at
+        ){
+
+            const date =
+                new Date(
+                    chapter.publish_at
+                );
+
+
+            if(
+                !Number.isNaN(
+                    date.getTime()
+                )
+            ){
+
+                const local =
+                    new Date(
+                        date.getTime() -
+                        date.getTimezoneOffset()
+                        * 60000
+                    )
+                    .toISOString()
+                    .slice(
+                        0,
+                        16
+                    );
+
+
+                publishAt.value =
+                    local;
+
+            }
+
+        }else{
+
+            publishAt.value =
+                "";
+
+        }
+
+
+        /*
+        -------------------------------------------------
+        EXISTING AUDIO FILE
+        -------------------------------------------------
+        */
+
+        const fileInput =
+            document.getElementById(
+                "audioChapterFile"
+            );
+
+
+        fileInput.value =
+            "";
+
+
+        fileInput.required =
+            false;
+
+
+        const fileInfo =
+            document.getElementById(
+                "audioChapterFileInfo"
+            );
+
+
+        fileInfo.hidden =
+            false;
+
+
+        document
+            .getElementById(
+                "audioChapterFileName"
+            )
+            .textContent =
+                chapter.audio_original_name ||
+                "Existing audio file";
+
+
+        document
+            .getElementById(
+                "audioChapterFileSize"
+            )
+            .textContent =
+                chapter.audio_size_bytes
+                    ? formatAudioUploadSize(
+                        Number(
+                            chapter.audio_size_bytes
+                        )
+                    )
+                    : "";
+
+
+        document
+            .getElementById(
+                "audioChapterDuration"
+            )
+            .textContent =
+                formatAudioUploadDuration(
+                    Number(
+                        chapter.audio_duration_seconds ||
+                        0
+                    )
+                );
+
+
+        /*
+        -------------------------------------------------
+        CHANGE FORM TITLE
+        -------------------------------------------------
+        */
+
+        const heading =
+            panel.querySelector(
+                ".audio-create-header h2"
+            );
+
+
+        if(heading){
+
+            heading.textContent =
+                "Edit Audio Chapter";
+
+        }
+
+
+        const description =
+            panel.querySelector(
+                ".audio-create-header p"
+            );
+
+
+        if(description){
+
+            description.textContent =
+                "Update chapter details. Leave the audio file unchanged.";
+
+        }
+
+
+        const submitButton =
+            document.getElementById(
+                "submitAudioChapterBtn"
+            );
+
+
+        if(submitButton){
+
+            submitButton.textContent =
+                "Update Chapter";
+
+        }
+
+
+        panel.scrollIntoView({
+
+            behavior:
+                "smooth",
+
+            block:
+                "start"
+
+        });
+
+
+    }catch(error){
+
+        console.error(
+            "Audio Chapter edit error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Failed to load Audio Chapter."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   PUBLISH / UNPUBLISH AUDIO CHAPTER
+   ========================================================= */
+
+async function toggleAdminAudioChapterPublish(
+    chapterId,
+    published
+){
+
+    const action =
+        published
+            ? "publish"
+            : "unpublish";
+
+
+    if(
+        !confirm(
+            `Are you sure you want to ${action} this Audio Chapter?`
+        )
+    ){
+
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                `${ADMIN_AUDIO_API}/chapters/${chapterId}/publish`,
+                {
+
+                    method:
+                        "PATCH",
+
+                    headers: {
+
+                        Authorization:
+                            "Bearer " +
+                            localStorage.getItem(
+                                "token"
+                            ),
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+                            published
+                        })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Failed to update chapter publish status."
+            );
+
+        }
+
+
+        await loadAdminAudioChapters();
+
+
+    }catch(error){
+
+        console.error(
+            "Audio Chapter publish error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Failed to update chapter publish status."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   DELETE AUDIO CHAPTER
+   ========================================================= */
+
+async function deleteAdminAudioChapter(
+    chapterId
+){
+
+    if(
+        !confirm(
+            "Delete this Audio Chapter?\n\nThe database record and stored audio file will be removed."
+        )
+    ){
+
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                `${ADMIN_AUDIO_API}/chapters/${chapterId}`,
+                {
+
+                    method:
+                        "DELETE",
+
+                    headers: {
+
+                        Authorization:
+                            "Bearer " +
+                            localStorage.getItem(
+                                "token"
+                            )
+
+                    }
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Failed to delete Audio Chapter."
+            );
+
+        }
+
+
+        alert(
+            "Audio Chapter deleted successfully."
+        );
+
+
+        await loadAdminAudioChapters();
+
+
+    }catch(error){
+
+        console.error(
+            "Audio Chapter delete error:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Failed to delete Audio Chapter."
+        );
+
+    }
 
 }
 
@@ -2600,6 +3270,7 @@ async function updateAdminAudioReport(
 
 let editingAudioNovelId = null;
 
+
 /* =========================================================
    AUDIO NOVEL CREATE FORM
    ========================================================= */
@@ -3007,7 +3678,9 @@ const response =
                     false;
 
                 submitButton.textContent =
-                    "Create Audio Novel";
+                    editingAudioNovelId
+                        ? "Update Audio Novel"
+                        : "Create Audio Novel";
 
             }
 
@@ -3016,7 +3689,11 @@ const response =
 
 }
 
+/* =========================================================
+   AUDIO CHAPTER EDIT STATE
+   ========================================================= */
 
+let editingAudioChapterId = null;
 
 /* =========================================================
    AUDIO CHAPTER CREATION
@@ -3063,26 +3740,84 @@ function bindAudioChapterCreateForm(){
     }
 
 
-    openButton.addEventListener(
-        "click",
-        async () => {
+openButton.addEventListener(
+    "click",
+    async () => {
 
-            panel.hidden = false;
+        editingAudioChapterId =
+            null;
 
-            await loadAudioNovelOptions();
 
-            panel.scrollIntoView({
-                behavior:
-                    "smooth",
-                block:
-                    "start"
-            });
+        panel.hidden =
+            false;
+
+
+        const heading =
+            panel.querySelector(
+                ".audio-create-header h2"
+            );
+
+
+        if(heading){
+
+            heading.textContent =
+                "Create Audio Chapter";
 
         }
-    );
+
+
+        const description =
+            panel.querySelector(
+                ".audio-create-header p"
+            );
+
+
+        if(description){
+
+            description.textContent =
+                "Add a chapter and upload its audio file.";
+
+        }
+
+
+        const submitButton =
+            document.getElementById(
+                "submitAudioChapterBtn"
+            );
+
+
+        if(submitButton){
+
+            submitButton.textContent =
+                "Create & Upload Chapter";
+
+        }
+
+
+        fileInput.required =
+            true;
+
+
+        await loadAudioNovelOptions();
+
+
+        panel.scrollIntoView({
+
+            behavior:
+                "smooth",
+
+            block:
+                "start"
+
+        });
+
+    }
+);
 
 
 function closeForm(){
+
+editingAudioChapterId = null;
 
     panel.hidden = true;
 
@@ -3105,6 +3840,8 @@ function closeForm(){
                 "audioChapterFileInfo"
             )
             .hidden = true;
+
+fileInput.required = true;
 
     }
 
@@ -3133,9 +3870,7 @@ function closeForm(){
 
             const file =
                 fileInput.files[0];
-
-
-            if(!file){
+if(!file){
 
                 return;
 
@@ -3187,9 +3922,11 @@ function closeForm(){
             try{
 
                 const duration =
-                    await getAudioFileDuration(
-                        file
-                    );
+                    file
+                        ? await getAudioFileDuration(
+                            file
+                        )
+                        : null;
 
 
                 document
@@ -3261,6 +3998,12 @@ function closeForm(){
             const file =
                 fileInput.files[0];
 
+            const isEditing =
+                Number.isInteger(
+                    editingAudioChapterId
+                ) &&
+                editingAudioChapterId > 0;
+
 
             if(
                 !Number.isInteger(
@@ -3305,15 +4048,18 @@ function closeForm(){
             }
 
 
-            if(!file){
+if(
+    !file &&
+    !isEditing
+){
 
-                alert(
-                    "Please select an audio file."
-                );
+    alert(
+        "Please select an audio file."
+    );
 
-                return;
+    return;
 
-            }
+}
 
 
             const premium =
@@ -3384,99 +4130,212 @@ function closeForm(){
 
 
                 /*
+---------------------------------------------
+CREATE / UPDATE CHAPTER
+---------------------------------------------
+*/
+
+setAudioUploadStatus(
+    isEditing
+        ? "Updating chapter..."
+        : "Creating chapter..."
+);
+
+
+let chapterId;
+
+
+if(
+    isEditing
+){
+
+    const updateResponse =
+        await fetch(
+            `${ADMIN_AUDIO_API}/chapters/${editingAudioChapterId}`,
+            {
+
+                method:
+                    "PUT",
+
+                headers: {
+
+                    Authorization:
+                        "Bearer " +
+                        localStorage.getItem(
+                            "token"
+                        ),
+
+                    "Content-Type":
+                        "application/json"
+
+                },
+
+                body:
+                    JSON.stringify({
+
+                        chapter_no:
+                            chapterNo,
+
+                        title,
+
+                        is_premium:
+                            premium,
+
+                        coins_required:
+                            premium
+                                ? coins
+                                : 0,
+
+                        early_access:
+                            earlyAccess,
+
+                        is_draft:
+                            publishStatus ===
+                            "draft",
+
+                        is_published:
+                            publishStatus ===
+                            "published",
+
+                        publish_at:
+                            publishAt ||
+                            null
+
+                    })
+
+            }
+        );
+
+
+    const updateData =
+        await updateResponse.json();
+
+
+    if(
+        !updateResponse.ok ||
+        !updateData.success
+    ){
+
+        throw new Error(
+            updateData.message ||
+            "Failed to update chapter."
+        );
+
+    }
+
+
+    chapterId =
+        editingAudioChapterId;
+
+
+}else{
+
+    const chapterResponse =
+        await fetch(
+            `${ADMIN_AUDIO_API}/chapters`,
+            {
+
+                method:
+                    "POST",
+
+                headers: {
+
+                    Authorization:
+                        "Bearer " +
+                        localStorage.getItem(
+                            "token"
+                        ),
+
+                    "Content-Type":
+                        "application/json"
+
+                },
+
+                body:
+                    JSON.stringify({
+
+                        audio_novel_id:
+                            novelId,
+
+                        chapter_no:
+                            chapterNo,
+
+                        title,
+
+                        is_premium:
+                            premium,
+
+                        coins_required:
+                            premium
+                                ? coins
+                                : 0,
+
+                        early_access:
+                            earlyAccess,
+
+                        is_draft:
+                            publishStatus ===
+                            "draft",
+
+                        is_published:
+                            publishStatus ===
+                            "published",
+
+                        publish_at:
+                            publishAt ||
+                            null
+
+                    })
+
+            }
+        );
+
+
+    const chapterData =
+        await chapterResponse.json();
+
+
+    if(
+        !chapterResponse.ok ||
+        !chapterData.success
+    ){
+
+        throw new Error(
+            chapterData.message ||
+            "Failed to create chapter."
+        );
+
+    }
+
+
+    chapterId =
+        Number(
+            chapterData.chapter.id
+        );
+
+}
+
+
+                /*
                 ---------------------------------------------
-                CREATE CHAPTER
+                METADATA-ONLY EDIT
                 ---------------------------------------------
                 */
 
-                setAudioUploadStatus(
-                    "Creating chapter..."
-                );
-
-
-                const chapterResponse =
-                    await fetch(
-                        `${ADMIN_AUDIO_API}/chapters`,
-                        {
-
-                            method:
-                                "POST",
-
-                            headers: {
-
-                                Authorization:
-                                    "Bearer " +
-                                    localStorage.getItem(
-                                        "token"
-                                    ),
-
-                                "Content-Type":
-                                    "application/json"
-
-                            },
-
-                            body:
-                                JSON.stringify({
-
-                                    audio_novel_id:
-                                        novelId,
-
-                                    chapter_no:
-                                        chapterNo,
-
-                                    title,
-
-                                    is_premium:
-                                        premium,
-
-                                    coins_required:
-                                        premium
-                                            ? coins
-                                            : 0,
-
-                                    early_access:
-                                        earlyAccess,
-
-                                    is_draft:
-                                        publishStatus ===
-                                        "draft",
-
-                                    is_published:
-                                        publishStatus ===
-                                        "published",
-
-                                    publish_at:
-                                        publishAt ||
-                                        null
-
-                                })
-
-                        }
-                    );
-
-
-                const chapterData =
-                    await chapterResponse.json();
-
-
                 if(
-                    !chapterResponse.ok ||
-                    !chapterData.success
+                    isEditing &&
+                    !file
                 ){
-
-                    throw new Error(
-                        chapterData.message ||
-                        "Failed to create chapter."
+                    alert(
+                        "Audio Chapter updated successfully."
                     );
 
+                    closeForm();
+
+                    await loadAdminAudioChapters();
+
+                    return;
                 }
-
-
-                const chapterId =
-                    Number(
-                        chapterData.chapter.id
-                    );
-
 
                 /*
                 ---------------------------------------------
@@ -3531,6 +4390,23 @@ function closeForm(){
                 const startData =
                     await startResponse.json();
 
+
+if(
+    isEditing &&
+    !file
+){
+
+    alert(
+        "Audio Chapter updated successfully."
+    );
+
+    closeForm();
+
+    await loadAdminAudioChapters();
+
+    return;
+
+}
 
                 if(
                     !startResponse.ok ||
@@ -3645,7 +4521,9 @@ function closeForm(){
 
 
                 alert(
-                    "Audio Chapter created and uploaded successfully."
+                    isEditing
+                        ? "Audio Chapter updated and uploaded successfully."
+                        : "Audio Chapter created and uploaded successfully."
                 );
 
 
