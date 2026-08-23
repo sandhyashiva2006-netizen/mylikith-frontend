@@ -13,6 +13,10 @@ const token=()=>localStorage.getItem("token");
 let audioLiked=false;
 let audioLikeCount=0;
 
+let audioUserRating = null;
+let audioAverageRating = 0;
+let audioRatingCount = 0;
+	
 async function loadAudioLike(){
   const button=$("audioLikeButton");
   const count=$("audioLikeCount");
@@ -137,6 +141,357 @@ async function toggleAudioLike(){
   }
 }
 
+async function loadAudioRating(){
+
+  const stars =
+    document.querySelectorAll(
+      ".audio-rating-star"
+    );
+
+  const summary =
+    $("audioRatingSummary");
+
+  const userText =
+    $("audioRatingUserText");
+
+  if(
+    !stars.length ||
+    !summary ||
+    !userText ||
+    !chapterId
+  ){
+    return;
+  }
+
+  if(!token()){
+
+    summary.textContent =
+      "Login to rate";
+
+    userText.textContent =
+      "Login to rate this chapter.";
+
+    renderAudioRating();
+
+    return;
+  }
+
+  try{
+
+    const response =
+      await fetch(
+        `${AUDIO_API}/chapters/${chapterId}/rating`,
+        {
+          headers:headers()
+        }
+      );
+
+    const data =
+      await response.json();
+
+    if(
+      !response.ok ||
+      !data.success
+    ){
+
+      throw new Error(
+        data.message ||
+        "Unable to load rating."
+      );
+    }
+
+    audioUserRating =
+      data.rating === null ||
+      data.rating === undefined
+        ? null
+        : Number(data.rating);
+
+    audioAverageRating =
+      Number(
+        data.average_rating || 0
+      );
+
+    audioRatingCount =
+      Number(
+        data.rating_count || 0
+      );
+
+    renderAudioRating();
+
+  }catch(error){
+
+    console.warn(
+      "Audio rating load failed:",
+      error
+    );
+
+  }
+}
+
+
+function renderAudioRating(){
+
+  const stars =
+    document.querySelectorAll(
+      ".audio-rating-star"
+    );
+
+  const summary =
+    $("audioRatingSummary");
+
+  const userText =
+    $("audioRatingUserText");
+
+  if(
+    !summary ||
+    !userText
+  ){
+    return;
+  }
+
+
+  stars.forEach(
+    star => {
+
+      const value =
+        Number(
+          star.dataset.rating
+        );
+
+      star.classList.toggle(
+        "selected",
+        audioUserRating !== null &&
+        value <= audioUserRating
+      );
+
+      star.textContent =
+        audioUserRating !== null &&
+        value <= audioUserRating
+          ? "★"
+          : "☆";
+
+    }
+  );
+
+
+  if(audioRatingCount === 0){
+
+    summary.textContent =
+      "No ratings yet";
+
+  }else{
+
+    summary.textContent =
+      `${audioAverageRating.toFixed(1)} / 5 · ${audioRatingCount} ${
+        audioRatingCount === 1
+          ? "rating"
+          : "ratings"
+      }`;
+
+  }
+
+
+  if(audioUserRating !== null){
+
+    userText.textContent =
+      `Your rating: ${audioUserRating}/5`;
+
+  }else if(token()){
+
+    userText.textContent =
+      "You haven't rated this chapter.";
+
+  }else{
+
+    userText.textContent =
+      "Login to rate this chapter.";
+
+  }
+
+}
+
+
+async function submitAudioRating(
+  rating
+){
+
+  if(!token()){
+
+    location.href =
+      `login.html?redirect=${encodeURIComponent(
+        location.href
+      )}`;
+
+    return;
+  }
+
+
+  const stars =
+    document.querySelectorAll(
+      ".audio-rating-star"
+    );
+
+  stars.forEach(
+    star => {
+      star.disabled=true;
+    }
+  );
+
+
+  try{
+
+    const response =
+      await fetch(
+        `${AUDIO_API}/chapters/${chapterId}/rating`,
+        {
+          method:"POST",
+
+          headers:{
+            ...headers(),
+            "Content-Type":
+              "application/json"
+          },
+
+          body:JSON.stringify({
+            rating:Number(rating)
+          })
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(
+      !response.ok ||
+      !data.success
+    ){
+
+      throw new Error(
+        data.message ||
+        "Unable to save rating."
+      );
+
+    }
+
+
+    audioUserRating =
+      Number(data.rating);
+
+    audioAverageRating =
+      Number(
+        data.average_rating || 0
+      );
+
+    audioRatingCount =
+      Number(
+        data.rating_count || 0
+      );
+
+
+    renderAudioRating();
+
+
+  }catch(error){
+
+    console.error(
+      "Audio rating update failed:",
+      error
+    );
+
+  }finally{
+
+    stars.forEach(
+      star => {
+        star.disabled=false;
+      }
+    );
+
+  }
+
+}
+
+
+function bindAudioRating(){
+
+  const stars =
+    document.querySelectorAll(
+      ".audio-rating-star"
+    );
+
+  stars.forEach(
+    star => {
+
+      star.addEventListener(
+        "mouseenter",
+        () => {
+
+          const value =
+            Number(
+              star.dataset.rating
+            );
+
+          stars.forEach(
+            item => {
+
+              const itemValue =
+                Number(
+                  item.dataset.rating
+                );
+
+              item.textContent =
+                itemValue <= value
+                  ? "★"
+                  : "☆";
+
+              item.classList.toggle(
+                "hovered",
+                itemValue <= value
+              );
+
+            }
+          );
+
+        }
+      );
+
+
+      star.addEventListener(
+        "click",
+        () => {
+
+          submitAudioRating(
+            Number(
+              star.dataset.rating
+            )
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+  const container =
+    $("audioRatingStars");
+
+  if(container){
+
+    container.addEventListener(
+      "mouseleave",
+      () => {
+
+        renderAudioRating();
+
+      }
+    );
+
+  }
+
+}
+
 function formatTime(value){const n=Number(value);if(!Number.isFinite(n)||n<0)return"00:00";const s=Math.floor(n),h=Math.floor(s/3600),m=Math.floor((s%3600)/60),r=s%60;return h?`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`:`${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`}
 function headers(){const h={};if(token())h.Authorization=`Bearer ${token()}`;return h}
 function setMeta(title,description){document.title=`${title} — MyLikith Audio`;$("metaDescription").content=description;$("ogTitle").content=title;$("ogDescription").content=description}
@@ -150,6 +505,10 @@ async function init(){
   $("walletButton").addEventListener("click",()=>location.href="wallet.html");
   $("unlockButton").addEventListener("click",unlockChapter);
   $("audioLikeButton").addEventListener("click",toggleAudioLike);
+
+bindAudioRating();
+renderAudioRating();
+await loadAudioRating();
 
   renderAudioLike();
   await loadAudioLike();
@@ -320,7 +679,8 @@ async function unlockChapter(){
     const r=await fetch(`${MEDIA_API}/chapters/${chapterId}/unlock`,{method:"POST",headers:{...headers(),"Content-Type":"application/json"}});const d=await r.json();
     if(!r.ok||!d.success)throw new Error(d.message||"Unable to unlock chapter.");
     await loadChapter();
-    await loadAudioLike();
+await loadAudioLike();
+await loadAudioRating();
   }catch(e){alert(e.message);button.disabled=false;button.textContent=`🪙 Unlock for ${Number((chapterData||{}).coins_required||0)} Coins`}
 }
 
