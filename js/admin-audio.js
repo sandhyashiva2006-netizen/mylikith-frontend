@@ -6,6 +6,8 @@ document.addEventListener(
 
         loadAdminAudioNovels();
 
+        loadAdminAudioChapters();
+
     }
 );
 
@@ -406,6 +408,524 @@ function escapeAdminAudioHtml(
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+
+}
+
+/* =========================================================
+   LOAD AUDIO CHAPTERS
+   ========================================================= */
+
+async function loadAdminAudioChapters(){
+
+    const container =
+        document.getElementById(
+            "audioChaptersList"
+        );
+
+    const count =
+        document.getElementById(
+            "audioChapterCount"
+        );
+
+    if(!container){
+        return;
+    }
+
+
+    container.innerHTML = `
+        <div class="audio-admin-loading">
+            Loading Audio Chapters...
+        </div>
+    `;
+
+
+    try{
+
+        const response =
+            await fetch(
+                `${ADMIN_AUDIO_API}/chapters`,
+                {
+                    headers: {
+                        Authorization:
+                            "Bearer " +
+                            localStorage.getItem("token")
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Failed to load Audio Chapters."
+            );
+
+        }
+
+
+        const chapters =
+            Array.isArray(data.chapters)
+                ? data.chapters
+                : [];
+
+
+        if(count){
+
+            count.textContent =
+                chapters.length;
+
+        }
+
+
+        populateAudioChapterNovelFilter(
+            chapters
+        );
+
+
+        renderAdminAudioChapters(
+            chapters
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Admin Audio Chapters load error:",
+            error
+        );
+
+
+        container.innerHTML = `
+            <div class="audio-admin-loading">
+                Failed to load Audio Chapters.
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   NOVEL FILTER
+   ========================================================= */
+
+function populateAudioChapterNovelFilter(
+    chapters
+){
+
+    const select =
+        document.getElementById(
+            "audioChapterNovelFilter"
+        );
+
+
+    if(!select){
+        return;
+    }
+
+
+    const novels =
+        new Map();
+
+
+    chapters.forEach(
+        chapter => {
+
+            if(
+                chapter.audio_novel_id &&
+                chapter.audio_novel_title
+            ){
+
+                novels.set(
+                    String(
+                        chapter.audio_novel_id
+                    ),
+                    chapter.audio_novel_title
+                );
+
+            }
+
+        }
+    );
+
+
+    select.innerHTML = `
+        <option value="all">
+            All Audio Novels
+        </option>
+    `;
+
+
+    Array.from(
+        novels.entries()
+    )
+    .sort(
+        (a,b) =>
+            a[1].localeCompare(
+                b[1]
+            )
+    )
+    .forEach(
+        ([id,title]) => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value = id;
+
+            option.textContent =
+                title;
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+    select.onchange =
+        () => {
+
+            const selected =
+                select.value;
+
+
+            const filtered =
+                selected === "all"
+                    ? chapters
+                    : chapters.filter(
+                        chapter =>
+                            String(
+                                chapter.audio_novel_id
+                            ) === selected
+                    );
+
+
+            renderAdminAudioChapters(
+                filtered
+            );
+
+        };
+
+}
+
+
+/* =========================================================
+   RENDER AUDIO CHAPTERS
+   ========================================================= */
+
+function renderAdminAudioChapters(
+    chapters
+){
+
+    const container =
+        document.getElementById(
+            "audioChaptersList"
+        );
+
+
+    if(!container){
+        return;
+    }
+
+
+    if(!chapters.length){
+
+        container.innerHTML = `
+            <div class="audio-admin-loading">
+                No Audio Chapters found.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        chapters.map(
+            chapter => {
+
+                const duration =
+                    formatAdminAudioDuration(
+                        chapter.audio_duration_seconds
+                    );
+
+
+                const audioStatus =
+                    String(
+                        chapter.audio_status ||
+                        "unknown"
+                    );
+
+
+                const published =
+                    Boolean(
+                        chapter.is_published
+                    );
+
+
+                const draft =
+                    Boolean(
+                        chapter.is_draft
+                    );
+
+
+                const premium =
+                    Boolean(
+                        chapter.is_premium
+                    );
+
+
+                return `
+
+                    <article
+                        class="audio-admin-chapter-card"
+                    >
+
+                        <div
+                            class="audio-admin-chapter-number"
+                        >
+                            ${Number(
+                                chapter.chapter_no || 0
+                            )}
+                        </div>
+
+
+                        <div
+                            class="audio-admin-chapter-info"
+                        >
+
+                            <div
+                                class="audio-admin-chapter-title-row"
+                            >
+
+                                <div>
+
+                                    <h3>
+                                        ${escapeAdminAudioHtml(
+                                            chapter.title ||
+                                            "Untitled Chapter"
+                                        )}
+                                    </h3>
+
+                                    <p>
+                                        🎧
+                                        ${escapeAdminAudioHtml(
+                                            chapter.audio_novel_title ||
+                                            "Unknown Audio Novel"
+                                        )}
+                                    </p>
+
+                                </div>
+
+
+                                <div
+                                    class="audio-admin-badges"
+                                >
+
+                                    ${
+                                        premium
+                                            ? `
+                                                <span
+                                                    class="audio-admin-badge premium"
+                                                >
+                                                    👑 Premium
+                                                </span>
+                                              `
+                                            : ""
+                                    }
+
+                                    ${
+                                        draft
+                                            ? `
+                                                <span
+                                                    class="audio-admin-badge draft"
+                                                >
+                                                    Draft
+                                                </span>
+                                              `
+                                            : ""
+                                    }
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="audio-admin-chapter-meta"
+                            >
+
+                                <span>
+                                    ⏱
+                                    ${duration}
+                                </span>
+
+                                <span>
+                                    🎵
+                                    ${escapeAdminAudioHtml(
+                                        audioStatus
+                                    )}
+                                </span>
+
+                                <span>
+                                    👁
+                                    ${Number(
+                                        chapter.views || 0
+                                    ).toLocaleString()}
+                                </span>
+
+                                <span>
+                                    ❤️
+                                    ${Number(
+                                        chapter.likes || 0
+                                    ).toLocaleString()}
+                                </span>
+
+                                <span>
+                                    ⭐
+                                    ${Number(
+                                        chapter.rating || 0
+                                    ).toFixed(1)}
+                                    (${Number(
+                                        chapter.rating_count || 0
+                                    )})
+                                </span>
+
+                            </div>
+
+
+                            <div
+                                class="audio-admin-chapter-status"
+                            >
+
+                                <span
+                                    class="audio-admin-status ${
+                                        published
+                                            ? "published"
+                                            : draft
+                                                ? "draft"
+                                                : ""
+                                    }"
+                                >
+                                    ${
+                                        published
+                                            ? "Published"
+                                            : draft
+                                                ? "Draft"
+                                                : "Unpublished"
+                                    }
+                                </span>
+
+
+                                ${
+                                    premium
+                                        ? `
+                                            <span
+                                                class="audio-admin-status premium-status"
+                                            >
+                                                ${Number(
+                                                    chapter.coins_required || 0
+                                                )}
+                                                coins
+                                            </span>
+                                          `
+                                        : `
+                                            <span
+                                                class="audio-admin-status"
+                                            >
+                                                Free
+                                            </span>
+                                          `
+                                }
+
+
+                                ${
+                                    chapter.early_access
+                                        ? `
+                                            <span
+                                                class="audio-admin-status"
+                                            >
+                                                Early Access
+                                            </span>
+                                          `
+                                        : ""
+                                }
+
+
+                                <span
+                                    class="audio-admin-id"
+                                >
+                                    ID: ${chapter.id}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   FORMAT DURATION
+   ========================================================= */
+
+function formatAdminAudioDuration(
+    seconds
+){
+
+    const value =
+        Number(seconds);
+
+
+    if(
+        !Number.isFinite(value) ||
+        value <= 0
+    ){
+
+        return "—";
+
+    }
+
+
+    const total =
+        Math.round(value);
+
+
+    const minutes =
+        Math.floor(
+            total / 60
+        );
+
+
+    const remaining =
+        total % 60;
+
+
+    return `${minutes}:${String(
+        remaining
+    ).padStart(2,"0")}`;
 
 }
 

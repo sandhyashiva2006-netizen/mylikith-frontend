@@ -302,3 +302,153 @@
 
 }
 
+/* =========================================================
+   AUDIO CHAPTERS
+   ========================================================= */
+
+.audio-chapter-filter{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+}
+
+.audio-chapter-filter label{
+    color:#94a3b8;
+    font-size:12px;
+    font-weight:600;
+}
+
+.audio-chapter-filter select{
+    min-width:220px;
+    padding:9px 12px;
+    border:1px solid rgba(148,163,184,.16);
+    border-radius:9px;
+    outline:none;
+    color:#cbd5e1;
+    background:#0f172a;
+    font:inherit;
+    font-size:12px;
+}
+
+.audio-chapter-filter select:focus{
+    border-color:rgba(139,92,246,.55);
+}
+
+.audio-admin-chapter-card{
+    display:flex;
+    gap:15px;
+    margin-bottom:12px;
+    padding:15px;
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:14px;
+    background:rgba(255,255,255,.025);
+}
+
+.audio-admin-chapter-card:last-child{
+    margin-bottom:0;
+}
+
+.audio-admin-chapter-number{
+    flex:0 0 44px;
+    width:44px;
+    height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:11px;
+    color:#c4b5fd;
+    background:rgba(124,58,237,.14);
+    font-size:16px;
+    font-weight:800;
+}
+
+.audio-admin-chapter-info{
+    min-width:0;
+    flex:1;
+}
+
+.audio-admin-chapter-title-row{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+}
+
+.audio-admin-chapter-title-row h3{
+    margin:0;
+    color:#f8fafc;
+    font-size:15px;
+}
+
+.audio-admin-chapter-title-row p{
+    margin:5px 0 0;
+    color:#64748b;
+    font-size:11px;
+}
+
+.audio-admin-chapter-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 14px;
+    margin-top:12px;
+    color:#94a3b8;
+    font-size:11px;
+}
+
+.audio-admin-chapter-status{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:12px;
+}
+
+.audio-admin-status.premium-status{
+    color:#ddd6fe;
+    background:rgba(124,58,237,.12);
+}
+
+.audio-admin-badge.draft{
+    color:#fcd34d;
+    background:rgba(234,179,8,.10);
+}
+
+@media(max-width:600px){
+
+    .audio-chapter-filter{
+        display:block;
+    }
+
+    .audio-chapter-filter label{
+        display:block;
+        margin-bottom:7px;
+    }
+
+    .audio-chapter-filter select{
+        width:100%;
+        min-width:0;
+    }
+
+    .audio-admin-chapter-card{
+        gap:11px;
+        padding:12px;
+    }
+
+    .audio-admin-chapter-number{
+        flex-basis:36px;
+        width:36px;
+        height:36px;
+        font-size:13px;
+    }
+
+    .audio-admin-chapter-title-row{
+        display:block;
+    }
+
+    .audio-admin-badges{
+        margin-top:7px;
+    }
+
+}
+
