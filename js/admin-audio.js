@@ -4,7 +4,9 @@ document.addEventListener(
 
         bindAudioAdminTabs();
 
-	bindAudioNovelCreateForm();
+        bindAudioNovelCreateForm();
+
+        bindAudioChapterCreateForm();
 
         loadAdminAudioNovels();
 
@@ -2177,6 +2179,1212 @@ function bindAudioNovelCreateForm(){
 
         }
     );
+
+}
+
+/* =========================================================
+   AUDIO CHAPTER CREATION
+   ========================================================= */
+
+function bindAudioChapterCreateForm(){
+
+    const openButton =
+        document.getElementById(
+            "createAudioChapterBtn"
+        );
+
+    const closeButton =
+        document.getElementById(
+            "closeAudioChapterForm"
+        );
+
+    const cancelButton =
+        document.getElementById(
+            "cancelAudioChapterBtn"
+        );
+
+    const form =
+        document.getElementById(
+            "audioChapterForm"
+        );
+
+    const panel =
+        document.getElementById(
+            "audioChapterCreateForm"
+        );
+
+
+    if(
+        !openButton ||
+        !closeButton ||
+        !cancelButton ||
+        !form ||
+        !panel
+    ){
+
+        return;
+
+    }
+
+
+    openButton.addEventListener(
+        "click",
+        async () => {
+
+            panel.hidden = false;
+
+            await loadAudioNovelOptions();
+
+            panel.scrollIntoView({
+                behavior:
+                    "smooth",
+                block:
+                    "start"
+            });
+
+        }
+    );
+
+
+    function closeForm(){
+
+        panel.hidden = true;
+
+        form.reset();
+
+        document
+            .getElementById(
+                "audioChapterCoins"
+            )
+            .value = 0;
+
+        document
+            .getElementById(
+                "audioChapterUploadProgress"
+            )
+            .hidden = true;
+
+        document
+            .getElementById(
+                "audioChapterFileInfo"
+            )
+            .hidden = true;
+
+    }
+
+
+    closeButton.addEventListener(
+        "click",
+        closeForm
+    );
+
+
+    cancelButton.addEventListener(
+        "click",
+        closeForm
+    );
+
+
+    const fileInput =
+        document.getElementById(
+            "audioChapterFile"
+        );
+
+
+    fileInput.addEventListener(
+        "change",
+        async () => {
+
+            const file =
+                fileInput.files[0];
+
+
+            if(!file){
+
+                return;
+
+            }
+
+
+            if(
+                !file.type.startsWith(
+                    "audio/"
+                )
+            ){
+
+                alert(
+                    "Please select a valid audio file."
+                );
+
+                fileInput.value = "";
+
+                return;
+
+            }
+
+
+            document
+                .getElementById(
+                    "audioChapterFileInfo"
+                )
+                .hidden = false;
+
+
+            document
+                .getElementById(
+                    "audioChapterFileName"
+                )
+                .textContent =
+                    file.name;
+
+
+            document
+                .getElementById(
+                    "audioChapterFileSize"
+                )
+                .textContent =
+                    formatAudioUploadSize(
+                        file.size
+                    );
+
+
+            try{
+
+                const duration =
+                    await getAudioFileDuration(
+                        file
+                    );
+
+
+                document
+                    .getElementById(
+                        "audioChapterDuration"
+                    )
+                    .textContent =
+                        formatAudioUploadDuration(
+                            duration
+                        );
+
+
+            }catch(error){
+
+                console.error(
+                    "Audio duration detection error:",
+                    error
+                );
+
+                document
+                    .getElementById(
+                        "audioChapterDuration"
+                    )
+                    .textContent =
+                        "Unable to detect";
+
+            }
+
+        }
+    );
+
+
+    form.addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
+
+
+            const novelId =
+                Number(
+                    document
+                        .getElementById(
+                            "audioChapterNovel"
+                        )
+                        .value
+                );
+
+
+            const chapterNo =
+                Number(
+                    document
+                        .getElementById(
+                            "audioChapterNumber"
+                        )
+                        .value
+                );
+
+
+            const title =
+                document
+                    .getElementById(
+                        "audioChapterTitle"
+                    )
+                    .value
+                    .trim();
+
+
+            const file =
+                fileInput.files[0];
+
+
+            if(
+                !Number.isInteger(
+                    novelId
+                ) ||
+                novelId <= 0
+            ){
+
+                alert(
+                    "Please select an Audio Novel."
+                );
+
+                return;
+
+            }
+
+
+            if(
+                !Number.isInteger(
+                    chapterNo
+                ) ||
+                chapterNo <= 0
+            ){
+
+                alert(
+                    "Enter a valid chapter number."
+                );
+
+                return;
+
+            }
+
+
+            if(!title){
+
+                alert(
+                    "Chapter title is required."
+                );
+
+                return;
+
+            }
+
+
+            if(!file){
+
+                alert(
+                    "Please select an audio file."
+                );
+
+                return;
+
+            }
+
+
+            const premium =
+                document
+                    .getElementById(
+                        "audioChapterPremium"
+                    )
+                    .value ===
+                    "premium";
+
+
+            const coins =
+                Number(
+                    document
+                        .getElementById(
+                            "audioChapterCoins"
+                        )
+                        .value || 0
+                );
+
+
+            const earlyAccess =
+                document
+                    .getElementById(
+                        "audioChapterEarlyAccess"
+                    )
+                    .checked;
+
+
+            const publishStatus =
+                document
+                    .getElementById(
+                        "audioChapterPublishStatus"
+                    )
+                    .value;
+
+
+            const publishAt =
+                document
+                    .getElementById(
+                        "audioChapterPublishAt"
+                    )
+                    .value;
+
+
+            const submitButton =
+                document.getElementById(
+                    "submitAudioChapterBtn"
+                );
+
+
+            submitButton.disabled =
+                true;
+
+
+            try{
+
+                /*
+                ---------------------------------------------
+                DETECT DURATION
+                ---------------------------------------------
+                */
+
+                const duration =
+                    await getAudioFileDuration(
+                        file
+                    );
+
+
+                /*
+                ---------------------------------------------
+                CREATE CHAPTER
+                ---------------------------------------------
+                */
+
+                setAudioUploadStatus(
+                    "Creating chapter..."
+                );
+
+
+                const chapterResponse =
+                    await fetch(
+                        `${ADMIN_AUDIO_API}/chapters`,
+                        {
+
+                            method:
+                                "POST",
+
+                            headers: {
+
+                                Authorization:
+                                    "Bearer " +
+                                    localStorage.getItem(
+                                        "token"
+                                    ),
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    audio_novel_id:
+                                        novelId,
+
+                                    chapter_no:
+                                        chapterNo,
+
+                                    title,
+
+                                    is_premium:
+                                        premium,
+
+                                    coins_required:
+                                        premium
+                                            ? coins
+                                            : 0,
+
+                                    early_access:
+                                        earlyAccess,
+
+                                    is_draft:
+                                        publishStatus ===
+                                        "draft",
+
+                                    is_published:
+                                        publishStatus ===
+                                        "published",
+
+                                    publish_at:
+                                        publishAt ||
+                                        null
+
+                                })
+
+                        }
+                    );
+
+
+                const chapterData =
+                    await chapterResponse.json();
+
+
+                if(
+                    !chapterResponse.ok ||
+                    !chapterData.success
+                ){
+
+                    throw new Error(
+                        chapterData.message ||
+                        "Failed to create chapter."
+                    );
+
+                }
+
+
+                const chapterId =
+                    Number(
+                        chapterData.chapter.id
+                    );
+
+
+                /*
+                ---------------------------------------------
+                START B2 UPLOAD
+                ---------------------------------------------
+                */
+
+                setAudioUploadStatus(
+                    "Starting secure upload..."
+                );
+
+
+                const startResponse =
+                    await fetch(
+                        `${ADMIN_AUDIO_API}/chapters/${chapterId}/media/start`,
+                        {
+
+                            method:
+                                "POST",
+
+                            headers: {
+
+                                Authorization:
+                                    "Bearer " +
+                                    localStorage.getItem(
+                                        "token"
+                                    ),
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    file_name:
+                                        file.name,
+
+                                    mime_type:
+                                        file.type,
+
+                                    file_size:
+                                        file.size
+
+                                })
+
+                        }
+                    );
+
+
+                const startData =
+                    await startResponse.json();
+
+
+                if(
+                    !startResponse.ok ||
+                    !startData.success
+                ){
+
+                    throw new Error(
+                        startData.message ||
+                        "Unable to start audio upload."
+                    );
+
+                }
+
+
+                /*
+                ---------------------------------------------
+                MULTIPART UPLOAD
+                ---------------------------------------------
+                */
+
+                const uploadResult =
+                    await uploadAudioMultipart(
+                        chapterId,
+                        startData.upload_id,
+                        startData.object_key,
+                        file,
+                        Number(
+                            startData.part_size ||
+                            10 * 1024 * 1024
+                        )
+                    );
+
+
+                /*
+                ---------------------------------------------
+                COMPLETE UPLOAD
+                ---------------------------------------------
+                */
+
+                setAudioUploadStatus(
+                    "Finalizing audio..."
+                );
+
+
+                const completeResponse =
+                    await fetch(
+                        `${ADMIN_AUDIO_API}/chapters/${chapterId}/media/complete`,
+                        {
+
+                            method:
+                                "POST",
+
+                            headers: {
+
+                                Authorization:
+                                    "Bearer " +
+                                    localStorage.getItem(
+                                        "token"
+                                    ),
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    upload_id:
+                                        startData.upload_id,
+
+                                    object_key:
+                                        startData.object_key,
+
+                                    parts:
+                                        uploadResult.parts,
+
+                                    duration_seconds:
+                                        duration
+
+                                })
+
+                        }
+                    );
+
+
+                const completeData =
+                    await completeResponse.json();
+
+
+                if(
+                    !completeResponse.ok ||
+                    !completeData.success
+                ){
+
+                    throw new Error(
+                        completeData.message ||
+                        "Unable to complete audio upload."
+                    );
+
+                }
+
+
+                setAudioUploadProgress(
+                    100
+                );
+
+
+                setAudioUploadStatus(
+                    "Audio upload completed."
+                );
+
+
+                alert(
+                    "Audio Chapter created and uploaded successfully."
+                );
+
+
+                closeForm();
+
+
+                await loadAdminAudioChapters();
+
+
+            }catch(error){
+
+                console.error(
+                    "Audio Chapter creation error:",
+                    error
+                );
+
+
+                alert(
+                    error.message ||
+                    "Failed to create Audio Chapter."
+                );
+
+
+            }finally{
+
+                submitButton.disabled =
+                    false;
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   LOAD AUDIO NOVEL OPTIONS
+   ========================================================= */
+
+async function loadAudioNovelOptions(){
+
+    const select =
+        document.getElementById(
+            "audioChapterNovel"
+        );
+
+
+    if(!select){
+        return;
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                `${ADMIN_AUDIO_API}/novels`,
+                {
+                    headers: {
+
+                        Authorization:
+                            "Bearer " +
+                            localStorage.getItem(
+                                "token"
+                            )
+
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Failed to load Audio Novels."
+            );
+
+        }
+
+
+        const novels =
+            Array.isArray(
+                data.audio
+            )
+                ? data.audio
+                : [];
+
+
+        select.innerHTML = `
+            <option value="">
+                Select Audio Novel
+            </option>
+        `;
+
+
+        novels.forEach(
+            novel => {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+                option.value =
+                    novel.id;
+
+                option.textContent =
+                    novel.title;
+
+                select.appendChild(
+                    option
+                );
+
+            }
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Audio Novel options error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   MULTIPART AUDIO UPLOAD
+   ========================================================= */
+
+async function uploadAudioMultipart(
+    chapterId,
+    uploadId,
+    objectKey,
+    file,
+    partSize
+){
+
+    const parts = [];
+
+    const totalParts =
+        Math.ceil(
+            file.size /
+            partSize
+        );
+
+
+    for(
+        let index = 0;
+        index < totalParts;
+        index++
+    ){
+
+        const partNumber =
+            index + 1;
+
+
+        const start =
+            index *
+            partSize;
+
+
+        const end =
+            Math.min(
+                start + partSize,
+                file.size
+            );
+
+
+        const blob =
+            file.slice(
+                start,
+                end
+            );
+
+
+        setAudioUploadStatus(
+            `Preparing part ${partNumber} of ${totalParts}...`
+        );
+
+
+        const signResponse =
+            await fetch(
+                `${ADMIN_AUDIO_API}/chapters/${chapterId}/media/sign-part`,
+                {
+
+                    method:
+                        "POST",
+
+                    headers: {
+
+                        Authorization:
+                            "Bearer " +
+                            localStorage.getItem(
+                                "token"
+                            ),
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            upload_id:
+                                uploadId,
+
+                            object_key:
+                                objectKey,
+
+                            part_number:
+                                partNumber
+
+                        })
+
+                }
+            );
+
+
+        const signData =
+            await signResponse.json();
+
+
+        if(
+            !signResponse.ok ||
+            !signData.success
+        ){
+
+            throw new Error(
+                signData.message ||
+                `Unable to prepare part ${partNumber}.`
+            );
+
+        }
+
+
+        setAudioUploadStatus(
+            `Uploading part ${partNumber} of ${totalParts}...`
+        );
+
+
+        const uploadResponse =
+            await fetch(
+                signData.url,
+                {
+
+                    method:
+                        "PUT",
+
+                    body:
+                        blob
+
+                }
+            );
+
+
+        if(
+            !uploadResponse.ok
+        ){
+
+            throw new Error(
+                `Audio part ${partNumber} upload failed.`
+            );
+
+        }
+
+
+        const etag =
+            uploadResponse.headers.get(
+                "ETag"
+            );
+
+
+        if(!etag){
+
+            throw new Error(
+                `Missing ETag for audio part ${partNumber}.`
+            );
+
+        }
+
+
+        parts.push({
+
+            PartNumber:
+                partNumber,
+
+            ETag:
+                etag
+
+        });
+
+
+        setAudioUploadProgress(
+            Math.round(
+                (
+                    partNumber /
+                    totalParts
+                ) * 100
+            )
+        );
+
+    }
+
+
+    return {
+        parts
+    };
+
+}
+
+
+/* =========================================================
+   AUDIO DURATION
+   ========================================================= */
+
+function getAudioFileDuration(
+    file
+){
+
+    return new Promise(
+        (
+            resolve,
+            reject
+        ) => {
+
+            const audio =
+                document.createElement(
+                    "audio"
+                );
+
+
+            const url =
+                URL.createObjectURL(
+                    file
+                );
+
+
+            audio.preload =
+                "metadata";
+
+
+            audio.onloadedmetadata =
+                () => {
+
+                    const duration =
+                        audio.duration;
+
+                    URL.revokeObjectURL(
+                        url
+                    );
+
+                    if(
+                        !Number.isFinite(
+                            duration
+                        )
+                    ){
+
+                        reject(
+                            new Error(
+                                "Unable to determine audio duration."
+                            )
+                        );
+
+                        return;
+
+                    }
+
+
+                    resolve(
+                        duration
+                    );
+
+                };
+
+
+            audio.onerror =
+                () => {
+
+                    URL.revokeObjectURL(
+                        url
+                    );
+
+                    reject(
+                        new Error(
+                            "Unable to read audio file."
+                        )
+                    );
+
+                };
+
+
+            audio.src =
+                url;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   UPLOAD UI
+   ========================================================= */
+
+function setAudioUploadProgress(
+    percent
+){
+
+    const wrapper =
+        document.getElementById(
+            "audioChapterUploadProgress"
+        );
+
+    const bar =
+        document.getElementById(
+            "audioChapterUploadBar"
+        );
+
+    const label =
+        document.getElementById(
+            "audioChapterUploadPercent"
+        );
+
+
+    if(wrapper){
+        wrapper.hidden = false;
+    }
+
+
+    if(bar){
+        bar.style.width =
+            `${percent}%`;
+    }
+
+
+    if(label){
+        label.textContent =
+            `${percent}%`;
+    }
+
+}
+
+
+function setAudioUploadStatus(
+    message
+){
+
+    const wrapper =
+        document.getElementById(
+            "audioChapterUploadProgress"
+        );
+
+    const status =
+        document.getElementById(
+            "audioChapterUploadStatus"
+        );
+
+
+    if(wrapper){
+        wrapper.hidden = false;
+    }
+
+
+    if(status){
+        status.textContent =
+            message;
+    }
+
+}
+
+
+function formatAudioUploadSize(
+    bytes
+){
+
+    if(
+        !Number.isFinite(
+            bytes
+        ) ||
+        bytes <= 0
+    ){
+
+        return "0 B";
+
+    }
+
+
+    const units =
+        [
+            "B",
+            "KB",
+            "MB",
+            "GB"
+        ];
+
+
+    const index =
+        Math.min(
+            Math.floor(
+                Math.log(bytes) /
+                Math.log(1024)
+            ),
+            units.length - 1
+        );
+
+
+    return (
+        bytes /
+        Math.pow(
+            1024,
+            index
+        )
+    )
+    .toFixed(
+        index === 0
+            ? 0
+            : 2
+    ) +
+    " " +
+    units[index];
+
+}
+
+
+function formatAudioUploadDuration(
+seconds
+){
+
+    if(
+        !Number.isFinite(
+            seconds
+        )
+    ){
+
+        return "—";
+
+    }
+
+
+    const total =
+        Math.round(
+            seconds
+        );
+
+
+    const minutes =
+        Math.floor(
+            total / 60
+        );
+
+
+    const remaining =
+        total % 60;
+
+
+    return `${minutes}:${String(
+        remaining
+    ).padStart(
+        2,
+        "0"
+    )}`;
 
 }
 

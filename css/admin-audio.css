@@ -957,3 +957,75 @@
 
 }
 
+/* =========================================================
+   AUDIO UPLOAD
+   ========================================================= */
+
+.audio-upload-info{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    padding:12px;
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:10px;
+    background:rgba(255,255,255,.025);
+    color:#94a3b8;
+    font-size:11px;
+}
+
+.audio-upload-info strong{
+    color:#e2e8f0;
+}
+
+.audio-upload-progress{
+    padding:14px;
+    border:1px solid rgba(124,58,237,.16);
+    border-radius:10px;
+    background:rgba(124,58,237,.035);
+}
+
+.audio-upload-progress-header{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    color:#cbd5e1;
+    font-size:11px;
+}
+
+.audio-upload-progress-header strong{
+    color:#a78bfa;
+}
+
+.audio-upload-progress-track{
+    height:7px;
+    margin-top:10px;
+    overflow:hidden;
+    border-radius:99px;
+    background:rgba(255,255,255,.07);
+}
+
+.audio-upload-progress-bar{
+    height:100%;
+    border-radius:inherit;
+    background:#7c3aed;
+    transition:width .2s ease;
+}
+
+.audio-upload-progress p{
+    margin:8px 0 0;
+    color:#64748b;
+    font-size:10px;
+}
+
+@media(max-width:600px){
+
+    .audio-upload-info{
+        display:block;
+    }
+
+    .audio-upload-info > div + div{
+        margin-top:7px;
+    }
+
+}
+

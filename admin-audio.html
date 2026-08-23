@@ -795,21 +795,360 @@
             class="audio-admin-section"
         >
 
-            <div class="audio-admin-section-header">
+<div class="audio-admin-section-header">
 
-                <div>
+    <div>
 
-                    <h2>
-                        📖 Audio Chapters
-                    </h2>
+        <h2>
+            📖 Audio Chapters
+        </h2>
 
-                    <p>
-                        Manage audio chapters and playback status.
-                    </p>
+        <p>
+            Create and manage Audio Novel chapters.
+        </p>
 
-                </div>
+    </div>
+
+    <button
+        type="button"
+        id="createAudioChapterBtn"
+        class="audio-admin-primary-btn"
+    >
+        + New Chapter
+    </button>
+
+</div>
+
+<section
+    id="audioChapterCreateForm"
+    class="audio-create-panel"
+    hidden
+>
+
+    <div class="audio-create-header">
+
+        <div>
+
+            <span class="audio-create-eyebrow">
+                AUDIO STUDIO
+            </span>
+
+            <h2>
+                Create Audio Chapter
+            </h2>
+
+            <p>
+                Add a chapter and upload its audio file.
+            </p>
+
+        </div>
+
+
+        <button
+            type="button"
+            id="closeAudioChapterForm"
+            class="audio-create-close"
+        >
+            ✕
+        </button>
+
+    </div>
+
+
+    <form
+        id="audioChapterForm"
+        autocomplete="off"
+    >
+
+
+        <!-- AUDIO NOVEL -->
+
+        <div class="audio-create-field audio-create-wide">
+
+            <label for="audioChapterNovel">
+                Audio Novel *
+            </label>
+
+            <select
+                id="audioChapterNovel"
+                required
+            >
+
+                <option value="">
+                    Select Audio Novel
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- CHAPTER NUMBER -->
+
+        <div class="audio-create-field">
+
+            <label for="audioChapterNumber">
+                Chapter Number *
+            </label>
+
+            <input
+                type="number"
+                id="audioChapterNumber"
+                min="1"
+                step="1"
+                required
+                placeholder="1"
+            >
+
+        </div>
+
+
+        <!-- TITLE -->
+
+        <div class="audio-create-field">
+
+            <label for="audioChapterTitle">
+                Chapter Title *
+            </label>
+
+            <input
+                type="text"
+                id="audioChapterTitle"
+                maxlength="255"
+                required
+                placeholder="Chapter title"
+            >
+
+        </div>
+
+
+        <!-- AUDIO FILE -->
+
+        <div class="audio-create-field audio-create-wide">
+
+            <label for="audioChapterFile">
+                Audio File *
+            </label>
+
+            <input
+                type="file"
+                id="audioChapterFile"
+                accept="audio/*"
+                required
+            >
+
+            <small>
+                Select an audio file such as MP3, M4A, WAV or AAC.
+            </small>
+
+        </div>
+
+
+        <!-- AUDIO PREVIEW -->
+
+        <div
+            id="audioChapterFileInfo"
+            class="audio-upload-info audio-create-wide"
+            hidden
+        >
+
+            <div>
+                <strong id="audioChapterFileName">
+                    —
+                </strong>
+
+                <span id="audioChapterFileSize">
+                    —
+                </span>
+            </div>
+
+            <div>
+                Duration:
+                <strong id="audioChapterDuration">
+                    —
+                </strong>
+            </div>
+
+        </div>
+
+
+        <!-- PREMIUM -->
+
+        <div class="audio-create-field">
+
+            <label for="audioChapterPremium">
+                Access
+            </label>
+
+            <select
+                id="audioChapterPremium"
+            >
+
+                <option value="free">
+                    Free
+                </option>
+
+                <option value="premium">
+                    Premium
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- COINS -->
+
+        <div class="audio-create-field">
+
+            <label for="audioChapterCoins">
+                Coins Required
+            </label>
+
+            <input
+                type="number"
+                id="audioChapterCoins"
+                min="0"
+                step="1"
+                value="0"
+            >
+
+        </div>
+
+
+        <!-- EARLY ACCESS -->
+
+        <div class="audio-create-field">
+
+            <label>
+                Early Access
+            </label>
+
+            <label class="audio-create-checkbox">
+
+                <input
+                    type="checkbox"
+                    id="audioChapterEarlyAccess"
+                >
+
+                <span>
+                    Enable Early Access
+                </span>
+
+            </label>
+
+        </div>
+
+
+        <!-- DRAFT -->
+
+        <div class="audio-create-field">
+
+            <label for="audioChapterPublishStatus">
+                Publish Status
+            </label>
+
+            <select
+                id="audioChapterPublishStatus"
+            >
+
+                <option value="draft">
+                    Draft
+                </option>
+
+                <option value="published">
+                    Published
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- PUBLISH DATE -->
+
+        <div class="audio-create-field">
+
+            <label for="audioChapterPublishAt">
+                Publish Date
+            </label>
+
+            <input
+                type="datetime-local"
+                id="audioChapterPublishAt"
+            >
+
+        </div>
+
+
+        <!-- UPLOAD PROGRESS -->
+
+        <div
+            id="audioChapterUploadProgress"
+            class="audio-upload-progress audio-create-wide"
+            hidden
+        >
+
+            <div class="audio-upload-progress-header">
+
+                <span>
+                    Uploading Audio...
+                </span>
+
+                <strong
+                    id="audioChapterUploadPercent"
+                >
+                    0%
+                </strong>
 
             </div>
+
+
+            <div class="audio-upload-progress-track">
+
+                <div
+                    id="audioChapterUploadBar"
+                    class="audio-upload-progress-bar"
+                    style="width:0%"
+                ></div>
+
+            </div>
+
+
+            <p
+                id="audioChapterUploadStatus"
+            >
+                Preparing upload...
+            </p>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div class="audio-create-actions">
+
+            <button
+                type="button"
+                id="cancelAudioChapterBtn"
+                class="audio-create-secondary-btn"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="submit"
+                id="submitAudioChapterBtn"
+                class="audio-admin-primary-btn"
+            >
+                Create & Upload Chapter
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
 
 <div class="audio-chapter-filter">
 
