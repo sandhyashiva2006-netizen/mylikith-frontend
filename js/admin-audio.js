@@ -3922,12 +3922,16 @@ if(!file){
 
             try{
 
-                const duration =
-                    file
-                        ? await getAudioFileDuration(
-                            file
-                        )
-                        : null;
+                let duration = null;
+
+if(file instanceof File){
+
+    duration =
+        await getAudioFileDuration(
+            file
+        );
+
+}
 
 
                 document
