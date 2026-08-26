@@ -4010,6 +4010,21 @@ if(file instanceof File){
                 editingAudioChapterId > 0;
 
 
+if(
+    !isEditing &&
+    !(file instanceof File)
+){
+
+    alert(
+        "Please select an audio file."
+    );
+
+    submitButton.disabled = false;
+
+    return;
+
+}
+
             if(
                 !Number.isInteger(
                     novelId
@@ -4128,10 +4143,16 @@ if(
                 ---------------------------------------------
                 */
 
-                const duration =
-                    await getAudioFileDuration(
-                        file
-                    );
+                let duration = null;
+
+if(file instanceof File){
+
+    duration =
+        await getAudioFileDuration(
+            file
+        );
+
+}
 
 
                 /*
