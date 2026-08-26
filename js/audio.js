@@ -1515,3 +1515,68 @@ if(document.readyState === "loading"){
     bindNovelEngagement();
 
 }
+
+async function recordAudioNovelView(novelId){
+
+    if(!novelId){
+        return;
+    }
+
+    try{
+
+        const response =
+            await fetch(
+                `${AUDIO_API_BASE}/${novelId}/view`,
+                {
+                    method: "POST"
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            console.warn(
+                "Audio Novel view update failed:",
+                data.message ||
+                response.status
+            );
+
+            return;
+        }
+
+        // Update the currently displayed view count
+        const viewElements =
+            document.querySelectorAll(
+                "[data-audio-novel-views]"
+            );
+
+        viewElements.forEach(
+            element => {
+
+                element.textContent =
+                    Number(
+                        data.views || 0
+                    ).toLocaleString();
+
+            }
+        );
+
+    }catch(error){
+
+        console.warn(
+            "Audio Novel view update error:",
+            error
+        );
+
+    }
+
+}
+
+await recordAudioNovelView(
+    currentAudioNovelId
+);
