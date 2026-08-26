@@ -2,6 +2,8 @@ const AUDIO_API_BASE =
     "https://mylikith-backend.onrender.com/api/audio";
 
 let audioSearchTimer = null;
+let currentAudioNovelId = null;
+let currentAudioNovel = null;
 
 const audio$ = (id) => document.getElementById(id);
 
@@ -491,6 +493,9 @@ async function loadNovelDetails(novelId) {
             );
         }
 
+        currentAudioNovelId = Number(novelId);
+        currentAudioNovel = novelData.audio || null;
+
         renderNovelDetails(novelData.audio);
 
         if (
@@ -505,6 +510,8 @@ async function loadNovelDetails(novelId) {
         } else {
             renderChapters([]);
         }
+
+        await loadNovelEngagement(currentAudioNovelId);
 
         window.scrollTo({
             top: section.offsetTop - 90,
@@ -638,6 +645,756 @@ function renderChapters(chapters) {
     }).join("");
 }
 
+
+async function loadNovelEngagement(novelId) {
+
+    const section = audio$("novelEngagement");
+
+    if(!section || !novelId){
+        return;
+    }
+
+    section.hidden = false;
+
+    try{
+
+        if(audioToken()){
+
+            const [likeResponse, ratingResponse] =
+                await Promise.all([
+                    fetch(
+                        `${AUDIO_API_BASE}/${novelId}/like`,
+                        { headers: audioHeaders() }
+                    ),
+                    fetch(
+                        `${AUDIO_API_BASE}/${novelId}/rating`,
+                        { headers: audioHeaders() }
+                    )
+                ]);
+
+            const likeData = await likeResponse.json();
+            const ratingData = await ratingResponse.json();
+
+            updateNovelLikeUI(
+                likeResponse.ok && likeData.success
+                    ? Boolean(likeData.liked)
+                    : false,
+                likeResponse.ok && likeData.success
+                    ? Number(likeData.likes || 0)
+                    : Number(currentAudioNovel?.likes || 0)
+            );
+
+            updateNovelRatingUI(
+                ratingResponse.ok && ratingData.success
+                    ? Number(ratingData.average_rating || 0)
+                    : Number(currentAudioNovel?.rating || 0),
+                ratingResponse.ok && ratingData.success
+                    ? Number(ratingData.rating_count || 0)
+                    : Number(currentAudioNovel?.rating_count || 0),
+                ratingResponse.ok && ratingData.success && ratingData.rating != null
+                    ? Number(ratingData.rating)
+                    : null
+            );
+
+        }else{
+
+            updateNovelLikeUI(
+                false,
+                Number(currentAudioNovel?.likes || 0)
+            );
+
+            updateNovelRatingUI(
+                Number(currentAudioNovel?.rating || 0),
+                Number(currentAudioNovel?.rating_count || 0),
+                null
+            );
+        }
+
+    }catch(error){
+
+        console.error(
+            "Audio Novel engagement load error:",
+            error
+        );
+
+    }
+
+    await loadNovelComments(novelId);
+}
+
+
+function updateNovelLikeUI(liked, likes){
+
+    const icon = audio$("novelLikeIcon");
+    const label = audio$("novelLikeLabel");
+    const count = audio$("novelLikeCount");
+    const button = audio$("novelLikeButton");
+
+    if(icon) icon.textContent = liked ? "♥" : "♡";
+    if(label) label.textContent = liked ? "Liked" : "Like";
+    if(count) count.textContent = audioFormatNumber(likes);
+
+    if(button){
+        button.classList.toggle(
+            "is-active",
+            Boolean(liked)
+        );
+    }
+}
+
+
+function updateNovelRatingUI(average, count, userRating){
+
+    const averageElement = audio$("novelRatingAverage");
+    const countElement = audio$("novelRatingCount");
+
+    if(averageElement){
+        averageElement.textContent =
+            Number(average || 0).toFixed(1);
+    }
+
+    if(countElement){
+        countElement.textContent =
+            `${audioFormatNumber(count || 0)} ${
+                Number(count || 0) === 1
+                    ? "rating"
+                    : "ratings"
+            }`;
+    }
+
+    document
+        .querySelectorAll("#novelRatingStars button")
+        .forEach(button => {
+
+            const rating =
+                Number(button.dataset.rating);
+
+            const active =
+                userRating != null &&
+                rating <= Number(userRating);
+
+            button.textContent =
+                active ? "★" : "☆";
+
+            button.classList.toggle(
+                "is-active",
+                active
+            );
+        });
+}
+
+
+async function toggleNovelLike(){
+
+    if(!currentAudioNovelId){
+        return;
+    }
+
+    if(!audioToken()){
+        alert(
+            "Please login to like this Audio Novel."
+        );
+        return;
+    }
+
+    const button = audio$("novelLikeButton");
+
+    if(button) button.disabled = true;
+
+    try{
+
+        const response =
+            await fetch(
+                `${AUDIO_API_BASE}/${currentAudioNovelId}/like`,
+                {
+                    method: "POST",
+                    headers: {
+                        ...audioHeaders(),
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+
+        const data = await response.json();
+
+        if(!response.ok || !data.success){
+            throw new Error(
+                data.message ||
+                "Failed to update like."
+            );
+        }
+
+        updateNovelLikeUI(
+            Boolean(data.liked),
+            Number(data.likes || 0)
+        );
+
+        if(currentAudioNovel){
+            currentAudioNovel.likes =
+                Number(data.likes || 0);
+        }
+
+    }catch(error){
+
+        console.error(
+            "Audio Novel like error:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Failed to update like."
+        );
+
+    }finally{
+
+        if(button) button.disabled = false;
+    }
+}
+
+
+async function submitNovelRating(rating){
+
+    if(!currentAudioNovelId){
+        return;
+    }
+
+    if(!audioToken()){
+        alert(
+            "Please login to rate this Audio Novel."
+        );
+        return;
+    }
+
+    try{
+
+        const response =
+            await fetch(
+                `${AUDIO_API_BASE}/${currentAudioNovelId}/rating`,
+                {
+                    method: "POST",
+                    headers: {
+                        ...audioHeaders(),
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ rating })
+                }
+            );
+
+        const data = await response.json();
+
+        if(!response.ok || !data.success){
+            throw new Error(
+                data.message ||
+                "Failed to save rating."
+            );
+        }
+
+        updateNovelRatingUI(
+            Number(data.average_rating || 0),
+            Number(data.rating_count || 0),
+            Number(data.rating || rating)
+        );
+
+        if(currentAudioNovel){
+            currentAudioNovel.rating =
+                Number(data.average_rating || 0);
+
+            currentAudioNovel.rating_count =
+                Number(data.rating_count || 0);
+        }
+
+    }catch(error){
+
+        console.error(
+            "Audio Novel rating error:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Failed to save rating."
+        );
+    }
+}
+
+
+async function loadNovelComments(novelId){
+
+    const list = audio$("novelCommentsList");
+    const count = audio$("novelCommentCount");
+
+    if(!list){
+        return;
+    }
+
+    list.innerHTML =
+        `<div class="audio-comment-loading">Loading comments...</div>`;
+
+    try{
+
+        const response =
+            await fetch(
+                `${AUDIO_API_BASE}/${novelId}/comments`
+            );
+
+        const data = await response.json();
+
+        if(!response.ok || !data.success){
+            throw new Error(
+                data.message ||
+                "Failed to load comments."
+            );
+        }
+
+        const comments =
+            Array.isArray(data.comments)
+                ? data.comments
+                : [];
+
+        if(count){
+            count.textContent =
+                `${audioFormatNumber(comments.length)} ${
+                    comments.length === 1
+                        ? "comment"
+                        : "comments"
+                }`;
+        }
+
+        if(!comments.length){
+
+            list.innerHTML =
+                `<div class="audio-comment-empty">No comments yet. Be the first to share your thoughts.</div>`;
+
+            return;
+        }
+
+        list.innerHTML =
+            comments.map(comment => `
+
+                <article
+                    class="audio-novel-comment"
+                    data-comment-id="${Number(comment.id)}"
+                >
+                    <div class="audio-novel-comment-head">
+                        <strong>
+                            ${audioEscape(
+                                comment.name ||
+                                "MyLikith User"
+                            )}
+                        </strong>
+
+                        <time>
+                            ${audioEscape(
+                                audioFormatCommentDate(
+                                    comment.created_at
+                                )
+                            )}
+                        </time>
+                    </div>
+
+                    <p>
+                        ${audioEscape(
+                            comment.comment
+                        )}
+                    </p>
+
+                    <div class="audio-novel-comment-actions">
+
+                        ${
+                            audioToken()
+                                ? `
+                                    <button
+                                        type="button"
+                                        class="novel-comment-delete"
+                                        data-comment-id="${Number(comment.id)}"
+                                    >
+                                        Delete
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="novel-comment-report"
+                                        data-comment-id="${Number(comment.id)}"
+                                    >
+                                        Report
+                                    </button>
+                                `
+                                : ""
+                        }
+
+                    </div>
+                </article>
+
+            `).join("");
+
+    }catch(error){
+
+        console.error(
+            "Audio Novel comments load error:",
+            error
+        );
+
+        list.innerHTML =
+            `<div class="audio-comment-empty">Unable to load comments.</div>`;
+    }
+}
+
+
+function audioFormatCommentDate(value){
+
+    const date = new Date(value);
+
+    if(Number.isNaN(date.getTime())){
+        return "";
+    }
+
+    return date.toLocaleString(
+        undefined,
+        {
+            dateStyle: "medium",
+            timeStyle: "short"
+        }
+    );
+}
+
+
+async function submitNovelComment(event){
+
+    event.preventDefault();
+
+    if(!currentAudioNovelId){
+        return;
+    }
+
+    if(!audioToken()){
+        alert(
+            "Please login to comment on this Audio Novel."
+        );
+        return;
+    }
+
+    const input = audio$("novelCommentInput");
+    const button =
+        event.currentTarget.querySelector(
+            'button[type="submit"]'
+        );
+
+    const comment =
+        String(input?.value || "").trim();
+
+    if(!comment){
+        alert("Comment cannot be empty.");
+        return;
+    }
+
+    if(button) button.disabled = true;
+
+    try{
+
+        const response =
+            await fetch(
+                `${AUDIO_API_BASE}/${currentAudioNovelId}/comments`,
+                {
+                    method: "POST",
+                    headers: {
+                        ...audioHeaders(),
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ comment })
+                }
+            );
+
+        const data = await response.json();
+
+        if(!response.ok || !data.success){
+            throw new Error(
+                data.message ||
+                "Failed to add comment."
+            );
+        }
+
+        input.value = "";
+
+        await loadNovelComments(
+            currentAudioNovelId
+        );
+
+    }catch(error){
+
+        console.error(
+            "Audio Novel comment error:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Failed to add comment."
+        );
+
+    }finally{
+
+        if(button) button.disabled = false;
+    }
+}
+
+
+async function deleteNovelComment(commentId){
+
+    if(!audioToken()){
+        return;
+    }
+
+    if(!confirm("Delete this comment?")){
+        return;
+    }
+
+    try{
+
+        const response =
+            await fetch(
+                `${AUDIO_API_BASE}/${currentAudioNovelId}/comments/${commentId}`,
+                {
+                    method: "DELETE",
+                    headers: audioHeaders()
+                }
+            );
+
+        const data = await response.json();
+
+        if(!response.ok || !data.success){
+            throw new Error(
+                data.message ||
+                "Failed to delete comment."
+            );
+        }
+
+        await loadNovelComments(
+            currentAudioNovelId
+        );
+
+    }catch(error){
+
+        console.error(
+            "Audio Novel comment delete error:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Failed to delete comment."
+        );
+    }
+}
+
+
+async function reportNovelComment(commentId){
+
+    if(!audioToken()){
+        alert(
+            "Please login to report a comment."
+        );
+        return;
+    }
+
+    const reason =
+        prompt(
+            "Why are you reporting this comment?"
+        );
+
+    if(!reason || !reason.trim()){
+        return;
+    }
+
+    try{
+
+        const response =
+            await fetch(
+                `${AUDIO_API_BASE}/novel-comments/${commentId}/report`,
+                {
+                    method: "POST",
+                    headers: {
+                        ...audioHeaders(),
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        reason: reason.trim()
+                    })
+                }
+            );
+
+        const data = await response.json();
+
+        if(!response.ok || !data.success){
+            throw new Error(
+                data.message ||
+                "Failed to report comment."
+            );
+        }
+
+        alert(
+            "Comment reported successfully."
+        );
+
+    }catch(error){
+
+        console.error(
+            "Audio Novel comment report error:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Failed to report comment."
+        );
+    }
+}
+
+
+async function shareAudioNovel(){
+
+    if(!currentAudioNovelId){
+        return;
+    }
+
+    const title =
+        currentAudioNovel?.title ||
+        "MyLikith Audio Novel";
+
+    const url =
+        `${window.location.origin}${window.location.pathname}?id=${encodeURIComponent(currentAudioNovelId)}`;
+
+    try{
+
+        if(navigator.share){
+
+            await navigator.share({
+                title,
+                text:
+                    `Listen to ${title} on MyLikith Audio.`,
+                url
+            });
+
+        }else if(navigator.clipboard){
+
+            await navigator.clipboard.writeText(url);
+
+            alert(
+                "Audio Novel link copied."
+            );
+
+        }else{
+
+            window.prompt(
+                "Copy this Audio Novel link:",
+                url
+            );
+        }
+
+    }catch(error){
+
+        if(error?.name !== "AbortError"){
+
+            console.error(
+                "Audio Novel share error:",
+                error
+            );
+        }
+    }
+}
+
+
+function bindNovelEngagement(){
+
+    const likeButton =
+        audio$("novelLikeButton");
+
+    if(likeButton){
+        likeButton.addEventListener(
+            "click",
+            toggleNovelLike
+        );
+    }
+
+    document
+        .querySelectorAll(
+            "#novelRatingStars button"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => submitNovelRating(
+                    Number(
+                        button.dataset.rating
+                    )
+                )
+            );
+        });
+
+    const commentForm =
+        audio$("novelCommentForm");
+
+    if(commentForm){
+        commentForm.addEventListener(
+            "submit",
+            submitNovelComment
+        );
+    }
+
+    const shareButton =
+        audio$("novelShareButton");
+
+    if(shareButton){
+        shareButton.addEventListener(
+            "click",
+            shareAudioNovel
+        );
+    }
+
+    const commentsList =
+        audio$("novelCommentsList");
+
+    if(commentsList){
+
+        commentsList.addEventListener(
+            "click",
+            event => {
+
+                const deleteButton =
+                    event.target.closest(
+                        ".novel-comment-delete"
+                    );
+
+                if(deleteButton){
+
+                    deleteNovelComment(
+                        Number(
+                            deleteButton.dataset.commentId
+                        )
+                    );
+
+                    return;
+                }
+
+                const reportButton =
+                    event.target.closest(
+                        ".novel-comment-report"
+                    );
+
+                if(reportButton){
+
+                    reportNovelComment(
+                        Number(
+                            reportButton.dataset.commentId
+                        )
+                    );
+                }
+            }
+        );
+    }
+}
+
 function clearAudioFilters() {
     if (audio$("audioSearch")) {
         audio$("audioSearch").value = "";
@@ -743,3 +1500,18 @@ document.addEventListener(
     "DOMContentLoaded",
     initAudioPage
 );
+
+
+if(document.readyState === "loading"){
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        bindNovelEngagement,
+        { once: true }
+    );
+
+}else{
+
+    bindNovelEngagement();
+
+}

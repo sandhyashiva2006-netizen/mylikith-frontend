@@ -810,3 +810,208 @@
         grid-template-columns:1fr;
     }
 }
+
+
+/* =========================================================
+   AUDIO NOVEL ENGAGEMENT
+   ========================================================= */
+
+.audio-novel-engagement{
+    margin-top:24px;
+    padding-top:20px;
+    border-top:1px solid rgba(255,255,255,.10);
+}
+
+.audio-novel-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:18px;
+}
+
+.audio-engagement-btn{
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.05);
+    color:inherit;
+    border-radius:999px;
+    padding:10px 16px;
+    cursor:pointer;
+    font:inherit;
+    transition:.2s ease;
+}
+
+.audio-engagement-btn:hover,
+.audio-engagement-btn.is-active{
+    transform:translateY(-1px);
+    background:rgba(255,255,255,.10);
+}
+
+.audio-engagement-btn:disabled{
+    opacity:.6;
+    cursor:wait;
+}
+
+.audio-novel-rating{
+    display:flex;
+    align-items:center;
+    gap:22px;
+    flex-wrap:wrap;
+    margin-bottom:24px;
+}
+
+.audio-novel-rating-summary{
+    display:flex;
+    align-items:baseline;
+    gap:6px;
+}
+
+.audio-novel-rating-summary strong{
+    font-size:28px;
+}
+
+.audio-novel-rating-summary small{
+    margin-left:8px;
+    opacity:.7;
+}
+
+.audio-novel-rating-stars{
+    display:flex;
+    gap:2px;
+}
+
+.audio-novel-rating-stars button{
+    border:0;
+    background:transparent;
+    color:inherit;
+    font-size:28px;
+    line-height:1;
+    padding:2px;
+    cursor:pointer;
+}
+
+.audio-novel-rating-stars button:hover,
+.audio-novel-rating-stars button.is-active{
+    transform:scale(1.08);
+}
+
+.audio-novel-comments{
+    margin-top:12px;
+}
+
+.audio-novel-comments-heading{
+    display:flex;
+    align-items:end;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:14px;
+}
+
+.audio-novel-comments-heading h3{
+    margin:4px 0 0;
+}
+
+.audio-novel-comments-heading > span{
+    opacity:.7;
+    font-size:14px;
+}
+
+.audio-novel-comment-form{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:18px;
+}
+
+.audio-novel-comment-form textarea{
+    width:100%;
+    box-sizing:border-box;
+    resize:vertical;
+    min-height:90px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.04);
+    color:inherit;
+    border-radius:12px;
+    padding:12px;
+    font:inherit;
+}
+
+.audio-novel-comments-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.audio-novel-comment{
+    padding:14px;
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:14px;
+    background:rgba(255,255,255,.035);
+}
+
+.audio-novel-comment-head{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:7px;
+}
+
+.audio-novel-comment-head time{
+    opacity:.6;
+    font-size:12px;
+}
+
+.audio-novel-comment p{
+    margin:0;
+    line-height:1.55;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+}
+
+.audio-novel-comment-actions{
+    display:flex;
+    gap:14px;
+    margin-top:10px;
+}
+
+.audio-novel-comment-actions button{
+    border:0;
+    background:transparent;
+    color:inherit;
+    opacity:.65;
+    cursor:pointer;
+    padding:3px 0;
+    font-size:12px;
+}
+
+.audio-novel-comment-actions button:hover{
+    opacity:1;
+    text-decoration:underline;
+}
+
+.audio-comment-loading,
+.audio-comment-empty{
+    padding:18px;
+    text-align:center;
+    opacity:.7;
+}
+
+@media (max-width:600px){
+
+    .audio-novel-rating{
+        align-items:flex-start;
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .audio-novel-comments-heading{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .audio-novel-comment-head{
+        align-items:flex-start;
+        flex-direction:column;
+        gap:3px;
+    }
+
+}

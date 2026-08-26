@@ -143,6 +143,57 @@
 
                 <div id="novelDetailMeta" class="novel-detail-meta"></div>
 
+                <div
+                    id="novelEngagement"
+                    class="audio-novel-engagement"
+                    hidden
+                >
+                    <div class="audio-novel-actions">
+                        <button type="button" id="novelLikeButton" class="audio-engagement-btn">
+                            <span id="novelLikeIcon">♡</span>
+                            <span id="novelLikeLabel">Like</span>
+                            <span id="novelLikeCount">0</span>
+                        </button>
+
+                        <button type="button" id="novelShareButton" class="audio-engagement-btn">
+                            ↗ Share
+                        </button>
+                    </div>
+
+                    <div class="audio-novel-rating">
+                        <div class="audio-novel-rating-summary">
+                            <strong id="novelRatingAverage">0.0</strong>
+                            <span>/ 5</span>
+                            <small id="novelRatingCount">0 ratings</small>
+                        </div>
+
+                        <div id="novelRatingStars" class="audio-novel-rating-stars" aria-label="Rate this audio novel">
+                            <button type="button" data-rating="1" aria-label="1 star">☆</button>
+                            <button type="button" data-rating="2" aria-label="2 stars">☆</button>
+                            <button type="button" data-rating="3" aria-label="3 stars">☆</button>
+                            <button type="button" data-rating="4" aria-label="4 stars">☆</button>
+                            <button type="button" data-rating="5" aria-label="5 stars">☆</button>
+                        </div>
+                    </div>
+
+                    <div class="audio-novel-comments">
+                        <div class="audio-novel-comments-heading">
+                            <div>
+                                <span class="audio-section-label">COMMUNITY</span>
+                                <h3>Comments</h3>
+                            </div>
+                            <span id="novelCommentCount">0 comments</span>
+                        </div>
+
+                        <form id="novelCommentForm" class="audio-novel-comment-form">
+                            <textarea id="novelCommentInput" rows="3" maxlength="2000" placeholder="Share your thoughts about this Audio Novel..."></textarea>
+                            <button type="submit" class="audio-primary-btn">Post Comment</button>
+                        </form>
+
+                        <div id="novelCommentsList" class="audio-novel-comments-list"></div>
+                    </div>
+                </div>
+
                 <a id="novelFirstChapterButton" class="audio-primary-btn" href="#" hidden>
                     ▶ Start Listening
                 </a>
