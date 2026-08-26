@@ -512,6 +512,9 @@ async function loadNovelDetails(novelId) {
         }
 
         await loadNovelEngagement(currentAudioNovelId);
+await recordAudioNovelView(
+    currentAudioNovelId
+);
 
         window.scrollTo({
             top: section.offsetTop - 90,
@@ -1577,6 +1580,3 @@ async function recordAudioNovelView(novelId){
 
 }
 
-await recordAudioNovelView(
-    currentAudioNovelId
-);
