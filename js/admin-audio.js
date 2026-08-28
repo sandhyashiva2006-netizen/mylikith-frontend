@@ -693,13 +693,40 @@ async function editAdminAudioNovel(
             .value =
                 novel.cover_url || "";
 
+        /*
+        -------------------------------------------------
+        EXISTING COVER INPUT / PREVIEW
+        These elements are local to the create-form binder,
+        so edit mode must resolve them again instead of
+        referencing an out-of-scope variable.
+        -------------------------------------------------
+        */
+
+        const coverFileInput =
+            document.getElementById(
+                "audioNovelCoverFile"
+            );
+
+        const coverPreviewWrap =
+            document.getElementById(
+                "audioNovelCoverPreviewWrap"
+            );
+
+        const coverPreview =
+            document.getElementById(
+                "audioNovelCoverPreview"
+            );
+
         if(coverFileInput){
             coverFileInput.value = "";
         }
 
         if(coverPreview && novel.cover_url){
             coverPreview.src = novel.cover_url;
-            coverPreviewWrap.hidden = false;
+
+            if(coverPreviewWrap){
+                coverPreviewWrap.hidden = false;
+            }
         }else if(coverPreviewWrap){
             coverPreviewWrap.hidden = true;
         }
