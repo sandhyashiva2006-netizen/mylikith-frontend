@@ -693,6 +693,17 @@ async function editAdminAudioNovel(
             .value =
                 novel.cover_url || "";
 
+        if(coverFileInput){
+            coverFileInput.value = "";
+        }
+
+        if(coverPreview && novel.cover_url){
+            coverPreview.src = novel.cover_url;
+            coverPreviewWrap.hidden = false;
+        }else if(coverPreviewWrap){
+            coverPreviewWrap.hidden = true;
+        }
+
 
         document
             .getElementById(
@@ -3273,6 +3284,124 @@ let editingAudioNovelId = null;
 
 
 /* =========================================================
+   AUDIO NOVEL COVER UPLOAD
+   ========================================================= */
+
+async function uploadAudioNovelCover(novelId, file){
+
+    if(!novelId || !(file instanceof File)){
+        return null;
+    }
+
+    const allowedTypes = new Set([
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+    ]);
+
+    if(!allowedTypes.has(file.type)){
+        throw new Error(
+            "Please select a JPG, PNG or WebP cover image."
+        );
+    }
+
+    if(file.size <= 0 || file.size > 5 * 1024 * 1024){
+        throw new Error(
+            "Cover image must be 5 MB or smaller."
+        );
+    }
+
+    const token =
+        localStorage.getItem("token");
+
+    const startResponse =
+        await fetch(
+            `${ADMIN_AUDIO_API}/novels/${novelId}/cover/start`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization:
+                        "Bearer " + token,
+                    "Content-Type":
+                        "application/json"
+                },
+                body: JSON.stringify({
+                    file_name: file.name,
+                    mime_type: file.type,
+                    file_size: file.size
+                })
+            }
+        );
+
+    const startData =
+        await startResponse.json();
+
+    if(
+        !startResponse.ok ||
+        !startData.success
+    ){
+        throw new Error(
+            startData.message ||
+            "Unable to prepare cover upload."
+        );
+    }
+
+    const uploadResponse =
+        await fetch(
+            startData.upload_url,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": file.type
+                },
+                body: file
+            }
+        );
+
+    if(!uploadResponse.ok){
+        throw new Error(
+            "Cover image upload failed."
+        );
+    }
+
+    const completeResponse =
+        await fetch(
+            `${ADMIN_AUDIO_API}/novels/${novelId}/cover/complete`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization:
+                        "Bearer " + token,
+                    "Content-Type":
+                        "application/json"
+                },
+                body: JSON.stringify({
+                    object_key:
+                        startData.object_key,
+                    public_url:
+                        startData.public_url
+                })
+            }
+        );
+
+    const completeData =
+        await completeResponse.json();
+
+    if(
+        !completeResponse.ok ||
+        !completeData.success
+    ){
+        throw new Error(
+            completeData.message ||
+            "Unable to save uploaded cover."
+        );
+    }
+
+    return completeData.cover_url;
+}
+
+
+/* =========================================================
    AUDIO NOVEL CREATE FORM
    ========================================================= */
 
@@ -3301,6 +3430,21 @@ function bindAudioNovelCreateForm(){
     const panel =
         document.getElementById(
             "audioNovelCreateForm"
+        );
+
+    const coverFileInput =
+        document.getElementById(
+            "audioNovelCoverFile"
+        );
+
+    const coverPreviewWrap =
+        document.getElementById(
+            "audioNovelCoverPreviewWrap"
+        );
+
+    const coverPreview =
+        document.getElementById(
+            "audioNovelCoverPreview"
         );
 
 
@@ -3336,6 +3480,14 @@ function closeForm(){
     panel.hidden = true;
 
     form.reset();
+
+    if(coverPreviewWrap){
+        coverPreviewWrap.hidden = true;
+    }
+
+    if(coverPreview){
+        coverPreview.removeAttribute("src");
+    }
 
     document
         .getElementById(
@@ -3441,6 +3593,61 @@ function closeForm(){
     );
 
 
+    if(coverFileInput){
+
+        coverFileInput.addEventListener(
+            "change",
+            () => {
+
+                const file =
+                    coverFileInput.files[0];
+
+                if(!file){
+                    if(coverPreviewWrap){
+                        coverPreviewWrap.hidden = true;
+                    }
+                    return;
+                }
+
+                const allowedTypes = new Set([
+                    "image/jpeg",
+                    "image/png",
+                    "image/webp"
+                ]);
+
+                if(!allowedTypes.has(file.type)){
+                    alert(
+                        "Please select a JPG, PNG or WebP image."
+                    );
+                    coverFileInput.value = "";
+                    return;
+                }
+
+                if(file.size > 5 * 1024 * 1024){
+                    alert(
+                        "Cover image must be 5 MB or smaller."
+                    );
+                    coverFileInput.value = "";
+                    return;
+                }
+
+                const objectUrl =
+                    URL.createObjectURL(file);
+
+                if(coverPreview){
+                    coverPreview.src = objectUrl;
+                }
+
+                if(coverPreviewWrap){
+                    coverPreviewWrap.hidden = false;
+                }
+
+            }
+        );
+
+    }
+
+
     form.addEventListener(
         "submit",
         async event => {
@@ -3495,6 +3702,17 @@ function closeForm(){
                         "audioNovelReleaseDate"
                     )
                     .value;
+
+            const coverFile =
+                coverFileInput?.files?.[0] || null;
+
+            const coverUrlInput =
+                document
+                    .getElementById(
+                        "audioNovelCover"
+                    )
+                    .value
+                    .trim();
 
 
             const submitButton =
@@ -3553,12 +3771,7 @@ const response =
                                             .trim(),
 
                                     cover_url:
-                                        document
-                                            .getElementById(
-                                                "audioNovelCover"
-                                            )
-                                            .value
-                                            .trim(),
+                                        coverUrlInput,
 
                                     language:
                                         document
@@ -3641,6 +3854,35 @@ const response =
                     throw new Error(
                         data.message ||
                         "Failed to create Audio Novel."
+                    );
+
+                }
+
+
+                if(coverFile){
+
+                    submitButton.textContent =
+                        "Uploading Cover...";
+
+                    const savedNovel =
+                        data.audio ||
+                        data.novel ||
+                        data.audio_novel ||
+                        null;
+
+                    const novelId =
+                        savedNovel?.id ||
+                        editingAudioNovelId;
+
+                    if(!novelId){
+                        throw new Error(
+                            "Audio Novel was saved, but its ID was not returned for cover upload."
+                        );
+                    }
+
+                    await uploadAudioNovelCover(
+                        novelId,
+                        coverFile
                     );
 
                 }
