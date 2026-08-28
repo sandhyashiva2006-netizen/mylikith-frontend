@@ -75,6 +75,49 @@ function bindAudioAdminTabs(){
 
 }
 
+
+function adminAudioCoverUrl(url, novelId){
+
+    if(!url){
+        return "";
+    }
+
+    const value =
+        String(url);
+
+    /*
+    New covers already use the stable MyLikith
+    cover endpoint.
+    */
+    if(
+        value.includes(
+            "/api/audio/media/novels/"
+        )
+    ){
+        return value;
+    }
+
+    /*
+    Existing covers may still contain a private
+    direct B2 URL. Route those through the secure
+    cover proxy as well.
+    */
+    if(
+        value.includes(
+            "backblazeb2.com/"
+        )
+    ){
+        return (
+            "https://mylikith-backend.onrender.com" +
+            "/api/audio/media/novels/" +
+            encodeURIComponent(novelId) +
+            "/cover"
+        );
+    }
+
+    return value;
+}
+
 /* =========================================================
    LOAD AUDIO NOVELS
    ========================================================= */
@@ -214,7 +257,10 @@ function renderAdminAudioNovels(
             item => {
 
                 const cover =
-                    item.cover_url ||
+                    adminAudioCoverUrl(
+                        item.cover_url,
+                        item.id
+                    ) ||
                     "assets/images/default-cover.jpg";
 
 

@@ -59,7 +59,44 @@ function audioFormatTime(seconds) {
     return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
 }
 
-function audioCover(url, title) {
+
+function audioNovelCoverUrl(url, novelId){
+
+    if(!url){
+        return "";
+    }
+
+    const value =
+        String(url);
+
+    if(
+        value.includes(
+            "/api/audio/media/novels/"
+        )
+    ){
+        return value;
+    }
+
+    if(
+        value.includes(
+            "backblazeb2.com/"
+        )
+    ){
+        return (
+            AUDIO_API_BASE.replace(
+                "/api/audio",
+                ""
+            ) +
+            "/api/audio/media/novels/" +
+            encodeURIComponent(novelId) +
+            "/cover"
+        );
+    }
+
+    return value;
+}
+
+function audioCover(url, title, novelId) {
     if (!url) {
         return `<div class="audio-card-cover-fallback">🎧</div>`;
     }
@@ -67,7 +104,12 @@ function audioCover(url, title) {
     return `
         <img
             class="audio-card-cover"
-            src="${audioEscape(url)}"
+            src="${audioEscape(
+                audioNovelCoverUrl(
+                    url,
+                    novelId
+                )
+            )}"
             alt="${audioEscape(title)}"
             loading="lazy"
             onerror="this.style.display='none';this.nextElementSibling.hidden=false;"
@@ -105,7 +147,7 @@ function renderAudioCard(item) {
             href="audio.html?id=${encodeURIComponent(item.id)}"
         >
             <div class="audio-card-cover-wrap">
-                ${audioCover(item.cover_url, item.title)}
+                ${audioCover(item.cover_url, item.title, item.id)}
                 ${audioBadges(item)}
                 <span class="audio-card-play">▶</span>
             </div>
@@ -213,7 +255,7 @@ function renderContinueListening(items) {
                 href="audio-chapter.html?id=${encodeURIComponent(item.chapter_id)}"
             >
                 <div class="continue-cover-wrap">
-                    ${audioCover(item.cover_url, item.audio_novel_title)}
+                    ${audioCover(item.cover_url, item.audio_novel_title, item.audio_novel_id)}
                 </div>
 
                 <div class="continue-info">
@@ -512,9 +554,6 @@ async function loadNovelDetails(novelId) {
         }
 
         await loadNovelEngagement(currentAudioNovelId);
-await recordAudioNovelView(
-    currentAudioNovelId
-);
 
         window.scrollTo({
             top: section.offsetTop - 90,
@@ -543,7 +582,11 @@ function renderNovelDetails(novel) {
 
     if (cover && fallback) {
         if (novel.cover_url) {
-            cover.src = novel.cover_url;
+            cover.src =
+                audioNovelCoverUrl(
+                    novel.cover_url,
+                    currentAudioNovelId
+                );
             cover.alt = novel.title || "Audio novel cover";
             cover.hidden = false;
             fallback.hidden = true;
@@ -1580,3 +1623,6 @@ async function recordAudioNovelView(novelId){
 
 }
 
+await recordAudioNovelView(
+    currentAudioNovelId
+);
