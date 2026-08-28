@@ -1539,6 +1539,10 @@ async function initAudioPage() {
         novelId > 0
     ) {
         await loadNovelDetails(novelId);
+
+        await recordAudioNovelView(
+            novelId
+        );
     }
 }
 
@@ -1622,7 +1626,3 @@ async function recordAudioNovelView(novelId){
     }
 
 }
-
-await recordAudioNovelView(
-    currentAudioNovelId
-);
