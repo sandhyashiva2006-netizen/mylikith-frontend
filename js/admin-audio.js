@@ -277,14 +277,14 @@ function renderAdminAudioNovels(
                         >
 
                             <img
-                                src="assets/images/default-cover.jpg"
-                                data-audio-novel-cover-id="${Number(
-                                    item.id
+                                src="${escapeAdminAudioHtml(
+                                    cover
                                 )}"
                                 alt="${escapeAdminAudioHtml(
                                     item.title
                                 )}"
                                 loading="lazy"
+                                onerror="this.onerror=null;this.src='assets/images/default-cover.jpg';"
                             >
 
                         </div>
