@@ -460,37 +460,8 @@
 
         <div class="audio-create-field audio-create-wide">
 
-            <label for="audioNovelCoverFile">
-                Cover Image
-            </label>
-
-            <input
-                type="file"
-                id="audioNovelCoverFile"
-                accept="image/jpeg,image/png,image/webp"
-            >
-
-            <small>
-                JPG, PNG or WebP • Maximum 5 MB.
-            </small>
-
-            <div
-                id="audioNovelCoverPreviewWrap"
-                style="margin-top:12px;"
-                hidden
-            >
-                <img
-                    id="audioNovelCoverPreview"
-                    alt="Audio Novel cover preview"
-                    style="display:block;width:140px;height:190px;object-fit:cover;border-radius:10px;border:1px solid rgba(127,127,127,.35);"
-                >
-            </div>
-
-            <label
-                for="audioNovelCover"
-                style="display:block;margin-top:14px;"
-            >
-                Or use Cover Image URL
+            <label for="audioNovelCover">
+                Cover Image URL
             </label>
 
             <input
@@ -500,7 +471,7 @@
             >
 
             <small>
-                If a cover file is selected, it takes priority over this URL.
+                Use the image URL for the Audio Novel cover.
             </small>
 
         </div>
@@ -1295,8 +1266,8 @@
 
 
 <script src="js/admin-auth.js"></script>
-<script src="js/admin-nav.js"></script>
-<script src="js/admin-audio.js?v=20260823-2"></script>
+
+<script src="js/admin-audio.js?v=20260828-coverfix2"></script>
 
 
 </body>

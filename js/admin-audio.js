@@ -82,11 +82,6 @@ function bindAudioAdminTabs(){
 const ADMIN_AUDIO_API =
     "https://mylikith-backend.onrender.com/api/admin/audio";
 
-const MYLIKITH_API =
-    ADMIN_AUDIO_API.replace(
-        /\/api\/admin\/audio$/,
-        ""
-    );
 
 async function loadAdminAudioNovels(){
 
@@ -727,30 +722,14 @@ async function editAdminAudioNovel(
             coverFileInput.value = "";
         }
 
-        if(
-            coverPreview &&
-            novel.cover_url
-        ){
-
-            coverPreview.src =
-                "assets/images/default-cover.jpg";
+        if(coverPreview && novel.cover_url){
+            coverPreview.src = novel.cover_url;
 
             if(coverPreviewWrap){
-                coverPreviewWrap.hidden =
-                    false;
+                coverPreviewWrap.hidden = false;
             }
-
-            /* The cover URL is public, so the browser can load it directly. */
-            coverPreview.src =
-                novel.cover_url +
-                (novel.cover_url.includes("?") ? "&" : "?") +
-                "t=" + Date.now();
-
         }else if(coverPreviewWrap){
-
-            coverPreviewWrap.hidden =
-                true;
-
+            coverPreviewWrap.hidden = true;
         }
 
 
@@ -3360,200 +3339,93 @@ async function uploadAudioNovelCover(novelId, file){
         );
     }
 
-    /*
-     * Use the same proven cover-upload flow as MyLikith Originals.
-     * The common /api/upload-cover endpoint returns a directly
-     * usable public image URL. No B2 cover start/complete flow,
-     * signed URL or Authorization header is used for the image.
-     */
-    const formData =
-        new FormData();
+    const token =
+        localStorage.getItem("token");
 
-    formData.append(
-        "cover",
-        file
-    );
-
-    const uploadResponse =
+    const startResponse =
         await fetch(
-            `${MYLIKITH_API}/api/upload-cover`,
+            `${ADMIN_AUDIO_API}/novels/${novelId}/cover/start`,
             {
                 method: "POST",
-                body: formData
-            }
-        );
-
-    const uploadData =
-        await uploadResponse.json();
-
-    if(
-        !uploadResponse.ok ||
-        !uploadData.success
-    ){
-        throw new Error(
-            uploadData.message ||
-            "Cover image upload failed."
-        );
-    }
-
-    if(!uploadData.url){
-        throw new Error(
-            "Cover upload succeeded but no image URL was returned."
-        );
-    }
-
-    const coverUrl =
-        uploadData.url;
-
-    /*
-     * Save the returned public URL in audio_novels.cover_url
-     * through the existing Admin Audio Novel update endpoint.
-     * The endpoint requires the complete novel payload, so when
-     * possible use the current form values and preserve all fields.
-     */
-    const form =
-        document.getElementById(
-            "audioNovelForm"
-        );
-
-    const title =
-        document
-            .getElementById(
-                "audioNovelTitle"
-            )
-            ?.value
-            ?.trim();
-
-    const categoriesText =
-        document
-            .getElementById(
-                "audioNovelCategories"
-            )
-            ?.value
-            ?.trim() || "";
-
-    const categories =
-        categoriesText
-            ? categoriesText
-                .split(",")
-                .map(item => item.trim())
-                .filter(Boolean)
-            : [];
-
-    const releaseDate =
-        document
-            .getElementById(
-                "audioNovelReleaseDate"
-            )
-            ?.value || "";
-
-    const updateResponse =
-        await fetch(
-            `${ADMIN_AUDIO_API}/novels/${encodeURIComponent(novelId)}`,
-            {
-                method: "PUT",
                 headers: {
                     Authorization:
-                        "Bearer " +
-                        localStorage.getItem("token"),
+                        "Bearer " + token,
                     "Content-Type":
                         "application/json"
                 },
                 body: JSON.stringify({
-                    title: title || "Audio Novel",
-                    description:
-                        document
-                            .getElementById(
-                                "audioNovelDescription"
-                            )
-                            ?.value
-                            ?.trim() || "",
-                    cover_url: coverUrl,
-                    language:
-                        document
-                            .getElementById(
-                                "audioNovelLanguage"
-                            )
-                            ?.value || "",
-                    category:
-                        document
-                            .getElementById(
-                                "audioNovelCategory"
-                            )
-                            ?.value
-                            ?.trim() || "",
-                    categories,
-                    content_type:
-                        document
-                            .getElementById(
-                                "audioNovelContentType"
-                            )
-                            ?.value || "story",
-                    status:
-                        document
-                            .getElementById(
-                                "audioNovelStatus"
-                            )
-                            ?.value || "ongoing",
-                    publish_status:
-                        document
-                            .getElementById(
-                                "audioNovelPublishStatus"
-                            )
-                            ?.value || "draft",
-                    visibility:
-                        document
-                            .getElementById(
-                                "audioNovelVisibility"
-                            )
-                            ?.value || "private",
-                    premium_only:
-                        Boolean(
-                            document
-                                .getElementById(
-                                    "audioNovelPremium"
-                                )
-                                ?.checked
-                        ),
-                    featured:
-                        Boolean(
-                            document
-                                .getElementById(
-                                    "audioNovelFeatured"
-                                )
-                                ?.checked
-                        ),
-                    release_date:
-                        releaseDate || null
+                    file_name: file.name,
+                    mime_type: file.type,
+                    file_size: file.size
                 })
             }
         );
 
-    const updateData =
-        await updateResponse.json();
+    const startData =
+        await startResponse.json();
 
     if(
-        !updateResponse.ok ||
-        !updateData.success
+        !startResponse.ok ||
+        !startData.success
     ){
         throw new Error(
-            updateData.message ||
-            "Cover uploaded, but unable to save the cover URL."
+            startData.message ||
+            "Unable to prepare cover upload."
         );
     }
 
-    /* Keep the form URL field synchronized with the saved cover. */
-    const coverUrlInput =
-        document.getElementById(
-            "audioNovelCover"
+    const uploadResponse =
+        await fetch(
+            startData.upload_url,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": file.type
+                },
+                body: file
+            }
         );
 
-    if(coverUrlInput){
-        coverUrlInput.value =
-            coverUrl;
+    if(!uploadResponse.ok){
+        throw new Error(
+            "Cover image upload failed."
+        );
     }
 
-    return coverUrl;
+    const completeResponse =
+        await fetch(
+            `${ADMIN_AUDIO_API}/novels/${novelId}/cover/complete`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization:
+                        "Bearer " + token,
+                    "Content-Type":
+                        "application/json"
+                },
+                body: JSON.stringify({
+                    object_key:
+                        startData.object_key,
+                    public_url:
+                        startData.public_url
+                })
+            }
+        );
+
+    const completeData =
+        await completeResponse.json();
+
+    if(
+        !completeResponse.ok ||
+        !completeData.success
+    ){
+        throw new Error(
+            completeData.message ||
+            "Unable to save uploaded cover."
+        );
+    }
+
+    return completeData.cover_url;
 }
 
 
