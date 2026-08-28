@@ -82,6 +82,122 @@ function bindAudioAdminTabs(){
 const ADMIN_AUDIO_API =
     "https://mylikith-backend.onrender.com/api/admin/audio";
 
+/* =========================================================
+   ADMIN AUDIO NOVEL COVER LOADER
+   Browser <img> cannot send the Admin Bearer token by itself,
+   so Admin covers are fetched with Authorization and converted
+   to a temporary blob URL.
+   ========================================================= */
+
+async function loadAdminAudioNovelCoverImage(
+    image,
+    novelId
+){
+
+    if(
+        !image ||
+        !novelId
+    ){
+        return;
+    }
+
+    try{
+
+        const response =
+            await fetch(
+                `${ADMIN_AUDIO_API}/novels/${encodeURIComponent(novelId)}/cover`,
+                {
+                    headers: {
+                        Authorization:
+                            "Bearer " +
+                            localStorage.getItem(
+                                "token"
+                            )
+                    }
+                }
+            );
+
+        if(
+            !response.ok
+        ){
+            throw new Error(
+                `Cover request failed (${response.status}).`
+            );
+        }
+
+        const blob =
+            await response.blob();
+
+        if(
+            !blob.type.startsWith(
+                "image/"
+            )
+        ){
+            throw new Error(
+                "Cover response is not an image."
+            );
+        }
+
+        const objectUrl =
+            URL.createObjectURL(
+                blob
+            );
+
+        const previousUrl =
+            image.dataset.coverObjectUrl;
+
+        if(previousUrl){
+            URL.revokeObjectURL(
+                previousUrl
+            );
+        }
+
+        image.dataset.coverObjectUrl =
+            objectUrl;
+
+        image.src =
+            objectUrl;
+
+    }catch(error){
+
+        console.error(
+            "Admin Audio Novel cover load error:",
+            novelId,
+            error
+        );
+
+        image.src =
+            "assets/images/default-cover.jpg";
+
+    }
+}
+
+
+async function loadAdminAudioNovelCovers(){
+
+    const images =
+        document.querySelectorAll(
+            "#audioNovelsList img[data-audio-novel-cover-id]"
+        );
+
+    await Promise.all(
+        Array.from(
+            images
+        ).map(
+            image =>
+                loadAdminAudioNovelCoverImage(
+                    image,
+                    Number(
+                        image.dataset
+                            .audioNovelCoverId
+                    )
+                )
+        )
+    );
+
+}
+
+
 
 async function loadAdminAudioNovels(){
 
@@ -214,10 +330,7 @@ function renderAdminAudioNovels(
             item => {
 
                 const cover =
-                    adminAudioCoverUrl(
-                        item.cover_url,
-                        item.id
-                    ) ||
+                    item.cover_url ||
                     "assets/images/default-cover.jpg";
 
 
@@ -275,8 +388,9 @@ function renderAdminAudioNovels(
                         >
 
                             <img
-                                src="${escapeAdminAudioHtml(
-                                    cover
+                                src="assets/images/default-cover.jpg"
+                                data-audio-novel-cover-id="${Number(
+                                    item.id
                                 )}"
                                 alt="${escapeAdminAudioHtml(
                                     item.title
@@ -724,18 +838,29 @@ async function editAdminAudioNovel(
             coverFileInput.value = "";
         }
 
-        if(coverPreview && novel.cover_url){
+        if(
+            coverPreview &&
+            novel.cover_url
+        ){
+
             coverPreview.src =
-                adminAudioCoverUrl(
-                    novel.cover_url,
-                    novel.id
-                );
+                "assets/images/default-cover.jpg";
 
             if(coverPreviewWrap){
-                coverPreviewWrap.hidden = false;
+                coverPreviewWrap.hidden =
+                    false;
             }
+
+            await loadAdminAudioNovelCoverImage(
+                coverPreview,
+                novel.id
+            );
+
         }else if(coverPreviewWrap){
-            coverPreviewWrap.hidden = true;
+
+            coverPreviewWrap.hidden =
+                true;
+
         }
 
 
@@ -3308,23 +3433,6 @@ async function updateAdminAudioReport(
 
     }
 
-}
-
-
-function adminAudioCoverUrl(url, novelId){
-
-    if(novelId){
-
-        return (
-            "https://mylikith-backend.onrender.com" +
-            "/api/admin/audio/novels/" +
-            encodeURIComponent(novelId) +
-            "/cover"
-        );
-
-    }
-
-    return String(url || "");
 }
 
 /* =========================================================
