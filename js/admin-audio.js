@@ -75,49 +75,6 @@ function bindAudioAdminTabs(){
 
 }
 
-
-function adminAudioCoverUrl(url, novelId){
-
-    if(!url){
-        return "";
-    }
-
-    const value =
-        String(url);
-
-    /*
-    New covers already use the stable MyLikith
-    cover endpoint.
-    */
-    if(
-        value.includes(
-            "/api/audio/media/novels/"
-        )
-    ){
-        return value;
-    }
-
-    /*
-    Existing covers may still contain a private
-    direct B2 URL. Route those through the secure
-    cover proxy as well.
-    */
-    if(
-        value.includes(
-            "backblazeb2.com/"
-        )
-    ){
-        return (
-            "https://mylikith-backend.onrender.com" +
-            "/api/audio/media/novels/" +
-            encodeURIComponent(novelId) +
-            "/cover"
-        );
-    }
-
-    return value;
-}
-
 /* =========================================================
    LOAD AUDIO NOVELS
    ========================================================= */
@@ -768,7 +725,11 @@ async function editAdminAudioNovel(
         }
 
         if(coverPreview && novel.cover_url){
-            coverPreview.src = novel.cover_url;
+            coverPreview.src =
+                adminAudioCoverUrl(
+                    novel.cover_url,
+                    novel.id
+                );
 
             if(coverPreviewWrap){
                 coverPreviewWrap.hidden = false;
@@ -3347,6 +3308,23 @@ async function updateAdminAudioReport(
 
     }
 
+}
+
+
+function adminAudioCoverUrl(url, novelId){
+
+    if(novelId){
+
+        return (
+            "https://mylikith-backend.onrender.com" +
+            "/api/admin/audio/novels/" +
+            encodeURIComponent(novelId) +
+            "/cover"
+        );
+
+    }
+
+    return String(url || "");
 }
 
 /* =========================================================
