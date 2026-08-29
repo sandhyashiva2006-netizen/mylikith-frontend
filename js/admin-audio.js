@@ -84,9 +84,8 @@ const ADMIN_AUDIO_API =
 
 /* =========================================================
    ADMIN AUDIO NOVEL COVER LOADER
-   Covers are stored in private Backblaze B2.
-   Browser <img> cannot authenticate directly, so request the
-   admin media endpoint with the Bearer token and use a blob URL.
+   Private Backblaze B2 covers are loaded through the authenticated
+   backend proxy, then converted to a browser blob URL.
    ========================================================= */
 
 async function loadAdminAudioNovelCoverImage(
@@ -94,26 +93,22 @@ async function loadAdminAudioNovelCoverImage(
     novelId
 ){
 
-    if(
-        !image ||
-        !novelId
-    ){
+    if(!image || !novelId){
         return;
     }
 
     try{
 
-        const response =
-            await fetch(
-                `https://mylikith-backend.onrender.com/api/audio/media/novels/${encodeURIComponent(novelId)}/cover`,
-                {
-                    headers: {
-                        Authorization:
-                            "Bearer " +
-                            localStorage.getItem("token")
-                    }
+        const response = await fetch(
+            `https://mylikith-backend.onrender.com/api/audio/media/novels/${encodeURIComponent(novelId)}/cover`,
+            {
+                headers: {
+                    Authorization:
+                        "Bearer " +
+                        localStorage.getItem("token")
                 }
-            );
+            }
+        );
 
         if(!response.ok){
             throw new Error(
@@ -121,12 +116,11 @@ async function loadAdminAudioNovelCoverImage(
             );
         }
 
-        const blob =
-            await response.blob();
+        const blob = await response.blob();
 
         if(
             !blob.type ||
-            !blob.type.startsWith("image/")
+            !blob.type.toLowerCase().startsWith("image/")
         ){
             throw new Error(
                 "Cover response is not an image."
@@ -136,18 +130,11 @@ async function loadAdminAudioNovelCoverImage(
         const objectUrl =
             URL.createObjectURL(blob);
 
-        const previousUrl =
-            image.dataset.coverObjectUrl;
+        image.src = objectUrl;
 
-        if(previousUrl){
-            URL.revokeObjectURL(previousUrl);
-        }
-
-        image.dataset.coverObjectUrl =
-            objectUrl;
-
-        image.src =
-            objectUrl;
+        image.onload = () => {
+            URL.revokeObjectURL(objectUrl);
+        };
 
     }catch(error){
 
@@ -160,27 +147,6 @@ async function loadAdminAudioNovelCoverImage(
         image.src =
             "assets/images/default-cover.jpg";
     }
-}
-
-
-async function loadAdminAudioNovelCovers(){
-
-    const images =
-        document.querySelectorAll(
-            "#audioNovelsList img[data-audio-novel-cover-id]"
-        );
-
-    await Promise.all(
-        Array.from(images).map(
-            image =>
-                loadAdminAudioNovelCoverImage(
-                    image,
-                    Number(
-                        image.dataset.audioNovelCoverId
-                    )
-                )
-        )
-    );
 }
 
 async function loadAdminAudioNovels(){
@@ -280,6 +246,28 @@ async function loadAdminAudioNovels(){
 }
 
 
+
+async function loadAdminAudioNovelCovers(){
+
+    const images =
+        document.querySelectorAll(
+            "#audioNovelsList img[data-audio-novel-cover-id]"
+        );
+
+    await Promise.all(
+        Array.from(images).map(
+            image =>
+                loadAdminAudioNovelCoverImage(
+                    image,
+                    Number(
+                        image.dataset.audioNovelCoverId
+                    )
+                )
+        )
+    );
+}
+
+
 /* =========================================================
    RENDER AUDIO NOVELS
    ========================================================= */
@@ -375,12 +363,8 @@ function renderAdminAudioNovels(
 
                             <img
                                 src="assets/images/default-cover.jpg"
-                                data-audio-novel-cover-id="${Number(
-                                    item.id
-                                )}"
-                                alt="${escapeAdminAudioHtml(
-                                    item.title
-                                )}"
+                                data-audio-novel-cover-id="${Number(item.id)}"
+                                alt="${escapeAdminAudioHtml(item.title)}"
                                 loading="lazy"
                                 onerror="this.onerror=null;this.src='assets/images/default-cover.jpg';"
                             >
