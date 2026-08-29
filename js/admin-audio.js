@@ -82,45 +82,70 @@ function bindAudioAdminTabs(){
 const ADMIN_AUDIO_API =
     "https://mylikith-backend.onrender.com/api/admin/audio";
 
+const AUDIO_MEDIA_API =
+    "https://mylikith-backend.onrender.com/api/audio/media";
+
 /* =========================================================
    ADMIN AUDIO NOVEL COVER LOADER
-   Private Backblaze B2 covers are loaded through the authenticated
-   backend proxy, then converted to a browser blob URL.
+   Browser <img> cannot send the Admin Bearer token by itself,
+   so Admin covers are fetched with Authorization and converted
+   to a temporary blob URL.
    ========================================================= */
+
+function isAudioNovelCoverProxyUrl(value){
+
+    const text =
+        String(value || "").trim();
+
+    return /\/api\/(?:audio\/media|admin\/audio)\/novels\/\\d+\/cover(?:[/?#]|$)/i.test(
+        text
+    );
+}
+
 
 async function loadAdminAudioNovelCoverImage(
     image,
     novelId
 ){
 
-    if(!image || !novelId){
+    if(
+        !image ||
+        !novelId
+    ){
         return;
     }
 
     try{
 
-        const response = await fetch(
-            `https://mylikith-backend.onrender.com/api/audio/media/novels/${encodeURIComponent(novelId)}/cover`,
-            {
-                headers: {
-                    Authorization:
-                        "Bearer " +
-                        localStorage.getItem("token")
+        const response =
+            await fetch(
+                `${AUDIO_MEDIA_API}/novels/${encodeURIComponent(novelId)}/cover`,
+                {
+                    headers: {
+                        Authorization:
+                            "Bearer " +
+                            localStorage.getItem(
+                                "token"
+                            )
+                    }
                 }
-            }
-        );
+            );
 
-        if(!response.ok){
+        if(
+            !response.ok
+        ){
             throw new Error(
                 `Cover request failed (${response.status}).`
             );
         }
 
-        const blob = await response.blob();
+        const blob =
+            await response.blob();
 
         if(
-            !blob.type ||
-            !blob.type.toLowerCase().startsWith("image/")
+            !blob.type.startsWith(
+                "image/"
+            )
         ){
             throw new Error(
                 "Cover response is not an image."
@@ -128,13 +153,24 @@ async function loadAdminAudioNovelCoverImage(
         }
 
         const objectUrl =
-            URL.createObjectURL(blob);
+            URL.createObjectURL(
+                blob
+            );
 
-        image.src = objectUrl;
+        const previousUrl =
+            image.dataset.coverObjectUrl;
 
-        image.onload = () => {
-            URL.revokeObjectURL(objectUrl);
-        };
+        if(previousUrl){
+            URL.revokeObjectURL(
+                previousUrl
+            );
+        }
+
+        image.dataset.coverObjectUrl =
+            objectUrl;
+
+        image.src =
+            objectUrl;
 
     }catch(error){
 
@@ -146,8 +182,36 @@ async function loadAdminAudioNovelCoverImage(
 
         image.src =
             "assets/images/default-cover.jpg";
+
     }
 }
+
+
+async function loadAdminAudioNovelCovers(){
+
+    const images =
+        document.querySelectorAll(
+            "#audioNovelsList img[data-audio-novel-cover-id]"
+        );
+
+    await Promise.all(
+        Array.from(
+            images
+        ).map(
+            image =>
+                loadAdminAudioNovelCoverImage(
+                    image,
+                    Number(
+                        image.dataset
+                            .audioNovelCoverId
+                    )
+                )
+        )
+    );
+
+}
+
+
 
 async function loadAdminAudioNovels(){
 
@@ -224,8 +288,6 @@ async function loadAdminAudioNovels(){
             audio
         );
 
-        await loadAdminAudioNovelCovers();
-
 
     }catch(error){
 
@@ -243,28 +305,6 @@ async function loadAdminAudioNovels(){
 
     }
 
-}
-
-
-
-async function loadAdminAudioNovelCovers(){
-
-    const images =
-        document.querySelectorAll(
-            "#audioNovelsList img[data-audio-novel-cover-id]"
-        );
-
-    await Promise.all(
-        Array.from(images).map(
-            image =>
-                loadAdminAudioNovelCoverImage(
-                    image,
-                    Number(
-                        image.dataset.audioNovelCoverId
-                    )
-                )
-        )
-    );
 }
 
 
@@ -363,10 +403,13 @@ function renderAdminAudioNovels(
 
                             <img
                                 src="assets/images/default-cover.jpg"
-                                data-audio-novel-cover-id="${Number(item.id)}"
-                                alt="${escapeAdminAudioHtml(item.title)}"
+                                data-audio-novel-cover-id="${Number(
+                                    item.id
+                                )}"
+                                alt="${escapeAdminAudioHtml(
+                                    item.title
+                                )}"
                                 loading="lazy"
-                                onerror="this.onerror=null;this.src='assets/images/default-cover.jpg';"
                             >
 
                         </div>
@@ -811,18 +854,24 @@ async function editAdminAudioNovel(
 
         if(
             coverPreview &&
-            novel.cover_url
+            novel.cover_url &&
+            !isAudioNovelCoverProxyUrl(
+                novel.cover_url
+            )
         ){
 
-            loadAdminAudioNovelCoverImage(
-                coverPreview,
-                novel.cover_url
-            );
+            coverPreview.src =
+                "assets/images/default-cover.jpg";
 
             if(coverPreviewWrap){
                 coverPreviewWrap.hidden =
                     false;
             }
+
+            await loadAdminAudioNovelCoverImage(
+                coverPreview,
+                novel.id
+            );
 
         }else if(coverPreviewWrap){
 
@@ -3443,7 +3492,7 @@ async function uploadAudioNovelCover(novelId, file){
 
     const startResponse =
         await fetch(
-            `${ADMIN_AUDIO_API}/novels/${novelId}/cover/start`,
+            `${AUDIO_MEDIA_API}/novels/${novelId}/cover/start`,
             {
                 method: "POST",
                 headers: {
@@ -3493,7 +3542,7 @@ async function uploadAudioNovelCover(novelId, file){
 
     const completeResponse =
         await fetch(
-            `${ADMIN_AUDIO_API}/novels/${novelId}/cover/complete`,
+            `${AUDIO_MEDIA_API}/novels/${novelId}/cover/complete`,
             {
                 method: "POST",
                 headers: {
@@ -3833,13 +3882,20 @@ function closeForm(){
             const coverFile =
                 coverFileInput?.files?.[0] || null;
 
-            const coverUrlInput =
+            const rawCoverUrlInput =
                 document
                     .getElementById(
                         "audioNovelCover"
                     )
                     .value
                     .trim();
+
+            const coverUrlInput =
+                isAudioNovelCoverProxyUrl(
+                    rawCoverUrlInput
+                )
+                    ? ""
+                    : rawCoverUrlInput;
 
 
             const submitButton =
@@ -3898,7 +3954,9 @@ const response =
                                             .trim(),
 
                                     cover_url:
-                                        coverUrlInput,
+                                        coverFile
+                                            ? ""
+                                            : coverUrlInput,
 
                                     language:
                                         document
