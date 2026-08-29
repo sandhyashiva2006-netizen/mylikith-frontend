@@ -75,35 +75,22 @@ function bindAudioAdminTabs(){
 
 }
 
+function loadAdminAudioNovelCoverImage(image, coverUrl){
+    if(!image){
+        return;
+    }
+
+    image.src =
+        String(coverUrl || "").trim() ||
+        "assets/images/default-cover.jpg";
+}
+
 /* =========================================================
    LOAD AUDIO NOVELS
    ========================================================= */
 
 const ADMIN_AUDIO_API =
     "https://mylikith-backend.onrender.com/api/admin/audio";
-
-/* =========================================================
-   ADMIN AUDIO NOVEL COVER LOADER
-   Use the public cover_url already returned by the API.
-   No separate /cover endpoint is required.
-   ========================================================= */
-
-function loadAdminAudioNovelCoverImage(
-    image,
-    coverUrl
-){
-
-    if(!image){
-        return;
-    }
-
-    image.src =
-        coverUrl ||
-        "assets/images/default-cover.jpg";
-
-}
-
-
 
 async function loadAdminAudioNovels(){
 
@@ -301,6 +288,7 @@ function renderAdminAudioNovels(
                                     item.title
                                 )}"
                                 loading="lazy"
+                                onerror="this.onerror=null;this.src='assets/images/default-cover.jpg';"
                             >
 
                         </div>
@@ -748,15 +736,18 @@ async function editAdminAudioNovel(
             novel.cover_url
         ){
 
-            loadAdminAudioNovelCoverImage(
-                coverPreview,
-                novel.cover_url
-            );
+            coverPreview.src =
+                "assets/images/default-cover.jpg";
 
             if(coverPreviewWrap){
                 coverPreviewWrap.hidden =
                     false;
             }
+
+            loadAdminAudioNovelCoverImage(
+                coverPreview,
+                novel.cover_url
+            );
 
         }else if(coverPreviewWrap){
 
