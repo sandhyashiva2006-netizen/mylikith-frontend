@@ -286,7 +286,12 @@ function renderAdminAudioNovels(
                         >
 
                             <img
-                                src="assets/images/default-cover.jpg"
+                                src="${
+                                    cover &&
+                                    !isLegacyAudioCoverProxyUrl(cover)
+                                        ? escapeAdminAudioHtml(cover)
+                                        : "assets/images/default-cover.jpg"
+                                }"
                                 data-audio-novel-cover-id="${Number(
                                     item.id
                                 )}"
@@ -294,6 +299,7 @@ function renderAdminAudioNovels(
                                     item.title
                                 )}"
                                 loading="lazy"
+                                onerror="this.onerror=null;this.src='assets/images/default-cover.jpg';"
                             >
 
                         </div>
