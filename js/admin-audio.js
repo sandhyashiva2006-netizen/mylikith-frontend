@@ -84,26 +84,25 @@ const ADMIN_AUDIO_API =
 
 /* =========================================================
    ADMIN AUDIO NOVEL COVER LOADER
-   Use the cover_url already returned by GET /novels.
-   There is NO /novels/:id/cover endpoint.
+   Use the public cover_url already returned by the API.
+   No separate /cover endpoint is required.
    ========================================================= */
+
 function loadAdminAudioNovelCoverImage(
     image,
     coverUrl
 ){
+
     if(!image){
         return;
     }
 
-    const url =
-        typeof coverUrl === "string"
-            ? coverUrl.trim()
-            : "";
-
     image.src =
-        url ||
+        coverUrl ||
         "assets/images/default-cover.jpg";
+
 }
+
 
 
 async function loadAdminAudioNovels(){
@@ -302,7 +301,6 @@ function renderAdminAudioNovels(
                                     item.title
                                 )}"
                                 loading="lazy"
-                                onerror="this.onerror=null;this.src='assets/images/default-cover.jpg';"
                             >
 
                         </div>
@@ -750,18 +748,15 @@ async function editAdminAudioNovel(
             novel.cover_url
         ){
 
-            coverPreview.src =
-                "assets/images/default-cover.jpg";
+            loadAdminAudioNovelCoverImage(
+                coverPreview,
+                novel.cover_url
+            );
 
             if(coverPreviewWrap){
                 coverPreviewWrap.hidden =
                     false;
             }
-
-            loadAdminAudioNovelCoverImage(
-                coverPreview,
-                novel.cover_url
-            );
 
         }else if(coverPreviewWrap){
 
