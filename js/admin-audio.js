@@ -75,22 +75,113 @@ function bindAudioAdminTabs(){
 
 }
 
-function loadAdminAudioNovelCoverImage(image, coverUrl){
-    if(!image){
-        return;
-    }
-
-    image.src =
-        String(coverUrl || "").trim() ||
-        "assets/images/default-cover.jpg";
-}
-
 /* =========================================================
    LOAD AUDIO NOVELS
    ========================================================= */
 
 const ADMIN_AUDIO_API =
     "https://mylikith-backend.onrender.com/api/admin/audio";
+
+/* =========================================================
+   ADMIN AUDIO NOVEL COVER LOADER
+   Covers are stored in private Backblaze B2.
+   Browser <img> cannot authenticate directly, so request the
+   admin media endpoint with the Bearer token and use a blob URL.
+   ========================================================= */
+
+async function loadAdminAudioNovelCoverImage(
+    image,
+    novelId
+){
+
+    if(
+        !image ||
+        !novelId
+    ){
+        return;
+    }
+
+    try{
+
+        const response =
+            await fetch(
+                `https://mylikith-backend.onrender.com/api/audio/media/novels/${encodeURIComponent(novelId)}/cover`,
+                {
+                    headers: {
+                        Authorization:
+                            "Bearer " +
+                            localStorage.getItem("token")
+                    }
+                }
+            );
+
+        if(!response.ok){
+            throw new Error(
+                `Cover request failed (${response.status}).`
+            );
+        }
+
+        const blob =
+            await response.blob();
+
+        if(
+            !blob.type ||
+            !blob.type.startsWith("image/")
+        ){
+            throw new Error(
+                "Cover response is not an image."
+            );
+        }
+
+        const objectUrl =
+            URL.createObjectURL(blob);
+
+        const previousUrl =
+            image.dataset.coverObjectUrl;
+
+        if(previousUrl){
+            URL.revokeObjectURL(previousUrl);
+        }
+
+        image.dataset.coverObjectUrl =
+            objectUrl;
+
+        image.src =
+            objectUrl;
+
+    }catch(error){
+
+        console.error(
+            "Admin Audio Novel cover load error:",
+            novelId,
+            error
+        );
+
+        image.src =
+            "assets/images/default-cover.jpg";
+    }
+}
+
+
+async function loadAdminAudioNovelCovers(){
+
+    const images =
+        document.querySelectorAll(
+            "#audioNovelsList img[data-audio-novel-cover-id]"
+        );
+
+    await Promise.all(
+        Array.from(images).map(
+            image =>
+                loadAdminAudioNovelCoverImage(
+                    image,
+                    Number(
+                        image.dataset.audioNovelCoverId
+                    )
+                )
+        )
+    );
+}
 
 async function loadAdminAudioNovels(){
 
@@ -166,6 +257,8 @@ async function loadAdminAudioNovels(){
         renderAdminAudioNovels(
             audio
         );
+
+        await loadAdminAudioNovelCovers();
 
 
     }catch(error){
@@ -281,8 +374,9 @@ function renderAdminAudioNovels(
                         >
 
                             <img
-                                src="${escapeAdminAudioHtml(
-                                    cover
+                                src="assets/images/default-cover.jpg"
+                                data-audio-novel-cover-id="${Number(
+                                    item.id
                                 )}"
                                 alt="${escapeAdminAudioHtml(
                                     item.title
@@ -736,18 +830,15 @@ async function editAdminAudioNovel(
             novel.cover_url
         ){
 
-            coverPreview.src =
-                "assets/images/default-cover.jpg";
+            loadAdminAudioNovelCoverImage(
+                coverPreview,
+                novel.cover_url
+            );
 
             if(coverPreviewWrap){
                 coverPreviewWrap.hidden =
                     false;
             }
-
-            loadAdminAudioNovelCoverImage(
-                coverPreview,
-                novel.cover_url
-            );
 
         }else if(coverPreviewWrap){
 
