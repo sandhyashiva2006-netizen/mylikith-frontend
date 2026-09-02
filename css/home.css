@@ -480,6 +480,45 @@ gap:28px;
 
 }
 
+/* ==========================================
+   Stats Section Mobile Polish (Fixing Screenshot Layout)
+========================================== */
+
+@media (max-width: 768px) {
+    .stats {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin: -30px auto 40px;
+        padding: 0 16px;
+    }
+
+    .stat {
+        padding: 24px 20px;
+        border-radius: 16px;
+    }
+
+    /* Keep the numbers prominent */
+    .stat h2 {
+        font-size: 32px !important;
+        line-height: 1.2;
+        margin-bottom: 6px;
+    }
+
+    /* Fix long text wrapping cleanly in text-heavy stat cards */
+    .stat:nth-child(1) h2,
+    .stat:nth-child(3) h2 {
+        font-size: 22px !important;
+        font-weight: 700;
+        line-height: 1.4;
+    }
+
+    .stat p {
+        font-size: 14px;
+        color: #cbd5e1;
+        margin: 0;
+    }
+}
+
 /* =========================
    Premium Novel Cards
 ========================= */
