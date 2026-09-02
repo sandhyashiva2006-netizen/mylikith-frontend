@@ -26,23 +26,23 @@ async function loadTrendingNovels() {
 
         container.innerHTML = "";
 
-if (novels.length === 0) {
-
-    container.innerHTML = `
-        <p style="text-align:center;color:#aaa;">
-            No trending novels available.
-        </p>
-    `;
-
-    return;
-}
-
         if (!Array.isArray(novels)) {
-    container.innerHTML = "<p>No novels found.</p>";
-    return;
-}
+            container.innerHTML = "<p>No novels found.</p>";
+            return;
+        }
 
-novels.slice(0,4).forEach(novel => {
+        if (novels.length === 0) {
+
+            container.innerHTML = `
+                <p style="text-align:center;color:#aaa;">
+                    No trending novels available.
+                </p>
+            `;
+
+            return;
+        }
+
+        novels.slice(0,4).forEach(novel => {
 
             container.innerHTML += `
 
@@ -60,9 +60,9 @@ onerror="this.src='assets/images/default-cover.jpg'">
 <p>${novel.category} • ${novel.language}</p>
 
 <div class="novel-meta">
-    <span>⭐ ${Number(novel.rating).toFixed(1)}</span>
-    <span>❤️ ${Number(novel.likes).toLocaleString()}</span>
-    <span>👁 ${Number(novel.views).toLocaleString()}</span>
+    <span>⭐ ${Number(novel.rating || 0).toFixed(1)}</span>
+    <span>❤️ ${Number(novel.likes || 0).toLocaleString()}</span>
+    <span>👁 ${Number(novel.views || 0).toLocaleString()}</span>
 </div>
 
 <div class="read-btn">
@@ -172,5 +172,3 @@ ${avatar}
     }
 
 }
-
-
