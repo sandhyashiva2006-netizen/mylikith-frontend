@@ -3367,4 +3367,218 @@ margin:0;
 
 }
 
-	
+/* =========================================================
+   READ IN YOUR LANGUAGE
+========================================================= */
+
+.language-section{
+    text-align:center;
+}
+
+.language-subtitle{
+    margin:-18px auto 32px;
+
+    color:#8F9BB5;
+
+    font-size:14px;
+
+    line-height:1.6;
+}
+
+.language-section .language-chips{
+    max-width:1050px;
+
+    margin:0 auto;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:12px;
+
+    flex-wrap:wrap;
+}
+
+.language-section .language-chips a{
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-width:125px;
+
+    min-height:48px;
+
+    padding:0 18px;
+
+    border-radius:999px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20,25,48,.95),
+            rgba(14,19,39,.95)
+        );
+
+    border:1px solid rgba(255,255,255,.08);
+
+    color:#F1F5F9;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    text-decoration:none;
+
+    white-space:nowrap;
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        background .25s ease,
+        box-shadow .25s ease;
+}
+
+.language-section .language-chips a:hover{
+    transform:translateY(-3px);
+
+    border-color:
+        rgba(124,58,237,.55);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(40,31,76,.95),
+            rgba(19,28,55,.95)
+        );
+
+    box-shadow:
+        0 8px 24px rgba(124,58,237,.16);
+}
+
+
+/* View all button */
+
+.language-more{
+    margin-top:30px;
+
+    display:flex;
+
+    justify-content:center;
+}
+
+.language-more-btn{
+    display:inline-flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:10px;
+
+    min-height:48px;
+
+    padding:0 22px;
+
+    border-radius:12px;
+
+    border:1px solid rgba(124,58,237,.30);
+
+    background:rgba(124,58,237,.08);
+
+    color:#C4B5FD;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    text-decoration:none;
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease;
+}
+
+.language-more-btn span{
+    font-size:18px;
+
+    transition:
+        transform .25s ease;
+}
+
+.language-more-btn:hover{
+    transform:translateY(-2px);
+
+    background:rgba(124,58,237,.16);
+
+    border-color:rgba(124,58,237,.55);
+}
+
+.language-more-btn:hover span{
+    transform:translateX(4px);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width:700px){
+
+    .language-subtitle{
+        margin:-12px auto 25px;
+
+        font-size:13px;
+    }
+
+    .language-section .language-chips{
+        gap:10px;
+
+        padding:0 4px;
+    }
+
+    .language-section .language-chips a{
+        min-width:calc(50% - 5px);
+
+        min-height:46px;
+
+        padding:0 10px;
+
+        font-size:13px;
+    }
+
+    .language-more{
+        margin-top:25px;
+    }
+
+    .language-more-btn{
+        width:100%;
+
+        max-width:280px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width:380px){
+
+    .language-section .language-chips{
+        gap:8px;
+    }
+
+    .language-section .language-chips a{
+        min-width:calc(50% - 4px);
+
+        font-size:12px;
+
+        padding:0 7px;
+    }
+
+}
+
