@@ -2752,7 +2752,7 @@ margin:0;
 
     width:min(1280px, calc(100% - 80px));
 
-    margin:0 auto 20px;
+    margin:0 auto 90px;
 
     padding:72px 70px 68px;
 
@@ -3240,7 +3240,7 @@ margin:0;
     .home-universe{
         width:calc(100% - 28px);
 
-        margin-bottom:10px;
+        margin-bottom:60px;
 
         padding:50px 18px 48px;
 
