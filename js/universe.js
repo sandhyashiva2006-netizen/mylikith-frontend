@@ -41,6 +41,7 @@ async function loadUniverseModules() {
         }
 
         renderUniverseModules(container, modules);
+        renderUniverseJourney(modules);
 
     } catch (error) {
 
@@ -163,6 +164,109 @@ function renderUniverseModules(container, modules) {
 
         container.appendChild(card);
     });
+}
+
+
+
+/* =========================================================
+   SYNC JOURNEY STATUS
+   The journey timeline is driven by the same Universe API
+   as the module cards above.
+   ========================================================= */
+
+function renderUniverseJourney(modules) {
+
+    const journeyItems = document.querySelectorAll("[data-journey-module]");
+
+    if (!journeyItems.length) {
+        return;
+    }
+
+    journeyItems.forEach(item => {
+
+        const key = item.dataset.journeyModule;
+        const module = findJourneyModule(modules, key);
+
+        if (!module) {
+            // If the API does not contain this module, keep the
+            // existing timeline label rather than inventing a status.
+            return;
+        }
+
+        const isAvailable =
+            module.enabled === true &&
+            module.coming_soon === false;
+
+        const status = item.querySelector(".journey-content span");
+        const dot = item.querySelector(".journey-dot");
+
+        item.classList.toggle("active", isAvailable);
+
+        if (dot) {
+            dot.textContent = isAvailable
+                ? "✓"
+                : getJourneyNumber(key);
+        }
+
+        if (status) {
+            status.textContent = isAvailable
+                ? "Available"
+                : "Coming Soon";
+        }
+    });
+}
+
+
+function findJourneyModule(modules, key) {
+
+    const aliases = {
+        novels: ["novels", "mylikith novels"],
+        classics: ["classics", "mylikith classics"],
+        translations: ["translations", "mylikith translations"],
+        audio: ["audio", "mylikith audio"],
+        podcasts: ["podcasts", "mylikith podcasts"],
+        kids: ["kids", "mylikith kids"],
+        originals: ["originals", "mylikith originals"]
+    };
+
+    const wanted = aliases[key] || [key];
+
+    return modules.find(module => {
+
+        const values = [
+            module.title,
+            module.name,
+            module.slug,
+            module.key,
+            module.module_key,
+            module.id
+        ]
+            .filter(value => value !== undefined && value !== null)
+            .map(value => String(value).trim().toLowerCase().replace(/[-_]+/g, " "));
+
+        return values.some(value =>
+            wanted.some(alias =>
+                value === alias ||
+                value.endsWith(" " + alias)
+            )
+        );
+    });
+}
+
+
+function getJourneyNumber(key) {
+
+    const numbers = {
+        novels: "1",
+        classics: "2",
+        translations: "3",
+        audio: "4",
+        podcasts: "5",
+        kids: "6",
+        originals: "7"
+    };
+
+    return numbers[key] || "";
 }
 
 
