@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loadFeaturedWriters();
 
+    loadHomeUniverse();
+
 });
 
 async function loadTrendingNovels() {
@@ -172,3 +174,157 @@ ${avatar}
     }
 
 }
+
+/* =========================================================
+   HOMEPAGE — MYLIKITH UNIVERSE
+========================================================= */
+
+async function loadHomeUniverse() {
+
+    const container =
+        document.getElementById("homeUniverseModules");
+
+    if (!container) return;
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE}/api/universe/modules`
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                "Unable to load Universe modules."
+            );
+        }
+
+        const modules =
+            await response.json();
+
+        if (
+            !Array.isArray(modules) ||
+            modules.length === 0
+        ) {
+
+            container.innerHTML = `
+                <div class="home-universe-loading">
+                    <span>
+                        The MyLikith Universe is growing...
+                    </span>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        container.innerHTML = "";
+
+
+        modules.forEach(module => {
+
+            const available =
+                Boolean(module.enabled) &&
+                !Boolean(module.coming_soon);
+
+            const card =
+                document.createElement(
+                    available ? "a" : "div"
+                );
+
+            card.className =
+                "home-universe-card";
+
+
+            if (available && module.route) {
+
+                card.href =
+                    module.route;
+
+            }
+
+
+            const status =
+                available
+                    ? "Explore"
+                    : "Coming Soon";
+
+
+            card.innerHTML = `
+
+                <div class="home-universe-icon">
+                    ${escapeHomeUniverseHTML(
+                        module.icon || "✦"
+                    )}
+                </div>
+
+                <div>
+
+                    <h3>
+                        ${escapeHomeUniverseHTML(
+                            module.title ||
+                            module.name ||
+                            "MyLikith"
+                        )}
+                    </h3>
+
+                    <p>
+                        ${escapeHomeUniverseHTML(
+                            module.description ||
+                            "Discover stories in this MyLikith experience."
+                        )}
+                    </p>
+
+                    <span
+                        class="home-universe-status
+                        ${available ? "" : "coming"}"
+                    >
+                        ${status}
+                    </span>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(card);
+
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "Homepage Universe error:",
+            error
+        );
+
+        container.innerHTML = `
+            <div class="home-universe-loading">
+                <span>
+                    Explore the MyLikith Universe
+                    to discover all our story experiences.
+                </span>
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function escapeHomeUniverseHTML(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
