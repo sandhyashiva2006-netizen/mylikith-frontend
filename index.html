@@ -48,7 +48,7 @@
 
 <meta name="twitter:title" content="MyLikith – Read & Publish Multilingual Novels">
 
-<meta name="twitter:description" content="Discover thousands of multilingual novels and publish your own stories on MyLikith.">
+<meta name="twitter:description" content="Discover amazing multilingual novels and publish your own stories on MyLikith.">
 
 <meta name="twitter:image" content="https://mylikith.in/assets/images/og-image.jpg">
 
@@ -101,6 +101,338 @@
 </script>
 
   
+
+<style>
+/* =========================================================
+   MyLikith Homepage Enhancements
+   Safe, additive styles for index.html
+========================================================= */
+
+.home-section-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:24px;
+    margin-bottom:28px;
+}
+
+.home-section-head .section-title{
+    margin-bottom:0;
+}
+
+.home-section-link{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    text-decoration:none;
+    font-weight:700;
+    white-space:nowrap;
+    transition:transform .2s ease, opacity .2s ease;
+}
+
+.home-section-link:hover{
+    transform:translateX(3px);
+    opacity:.88;
+}
+
+.home-section-note{
+    margin:-14px 0 28px;
+    opacity:.72;
+}
+
+.home-stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.home-stat-card{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    min-height:118px;
+    text-align:left;
+}
+
+.home-stat-card .stat-icon{
+    font-size:34px;
+    flex:0 0 auto;
+}
+
+.home-stat-card .stat-content h2{
+    margin:0;
+    line-height:1;
+}
+
+.home-stat-card .stat-content p{
+    margin:8px 0 0;
+}
+
+.home-reader-writer{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:24px;
+}
+
+.home-reader-writer-card{
+    position:relative;
+    overflow:hidden;
+    border-radius:22px;
+    padding:32px;
+    text-decoration:none;
+    min-height:210px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.home-reader-writer-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 16px 45px rgba(0,0,0,.18);
+}
+
+.home-reader-writer-icon{
+    font-size:38px;
+    margin-bottom:12px;
+}
+
+.home-reader-writer-card h3{
+    margin:0 0 8px;
+    font-size:26px;
+}
+
+.home-reader-writer-card p{
+    margin:0 0 18px;
+    line-height:1.65;
+    opacity:.82;
+}
+
+.home-reader-writer-action{
+    font-weight:800;
+}
+
+.home-discovery-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:22px;
+}
+
+.home-discovery-empty{
+    display:none;
+    text-align:center;
+    opacity:.72;
+    padding:20px;
+}
+
+.home-mini-card{
+    display:block;
+    text-decoration:none;
+    overflow:hidden;
+    border-radius:18px;
+    transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.home-mini-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 14px 38px rgba(0,0,0,.18);
+}
+
+.home-mini-cover{
+    width:100%;
+    aspect-ratio:2/3;
+    object-fit:cover;
+    display:block;
+}
+
+.home-mini-info{
+    padding:15px;
+}
+
+.home-mini-info h3{
+    margin:0 0 6px;
+    font-size:17px;
+    line-height:1.35;
+}
+
+.home-mini-info p{
+    margin:0;
+    opacity:.72;
+    font-size:13px;
+}
+
+.home-mini-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:10px;
+    font-size:12px;
+    opacity:.78;
+}
+
+.home-view-all{
+    display:flex;
+    justify-content:center;
+    margin-top:28px;
+}
+
+.home-view-all a{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    text-decoration:none;
+    font-weight:800;
+    padding:11px 18px;
+    border-radius:999px;
+    transition:transform .2s ease, opacity .2s ease;
+}
+
+.home-view-all a:hover{
+    transform:translateX(3px);
+    opacity:.88;
+}
+
+.home-continue-section{
+    display:none;
+}
+
+.home-continue-card{
+    display:flex;
+    align-items:center;
+    gap:22px;
+    padding:22px;
+    border-radius:22px;
+    text-decoration:none;
+    transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.home-continue-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 14px 40px rgba(0,0,0,.18);
+}
+
+.home-continue-cover{
+    width:92px;
+    height:130px;
+    object-fit:cover;
+    border-radius:12px;
+    flex:0 0 auto;
+}
+
+.home-continue-info{
+    flex:1;
+}
+
+.home-continue-info h3{
+    margin:0 0 7px;
+}
+
+.home-continue-info p{
+    margin:0 0 12px;
+    opacity:.76;
+}
+
+.home-progress{
+    height:7px;
+    border-radius:999px;
+    overflow:hidden;
+    background:rgba(128,128,128,.22);
+}
+
+.home-progress span{
+    display:block;
+    height:100%;
+    width:0;
+    border-radius:inherit;
+}
+
+.home-continue-arrow{
+    font-size:28px;
+    font-weight:800;
+}
+
+.home-language-wrap{
+    text-align:center;
+}
+
+.home-language-wrap .language-chips{
+    justify-content:center;
+}
+
+.home-review-card{
+    text-align:left;
+}
+
+.home-review-stars{
+    letter-spacing:2px;
+    margin-bottom:12px;
+}
+
+.home-cta-note{
+    max-width:760px;
+    margin:0 auto;
+}
+
+@media (max-width:1024px){
+    .home-discovery-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .home-stats{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media (max-width:768px){
+    .home-section-head{
+        align-items:flex-start;
+        flex-direction:column;
+        gap:12px;
+    }
+
+    .home-stats{
+        grid-template-columns:1fr;
+    }
+
+    .home-stat-card{
+        justify-content:flex-start;
+    }
+
+    .home-reader-writer{
+        grid-template-columns:1fr;
+    }
+
+    .home-discovery-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:15px;
+    }
+
+    .home-continue-card{
+        align-items:flex-start;
+    }
+}
+
+@media (max-width:480px){
+    .home-discovery-grid{
+        grid-template-columns:1fr;
+    }
+
+    .home-continue-cover{
+        width:76px;
+        height:108px;
+    }
+
+    .home-continue-arrow{
+        display:none;
+    }
+
+    .home-reader-writer-card{
+        padding:25px;
+    }
+}
+</style>
+
 </head>
 
 <body>
@@ -203,9 +535,9 @@ class="navbar">
 
 </section>
 
-<section class="stats">
+<section class="stats home-stats" aria-label="MyLikith platform statistics">
 
-  <div class="stat">
+  <div class="stat home-stat-card">
     <div class="stat-icon">📚</div>
     <div class="stat-content">
       <h2>25<span>+</span></h2>
@@ -213,8 +545,7 @@ class="navbar">
     </div>
   </div>
 
-
-  <div class="stat">
+  <div class="stat home-stat-card">
     <div class="stat-icon">🌍</div>
     <div class="stat-content">
       <h2>8<span>+</span></h2>
@@ -222,7 +553,7 @@ class="navbar">
     </div>
   </div>
 
-  <div class="stat">
+  <div class="stat home-stat-card">
     <div class="stat-icon">✍️</div>
     <div class="stat-content">
       <h2>8</h2>
@@ -232,19 +563,62 @@ class="navbar">
 
 </section>
 
+
+<section class="section home-continue-section" id="continueReadingSection">
+  <div class="home-section-head">
+    <h2 class="section-title">📖 Continue Reading</h2>
+  </div>
+
+  <div id="continueReadingContainer"></div>
+</section>
+
+
 <section class="section">
 
-<h2 class="section-title">
-🔥 Trending Novels
-</h2>
+  <div class="home-section-head">
+    <h2 class="section-title">🔥 Trending Novels</h2>
+    <a href="explore.html" class="home-section-link">Explore All Stories →</a>
+  </div>
 
-<div
-class="novels-grid"
-id="trendingNovels">
+  <div
+    class="novels-grid"
+    id="trendingNovels">
+  </div>
 
-</div>
+  <div class="home-view-all">
+    <a href="explore.html">View All Novels →</a>
+  </div>
 
 </section>
+
+<section class="section" id="newReleasesSection">
+  <div class="home-section-head">
+    <h2 class="section-title">✨ New Releases</h2>
+    <a href="explore.html" class="home-section-link">Discover More →</a>
+  </div>
+
+  <p class="home-section-note">Fresh stories and recently published novels to discover.</p>
+
+  <div class="home-discovery-grid" id="newReleasesGrid"></div>
+  <div class="home-discovery-empty" id="newReleasesEmpty">New releases will appear here as more stories are published.</div>
+
+  <div class="home-view-all">
+    <a href="explore.html">View All Stories →</a>
+  </div>
+</section>
+
+<section class="section" id="recentlyUpdatedSection">
+  <div class="home-section-head">
+    <h2 class="section-title">🆕 Recently Updated</h2>
+    <a href="explore.html" class="home-section-link">Browse Stories →</a>
+  </div>
+
+  <p class="home-section-note">Catch up with novels that have recently received updates.</p>
+
+  <div class="home-discovery-grid" id="recentlyUpdatedGrid"></div>
+  <div class="home-discovery-empty" id="recentlyUpdatedEmpty">Recently updated stories will appear here when update data is available.</div>
+</section>
+
 
 
 <section class="section">
@@ -339,7 +713,7 @@ id="trendingNovels">
 
 </section>
 
-<section class="section language-section">
+<section class="section language-section" aria-label="Read in your language">
 
     <h2 class="section-title">
         🌍 Read in Your Language
@@ -411,11 +785,39 @@ id="trendingNovels">
 
 </section>
 
+<section class="section">
+  <div class="home-section-head">
+    <h2 class="section-title">✨ Choose Your MyLikith Journey</h2>
+  </div>
+
+  <div class="home-reader-writer">
+
+    <a href="explore.html" class="home-reader-writer-card">
+      <div class="home-reader-writer-icon">📚</div>
+      <h3>For Readers</h3>
+      <p>Discover stories you'll love across genres and languages.</p>
+      <span class="home-reader-writer-action">Explore Stories →</span>
+    </a>
+
+    <a href="signup.html" class="home-reader-writer-card">
+      <div class="home-reader-writer-icon">✍️</div>
+      <h3>For Writers</h3>
+      <p>Publish your stories, build your readership and grow with MyLikith.</p>
+      <span class="home-reader-writer-action">Start Writing →</span>
+    </a>
+
+  </div>
+</section>
+
+
   <!-- WRITERS -->
 
   <section class="section">
 
-<h2>✍️ Featured Writers</h2>
+<div class="home-section-head">
+  <h2 class="section-title">✍️ Featured Writers</h2>
+  <a href="explore.html" class="home-section-link">Meet More Writers →</a>
+</div>
 
 <div
 class="card-grid"
@@ -425,41 +827,10 @@ id="featuredWriters">
 
 </section>
 
-<section class="section">
+  <div class="home-view-all">
+    <a href="explore.html">Explore All Stories →</a>
+  </div>
 
-<h2 class="section-title">
-⭐ Reader Reviews
-</h2>
-
-<div class="card-grid">
-
-<div class="writer-card">
-<p>
-I started reading during my commute and now I look forward to it every single day. The story pulled me in from chapter one and I can't stop thinking about what happens next.
-</p>
-<br>
-<strong>- Ravi K.</strong>
-</div>
-
-<div class="writer-card">
-<p>
-MyLikith introduced me to writers I never would have found otherwise. The variety keeps me coming back, there's always something new that fits my mood.
-</p>
-<br>
-<strong>- Priya S.</strong>
-</div>
-
-<div class="writer-card">
-<p>
-As someone who reads in multiple languages, finding a platform that actually caters to that felt like a small miracle. I've recommended it to three friends already.
-</p>
-<br>
-<strong>- John M.</strong>
-</div>
-
-</div>
-
-</section>
 
 <section class="section">
 
@@ -478,7 +849,7 @@ As someone who reads in multiple languages, finding a platform that actually cat
 <h3>Read Anywhere</h3>
 
 <p>
-Enjoy thousands of novels across multiple genres and languages from any device.
+Explore novels across multiple genres and languages from any device.
 </p>
 
 </div>
@@ -529,6 +900,44 @@ Read and publish stories in multiple Indian and international languages.
 
 </section>
 
+<section class="section">
+
+<h2 class="section-title">
+⭐ Reader Reviews
+</h2>
+
+<p class="home-section-note">Reader feedback and community reviews will grow as MyLikith grows.</p>
+
+<div class="card-grid">
+
+<div class="writer-card">
+<p>
+I started reading during my commute and now I look forward to it every single day. The story pulled me in from chapter one and I can't stop thinking about what happens next.
+</p>
+<br>
+<strong>- Ravi K.</strong>
+</div>
+
+<div class="writer-card">
+<p>
+MyLikith introduced me to writers I never would have found otherwise. The variety keeps me coming back, there's always something new that fits my mood.
+</p>
+<br>
+<strong>- Priya S.</strong>
+</div>
+
+<div class="writer-card">
+<p>
+As someone who reads in multiple languages, finding a platform that actually caters to that felt like a small miracle. I've recommended it to three friends already.
+</p>
+<br>
+<strong>- John M.</strong>
+</div>
+
+</div>
+
+</section>
+
   <!-- WRITER CTA -->
 
   <section class="writer-cta">
@@ -538,7 +947,7 @@ Turn Your Imagination Into Income
 </h2>
 
 <p>
-Publish novels, build a loyal audience, unlock premium readers and earn from every chapter you write.
+Publish novels, build a loyal audience, reach premium readers and explore opportunities to earn from your stories.
 </p>
 
     <a href="signup.html" class="signup-btn">
@@ -555,6 +964,273 @@ Publish novels, build a loyal audience, unlock premium readers and earn from eve
 <script src="js/session.js"></script>
 <script src="js/navbar.js"></script>
 <script src="js/footer.js"></script>
+
+
+<script>
+/* =========================================================
+   MyLikith Homepage Discovery Enhancements
+========================================================= */
+
+(function () {
+    const API_BASE = "https://mylikith-backend.onrender.com";
+
+    function safeNumber(value) {
+        const n = Number(value);
+        return Number.isFinite(n) ? n : 0;
+    }
+
+    function formatCount(value) {
+        const num = safeNumber(value);
+
+        if (num >= 1000000) {
+            return (num / 1000000).toFixed(1).replace(".0", "") + "M";
+        }
+
+        if (num >= 1000) {
+            return (num / 1000).toFixed(1).replace(".0", "") + "K";
+        }
+
+        return String(Math.round(num));
+    }
+
+    function getDateValue(novel, keys) {
+        for (const key of keys) {
+            if (novel && novel[key]) {
+                const time = Date.parse(novel[key]);
+                if (!Number.isNaN(time)) return time;
+            }
+        }
+        return 0;
+    }
+
+    function novelCard(novel) {
+        const cover = novel.cover_url || "assets/images/default-cover.jpg";
+        const title = novel.title || "Untitled Story";
+        const category = novel.category || "Novel";
+        const language = novel.language || "English";
+
+        return `
+            <a href="novel.html?id=${encodeURIComponent(novel.id)}" class="home-mini-card">
+                <img
+                    class="home-mini-cover"
+                    src="${cover}"
+                    alt="${title}"
+                    loading="lazy"
+                    onerror="this.src='assets/images/default-cover.jpg'">
+                <div class="home-mini-info">
+                    <h3>${title}</h3>
+                    <p>${category} • ${language}</p>
+                    <div class="home-mini-meta">
+                        <span>⭐ ${safeNumber(novel.rating).toFixed(1)}</span>
+                        <span>👁 ${formatCount(novel.views)}</span>
+                    </div>
+                </div>
+            </a>
+        `;
+    }
+
+    function renderDiscovery(gridId, emptyId, novels) {
+        const grid = document.getElementById(gridId);
+        const empty = document.getElementById(emptyId);
+
+        if (!grid || !empty) return;
+
+        if (!Array.isArray(novels) || novels.length === 0) {
+            grid.innerHTML = "";
+            empty.style.display = "block";
+            return;
+        }
+
+        empty.style.display = "none";
+        grid.innerHTML = novels.slice(0, 4).map(novelCard).join("");
+    }
+
+    async function loadHomepageDiscovery() {
+        try {
+            const response = await fetch(`${API_BASE}/api/novels`);
+
+            if (!response.ok) {
+                throw new Error("Unable to load novels.");
+            }
+
+            const novels = await response.json();
+
+            if (!Array.isArray(novels) || novels.length === 0) {
+                renderDiscovery("newReleasesGrid", "newReleasesEmpty", []);
+                renderDiscovery("recentlyUpdatedGrid", "recentlyUpdatedEmpty", []);
+                return;
+            }
+
+            const newest = [...novels]
+                .sort((a, b) => {
+                    const dateA = getDateValue(a, [
+                        "created_at",
+                        "createdAt",
+                        "published_at",
+                        "publishedAt",
+                        "created"
+                    ]);
+                    const dateB = getDateValue(b, [
+                        "created_at",
+                        "createdAt",
+                        "published_at",
+                        "publishedAt",
+                        "created"
+                    ]);
+
+                    return dateB - dateA;
+                })
+                .filter((novel, index, arr) => {
+                    if (getDateValue(novel, [
+                        "created_at",
+                        "createdAt",
+                        "published_at",
+                        "publishedAt",
+                        "created"
+                    ]) > 0) return true;
+
+                    return index < 4;
+                });
+
+            const updated = [...novels]
+                .sort((a, b) => {
+                    const dateA = getDateValue(a, [
+                        "updated_at",
+                        "updatedAt",
+                        "last_updated",
+                        "lastUpdated",
+                        "modified_at",
+                        "modifiedAt"
+                    ]);
+                    const dateB = getDateValue(b, [
+                        "updated_at",
+                        "updatedAt",
+                        "last_updated",
+                        "lastUpdated",
+                        "modified_at",
+                        "modifiedAt"
+                    ]);
+
+                    return dateB - dateA;
+                })
+                .filter((novel) => {
+                    return getDateValue(novel, [
+                        "updated_at",
+                        "updatedAt",
+                        "last_updated",
+                        "lastUpdated",
+                        "modified_at",
+                        "modifiedAt"
+                    ]) > 0;
+                });
+
+            renderDiscovery(
+                "newReleasesGrid",
+                "newReleasesEmpty",
+                newest.slice(0, 4)
+            );
+
+            renderDiscovery(
+                "recentlyUpdatedGrid",
+                "recentlyUpdatedEmpty",
+                updated.slice(0, 4)
+            );
+
+            /* Hide Recently Updated if the API does not provide update dates yet. */
+            const updatedSection = document.getElementById("recentlyUpdatedSection");
+            if (updatedSection && updated.length === 0) {
+                updatedSection.style.display = "none";
+            }
+
+        } catch (error) {
+            console.warn("Homepage discovery sections:", error);
+
+            const updatedSection = document.getElementById("recentlyUpdatedSection");
+            if (updatedSection) {
+                updatedSection.style.display = "none";
+            }
+
+            renderDiscovery("newReleasesGrid", "newReleasesEmpty", []);
+        }
+    }
+
+    function loadContinueReading() {
+        const section = document.getElementById("continueReadingSection");
+        const container = document.getElementById("continueReadingContainer");
+
+        if (!section || !container) return;
+
+        /*
+         * Safe compatibility layer:
+         * If the reading system already stores progress under one of these
+         * common keys, the homepage can surface it. If not, this section
+         * remains hidden and does not interfere with the existing reader.
+         */
+        const keys = [
+            "mylikithContinueReading",
+            "mylikith_continue_reading",
+            "continueReading",
+            "continue_reading"
+        ];
+
+        let saved = null;
+
+        for (const key of keys) {
+            try {
+                const raw = localStorage.getItem(key);
+                if (!raw) continue;
+
+                const parsed = JSON.parse(raw);
+                if (parsed) {
+                    saved = parsed;
+                    break;
+                }
+            } catch (error) {
+                /* Ignore incompatible localStorage values. */
+            }
+        }
+
+        if (!saved) return;
+
+        const item = Array.isArray(saved) ? saved[0] : saved;
+        if (!item || !item.id) return;
+
+        const title = item.title || "Continue Reading";
+        const cover = item.cover_url || item.cover || "assets/images/default-cover.jpg";
+        const chapter = item.chapter || item.chapter_number || item.chapterTitle || "";
+        const progress = Math.max(0, Math.min(100, safeNumber(item.progress || item.percent || 0)));
+
+        container.innerHTML = `
+            <a href="novel.html?id=${encodeURIComponent(item.id)}" class="home-continue-card">
+                <img
+                    src="${cover}"
+                    alt="${title}"
+                    class="home-continue-cover"
+                    loading="lazy"
+                    onerror="this.src='assets/images/default-cover.jpg'">
+
+                <div class="home-continue-info">
+                    <h3>${title}</h3>
+                    <p>${chapter ? "Chapter " + chapter : "Continue your story"}</p>
+                    <div class="home-progress" aria-label="${progress}% complete">
+                        <span style="width:${progress}%"></span>
+                    </div>
+                </div>
+
+                <div class="home-continue-arrow">→</div>
+            </a>
+        `;
+
+        section.style.display = "block";
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        loadHomepageDiscovery();
+        loadContinueReading();
+    });
+})();
+</script>
+
 
 </body>
 </html>
