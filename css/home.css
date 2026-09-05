@@ -560,15 +560,14 @@ box-shadow:0 20px 45px rgba(124,58,237,.25);
 }
 
 .novel-cover{
+    width:100%;
+    height:auto;
+    aspect-ratio:2 / 3;
 
-width:100%;
+    object-fit:contain;
+    display:block;
 
-height:360px;
-
-object-fit:cover;
-
-display:block;
-
+    background:#0b1024;
 }
 
 .novel-info{
@@ -662,15 +661,15 @@ box-shadow:0 10px 35px rgba(0,0,0,.35);
 }
 
 .novel-card img{
+    width:100%;
+    height:auto;
 
-width:100%;
+    aspect-ratio:2 / 3;
 
-height:300px;
+    object-fit:contain;
+    display:block;
 
-object-fit:cover;
-
-display:block;
-
+    background:#0b1024;
 }
 
 .novel-card-content{
@@ -715,6 +714,28 @@ color:#22D3EE;
 transform:translateY(-8px);
 
 border-color:#7C3AED;
+
+}
+
+@media (max-width:768px){
+
+    .novel-cover{
+        width:100%;
+        height:auto;
+
+        aspect-ratio:2 / 3;
+
+        object-fit:contain;
+    }
+
+    .novel-card img{
+        width:100%;
+        height:auto;
+
+        aspect-ratio:2 / 3;
+
+        object-fit:contain;
+    }
 
 }
 

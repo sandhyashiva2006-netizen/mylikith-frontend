@@ -756,4 +756,57 @@ padding-right:18px;
     }
 }
 
+/* =========================================================
+   MOBILE HERO CTA — KEEP BUTTON TEXT ON ONE LINE
+========================================================= */
+
+@media (max-width: 768px){
+
+    .hero-buttons{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:18px;
+        width:100%;
+    }
+
+    .hero-buttons .start-btn,
+    .hero-buttons .writer-btn{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+        width:100%;
+        max-width:330px;
+
+        min-height:58px;
+
+        padding:0 24px;
+
+        white-space:nowrap;
+        word-break:normal;
+        overflow-wrap:normal;
+
+        text-align:center;
+
+        line-height:1.2;
+    }
+
+}
+
+@media (max-width: 400px){
+
+    .hero-buttons .start-btn,
+    .hero-buttons .writer-btn{
+        max-width:300px;
+        padding-left:18px;
+        padding-right:18px;
+
+        font-size:16px;
+
+        white-space:nowrap;
+    }
+
+}
+
 
