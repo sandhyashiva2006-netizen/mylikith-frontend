@@ -7,9 +7,136 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loadFeaturedWriters();
 
-    loadHomeUniverse();
+    loadFeaturedOriginal();
 
 });
+
+
+async function loadFeaturedOriginal() {
+
+    const section =
+        document.getElementById("homeOriginalsPromo");
+
+    if (!section) return;
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE}/api/originals`
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !Array.isArray(data.originals)) {
+            throw new Error(
+                data.message ||
+                "Unable to load Originals."
+            );
+        }
+
+        const original = data.originals[0];
+
+        if (!original) {
+            section.hidden = true;
+            return;
+        }
+
+        const title =
+            document.getElementById("homeOriginalTitle");
+
+        const meta =
+            document.getElementById("homeOriginalMeta");
+
+        const watch =
+            document.getElementById("homeOriginalWatch");
+
+        const artLink =
+            document.getElementById("homeOriginalArtLink");
+
+        const cover =
+            document.getElementById("homeOriginalCover");
+
+        const placeholder =
+            document.getElementById("homeOriginalPlaceholder");
+
+        if (title) {
+            title.textContent =
+                original.title ||
+                "MyLikith Original";
+        }
+
+        if (meta) {
+            const details = [];
+
+            if (original.content_type) {
+                details.push(original.content_type);
+            }
+
+            if (original.language) {
+                details.push(original.language);
+            }
+
+            if (original.category) {
+                details.push(original.category);
+            }
+
+            meta.textContent =
+                details.length
+                    ? details.join(" • ")
+                    : "Original video series";
+        }
+
+        const originalUrl =
+            `original.html?id=${encodeURIComponent(original.id)}`;
+
+        if (watch) {
+            watch.href = originalUrl;
+        }
+
+        if (artLink) {
+            artLink.href = originalUrl;
+            artLink.setAttribute(
+                "aria-label",
+                `Watch ${original.title || "MyLikith Original"}`
+            );
+        }
+
+        if (cover && original.cover_url) {
+            cover.src = original.cover_url;
+            cover.alt = original.title || "MyLikith Original";
+            cover.hidden = false;
+
+            cover.addEventListener(
+                "error",
+                () => {
+                    cover.hidden = true;
+                    if (placeholder) {
+                        placeholder.hidden = false;
+                    }
+                },
+                { once: true }
+            );
+
+            if (placeholder) {
+                placeholder.hidden = true;
+            }
+        }
+
+        section.hidden = false;
+
+    } catch (error) {
+
+        console.error(
+            "Homepage Originals error:",
+            error
+        );
+
+        section.hidden = true;
+
+    }
+
+}
+
 
 async function loadTrendingNovels() {
 
@@ -28,23 +155,23 @@ async function loadTrendingNovels() {
 
         container.innerHTML = "";
 
+if (novels.length === 0) {
+
+    container.innerHTML = `
+        <p style="text-align:center;color:#aaa;">
+            No trending novels available.
+        </p>
+    `;
+
+    return;
+}
+
         if (!Array.isArray(novels)) {
-            container.innerHTML = "<p>No novels found.</p>";
-            return;
-        }
+    container.innerHTML = "<p>No novels found.</p>";
+    return;
+}
 
-        if (novels.length === 0) {
-
-            container.innerHTML = `
-                <p style="text-align:center;color:#aaa;">
-                    No trending novels available.
-                </p>
-            `;
-
-            return;
-        }
-
-        novels.slice(0,4).forEach(novel => {
+novels.slice(0,4).forEach(novel => {
 
             container.innerHTML += `
 
@@ -62,9 +189,9 @@ onerror="this.src='assets/images/default-cover.jpg'">
 <p>${novel.category} • ${novel.language}</p>
 
 <div class="novel-meta">
-    <span>⭐ ${Number(novel.rating || 0).toFixed(1)}</span>
-    <span>❤️ ${Number(novel.likes || 0).toLocaleString()}</span>
-    <span>👁 ${Number(novel.views || 0).toLocaleString()}</span>
+    <span>⭐ ${Number(novel.rating).toFixed(1)}</span>
+    <span>❤️ ${Number(novel.likes).toLocaleString()}</span>
+    <span>👁 ${Number(novel.views).toLocaleString()}</span>
 </div>
 
 <div class="read-btn">
@@ -175,156 +302,4 @@ ${avatar}
 
 }
 
-/* =========================================================
-   HOMEPAGE — MYLIKITH UNIVERSE
-========================================================= */
-
-async function loadHomeUniverse() {
-
-    const container =
-        document.getElementById("homeUniverseModules");
-
-    if (!container) return;
-
-    try {
-
-        const response = await fetch(
-            `${API_BASE}/api/universe/modules`
-        );
-
-        if (!response.ok) {
-            throw new Error(
-                "Unable to load Universe modules."
-            );
-        }
-
-        const modules =
-            await response.json();
-
-        if (
-            !Array.isArray(modules) ||
-            modules.length === 0
-        ) {
-
-            container.innerHTML = `
-                <div class="home-universe-loading">
-                    <span>
-                        The MyLikith Universe is growing...
-                    </span>
-                </div>
-            `;
-
-            return;
-        }
-
-
-        container.innerHTML = "";
-
-
-        modules.forEach(module => {
-
-            const available =
-                Boolean(module.enabled) &&
-                !Boolean(module.coming_soon);
-
-            const card =
-                document.createElement(
-                    available ? "a" : "div"
-                );
-
-            card.className =
-                "home-universe-card";
-
-
-            if (available && module.route) {
-
-                card.href =
-                    module.route;
-
-            }
-
-
-            const status =
-                available
-                    ? "Explore"
-                    : "Coming Soon";
-
-
-            card.innerHTML = `
-
-                <div class="home-universe-icon">
-                    ${escapeHomeUniverseHTML(
-                        module.icon || "✦"
-                    )}
-                </div>
-
-                <div>
-
-                    <h3>
-                        ${escapeHomeUniverseHTML(
-                            module.title ||
-                            module.name ||
-                            "MyLikith"
-                        )}
-                    </h3>
-
-                    <p>
-                        ${escapeHomeUniverseHTML(
-                            module.description ||
-                            "Discover stories in this MyLikith experience."
-                        )}
-                    </p>
-
-                    <span
-                        class="home-universe-status
-                        ${available ? "" : "coming"}"
-                    >
-                        ${status}
-                    </span>
-
-                </div>
-
-            `;
-
-
-            container.appendChild(card);
-
-        });
-
-
-    } catch (error) {
-
-        console.error(
-            "Homepage Universe error:",
-            error
-        );
-
-        container.innerHTML = `
-            <div class="home-universe-loading">
-                <span>
-                    Explore the MyLikith Universe
-                    to discover all our story experiences.
-                </span>
-            </div>
-        `;
-
-    }
-
-}
-
-
-/* =========================================================
-   HTML ESCAPE
-========================================================= */
-
-function escapeHomeUniverseHTML(value) {
-
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-}
 
