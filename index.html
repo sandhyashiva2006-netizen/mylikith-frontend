@@ -108,6 +108,140 @@
    Safe, additive styles for index.html
 ========================================================= */
 
+/* MyLikith Universe homepage preview */
+.home-universe-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:16px;
+    margin-top:28px;
+}
+
+.home-universe-card{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    min-height:190px;
+    padding:22px;
+    border:1px solid rgba(160,120,255,.18);
+    border-radius:20px;
+    background:rgba(255,255,255,.035);
+    color:inherit;
+    text-decoration:none;
+    box-sizing:border-box;
+    transition:transform .22s ease,border-color .22s ease,background .22s ease,box-shadow .22s ease;
+}
+
+.home-universe-card.available:hover{
+    transform:translateY(-4px);
+    border-color:rgba(160,120,255,.48);
+    background:rgba(255,255,255,.06);
+    box-shadow:0 14px 35px rgba(0,0,0,.2);
+}
+
+.home-universe-card.coming-soon{
+    opacity:.72;
+}
+
+.home-universe-card-icon{
+    width:46px;
+    height:46px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:14px;
+    border-radius:14px;
+    background:rgba(126,87,255,.13);
+    font-size:23px;
+}
+
+.home-universe-card-content{
+    flex:1;
+}
+
+.home-universe-card-content h3{
+    margin:0 0 7px;
+    font-size:18px;
+}
+
+.home-universe-card-content p{
+    margin:0;
+    line-height:1.55;
+    font-size:13px;
+    opacity:.72;
+}
+
+.home-universe-card-footer{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-top:18px;
+}
+
+.home-universe-status{
+    display:inline-flex;
+    align-items:center;
+    padding:5px 9px;
+    border-radius:999px;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.03em;
+    background:rgba(255,255,255,.07);
+}
+
+.home-universe-status.available{
+    color:#cdbbff;
+    background:rgba(126,87,255,.14);
+}
+
+.home-universe-card-arrow{
+    font-size:20px;
+    line-height:1;
+    opacity:.85;
+}
+
+.home-universe-loading,
+.home-universe-empty,
+.home-universe-error{
+    grid-column:1/-1;
+    min-height:120px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    text-align:center;
+    opacity:.75;
+}
+
+.home-universe-empty p,
+.home-universe-error p{
+    margin:0;
+}
+
+.home-universe-error{
+    flex-wrap:wrap;
+}
+
+.home-universe-error button{
+    border:0;
+    border-radius:999px;
+    padding:8px 14px;
+    cursor:pointer;
+}
+
+.home-universe-spinner{
+    width:22px;
+    height:22px;
+    border:3px solid rgba(255,255,255,.14);
+    border-top-color:currentColor;
+    border-radius:50%;
+    animation:homeUniverseSpin .8s linear infinite;
+}
+
+@keyframes homeUniverseSpin{
+    to{transform:rotate(360deg)}
+}
+
 .home-section-head{
     display:flex;
     align-items:flex-end;
@@ -385,6 +519,11 @@
 }
 
 @media (max-width:768px){
+    .home-universe-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+
     .home-section-head{
         align-items:flex-start;
         flex-direction:column;
@@ -414,6 +553,8 @@
 }
 
 @media (max-width:480px){
+    .home-universe-grid{grid-template-columns:1fr;}
+
     .home-discovery-grid{
         grid-template-columns:1fr;
     }
