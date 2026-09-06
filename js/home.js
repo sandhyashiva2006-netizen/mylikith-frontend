@@ -3,6 +3,8 @@ const API_BASE =
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    loadHomeUniverse();
+
     loadTrendingNovels();
 
     loadFeaturedWriters();
@@ -12,131 +14,110 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-async function loadFeaturedOriginal() {
+async function loadHomeUniverse() {
 
-    const section =
-        document.getElementById("homeOriginalsPromo");
+    const container = document.getElementById("homeUniverseModules");
 
-    if (!section) return;
+    if (!container) return;
 
     try {
 
         const response = await fetch(
-            `${API_BASE}/api/originals`
+            `${API_BASE}/api/universe/modules`
         );
 
-        const data = await response.json();
-
-        if (!response.ok || !Array.isArray(data.originals)) {
-            throw new Error(
-                data.message ||
-                "Unable to load Originals."
-            );
+        if (!response.ok) {
+            throw new Error(`Universe API returned ${response.status}`);
         }
 
-        const original = data.originals[0];
+        const modules = await response.json();
 
-        if (!original) {
-            section.hidden = true;
+        if (!Array.isArray(modules)) {
+            throw new Error("Invalid Universe API response.");
+        }
+
+        const available = modules.filter(module =>
+            module &&
+            module.enabled === true &&
+            module.coming_soon === false
+        );
+
+        const comingSoon = modules.filter(module =>
+            !available.includes(module)
+        );
+
+        const ordered = [...available, ...comingSoon].slice(0, 6);
+
+        if (ordered.length === 0) {
+            container.innerHTML = `
+                <div class="home-universe-empty">
+                    <span>✦</span>
+                    <p>The MyLikith Universe is preparing something new.</p>
+                </div>
+            `;
             return;
         }
 
-        const title =
-            document.getElementById("homeOriginalTitle");
+        container.innerHTML = ordered.map(module => {
 
-        const meta =
-            document.getElementById("homeOriginalMeta");
+            const isAvailable =
+                module.enabled === true &&
+                module.coming_soon === false;
 
-        const watch =
-            document.getElementById("homeOriginalWatch");
+            const title = escapeHomeHTML(module.title || module.name || "MyLikith");
+            const description = escapeHomeHTML(module.description || "Explore stories on MyLikith.");
+            const icon = escapeHomeHTML(module.icon || "✦");
+            const route = module.route ? escapeHomeAttribute(module.route) : "";
 
-        const artLink =
-            document.getElementById("homeOriginalArtLink");
+            const cardContent = `
+                <div class="home-universe-card-icon">${icon}</div>
+                <div class="home-universe-card-content">
+                    <h3>${title}</h3>
+                    <p>${description}</p>
+                </div>
+                <div class="home-universe-card-footer">
+                    <span class="home-universe-status ${isAvailable ? "available" : "coming-soon"}">
+                        ${isAvailable ? "Available" : "Coming Soon"}
+                    </span>
+                    ${isAvailable && route ? `<span class="home-universe-card-arrow">→</span>` : ""}
+                </div>
+            `;
 
-        const cover =
-            document.getElementById("homeOriginalCover");
-
-        const placeholder =
-            document.getElementById("homeOriginalPlaceholder");
-
-        if (title) {
-            title.textContent =
-                original.title ||
-                "MyLikith Original";
-        }
-
-        if (meta) {
-            const details = [];
-
-            if (original.content_type) {
-                details.push(original.content_type);
+            if (isAvailable && route) {
+                return `<a class="home-universe-card available" href="${route}">${cardContent}</a>`;
             }
 
-            if (original.language) {
-                details.push(original.language);
-            }
+            return `<div class="home-universe-card coming-soon">${cardContent}</div>`;
 
-            if (original.category) {
-                details.push(original.category);
-            }
-
-            meta.textContent =
-                details.length
-                    ? details.join(" • ")
-                    : "Original video series";
-        }
-
-        const originalUrl =
-            `original.html?id=${encodeURIComponent(original.id)}`;
-
-        if (watch) {
-            watch.href = originalUrl;
-        }
-
-        if (artLink) {
-            artLink.href = originalUrl;
-            artLink.setAttribute(
-                "aria-label",
-                `Watch ${original.title || "MyLikith Original"}`
-            );
-        }
-
-        if (cover && original.cover_url) {
-            cover.src = original.cover_url;
-            cover.alt = original.title || "MyLikith Original";
-            cover.hidden = false;
-
-            cover.addEventListener(
-                "error",
-                () => {
-                    cover.hidden = true;
-                    if (placeholder) {
-                        placeholder.hidden = false;
-                    }
-                },
-                { once: true }
-            );
-
-            if (placeholder) {
-                placeholder.hidden = true;
-            }
-        }
-
-        section.hidden = false;
+        }).join("");
 
     } catch (error) {
 
-        console.error(
-            "Homepage Originals error:",
-            error
-        );
+        console.warn("Homepage Universe:", error);
 
-        section.hidden = true;
+        container.innerHTML = `
+            <div class="home-universe-error">
+                <span>✦</span>
+                <p>Unable to load the Universe right now.</p>
+                <button type="button" onclick="loadHomeUniverse()">Try Again</button>
+            </div>
+        `;
 
     }
-
 }
 
+function escapeHomeHTML(value) {
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function escapeHomeAttribute(value) {
+    return escapeHomeHTML(value);
+}
 
 async function loadTrendingNovels() {
 
@@ -155,21 +136,23 @@ async function loadTrendingNovels() {
 
         container.innerHTML = "";
 
-if (!Array.isArray(novels)) {
-    container.innerHTML = "<p>No novels found.</p>";
-    return;
-}
+        if (!Array.isArray(novels)) {
+            container.innerHTML = "<p>No novels found.</p>";
+            return;
+        }
 
-if (novels.length === 0) {
+        if (novels.length === 0) {
+
     container.innerHTML = `
         <p style="text-align:center;color:#aaa;">
             No trending novels available.
         </p>
     `;
+
     return;
 }
 
-novels.slice(0,4).forEach(novel => {
+        novels.slice(0,4).forEach(novel => {
 
             container.innerHTML += `
 
@@ -300,4 +283,74 @@ ${avatar}
 
 }
 
+async function loadFeaturedOriginal() {
+
+    const section = document.getElementById("homeOriginalsPromo");
+    const title = document.getElementById("homeOriginalTitle");
+    const meta = document.getElementById("homeOriginalMeta");
+    const watch = document.getElementById("homeOriginalWatch");
+    const artLink = document.getElementById("homeOriginalArtLink");
+    const cover = document.getElementById("homeOriginalCover");
+    const placeholder = document.getElementById("homeOriginalPlaceholder");
+
+    if (!section || !title) return;
+
+    try {
+
+        const response = await fetch(`${API_BASE}/api/originals`);
+
+        if (!response.ok) {
+            throw new Error("Unable to load Originals.");
+        }
+
+        const originals = await response.json();
+
+        if (!Array.isArray(originals) || originals.length === 0) {
+            section.hidden = true;
+            return;
+        }
+
+        const original = originals[0];
+
+        title.textContent = original.title || "MyLikith Original";
+
+        const metaParts = [];
+        if (original.language) metaParts.push(original.language);
+        if (original.category) metaParts.push(original.category);
+        if (original.content_type) metaParts.push(original.content_type);
+
+        meta.textContent = metaParts.join(" • ");
+
+        const destination = original.id
+            ? `original.html?id=${encodeURIComponent(original.id)}`
+            : "originals.html";
+
+        if (watch) watch.href = destination;
+        if (artLink) artLink.href = destination;
+
+        if (original.cover_url && cover) {
+            cover.src = original.cover_url;
+            cover.alt = original.title || "MyLikith Original";
+            cover.hidden = false;
+
+            cover.onerror = function () {
+                cover.hidden = true;
+                if (placeholder) placeholder.hidden = false;
+            };
+
+            if (placeholder) placeholder.hidden = true;
+        } else if (placeholder) {
+            placeholder.hidden = false;
+        }
+
+        section.hidden = false;
+
+    } catch (error) {
+
+        console.warn("Homepage Originals:", error);
+        section.hidden = true;
+
+    }
+
+}
 
