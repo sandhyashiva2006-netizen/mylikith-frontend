@@ -431,6 +431,213 @@
         padding:25px;
     }
 }
+
+
+/* =========================================================
+   MYLIKITH ORIGINALS — HOMEPAGE PROMO
+========================================================= */
+.home-originals-promo {
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.home-originals-promo-inner {
+    position: relative;
+    max-width: 1180px;
+    margin: 0 auto;
+    min-height: 380px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+    align-items: stretch;
+    overflow: hidden;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #17121f 0%, #21172f 52%, #0d0d14 100%);
+    border: 1px solid rgba(255,255,255,.10);
+    box-shadow: 0 24px 70px rgba(0,0,0,.28);
+}
+
+.home-originals-promo-copy {
+    position: relative;
+    z-index: 2;
+    padding: 54px 52px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.home-originals-eyebrow {
+    display: inline-flex;
+    width: fit-content;
+    margin-bottom: 14px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    opacity: .82;
+}
+
+.home-originals-promo-copy h2 {
+    margin: 0 0 14px;
+    font-size: clamp(30px, 4vw, 48px);
+    line-height: 1.08;
+}
+
+.home-originals-promo-copy h2 span {
+    display: block;
+    opacity: .72;
+}
+
+.home-originals-promo-copy p {
+    max-width: 560px;
+    margin: 0 0 24px;
+    font-size: 16px;
+    line-height: 1.7;
+    opacity: .78;
+}
+
+.home-original-feature {
+    margin-bottom: 24px;
+}
+
+.home-original-feature-label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    opacity: .62;
+}
+
+.home-original-feature-title {
+    margin: 0;
+    font-size: clamp(22px, 3vw, 32px);
+    line-height: 1.2;
+}
+
+.home-original-feature-meta {
+    margin-top: 8px;
+    font-size: 13px;
+    opacity: .65;
+}
+
+.home-original-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.home-original-watch-btn,
+.home-original-explore-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 20px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 800;
+    transition: transform .2s ease, opacity .2s ease;
+}
+
+.home-original-watch-btn {
+    background: #fff;
+    color: #111;
+}
+
+.home-original-explore-btn {
+    border: 1px solid rgba(255,255,255,.18);
+    color: inherit;
+    background: rgba(255,255,255,.05);
+}
+
+.home-original-watch-btn:hover,
+.home-original-explore-btn:hover {
+    transform: translateY(-2px);
+    opacity: .9;
+}
+
+.home-originals-promo-art {
+    position: relative;
+    min-height: 380px;
+    overflow: hidden;
+}
+
+.home-originals-promo-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(23,18,31,.72) 0%, rgba(23,18,31,.12) 42%, rgba(0,0,0,.12) 100%);
+    pointer-events: none;
+}
+
+.home-originals-promo-art img,
+.home-originals-art-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 380px;
+    display: block;
+    object-fit: cover;
+}
+
+.home-originals-art-placeholder {
+    display: grid;
+    place-items: center;
+    font-size: 72px;
+    background: radial-gradient(circle at 50% 35%, rgba(255,255,255,.13), transparent 45%);
+}
+
+.home-originals-play {
+    position: absolute;
+    z-index: 3;
+    left: 50%;
+    top: 50%;
+    width: 76px;
+    height: 76px;
+    transform: translate(-50%, -50%);
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255,255,255,.94);
+    color: #111;
+    font-size: 28px;
+    padding-left: 4px;
+    box-shadow: 0 12px 35px rgba(0,0,0,.35);
+}
+
+@media (max-width: 760px) {
+    .home-originals-promo {
+        padding: 0 14px;
+    }
+
+    .home-originals-promo-inner {
+        grid-template-columns: 1fr;
+        min-height: 0;
+        border-radius: 20px;
+    }
+
+    .home-originals-promo-art {
+        order: -1;
+        min-height: 240px;
+    }
+
+    .home-originals-promo-art img,
+    .home-originals-art-placeholder {
+        min-height: 240px;
+        max-height: 300px;
+    }
+
+    .home-originals-promo-art::after {
+        background: linear-gradient(180deg, rgba(0,0,0,.08), rgba(23,18,31,.42));
+    }
+
+    .home-originals-promo-copy {
+        padding: 34px 26px 30px;
+    }
+}
+
 </style>
 
 </head>
@@ -463,7 +670,7 @@ class="navbar">
         </h1>
 
         <p>
-            Read bestselling novels, discover talented writers, publish your own stories,
+            Discover novels, explore talented writers, publish your own stories,
             translate across languages and earn from your imagination.
         </p>
 
@@ -529,6 +736,97 @@ class="navbar">
         >
             Explore the MyLikith Universe
             <span>→</span>
+        </a>
+
+    </div>
+
+</section>
+
+<!-- MYLIKITH ORIGINALS — FEATURED PROMO -->
+
+<section
+    class="home-originals-promo"
+    id="homeOriginalsPromo"
+    hidden
+>
+
+    <div class="home-originals-promo-inner">
+
+        <div class="home-originals-promo-copy">
+
+            <div class="home-originals-eyebrow">
+                ✦ MYLIKITH ORIGINALS
+            </div>
+
+            <h2>
+                Stories Beyond the Page.
+                <span>Made to Watch.</span>
+            </h2>
+
+            <p>
+                Watch MyLikith stories come to life through cinematic video episodes,
+                created for the MyLikith Universe.
+            </p>
+
+            <div class="home-original-feature">
+                <span class="home-original-feature-label">
+                    Now Watching
+                </span>
+
+                <h3
+                    id="homeOriginalTitle"
+                    class="home-original-feature-title"
+                >
+                    MyLikith Original
+                </h3>
+
+                <div
+                    id="homeOriginalMeta"
+                    class="home-original-feature-meta"
+                ></div>
+            </div>
+
+            <div class="home-original-actions">
+
+                <a
+                    id="homeOriginalWatch"
+                    href="originals.html"
+                    class="home-original-watch-btn"
+                >
+                    ▶ Watch Now
+                </a>
+
+                <a
+                    href="originals.html"
+                    class="home-original-explore-btn"
+                >
+                    Explore Originals →
+                </a>
+
+            </div>
+
+        </div>
+
+        <a
+            id="homeOriginalArtLink"
+            href="originals.html"
+            class="home-originals-promo-art"
+            aria-label="Watch MyLikith Original"
+        >
+            <div class="home-original-art-placeholder" id="homeOriginalPlaceholder">
+                🎬
+            </div>
+
+            <img
+                id="homeOriginalCover"
+                src=""
+                alt=""
+                hidden
+            >
+
+            <span class="home-originals-play" aria-hidden="true">
+                ▶
+            </span>
         </a>
 
     </div>
@@ -801,77 +1099,76 @@ id="featuredWriters">
 
 </section>
 
-
+  <div class="home-view-all">
+    <a href="explore.html">Explore All Stories →</a>
+  </div>
 
 
 <section class="section">
 
-    <h2 class="section-title">
-        ✨ Why MyLikith?
-    </h2>
+<h2 class="section-title">
+✨ Why MyLikith?
+</h2>
 
-    <div class="category-grid">
+<div class="category-grid">
 
-        <div class="category-card">
+<div class="category-card">
 
-            <div class="category-icon">
-                📚
-            </div>
+<div class="category-icon">
+📖
+</div>
 
-            <h3>Discover Your Next Story</h3>
+<h3>Read Anywhere</h3>
 
-            <p>
-                Explore novels across genres, discover new voices and find stories that keep you turning the page.
-            </p>
+<p>
+Explore novels across multiple genres and languages from any device.
+</p>
 
-        </div>
+</div>
 
+<div class="category-card">
 
-        <div class="category-card">
+<div class="category-icon">
+✍️
+</div>
 
-            <div class="category-icon">
-                ✍️
-            </div>
+<h3>Publish Easily</h3>
 
-            <h3>Bring Your Story to Life</h3>
+<p>
+Write your stories, publish chapters and build your own readership.
+</p>
 
-            <p>
-                Publish your novel chapter by chapter, share your imagination and build a readership of your own.
-            </p>
+</div>
 
-        </div>
+<div class="category-card">
 
+<div class="category-icon">
+💰
+</div>
 
-        <div class="category-card">
+<h3>Earn as a Writer</h3>
 
-            <div class="category-icon">
-                🌍
-            </div>
+<p>
+Unlock monetization opportunities through premium content and reader support.
+</p>
 
-            <h3>Stories Without Borders</h3>
+</div>
 
-            <p>
-                Discover and publish stories across Indian and international languages, bringing different voices together.
-            </p>
+<div class="category-card">
 
-        </div>
+<div class="category-icon">
+🌍
+</div>
 
+<h3>Multi-Language Platform</h3>
 
-        <div class="category-card">
+<p>
+Read and publish stories in multiple Indian and international languages.
+</p>
 
-            <div class="category-icon">
-                ✨
-            </div>
+</div>
 
-            <h3>More Than a Reading Platform</h3>
-
-            <p>
-                Be part of the MyLikith Universe as stories expand into new formats, experiences and original worlds.
-            </p>
-
-        </div>
-
-    </div>
+</div>
 
 </section>
 
