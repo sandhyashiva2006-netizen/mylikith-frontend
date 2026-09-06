@@ -155,19 +155,17 @@ async function loadTrendingNovels() {
 
         container.innerHTML = "";
 
-if (novels.length === 0) {
+if (!Array.isArray(novels)) {
+    container.innerHTML = "<p>No novels found.</p>";
+    return;
+}
 
+if (novels.length === 0) {
     container.innerHTML = `
         <p style="text-align:center;color:#aaa;">
             No trending novels available.
         </p>
     `;
-
-    return;
-}
-
-        if (!Array.isArray(novels)) {
-    container.innerHTML = "<p>No novels found.</p>";
     return;
 }
 
