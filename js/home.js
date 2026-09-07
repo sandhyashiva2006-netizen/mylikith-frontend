@@ -303,14 +303,19 @@ async function loadFeaturedOriginal() {
             throw new Error("Unable to load Originals.");
         }
 
-        const originals = await response.json();
+        const data = await response.json();
+const originals = Array.isArray(data)
+    ? data
+    : Array.isArray(data.originals)
+        ? data.originals
+        : [];
 
-        if (!Array.isArray(originals) || originals.length === 0) {
-            section.hidden = true;
-            return;
-        }
+if (originals.length === 0) {
+    // Keep the Originals section visible with its default placeholder.
+    return;
+}
 
-        const original = originals[0];
+const original = originals[0]; 
 
         title.textContent = original.title || "MyLikith Original";
 
@@ -346,11 +351,8 @@ async function loadFeaturedOriginal() {
         section.hidden = false;
 
     } catch (error) {
-
-        console.warn("Homepage Originals:", error);
-        section.hidden = true;
-
-    }
-
+    console.warn("Homepage Originals:", error);
+    // Keep the Originals section visible.
 }
 
+}
