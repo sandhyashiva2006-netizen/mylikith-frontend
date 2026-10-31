@@ -1,3 +1,5 @@
+const NAVBAR_API_BASE = "https://mylikith-backend.onrender.com";
+
 
 
 const navbarUser = JSON.parse(localStorage.getItem("user"));
@@ -389,7 +391,7 @@ try{
 
 const res=await fetch(
 
-`${API}/api/premium/status/${navbarUser.id}`
+`${NAVBAR_API_BASE}/api/premium/status/${navbarUser.id}`
 
 );
 
@@ -429,7 +431,7 @@ try{
 
 const response=await fetch(
 
-`${API}/api/writers/notifications/${navbarUser.id}/unread`
+`${NAVBAR_API_BASE}/api/writers/notifications/${navbarUser.id}/unread`
 
 );
 

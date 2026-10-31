@@ -83,7 +83,7 @@ ${chapter.author}
 
 <button
 class="admin-btn"
-onclick="editChapter(${chapter.id})">
+onclick="editChapter(${chapter.id},${chapter.novel_id})">
 
 ✏ Edit
 
@@ -129,10 +129,13 @@ c.novel.toLowerCase().includes(q)
 
 });
 
-function editChapter(id){
+function editChapter(id, novelId){
 
-window.location.href=
-`writer-studio.html?chapter=${id}`;
+const params = new URLSearchParams();
+if (novelId) params.set("novel", novelId);
+params.set("chapter", id);
+
+window.location.href = `writer-studio.html?${params.toString()}`;
 
 }
 
