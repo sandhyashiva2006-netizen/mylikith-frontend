@@ -1,14 +1,86 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Partner Dashboard | MyLikith</title>
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/common.css">
-<link rel="stylesheet" href="css/home.css">
-<link rel="stylesheet" href="css/responsive.css">
-<style>body{margin:0;background:#100d1b;color:#f5efff;font:15px Arial}.wrap{max-width:1180px;margin:35px auto;padding:20px}.panel,.stat{background:#1d172b;border:1px solid #493565;border-radius:16px;padding:22px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:18px 0}.label{color:#bdb0ce}.value{font-size:28px;color:#d5baff;margin-top:8px}.code{font-size:22px;letter-spacing:2px;color:#d5baff}.btn{background:#9b68ed;color:white;border:0;padding:11px 16px;border-radius:9px;cursor:pointer}input{padding:10px;border-radius:8px;background:#120e1c;color:white;border:1px solid #54416e;width:130px}#notice{color:#d5baff;margin:14px 0}.wrap{position:relative;z-index:1}.navbar{position:relative;z-index:20}
-@media(max-width:700px){.wrap{margin:16px auto;padding:14px}.panel,.stat{padding:17px}.stats{grid-template-columns:1fr 1fr}}
-</style></head><body>
-<nav
-id="navbar"
-class="navbar">
-
-</nav>
-<main class="wrap"><p><a href="partners.html" style="color:#c5a4ff">← Programme</a></p><h1>Author Growth Partner Dashboard</h1><div id="notice">Loading your partner account…</div><div id="content" hidden><section class="panel"><div class="label">Your partner code</div><div class="code" id="code"></div><p class="label">Share this code with authors. Attribution must be recorded and approved by MyLikith.</p><button class="btn" id="copy">Copy code</button></section><section class="stats"><div class="stat"><div class="label">Total referrals</div><div class="value" id="refs">0</div></div><div class="stat"><div class="label">Approved authors</div><div class="value" id="approved">0</div></div><div class="stat"><div class="label">Unpaid commissions</div><div class="value" id="unpaid">₹0</div></div><div class="stat"><div class="label">Commissions paid</div><div class="value" id="paid">₹0</div></div></section><section class="panel"><h2>Request a payout</h2><p class="label">Minimum request ₹500. Only approved, available commission can be requested.</p><input id="amount" type="number" min="500" step="0.01" placeholder="Amount ₹"><button class="btn" id="request">Submit request</button></section><section class="panel" style="margin-top:16px"><h2>Payout history</h2><div id="payouts" class="label">No payout requests yet.</div></section></div></main><script src="js/navbar.js"></script><script>const API='https://mylikith-backend.onrender.com';const token=localStorage.getItem('token');const notice=document.getElementById('notice');let partnerCode='';async function load(){if(!token){notice.textContent='Please log in using your existing MyLikith account.';return;}try{const r=await fetch(API+'/api/partners/me',{headers:{Authorization:'Bearer '+token}});const j=await r.json();if(!j.success)throw Error('Unable to load account.');if(!j.approved){notice.textContent=j.application?'Application status: '+j.application.status+'.':'No application found. Apply through the programme page first.';return;}partnerCode=j.profile.partner_code;document.getElementById('code').textContent=partnerCode;document.getElementById('refs').textContent=j.referrals.total;document.getElementById('approved').textContent=j.referrals.approved;document.getElementById('unpaid').textContent='₹'+Number(j.commissions.unpaid).toFixed(2);document.getElementById('paid').textContent='₹'+Number(j.commissions.paid).toFixed(2);document.getElementById('payouts').innerHTML=j.payouts.length?j.payouts.map(p=>`<p>#${p.id} · ₹${Number(p.amount).toFixed(2)} · ${p.status}</p>`).join(''):'No payout requests yet.';document.getElementById('content').hidden=false;notice.textContent='';}catch(e){notice.textContent=e.message||'Unable to load dashboard.';}}document.getElementById('copy').onclick=()=>navigator.clipboard.writeText(partnerCode);document.getElementById('request').onclick=async()=>{const amount=Number(document.getElementById('amount').value);try{const r=await fetch(API+'/api/partners/payout-request',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify({amount})});const j=await r.json();notice.textContent=j.message||'Request submitted.';if(j.success)load();}catch(_){notice.textContent='Network error.';}};load();</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Partner Dashboard | MyLikith</title>
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#100d1b;color:#f5efff;font:15px Arial,sans-serif}.wrap{max-width:1050px;margin:35px auto;padding:20px}.panel,.stat{background:#1d172b;border:1px solid #493565;border-radius:16px;padding:22px}.panel{margin-top:16px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:18px 0}.label{color:#bdb0ce;line-height:1.6}.value{font-size:28px;color:#d5baff;margin-top:8px}.code{font-size:22px;letter-spacing:2px;color:#d5baff;overflow-wrap:anywhere}.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:#8b4cf2;color:white;border:0;padding:11px 16px;border-radius:9px;cursor:pointer;text-decoration:none;font-weight:600}.btn.secondary{background:#34254b;border:1px solid #664b8e}.btn.whatsapp{background:#167c52}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.link-input{width:100%;padding:12px;border-radius:9px;background:#120e1c;color:#e9ddff;border:1px solid #54416e;font-size:14px}.link-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;margin-top:12px}input[type=number]{padding:10px;border-radius:8px;background:#120e1c;color:white;border:1px solid #54416e;width:160px;max-width:100%}#notice{color:#d5baff;margin:14px 0;line-height:1.6}.hint{font-size:13px;color:#a99abf;line-height:1.6}.success{color:#76e2ad}@media(max-width:620px){.wrap{margin:12px auto;padding:14px}.panel,.stat{padding:17px}.link-row{grid-template-columns:1fr}.btn{width:100%}.actions{flex-direction:column}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<p><a href="partners.html" style="color:#c5a4ff">← Programme</a></p>
+<h1>Author Growth Partner Dashboard</h1>
+<div id="notice">Loading your partner account…</div>
+<div id="content" hidden>
+<section class="panel">
+  <div class="label">Your partner code</div>
+  <div class="code" id="code"></div>
+  <p class="label">You can share your personal referral link with authors. They can open it, sign in as a Writer, and confirm the referral. MyLikith reviews each attribution.</p>
+  <div class="actions"><button class="btn secondary" id="copyCode" type="button">Copy partner code</button></div>
+</section>
+<section class="panel" id="sharePanel">
+  <h2 style="margin-top:0">Your author referral link</h2>
+  <p class="label">Share this link with an author. Their partner code will be filled in automatically.</p>
+  <div class="link-row"><input class="link-input" id="referralLink" readonly aria-label="Your author referral link"><button class="btn" id="copyLink" type="button">Copy link</button></div>
+  <div class="actions"><a class="btn whatsapp" id="whatsappShare" href="#" target="_blank" rel="noopener">Share on WhatsApp</a><button class="btn secondary" id="nativeShare" type="button" hidden>Share link…</button></div>
+  <p class="hint" id="shareStatus" aria-live="polite">The referral remains pending until the author submits it and an administrator approves it.</p>
+</section>
+<section class="stats">
+  <div class="stat"><div class="label">Total referrals</div><div class="value" id="refs">0</div></div>
+  <div class="stat"><div class="label">Approved authors</div><div class="value" id="approved">0</div></div>
+  <div class="stat"><div class="label">Unpaid commissions</div><div class="value" id="unpaid">₹0</div></div>
+  <div class="stat"><div class="label">Commissions paid</div><div class="value" id="paid">₹0</div></div>
+</section>
+<section class="panel">
+  <h2>Request a payout</h2>
+  <p class="label">Minimum request ₹500. Only approved, available commission can be requested.</p>
+  <input id="amount" type="number" min="500" step="0.01" placeholder="Amount ₹"><button class="btn" id="request" type="button">Submit request</button>
+</section>
+<section class="panel"><h2>Payout history</h2><div id="payouts" class="label">No payout requests yet.</div></section>
+</div>
+</main>
+<script>
+const API='https://mylikith-backend.onrender.com';
+const token=localStorage.getItem('token');
+const notice=document.getElementById('notice');
+let partnerCode='';
+let referralUrl='';
+function setShareStatus(message,isSuccess=false){const el=document.getElementById('shareStatus');el.textContent=message;el.className='hint'+(isSuccess?' success':'');}
+async function copyText(value){
+  try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(value);}else{const t=document.createElement('textarea');t.value=value;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();const ok=document.execCommand('copy');t.remove();if(!ok)throw new Error('Copy unavailable');}return true;}
+  catch(_){return false;}
+}
+async function load(){
+  if(!token){notice.textContent='Please log in using your existing MyLikith partner account.';return;}
+  try{
+    const r=await fetch(API+'/api/partners/me',{headers:{Authorization:'Bearer '+token}});
+    const j=await r.json();
+    if(!r.ok||!j.success)throw Error(j.message||'Unable to load account.');
+    if(!j.approved){notice.textContent=j.application?'Application status: '+j.application.status+'.':'No application found. Apply through the programme page first.';return;}
+    partnerCode=String(j.profile.partner_code||'').trim().toUpperCase();
+    referralUrl=new URL('partner-refer.html?code='+encodeURIComponent(partnerCode),window.location.href).toString();
+    document.getElementById('code').textContent=partnerCode;
+    document.getElementById('referralLink').value=referralUrl;
+    document.getElementById('whatsappShare').href='https://wa.me/?text='+encodeURIComponent('Join MyLikith as an author. Use my Author Growth Partner referral link: '+referralUrl);
+    document.getElementById('refs').textContent=j.referrals?.total??0;
+    document.getElementById('approved').textContent=j.referrals?.approved??0;
+    document.getElementById('unpaid').textContent='₹'+Number(j.commissions?.unpaid||0).toFixed(2);
+    document.getElementById('paid').textContent='₹'+Number(j.commissions?.paid||0).toFixed(2);
+    document.getElementById('payouts').textContent='';
+    if(j.payouts?.length){document.getElementById('payouts').innerHTML=j.payouts.map(p=>{const row=document.createElement('p');row.textContent='#'+p.id+' · ₹'+Number(p.amount).toFixed(2)+' · '+p.status;return row.outerHTML;}).join('');}
+    else document.getElementById('payouts').textContent='No payout requests yet.';
+    if(navigator.share)document.getElementById('nativeShare').hidden=false;
+    document.getElementById('content').hidden=false;
+    notice.textContent='';
+  }catch(e){notice.textContent=e.message||'Unable to load dashboard.';}
+}
+document.getElementById('copyCode').onclick=async()=>{setShareStatus(await copyText(partnerCode)?'Partner code copied.':'Unable to copy automatically. Please select the code and copy it.',true);};
+document.getElementById('copyLink').onclick=async()=>{setShareStatus(await copyText(referralUrl)?'Referral link copied. Share it with authors.':'Unable to copy automatically. Select the link and copy it.',true);};
+document.getElementById('nativeShare').onclick=async()=>{try{await navigator.share({title:'MyLikith Author Referral',text:'Join MyLikith as an author using my referral link.',url:referralUrl});}catch(e){if(e.name!=='AbortError')setShareStatus('Unable to open the share menu.');}};
+document.getElementById('request').onclick=async()=>{const amount=Number(document.getElementById('amount').value);try{const r=await fetch(API+'/api/partners/payout-request',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify({amount})});const j=await r.json();notice.textContent=j.message||'Request submitted.';if(j.success)load();}catch(_){notice.textContent='Network error.';}};
+load();
+</script>
+</body>
+</html>

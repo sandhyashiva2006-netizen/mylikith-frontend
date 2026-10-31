@@ -1,6 +1,22 @@
 const API =
 "https://mylikith-backend.onrender.com";
 
+// MAGP attribution is separate from MyLikith's ordinary reader referral code.
+function getMAGPInviteCode(){
+  return (new URLSearchParams(window.location.search).get("magp_code") || "").trim().toUpperCase();
+}
+
+function getMAGPReferralUrl(code){
+  return "partner-refer.html?code=" + encodeURIComponent(code);
+}
+
+const magpInviteCode = getMAGPInviteCode();
+const magpInviteNotice = document.getElementById("magpInviteNotice");
+if(magpInviteNotice && magpInviteCode){
+  magpInviteNotice.hidden = false;
+  magpInviteNotice.textContent = "You have an Author Growth Partner invitation (" + magpInviteCode + "). After signing in with your Writer account, you can confirm the referral. This is separate from the optional reader referral code below.";
+}
+
 async function register(){
 
 const name =
@@ -50,8 +66,9 @@ if(data.success){
 
 alert("Registration Successful");
 
-window.location =
-"login.html";
+window.location = magpInviteCode
+  ? "login.html?magp_code=" + encodeURIComponent(magpInviteCode)
+  : "login.html";
 
 }else{
 
@@ -107,8 +124,9 @@ JSON.stringify(data.user)
 
 alert("Login Successful");
 
-window.location =
-"reader-dashboard.html";
+window.location = magpInviteCode
+  ? getMAGPReferralUrl(magpInviteCode)
+  : "reader-dashboard.html";
 
 }else{
 

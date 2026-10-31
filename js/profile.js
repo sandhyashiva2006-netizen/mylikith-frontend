@@ -793,7 +793,10 @@ if(data.success){
 
     alert("🎉 Welcome to MyLikith Writers!");
 
-    window.location.href = "writer-dashboard.html";
+    const magpCode = (new URLSearchParams(window.location.search).get("magp_code") || "").trim().toUpperCase();
+    window.location.href = magpCode
+        ? "partner-refer.html?code=" + encodeURIComponent(magpCode)
+        : "writer-dashboard.html";
 
 }else{
 
