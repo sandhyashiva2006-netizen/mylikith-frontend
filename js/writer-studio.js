@@ -16,8 +16,8 @@ document.getElementById("schedulePublish");
 const publishAt=
 document.getElementById("publishAt");
 
+const chapterId=params.get("chapter");
 let novelId=params.get("novel");
-const requestedChapterId=params.get("chapter");
 
 const editor=document.getElementById("chapterEditor");
 
@@ -45,14 +45,15 @@ let hasChanges=false;
 
 async function loadNovel(){
 
-if (!novelId || !/^\d+$/.test(String(novelId))) {
-    throw new Error("A valid novel ID was not provided.");
+if (!novelId) {
+    throw new Error("Novel ID is missing. Open this studio from a valid novel or chapter.");
 }
 
 const res=await fetch(`${API}/api/novels/${encodeURIComponent(novelId)}`);
 const novel=await res.json();
-if (!res.ok || !novel || novel.success === false || !novel.id) {
-    throw new Error(novel.message || "Unable to load this novel.");
+
+if (!res.ok || !novel || !novel.id) {
+    throw new Error(novel?.message || novel?.error || "Unable to load novel details.");
 }
 
 document.getElementById("novelTitle").textContent=novel.title;
@@ -93,8 +94,6 @@ document
 
 document.getElementById("settingStatus").value=novel.status;
 
-return true;
-
 }
 
 document.getElementById("settingsBtn").onclick=()=>{
@@ -127,14 +126,27 @@ schedulePublish.checked
 
 async function loadChapters(){
 
-if (!novelId || !/^\d+$/.test(String(novelId))) {
-    throw new Error("A valid novel ID is required to load chapters.");
+if (!novelId) {
+    throw new Error("Cannot load chapters because the novel ID is missing.");
 }
 
 const res=await fetch(`${API}/api/writers/chapters/${encodeURIComponent(novelId)}`);
-const chapters=await res.json();
-if (!res.ok || !Array.isArray(chapters)) {
-    throw new Error(chapters.message || "Unable to load the chapter list.");
+const payload=await res.json();
+
+if (!res.ok) {
+    throw new Error(payload?.message || payload?.error || "Unable to load chapters.");
+}
+
+const chapters = Array.isArray(payload)
+    ? payload
+    : Array.isArray(payload?.chapters)
+        ? payload.chapters
+        : Array.isArray(payload?.data)
+            ? payload.data
+            : null;
+
+if (!chapters) {
+    throw new Error("The chapters API returned an unexpected response format.");
 }
 
 chapterList.innerHTML="";
@@ -149,6 +161,7 @@ chapters.forEach(ch=>{
 chapterList.innerHTML+=`
 
 <div class="chapter-item"
+data-chapter-id="${ch.id}"
 onclick="openChapter(${ch.id},this)">
 
 <div class="chapter-header">
@@ -280,11 +293,9 @@ element.classList.add("active");
 
 currentChapter=id;
 
-const res=await fetch(`${API}/api/chapters/${encodeURIComponent(id)}`);
+const res=await fetch(`${API}/api/chapters/${id}`);
+
 const chapter=await res.json();
-if (!res.ok || !chapter || chapter.success === false) {
-    throw new Error(chapter.message || "Unable to load this chapter.");
-}
 
 title.value=chapter.title;
 
@@ -443,43 +454,6 @@ document.getElementById("previewBtn").innerHTML="👁 Preview";
 document.getElementById("publishBtn").onclick=publishChapter;
 
 document.getElementById("saveDraftBtn").onclick=saveChapter;
-
-async function initializeStudio(){
-    try {
-        // Admin opens the editor with ?chapter=ID. Resolve its parent novel first.
-        if (requestedChapterId) {
-            if (!/^\d+$/.test(String(requestedChapterId))) {
-                throw new Error("The chapter link is invalid.");
-            }
-            const chapterResponse = await fetch(`${API}/api/chapters/${encodeURIComponent(requestedChapterId)}`);
-            const selectedChapter = await chapterResponse.json();
-            if (!chapterResponse.ok || !selectedChapter || selectedChapter.success === false || !selectedChapter.novel_id) {
-                throw new Error(selectedChapter.message || "The requested chapter could not be found.");
-            }
-            novelId = String(selectedChapter.novel_id);
-        }
-
-        if (!novelId || !/^\d+$/.test(String(novelId))) {
-            throw new Error("No novel was selected. Open Writer Studio from a novel or Admin → Chapters → Edit.");
-        }
-
-        await loadNovel();
-        await loadChapters();
-
-        if (requestedChapterId) {
-            const chapterItem = Array.from(document.querySelectorAll(".chapter-item")).find(item =>
-                (item.getAttribute("onclick") || "").startsWith(`openChapter(${requestedChapterId},`)
-            );
-            await openChapter(requestedChapterId, chapterItem || null);
-        }
-    } catch (error) {
-        console.error("Writer Studio initialization failed:", error);
-        chapterList.innerHTML = `<div class="empty-state"><h3>Unable to open Writer Studio</h3><p>${error.message}</p></div>`;
-        document.getElementById("novelTitle").textContent = "Unable to load novel";
-    }
-}
-
-initializeStudio();
 
 
 async function saveChapter(){
@@ -918,3 +892,51 @@ window.addEventListener("beforeunload",(e)=>{
 
 });
 
+
+
+/* =====================================
+   Safe Writer Studio Initialization
+   Supports both ?novel=ID and ?chapter=ID
+===================================== */
+
+async function initializeWriterStudio() {
+    try {
+        // Admin -> Chapters -> Edit supplies a chapter ID. Resolve its parent novel first.
+        if (chapterId) {
+            const chapterResponse = await fetch(`${API}/api/chapters/${encodeURIComponent(chapterId)}`);
+            const chapterData = await chapterResponse.json();
+
+            if (!chapterResponse.ok || !chapterData || !chapterData.novel_id) {
+                throw new Error(chapterData?.message || "Unable to identify the novel for this chapter.");
+            }
+
+            if (novelId && String(novelId) !== String(chapterData.novel_id)) {
+                throw new Error("The selected chapter does not belong to the supplied novel.");
+            }
+
+            novelId = String(chapterData.novel_id);
+        }
+
+        if (!novelId) {
+            throw new Error("No novel or chapter was specified. Please open Writer Studio from a novel.");
+        }
+
+        await loadNovel();
+        await loadChapters();
+
+        if (chapterId) {
+            const chapterElement = Array.from(document.querySelectorAll(".chapter-item"))
+                .find(item => item.getAttribute("data-chapter-id") === String(chapterId));
+            await openChapter(chapterId, chapterElement || null);
+        }
+    } catch (error) {
+        console.error("Writer Studio initialization failed:", error);
+        if (chapterList) {
+            chapterList.innerHTML = `<div class="empty-state">Unable to load this chapter. ${String(error.message || error)}</div>`;
+        }
+        const status = document.getElementById("saveStatus");
+        if (status) status.textContent = "⚠ Unable to load chapter";
+    }
+}
+
+initializeWriterStudio();

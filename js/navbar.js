@@ -1,4 +1,4 @@
-const NAVBAR_API_BASE = "https://mylikith-backend.onrender.com";
+window.MYLIKITH_API_BASE = window.MYLIKITH_API_BASE || "https://mylikith-backend.onrender.com";
 
 
 
@@ -391,7 +391,7 @@ try{
 
 const res=await fetch(
 
-`${NAVBAR_API_BASE}/api/premium/status/${navbarUser.id}`
+`${window.MYLIKITH_API_BASE}/api/premium/status/${navbarUser.id}`
 
 );
 
@@ -431,7 +431,7 @@ try{
 
 const response=await fetch(
 
-`${NAVBAR_API_BASE}/api/writers/notifications/${navbarUser.id}/unread`
+`${window.MYLIKITH_API_BASE}/api/writers/notifications/${navbarUser.id}/unread`
 
 );
 
