@@ -62,6 +62,10 @@ html += `
 </li>
 
 <li>
+<a href="partners.html">🤝 Partner Programme</a>
+</li>
+
+<li>
 <a href="premium.html">Premium</a>
 </li>
 
@@ -101,6 +105,12 @@ Explore
 <li>
 <a href="library.html">
 Library
+</a>
+</li>
+
+<li>
+<a href="partners.html">
+🤝 Partner Programme
 </a>
 </li>
 
