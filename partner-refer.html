@@ -35,24 +35,88 @@ const msg=document.getElementById('msg');
 const form=document.getElementById('referralForm');
 const authActions=document.getElementById('authActions');
 const inviteNotice=document.getElementById('inviteNotice');
-if(codeFromLink){input.value=codeFromLink;inviteNotice.hidden=false;inviteNotice.textContent='You were invited by an Author Growth Partner. Code '+codeFromLink+' has been filled in for you.';document.getElementById('writerAccessLink').href='reader-profile.html?magp_code='+encodeURIComponent(codeFromLink);}
-if(!token){authActions.hidden=false;form.hidden=true;const suffix=codeFromLink?'?magp_code='+encodeURIComponent(codeFromLink):'';document.getElementById('signupBtn').href='signup.html'+suffix;document.getElementById('loginBtn').href='login.html'+suffix;}
-form.onsubmit=async e=>{
-  e.preventDefault();
+const submit=document.getElementById('submitBtn');
+
+if(codeFromLink){
+  input.value=codeFromLink;
+  inviteNotice.hidden=false;
+  inviteNotice.textContent='You were invited by an Author Growth Partner. Code '+codeFromLink+' has been filled in for you.';
+  document.getElementById('writerAccessLink').href='reader-profile.html?magp_code='+encodeURIComponent(codeFromLink);
+}
+
+if(!token){
+  authActions.hidden=false;
+  form.hidden=true;
+  const suffix=codeFromLink?'?magp_code='+encodeURIComponent(codeFromLink):'';
+  document.getElementById('signupBtn').href='signup.html'+suffix;
+  document.getElementById('loginBtn').href='login.html'+suffix;
+}
+
+async function submitReferral(automatic=false){
   const partner_code=input.value.trim().toUpperCase();
   if(!partner_code){msg.textContent='Please enter a partner code.';return;}
   if(!token){msg.textContent='Please log in first.';authActions.hidden=false;return;}
-  const submit=document.getElementById('submitBtn');submit.disabled=true;submit.textContent='Submitting…';msg.className='';msg.textContent='';
+
+  submit.disabled=true;
+  submit.textContent=automatic?'Confirming invitation…':'Submitting…';
+  msg.className='';
+  msg.textContent='';
+
   try{
-    const r=await fetch(API+'/api/partners/attribute',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify({partner_code})});
+    const r=await fetch(API+'/api/partners/attribute',{
+      method:'POST',
+      headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},
+      body:JSON.stringify({partner_code})
+    });
     const j=await r.json();
-    if(r.ok&&j.success){msg.className='ok';msg.textContent=j.message||'Referral submitted for admin approval.';submit.textContent='Submitted for review';form.querySelector('input').readOnly=true;return;}
-    msg.className='error';msg.textContent=j.message||'Unable to submit referral. Please try again.';
-    if(r.status===403&&/writer/i.test(j.message||'')){msg.textContent='This account does not yet have Writer access. Apply for Writer access from your MyLikith profile, then return to this referral link.';document.getElementById('writerAccessLink').href='reader-profile.html?magp_code='+encodeURIComponent(partner_code);}
-    if(r.status===409){submit.textContent='Already submitted';}
-    else{submit.disabled=false;submit.textContent='Confirm referral';}
-  }catch(_){msg.className='error';msg.textContent='Network error. Please try again.';submit.disabled=false;submit.textContent='Confirm referral';}
+
+    if(r.ok&&j.success){
+      msg.className='ok';
+      msg.textContent=j.message||'Referral submitted for admin approval.';
+      submit.textContent='Submitted for review';
+      input.readOnly=true;
+      return;
+    }
+
+    msg.className='error';
+    msg.textContent=j.message||'Unable to submit referral. Please try again.';
+
+    if(r.status===403&&/writer/i.test(j.message||'')){
+      msg.textContent='Your account does not yet have Writer access. Apply for Writer access below. Your partner invitation will be submitted automatically after Writer access is created.';
+      document.getElementById('writerAccessLink').href='reader-profile.html?magp_code='+encodeURIComponent(partner_code);
+      document.getElementById('writerAccessLink').textContent='Apply for Writer access';
+      document.getElementById('writerAccessLink').style.display='inline';
+      submit.disabled=false;
+      submit.textContent='Confirm referral';
+      return;
+    }
+
+    if(r.status===409){
+      submit.textContent='Already submitted';
+      input.readOnly=true;
+      return;
+    }
+
+    submit.disabled=false;
+    submit.textContent='Confirm referral';
+  }catch(_){
+    msg.className='error';
+    msg.textContent='Network error. Please try again.';
+    submit.disabled=false;
+    submit.textContent='Confirm referral';
+  }
+}
+
+form.onsubmit=async e=>{
+  e.preventDefault();
+  await submitReferral(false);
 };
+
+// A partner-link invitation is submitted automatically once the invited account
+// has Writer access. Reader accounts are sent to Writer onboarding first.
+if(token&&codeFromLink){
+  submitReferral(true);
+}
 </script>
 </body>
 </html>
