@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Partner Dashboard | MyLikith</title>
 <style>
-:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#100d1b;color:#f5efff;font:15px Arial,sans-serif}.wrap{max-width:1050px;margin:35px auto;padding:20px}.panel,.stat{background:#1d172b;border:1px solid #493565;border-radius:16px;padding:22px}.panel{margin-top:16px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:18px 0}.label{color:#bdb0ce;line-height:1.6}.value{font-size:28px;color:#d5baff;margin-top:8px}.code{font-size:22px;letter-spacing:2px;color:#d5baff;overflow-wrap:anywhere}.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:#8b4cf2;color:white;border:0;padding:11px 16px;border-radius:9px;cursor:pointer;text-decoration:none;font-weight:600}.btn.secondary{background:#34254b;border:1px solid #664b8e}.btn.whatsapp{background:#167c52}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.link-input{width:100%;padding:12px;border-radius:9px;background:#120e1c;color:#e9ddff;border:1px solid #54416e;font-size:14px}.link-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;margin-top:12px}input[type=number]{padding:10px;border-radius:8px;background:#120e1c;color:white;border:1px solid #54416e;width:160px;max-width:100%}#notice{color:#d5baff;margin:14px 0;line-height:1.6}.hint{font-size:13px;color:#a99abf;line-height:1.6}.success{color:#76e2ad}@media(max-width:620px){.wrap{margin:12px auto;padding:14px}.panel,.stat{padding:17px}.link-row{grid-template-columns:1fr}.btn{width:100%}.actions{flex-direction:column}}
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#100d1b;color:#f5efff;font:15px Arial,sans-serif}.wrap{max-width:1050px;margin:35px auto;padding:20px}.panel,.stat{background:#1d172b;border:1px solid #493565;border-radius:16px;padding:22px}.panel{margin-top:16px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:18px 0}.label{color:#bdb0ce;line-height:1.6}.value{font-size:28px;color:#d5baff;margin-top:8px}.code{font-size:22px;letter-spacing:2px;color:#d5baff;overflow-wrap:anywhere}.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:#8b4cf2;color:white;border:0;padding:11px 16px;border-radius:9px;cursor:pointer;text-decoration:none;font-weight:600}.btn.secondary{background:#34254b;border:1px solid #664b8e}.btn.whatsapp{background:#167c52}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.link-input{width:100%;padding:12px;border-radius:9px;background:#120e1c;color:#e9ddff;border:1px solid #54416e;font-size:14px}.link-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;margin-top:12px}select.link-input{margin:6px 0 12px}#upiFields input,#bankFields input{margin:6px 0 12px}input[type=number]{padding:10px;border-radius:8px;background:#120e1c;color:white;border:1px solid #54416e;width:160px;max-width:100%}#notice{color:#d5baff;margin:14px 0;line-height:1.6}.hint{font-size:13px;color:#a99abf;line-height:1.6}.success{color:#76e2ad}@media(max-width:620px){.wrap{margin:12px auto;padding:14px}.panel,.stat{padding:17px}.link-row{grid-template-columns:1fr}.btn{width:100%}.actions{flex-direction:column}}
 </style>
 </head>
 <body>
@@ -36,18 +36,17 @@
   <div class="stat"><div class="label">Commissions paid</div><div class="value" id="paid">₹0</div></div>
 </section>
 <section class="panel">
+  <h2>Withdrawal payment details</h2>
+  <p class="label">Add the UPI ID or bank account where MyLikith should send your approved partner payout. These details are visible to authorised administrators for manual payment processing.</p>
+  <label class="label" for="paymentMethod">Payment method</label><select id="paymentMethod" class="link-input"><option value="UPI">UPI</option><option value="BANK">Bank transfer</option></select>
+  <div id="upiFields"><label class="label" for="upiId">UPI ID</label><input class="link-input" id="upiId" placeholder="name@bank" maxlength="120"></div>
+  <div id="bankFields" hidden><label class="label" for="accountName">Account holder name</label><input class="link-input" id="accountName" maxlength="120" placeholder="Name as per bank account"><label class="label" for="bankName">Bank name</label><input class="link-input" id="bankName" maxlength="120" placeholder="Bank name"><label class="label" for="accountNumber">Account number</label><input class="link-input" id="accountNumber" inputmode="numeric" maxlength="24" placeholder="Account number"><label class="label" for="ifscCode">IFSC code</label><input class="link-input" id="ifscCode" maxlength="11" placeholder="ABCD0123456"></div>
+  <button class="btn secondary" id="savePaymentDetails" type="button">Save payment details</button><p class="hint" id="paymentStatus" role="status"></p>
+</section>
+<section class="panel">
   <h2>Request a payout</h2>
-  <p class="label">Minimum request ₹500. Only admin-approved commissions are withdrawable. Add your UPI ID or bank account details; MyLikith will manually transfer approved payouts. This is a cash payout and does not go into your reader coin wallet.</p>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:14px 0">
-    <label>Withdrawal amount (₹)<input id="amount" type="number" min="500" step="0.01" placeholder="500" style="display:block;width:100%;margin-top:6px"></label>
-    <label>Payment method<select id="paymentMethod" style="display:block;width:100%;padding:11px;margin-top:6px;border-radius:8px;background:#120e1c;color:white;border:1px solid #54416e"><option value="upi">UPI</option><option value="bank">Bank transfer</option></select></label>
-    <label>Account holder name<input id="accountName" autocomplete="name" placeholder="Name as per account" style="display:block;width:100%;margin-top:6px"></label>
-    <label id="upiWrap">UPI ID<input id="upiId" placeholder="name@bank" style="display:block;width:100%;margin-top:6px"></label>
-    <label id="bankWrap" hidden>Bank name<input id="bankName" placeholder="Bank name" style="display:block;width:100%;margin-top:6px"></label>
-    <label id="accountWrap" hidden>Account number<input id="accountNumber" inputmode="numeric" placeholder="Account number" style="display:block;width:100%;margin-top:6px"></label>
-    <label id="ifscWrap" hidden>IFSC code<input id="ifsc" autocapitalize="characters" placeholder="ABCD0123456" style="display:block;width:100%;margin-top:6px"></label>
-  </div>
-  <button class="btn" id="request" type="button">Submit withdrawal request</button>
+  <p class="label">Minimum request ₹500. Only commissions approved by an administrator count toward your available balance. After you submit a request, an administrator reviews it and manually transfers the funds to your saved UPI ID or bank account.</p>
+  <input id="amount" type="number" min="500" step="0.01" placeholder="Amount ₹"><button class="btn" id="request" type="button">Submit request</button>
 </section>
 <section class="panel"><h2>Payout history</h2><div id="payouts" class="label">No payout requests yet.</div></section>
 </div>
@@ -84,11 +83,7 @@ async function load(){
     document.getElementById('payouts').textContent='';
     if(j.payouts?.length){document.getElementById('payouts').innerHTML=j.payouts.map(p=>{const row=document.createElement('p');row.textContent='#'+p.id+' · ₹'+Number(p.amount).toFixed(2)+' · '+p.status;return row.outerHTML;}).join('');}
     else document.getElementById('payouts').textContent='No payout requests yet.';
-    try {
-      const pr=await fetch(API+'/api/partners/payment-details',{headers:{Authorization:'Bearer '+token}});
-      const pj=await pr.json();
-      if(pj.success&&pj.details){const d=pj.details;document.getElementById('paymentMethod').value=d.payment_method||'upi';document.getElementById('accountName').value=d.account_name||'';document.getElementById('upiId').value=d.upi_id||'';document.getElementById('bankName').value=d.bank_name||'';document.getElementById('accountNumber').value=d.account_number||'';document.getElementById('ifsc').value=d.ifsc_code||'';togglePaymentFields();}
-    } catch(_) {}
+    const pd=j.paymentDetails||{};document.getElementById('paymentMethod').value=pd.payment_method==='BANK'?'BANK':'UPI';document.getElementById('upiId').value=pd.upi_id||'';document.getElementById('accountName').value=pd.account_name||'';document.getElementById('bankName').value=pd.bank_name||'';document.getElementById('accountNumber').value=pd.account_number||'';document.getElementById('ifscCode').value=pd.ifsc_code||'';togglePaymentFields();
     if(navigator.share)document.getElementById('nativeShare').hidden=false;
     document.getElementById('content').hidden=false;
     notice.textContent='';
@@ -97,9 +92,10 @@ async function load(){
 document.getElementById('copyCode').onclick=async()=>{setShareStatus(await copyText(partnerCode)?'Partner code copied.':'Unable to copy automatically. Please select the code and copy it.',true);};
 document.getElementById('copyLink').onclick=async()=>{setShareStatus(await copyText(referralUrl)?'Referral link copied. Share it with authors.':'Unable to copy automatically. Select the link and copy it.',true);};
 document.getElementById('nativeShare').onclick=async()=>{try{await navigator.share({title:'MyLikith Author Referral',text:'Join MyLikith as an author using my referral link.',url:referralUrl});}catch(e){if(e.name!=='AbortError')setShareStatus('Unable to open the share menu.');}};
-function togglePaymentFields(){const bank=document.getElementById('paymentMethod').value==='bank';document.getElementById('upiWrap').hidden=bank;document.getElementById('bankWrap').hidden=!bank;document.getElementById('accountWrap').hidden=!bank;document.getElementById('ifscWrap').hidden=!bank;}
-document.getElementById('paymentMethod').addEventListener('change',togglePaymentFields);
-document.getElementById('request').onclick=async()=>{const amount=Number(document.getElementById('amount').value);const payment_method=document.getElementById('paymentMethod').value;const payload={amount,payment_method,account_name:document.getElementById('accountName').value.trim(),upi_id:document.getElementById('upiId').value.trim(),bank_name:document.getElementById('bankName').value.trim(),account_number:document.getElementById('accountNumber').value.trim(),ifsc_code:document.getElementById('ifsc').value.trim()};try{const r=await fetch(API+'/api/partners/payout-request',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify(payload)});const j=await r.json();notice.textContent=j.message||'Request submitted.';if(j.success){document.getElementById('amount').value='';await load();}}catch(_){notice.textContent='Network error.';}};
+function togglePaymentFields(){const bank=document.getElementById('paymentMethod').value==='BANK';document.getElementById('upiFields').hidden=bank;document.getElementById('bankFields').hidden=!bank;}
+document.getElementById('paymentMethod').onchange=togglePaymentFields;
+document.getElementById('savePaymentDetails').onclick=async()=>{const payment_method=document.getElementById('paymentMethod').value;const body={payment_method,upi_id:document.getElementById('upiId').value.trim(),account_name:document.getElementById('accountName').value.trim(),bank_name:document.getElementById('bankName').value.trim(),account_number:document.getElementById('accountNumber').value.trim(),ifsc_code:document.getElementById('ifscCode').value.trim()};const status=document.getElementById('paymentStatus');status.textContent='Saving…';try{const r=await fetch(API+'/api/partners/payment-details',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify(body)});const j=await r.json();if(!r.ok||!j.success)throw Error(j.message||'Unable to save payment details.');status.textContent=j.message||'Payment details saved.';}catch(e){status.textContent=e.message||'Network error.';}};
+document.getElementById('request').onclick=async()=>{const amount=Number(document.getElementById('amount').value);try{const r=await fetch(API+'/api/partners/payout-request',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify({amount})});const j=await r.json();notice.textContent=j.message||'Request submitted.';if(j.success){document.getElementById('amount').value='';await load();}}catch(_){notice.textContent='Network error.';}};
 load();
 </script>
 </body>
