@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Partner Dashboard | MyLikith</title>
 <style>
-:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#100d1b;color:#f5efff;font:15px Arial,sans-serif}.wrap{max-width:1050px;margin:35px auto;padding:20px}.panel,.stat{background:#1d172b;border:1px solid #493565;border-radius:16px;padding:22px}.panel{margin-top:16px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:18px 0}.label{color:#bdb0ce;line-height:1.6}.value{font-size:28px;color:#d5baff;margin-top:8px}.code{font-size:22px;letter-spacing:2px;color:#d5baff;overflow-wrap:anywhere}.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:#8b4cf2;color:white;border:0;padding:11px 16px;border-radius:9px;cursor:pointer;text-decoration:none;font-weight:600}.btn.secondary{background:#34254b;border:1px solid #664b8e}.btn.whatsapp{background:#167c52}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.link-input{width:100%;padding:12px;border-radius:9px;background:#120e1c;color:#e9ddff;border:1px solid #54416e;font-size:14px}.link-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;margin-top:12px}select.link-input{margin:6px 0 12px}#upiFields input,#bankFields input{margin:6px 0 12px}input[type=number]{padding:10px;border-radius:8px;background:#120e1c;color:white;border:1px solid #54416e;width:160px;max-width:100%}#notice{color:#d5baff;margin:14px 0;line-height:1.6}.hint{font-size:13px;color:#a99abf;line-height:1.6}.success{color:#76e2ad}@media(max-width:620px){.wrap{margin:12px auto;padding:14px}.panel,.stat{padding:17px}.link-row{grid-template-columns:1fr}.btn{width:100%}.actions{flex-direction:column}}
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#100d1b;color:#f5efff;font:15px Arial,sans-serif}.wrap{max-width:1050px;margin:35px auto;padding:20px}.panel,.stat{background:#1d172b;border:1px solid #493565;border-radius:16px;padding:22px}.panel{margin-top:16px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:18px 0}.label{color:#bdb0ce;line-height:1.6}.value{font-size:28px;color:#d5baff;margin-top:8px}.code{font-size:22px;letter-spacing:2px;color:#d5baff;overflow-wrap:anywhere}.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:#8b4cf2;color:white;border:0;padding:11px 16px;border-radius:9px;cursor:pointer;text-decoration:none;font-weight:600}.btn.secondary{background:#34254b;border:1px solid #664b8e}.btn.whatsapp{background:#167c52}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.link-input{width:100%;padding:12px;border-radius:9px;background:#120e1c;color:#e9ddff;border:1px solid #54416e;font-size:14px}.link-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;margin-top:12px}select.link-input{margin:6px 0 12px}#upiFields input,#bankFields input{margin:6px 0 12px}input[type=number]{padding:10px;border-radius:8px;background:#120e1c;color:white;border:1px solid #54416e;width:160px;max-width:100%}#notice{color:#d5baff;margin:14px 0;line-height:1.6}.hint{font-size:13px;color:#a99abf;line-height:1.6}.success{color:#76e2ad}.payment-warning{margin:14px 0;padding:13px 15px;border:1px solid #a66c27;background:#382817;border-radius:10px;color:#ffe0a8;line-height:1.55}.payment-warning strong{display:block;margin-bottom:4px}.payment-warning[hidden]{display:none}.modal-backdrop{position:fixed;inset:0;z-index:1000;background:#080610cc;display:flex;align-items:center;justify-content:center;padding:18px}.modal-backdrop[hidden]{display:none}.modal{width:min(100%,440px);background:#21182f;border:1px solid #76549e;border-radius:16px;padding:24px;box-shadow:0 18px 60px #0009}.modal h3{margin:0 0 10px;color:#f4eaff}.modal p{color:#c9bbda;line-height:1.6}.modal .actions{margin-top:18px}.modal-close{float:right;background:transparent;color:#d8c7ef;border:0;font-size:24px;cursor:pointer}@media(max-width:620px){.wrap{margin:12px auto;padding:14px}.panel,.stat{padding:17px}.link-row{grid-template-columns:1fr}.btn{width:100%}.actions{flex-direction:column}}
 </style>
 </head>
 <body>
@@ -35,7 +35,7 @@
   <div class="stat"><div class="label">Available to request</div><div class="value" id="available">₹0</div></div>
   <div class="stat"><div class="label">Commissions paid</div><div class="value" id="paid">₹0</div></div>
 </section>
-<section class="panel">
+<section class="panel" id="paymentDetailsPanel">
   <h2>Withdrawal payment details</h2>
   <p class="label">Add the UPI ID or bank account where MyLikith should send your approved partner payout. These details are visible to authorised administrators for manual payment processing.</p>
   <label class="label" for="paymentMethod">Payment method</label><select id="paymentMethod" class="link-input"><option value="UPI">UPI</option><option value="BANK">Bank transfer</option></select>
@@ -46,17 +46,36 @@
 <section class="panel">
   <h2>Request a payout</h2>
   <p class="label">Minimum request ₹500. Only commissions approved by an administrator count toward your available balance. After you submit a request, an administrator reviews it and manually transfers the funds to your saved UPI ID or bank account.</p>
+  <div class="payment-warning" id="paymentWarning" role="status"><strong>Action required: Save your payment details first.</strong>Please add and save your UPI ID or bank account details above before submitting a payout request.</div>
   <input id="amount" type="number" min="500" step="0.01" placeholder="Amount ₹"><button class="btn" id="request" type="button">Submit request</button>
 </section>
 <section class="panel"><h2>Payout history</h2><div id="payouts" class="label">No payout requests yet.</div></section>
 </div>
 </main>
+<div class="modal-backdrop" id="paymentModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="paymentModalTitle" aria-describedby="paymentModalText">
+    <button class="modal-close" id="closePaymentModal" type="button" aria-label="Close">×</button>
+    <h3 id="paymentModalTitle">Save payment details first</h3>
+    <p id="paymentModalText">Before requesting a payout, you must save a valid UPI ID or bank account details. This tells MyLikith where to send your approved payout.</p>
+    <div class="actions"><button class="btn" id="goToPaymentDetails" type="button">Add payment details</button><button class="btn secondary" id="dismissPaymentModal" type="button">Not now</button></div>
+  </div>
+</div>
 <script>
 const API='https://mylikith-backend.onrender.com';
 const token=localStorage.getItem('token');
 const notice=document.getElementById('notice');
 let partnerCode='';
 let referralUrl='';
+let paymentDetailsSaved=false;
+function validSavedPaymentDetails(pd){
+  if(!pd)return false;
+  if(pd.payment_method==='UPI')return /^[A-Za-z0-9._-]{2,100}@[A-Za-z0-9.-]{2,50}$/.test(String(pd.upi_id||'').trim());
+  if(pd.payment_method==='BANK')return !!String(pd.account_name||'').trim()&&!!String(pd.bank_name||'').trim()&&/^\d{6,24}$/.test(String(pd.account_number||'').trim())&&/^[A-Z]{4}0[A-Z0-9]{6}$/.test(String(pd.ifsc_code||'').trim().toUpperCase());
+  return false;
+}
+function updatePaymentReminder(){document.getElementById('paymentWarning').hidden=paymentDetailsSaved;}
+function openPaymentModal(){document.getElementById('paymentModal').hidden=false;document.getElementById('goToPaymentDetails').focus();}
+function closePaymentModal(){document.getElementById('paymentModal').hidden=true;}
 function setShareStatus(message,isSuccess=false){const el=document.getElementById('shareStatus');el.textContent=message;el.className='hint'+(isSuccess?' success':'');}
 async function copyText(value){
   try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(value);}else{const t=document.createElement('textarea');t.value=value;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();const ok=document.execCommand('copy');t.remove();if(!ok)throw new Error('Copy unavailable');}return true;}
@@ -83,7 +102,7 @@ async function load(){
     document.getElementById('payouts').textContent='';
     if(j.payouts?.length){document.getElementById('payouts').innerHTML=j.payouts.map(p=>{const row=document.createElement('p');row.textContent='#'+p.id+' · ₹'+Number(p.amount).toFixed(2)+' · '+p.status;return row.outerHTML;}).join('');}
     else document.getElementById('payouts').textContent='No payout requests yet.';
-    const pd=j.paymentDetails||{};document.getElementById('paymentMethod').value=pd.payment_method==='BANK'?'BANK':'UPI';document.getElementById('upiId').value=pd.upi_id||'';document.getElementById('accountName').value=pd.account_name||'';document.getElementById('bankName').value=pd.bank_name||'';document.getElementById('accountNumber').value=pd.account_number||'';document.getElementById('ifscCode').value=pd.ifsc_code||'';togglePaymentFields();
+    const pd=j.paymentDetails||{};document.getElementById('paymentMethod').value=pd.payment_method==='BANK'?'BANK':'UPI';document.getElementById('upiId').value=pd.upi_id||'';document.getElementById('accountName').value=pd.account_name||'';document.getElementById('bankName').value=pd.bank_name||'';document.getElementById('accountNumber').value=pd.account_number||'';document.getElementById('ifscCode').value=pd.ifsc_code||'';paymentDetailsSaved=validSavedPaymentDetails(pd);togglePaymentFields();updatePaymentReminder();
     if(navigator.share)document.getElementById('nativeShare').hidden=false;
     document.getElementById('content').hidden=false;
     notice.textContent='';
@@ -93,9 +112,15 @@ document.getElementById('copyCode').onclick=async()=>{setShareStatus(await copyT
 document.getElementById('copyLink').onclick=async()=>{setShareStatus(await copyText(referralUrl)?'Referral link copied. Share it with authors.':'Unable to copy automatically. Select the link and copy it.',true);};
 document.getElementById('nativeShare').onclick=async()=>{try{await navigator.share({title:'MyLikith Author Referral',text:'Join MyLikith as an author using my referral link.',url:referralUrl});}catch(e){if(e.name!=='AbortError')setShareStatus('Unable to open the share menu.');}};
 function togglePaymentFields(){const bank=document.getElementById('paymentMethod').value==='BANK';document.getElementById('upiFields').hidden=bank;document.getElementById('bankFields').hidden=!bank;}
-document.getElementById('paymentMethod').onchange=togglePaymentFields;
-document.getElementById('savePaymentDetails').onclick=async()=>{const payment_method=document.getElementById('paymentMethod').value;const body={payment_method,upi_id:document.getElementById('upiId').value.trim(),account_name:document.getElementById('accountName').value.trim(),bank_name:document.getElementById('bankName').value.trim(),account_number:document.getElementById('accountNumber').value.trim(),ifsc_code:document.getElementById('ifscCode').value.trim()};const status=document.getElementById('paymentStatus');status.textContent='Saving…';try{const r=await fetch(API+'/api/partners/payment-details',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify(body)});const j=await r.json();if(!r.ok||!j.success)throw Error(j.message||'Unable to save payment details.');status.textContent=j.message||'Payment details saved.';}catch(e){status.textContent=e.message||'Network error.';}};
-document.getElementById('request').onclick=async()=>{const amount=Number(document.getElementById('amount').value);try{const r=await fetch(API+'/api/partners/payout-request',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify({amount})});const j=await r.json();notice.textContent=j.message||'Request submitted.';if(j.success){document.getElementById('amount').value='';await load();}}catch(_){notice.textContent='Network error.';}};
+document.getElementById('paymentMethod').onchange=()=>{togglePaymentFields();paymentDetailsSaved=false;updatePaymentReminder();};
+['upiId','accountName','bankName','accountNumber','ifscCode'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{paymentDetailsSaved=false;updatePaymentReminder();}));
+document.getElementById('savePaymentDetails').onclick=async()=>{const payment_method=document.getElementById('paymentMethod').value;const body={payment_method,upi_id:document.getElementById('upiId').value.trim(),account_name:document.getElementById('accountName').value.trim(),bank_name:document.getElementById('bankName').value.trim(),account_number:document.getElementById('accountNumber').value.trim(),ifsc_code:document.getElementById('ifscCode').value.trim()};const status=document.getElementById('paymentStatus');status.textContent='Saving…';try{const r=await fetch(API+'/api/partners/payment-details',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify(body)});const j=await r.json();if(!r.ok||!j.success)throw Error(j.message||'Unable to save payment details.');paymentDetailsSaved=true;updatePaymentReminder();status.textContent=j.message||'Payment details saved.';status.className='hint success';}catch(e){paymentDetailsSaved=false;updatePaymentReminder();status.textContent=e.message||'Network error.';status.className='hint';}};
+document.getElementById('request').onclick=async()=>{if(!paymentDetailsSaved){openPaymentModal();return;}const amount=Number(document.getElementById('amount').value);try{const r=await fetch(API+'/api/partners/payout-request',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify({amount})});const j=await r.json();if(!r.ok||!j.success){if(String(j.message||'').toLowerCase().includes('payment details')){paymentDetailsSaved=false;updatePaymentReminder();openPaymentModal();return;}notice.textContent=j.message||'Unable to submit payout request.';return;}notice.textContent=j.message||'Payout request submitted.';document.getElementById('amount').value='';await load();}catch(_){notice.textContent='Network error.';}};
+document.getElementById('closePaymentModal').onclick=closePaymentModal;
+document.getElementById('dismissPaymentModal').onclick=closePaymentModal;
+document.getElementById('goToPaymentDetails').onclick=()=>{closePaymentModal();document.getElementById('paymentDetailsPanel').scrollIntoView({behavior:'smooth',block:'start'});document.getElementById('paymentMethod').focus({preventScroll:true});};
+document.getElementById('paymentModal').addEventListener('click',e=>{if(e.target.id==='paymentModal')closePaymentModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePaymentModal();});
 load();
 </script>
 </body>
