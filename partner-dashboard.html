@@ -30,14 +30,14 @@
 <section class="stats">
   <div class="stat"><div class="label">Total referrals</div><div class="value" id="refs">0</div></div>
   <div class="stat"><div class="label">Approved authors</div><div class="value" id="approved">0</div></div>
-  <div class="stat"><div class="label">Accrued · tax review pending</div><div class="value" id="taxPending">₹0</div></div>
+  <div class="stat"><div class="label">Awaiting admin approval</div><div class="value" id="taxPending">₹0</div></div>
   <div class="stat"><div class="label">Approved · unpaid</div><div class="value" id="unpaid">₹0</div></div>
   <div class="stat"><div class="label">Available to request</div><div class="value" id="available">₹0</div></div>
   <div class="stat"><div class="label">Commissions paid</div><div class="value" id="paid">₹0</div></div>
 </section>
 <section class="panel">
   <h2>Request a payout</h2>
-  <p class="label">Minimum request ₹500. Only approved, available commission can be requested. Accrued commissions awaiting tax or refund-safeguard confirmation are displayed separately and cannot yet be withdrawn.</p>
+  <p class="label">Minimum request ₹500. Only commissions approved by an administrator count toward your available balance. Payout requests remain temporarily disabled while MyLikith completes tax and refund-reversal checks.</p>
   <input id="amount" type="number" min="500" step="0.01" placeholder="Amount ₹"><button class="btn" id="request" type="button">Submit request</button>
 </section>
 <section class="panel"><h2>Payout history</h2><div id="payouts" class="label">No payout requests yet.</div></section>
