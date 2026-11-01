@@ -37,8 +37,17 @@
 </section>
 <section class="panel">
   <h2>Request a payout</h2>
-  <p class="label">Minimum request ₹500. Only commissions approved by an administrator count toward your available balance. Payout requests remain temporarily disabled while MyLikith completes tax and refund-reversal checks.</p>
-  <input id="amount" type="number" min="500" step="0.01" placeholder="Amount ₹"><button class="btn" id="request" type="button">Submit request</button>
+  <p class="label">Minimum request ₹500. Only admin-approved commissions are withdrawable. Add your UPI ID or bank account details; MyLikith will manually transfer approved payouts. This is a cash payout and does not go into your reader coin wallet.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:14px 0">
+    <label>Withdrawal amount (₹)<input id="amount" type="number" min="500" step="0.01" placeholder="500" style="display:block;width:100%;margin-top:6px"></label>
+    <label>Payment method<select id="paymentMethod" style="display:block;width:100%;padding:11px;margin-top:6px;border-radius:8px;background:#120e1c;color:white;border:1px solid #54416e"><option value="upi">UPI</option><option value="bank">Bank transfer</option></select></label>
+    <label>Account holder name<input id="accountName" autocomplete="name" placeholder="Name as per account" style="display:block;width:100%;margin-top:6px"></label>
+    <label id="upiWrap">UPI ID<input id="upiId" placeholder="name@bank" style="display:block;width:100%;margin-top:6px"></label>
+    <label id="bankWrap" hidden>Bank name<input id="bankName" placeholder="Bank name" style="display:block;width:100%;margin-top:6px"></label>
+    <label id="accountWrap" hidden>Account number<input id="accountNumber" inputmode="numeric" placeholder="Account number" style="display:block;width:100%;margin-top:6px"></label>
+    <label id="ifscWrap" hidden>IFSC code<input id="ifsc" autocapitalize="characters" placeholder="ABCD0123456" style="display:block;width:100%;margin-top:6px"></label>
+  </div>
+  <button class="btn" id="request" type="button">Submit withdrawal request</button>
 </section>
 <section class="panel"><h2>Payout history</h2><div id="payouts" class="label">No payout requests yet.</div></section>
 </div>
@@ -75,6 +84,11 @@ async function load(){
     document.getElementById('payouts').textContent='';
     if(j.payouts?.length){document.getElementById('payouts').innerHTML=j.payouts.map(p=>{const row=document.createElement('p');row.textContent='#'+p.id+' · ₹'+Number(p.amount).toFixed(2)+' · '+p.status;return row.outerHTML;}).join('');}
     else document.getElementById('payouts').textContent='No payout requests yet.';
+    try {
+      const pr=await fetch(API+'/api/partners/payment-details',{headers:{Authorization:'Bearer '+token}});
+      const pj=await pr.json();
+      if(pj.success&&pj.details){const d=pj.details;document.getElementById('paymentMethod').value=d.payment_method||'upi';document.getElementById('accountName').value=d.account_name||'';document.getElementById('upiId').value=d.upi_id||'';document.getElementById('bankName').value=d.bank_name||'';document.getElementById('accountNumber').value=d.account_number||'';document.getElementById('ifsc').value=d.ifsc_code||'';togglePaymentFields();}
+    } catch(_) {}
     if(navigator.share)document.getElementById('nativeShare').hidden=false;
     document.getElementById('content').hidden=false;
     notice.textContent='';
@@ -83,7 +97,9 @@ async function load(){
 document.getElementById('copyCode').onclick=async()=>{setShareStatus(await copyText(partnerCode)?'Partner code copied.':'Unable to copy automatically. Please select the code and copy it.',true);};
 document.getElementById('copyLink').onclick=async()=>{setShareStatus(await copyText(referralUrl)?'Referral link copied. Share it with authors.':'Unable to copy automatically. Select the link and copy it.',true);};
 document.getElementById('nativeShare').onclick=async()=>{try{await navigator.share({title:'MyLikith Author Referral',text:'Join MyLikith as an author using my referral link.',url:referralUrl});}catch(e){if(e.name!=='AbortError')setShareStatus('Unable to open the share menu.');}};
-document.getElementById('request').onclick=async()=>{const amount=Number(document.getElementById('amount').value);try{const r=await fetch(API+'/api/partners/payout-request',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify({amount})});const j=await r.json();notice.textContent=j.message||'Request submitted.';if(j.success)load();}catch(_){notice.textContent='Network error.';}};
+function togglePaymentFields(){const bank=document.getElementById('paymentMethod').value==='bank';document.getElementById('upiWrap').hidden=bank;document.getElementById('bankWrap').hidden=!bank;document.getElementById('accountWrap').hidden=!bank;document.getElementById('ifscWrap').hidden=!bank;}
+document.getElementById('paymentMethod').addEventListener('change',togglePaymentFields);
+document.getElementById('request').onclick=async()=>{const amount=Number(document.getElementById('amount').value);const payment_method=document.getElementById('paymentMethod').value;const payload={amount,payment_method,account_name:document.getElementById('accountName').value.trim(),upi_id:document.getElementById('upiId').value.trim(),bank_name:document.getElementById('bankName').value.trim(),account_number:document.getElementById('accountNumber').value.trim(),ifsc_code:document.getElementById('ifsc').value.trim()};try{const r=await fetch(API+'/api/partners/payout-request',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify(payload)});const j=await r.json();notice.textContent=j.message||'Request submitted.';if(j.success){document.getElementById('amount').value='';await load();}}catch(_){notice.textContent='Network error.';}};
 load();
 </script>
 </body>
