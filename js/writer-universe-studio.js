@@ -1,23 +1,136 @@
 (() => {
 const API='https://mylikith-backend.onrender.com/api/writer-universe';
+const MEDIA='https://mylikith-backend.onrender.com/api/audio/media';
 const token=localStorage.getItem('token')||'';
 const $=id=>document.getElementById(id);
-let activeTab='audio';
 const headers={'Content-Type':'application/json',Authorization:`Bearer ${token}`};
-async function api(path,options={}){const r=await fetch(API+path,{...options,headers:{...headers,...(options.headers||{})}});let d={};try{d=await r.json()}catch{}if(!r.ok||d.success===false)throw new Error(d.message||`Request failed (${r.status})`);return d;}
-function message(s){$('wuMessage').textContent=s;$('wuMessage').classList.remove('wu-hidden');}
+let currentProject=null;
+async function api(path,options={}) {
+ const r=await fetch(API+path,{...options,headers:{...headers,...(options.headers||{})}});
+ let d={}; try{d=await r.json()}catch{}
+ if(!r.ok||d.success===false) throw new Error(d.message||`Request failed (${r.status})`);
+ return d;
+}
+function msg(s){$('wuMessage').textContent=s;$('wuMessage').classList.remove('wu-hidden');}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function switchTab(tab){activeTab=tab;document.querySelectorAll('.wu-tabs button').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));$('audioPanel').classList.toggle('wu-hidden',tab!=='audio');$('originalsPanel').classList.toggle('wu-hidden',tab!=='originals');$('projectEditor').classList.add('wu-hidden');$('chapterEditor').classList.add('wu-hidden');}
-document.querySelectorAll('.wu-tabs button').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
-function projectCard(p,type){return `<article class="wu-card"><h3>${esc(p.title)}</h3><p class="wu-muted">${esc(p.language||'Language not set')} · ${esc(p.status||'ongoing')} · ${Number(type==='audio'?p.chapter_count:p.episode_count)||0} ${type==='audio'?'chapters':'episodes'}</p><p>${esc(p.description||'No description')}</p><div class="wu-actions"><button class="wu-btn primary" data-manage="${type}" data-id="${p.id}" data-title="${esc(p.title)}">Manage ${type==='audio'?'chapters':'episodes'}</button><button class="wu-btn" data-edit="${type}" data-id="${p.id}">Edit</button></div></article>`;}
-async function load(){try{const [a,o]=await Promise.all([api('/audio'),api('/originals')]);$('audioList').innerHTML=(a.audio||[]).map(p=>projectCard(p,'audio')).join('')||'<p class="wu-muted">No audio projects yet.</p>';$('originalsList').innerHTML=(o.originals||[]).map(p=>projectCard(p,'originals')).join('')||'<p class="wu-muted">No Originals series yet.</p>';}catch(e){message(e.message);}}
-function openProject(type,p=null){$('projectEditor').classList.remove('wu-hidden');$('chapterEditor').classList.add('wu-hidden');$('projectHeading').textContent=(p?'Edit ':'Create ')+(type==='audio'?'Audio Novel':'Originals Series');$('projectId').value=p?.id||'';$('projectType').value=type;$('pTitle').value=p?.title||'';$('pLanguage').value=p?.language||'';$('pCategory').value=p?.category||'';$('pContentType').value=p?.content_type||(type==='audio'?'story':'series');$('pStatus').value=p?.status||'ongoing';$('pCover').value=p?.cover_url||'';$('pDescription').value=p?.description||'';$('projectEditor').scrollIntoView({behavior:'smooth'});}
-$('newAudio').onclick=()=>openProject('audio');$('newOriginal').onclick=()=>openProject('originals');$('cancelProject').onclick=()=>$('projectEditor').classList.add('wu-hidden');
-$('projectForm').onsubmit=async e=>{e.preventDefault();const type=$('projectType').value,id=$('projectId').value;const body={title:$('pTitle').value.trim(),language:$('pLanguage').value.trim(),category:$('pCategory').value.trim(),content_type:$('pContentType').value,status:$('pStatus').value,cover_url:$('pCover').value.trim(),description:$('pDescription').value.trim()};try{await api(`/${type}${id?'/'+id:''}`,{method:id?'PUT':'POST',body:JSON.stringify(body)});$('projectEditor').classList.add('wu-hidden');message('Project saved.');await load();}catch(err){message(err.message);}};
-async function manage(type,id,name){$('chapterEditor').classList.remove('wu-hidden');$('projectEditor').classList.add('wu-hidden');$('chapterProjectId').value=id;$('chapterType').value=type;$('chapterHeading').textContent=type==='audio'?'Audio chapters':'Originals episodes';$('chapterProjectName').textContent=name;$('mediaTypeLabel').classList.toggle('wu-hidden',type!=='originals');$('contentLabel').classList.toggle('wu-hidden',type==='audio');$('chapterForm').reset();$('cCoins').value=0;await loadChapters();$('chapterEditor').scrollIntoView({behavior:'smooth'});}
-async function loadChapters(){const type=$('chapterType').value,id=$('chapterProjectId').value;try{const d=await api(`/${type}/${id}/${type==='audio'?'chapters':'episodes'}`);const arr=type==='audio'?d.chapters:d.episodes;$('chapterList').innerHTML=(arr||[]).map(c=>`<div class="wu-item"><div><strong>${esc(c.chapter_no)}. ${esc(c.title)}</strong><div class="wu-status">${c.is_premium?'Premium':'Free'} · ${c.is_published?'Published':'Draft'}${c.audio_status?' · '+esc(c.audio_status):''}</div></div></div>`).join('')||'<p class="wu-muted">No chapters or episodes yet.</p>';}catch(e){message(e.message);}}
-$('chapterForm').onsubmit=async e=>{e.preventDefault();const type=$('chapterType').value,id=$('chapterProjectId').value;const body={chapter_no:Number($('cNumber').value),title:$('cTitle').value.trim(),is_premium:$('cPremium').checked,coins_required:Number($('cCoins').value)||0,early_access:$('cEarly').checked,publish_at:$('cPublishAt').value||null};if(type==='originals'){body.media_type=$('cMediaType').value;body.content=$('cContent').value;}try{await api(`/${type}/${id}/${type==='audio'?'chapters':'episodes'}`,{method:'POST',body:JSON.stringify(body)});$('chapterForm').reset();$('cCoins').value=0;message('Chapter / episode saved as draft.');await loadChapters();}catch(err){message(err.message);}};
-$('closeChapters').onclick=()=>$('chapterEditor').classList.add('wu-hidden');
-document.addEventListener('click',async e=>{const m=e.target.closest('[data-manage]');if(m){manage(m.dataset.manage,m.dataset.id,m.dataset.title);return;}const ed=e.target.closest('[data-edit]');if(ed){try{const d=await api(`/${ed.dataset.edit}`);const list=ed.dataset.edit==='audio'?d.audio:d.originals;const p=list.find(x=>String(x.id)===ed.dataset.id);if(p)openProject(ed.dataset.edit,p);}catch(err){message(err.message);}}});
-if(!token){message('Please sign in first.');}else load();
+function hidden(id,on){$(id).classList.toggle('wu-hidden',!on);}
+function projectCard(p,type){
+ const published=String(p.publish_status||'draft').toLowerCase()==='published';
+ return `<article class="wu-card"><h3>${esc(p.title)}</h3><p class="wu-muted">${esc(p.language||'Language not set')} · ${esc(p.status||'ongoing')} · ${Number(type==='audio'?p.chapter_count:p.episode_count)||0} ${type==='audio'?'chapters':'episodes'} · ${published?'Published':'Draft'}</p>${p.cover_url?`<img src="${esc(p.cover_url)}" alt="Cover" style="width:86px;height:116px;object-fit:cover;border-radius:8px">`:''}<p>${esc(p.description||'No description')}</p><div class="wu-actions"><button class="wu-btn primary" data-manage="${type}" data-id="${p.id}" data-title="${esc(p.title)}">Manage ${type==='audio'?'chapters':'episodes'}</button><button class="wu-btn" data-edit="${type}" data-id="${p.id}">Edit</button><button class="wu-btn" data-project-publish="${type}" data-id="${p.id}" data-published="${published}">${published?'Unpublish':'Publish'}</button><button class="wu-btn" data-project-delete="${type}" data-id="${p.id}">Delete</button></div></article>`;
+}
+async function load(){
+ try{
+  const [a,o]=await Promise.all([api('/audio'),api('/originals')]);
+  $('audioList').innerHTML=(a.audio||[]).map(p=>projectCard(p,'audio')).join('')||'<p class="wu-muted">No audio projects yet.</p>';
+  $('originalsList').innerHTML=(o.originals||[]).map(p=>projectCard(p,'originals')).join('')||'<p class="wu-muted">No Originals series yet.</p>';
+ }catch(e){msg(e.message);}
+}
+function openProject(type,p=null){
+ hidden('projectEditor',true);hidden('chapterEditor',false);
+ $('projectHeading').textContent=(p?'Edit ':'Create ')+(type==='audio'?'Audio Novel':'Originals Series');
+ $('projectId').value=p?.id||'';$('projectType').value=type;
+ $('pTitle').value=p?.title||'';$('pLanguage').value=p?.language||'';$('pCategory').value=p?.category||'';
+ $('pContentType').value=p?.content_type||(type==='audio'?'story':'series');$('pStatus').value=p?.status||'ongoing';
+ $('pCover').value=p?.cover_url||'';$('pCoverFile').value='';$('coverStatus').textContent=p?.cover_url?'Current cover retained. Choose another image to replace it.':'Choose JPG, PNG or WebP (max 5 MB).';
+ if(p?.cover_url){$('coverPreview').src=p.cover_url;hidden('coverPreview',true)}else hidden('coverPreview',false);
+ $('pDescription').value=p?.description||'';$('projectEditor').scrollIntoView({behavior:'smooth'});
+}
+$('newAudio').onclick=()=>openProject('audio');$('newOriginal').onclick=()=>openProject('originals');
+$('cancelProject').onclick=()=>hidden('projectEditor',false);
+$('pCoverFile').addEventListener('change',()=>{
+ const f=$('pCoverFile').files[0]; if(!f)return;
+ if(f.size>5*1024*1024){msg('Cover must be 5 MB or smaller.');$('pCoverFile').value='';return;}
+ $('coverPreview').src=URL.createObjectURL(f);hidden('coverPreview',true);
+ $('coverStatus').textContent=f.name+' — ready to upload when you save.';
+});
+async function uploadCover(file){
+ const fd=new FormData();fd.append('cover',file);
+ const r=await fetch(API+'/cover-upload',{method:'POST',headers:{Authorization:`Bearer ${token}`},body:fd});
+ const d=await r.json();if(!r.ok||!d.success||!d.cover_url)throw new Error(d.message||'Cover upload failed.');
+ return d.cover_url;
+}
+$('projectForm').onsubmit=async e=>{
+ e.preventDefault();const type=$('projectType').value,id=$('projectId').value;
+ try{
+  let cover=$('pCover').value;
+  const file=$('pCoverFile').files[0];
+  if(file){$('coverStatus').textContent='Uploading cover…';cover=await uploadCover(file);}
+  const body={title:$('pTitle').value.trim(),language:$('pLanguage').value.trim(),category:$('pCategory').value.trim(),content_type:$('pContentType').value,status:$('pStatus').value,cover_url:cover||null,description:$('pDescription').value.trim()};
+  await api(`/${type}${id?'/'+id:''}`,{method:id?'PUT':'POST',body:JSON.stringify(body)});
+  hidden('projectEditor',false);msg('Project saved.');await load();
+ }catch(err){msg(err.message);}
+};
+async function manage(type,id,name){
+ currentProject={type,id};hidden('chapterEditor',true);hidden('projectEditor',false);
+ $('chapterProjectId').value=id;$('chapterType').value=type;$('chapterEditId').value='';
+ $('chapterHeading').textContent=type==='audio'?'Audio chapters':'Originals episodes';$('chapterProjectName').textContent=name;
+ hidden('mediaTypeLabel',type==='originals');hidden('contentLabel',type==='originals');hidden('audioUploadLabel',type==='audio');
+ $('chapterForm').reset();$('cCoins').value=0;$('cAudioFile').value='';$('audioUploadStatus').textContent='MP3 only, maximum 500 MB.';
+ $('chapterForm').querySelector('button[type=submit]').textContent='Add chapter / episode';
+ await loadChapters();$('chapterEditor').scrollIntoView({behavior:'smooth'});
+}
+async function loadChapters(){
+ const {type,id}=currentProject||{type:$('chapterType').value,id:$('chapterProjectId').value};
+ try{
+  const d=await api(`/${type}/${id}/${type==='audio'?'chapters':'episodes'}`),arr=type==='audio'?d.chapters:d.episodes;
+  $('chapterList').innerHTML=(arr||[]).map(c=>{
+   const published=!!c.is_published;
+   return `<div class="wu-item"><div><strong>${esc(c.chapter_no)}. ${esc(c.title)}</strong><div class="wu-status">${c.is_premium?'Premium':'Free'} · ${published?'Published':'Draft'}${c.audio_status?' · Audio: '+esc(c.audio_status):''}${c.media_status?' · Media: '+esc(c.media_status):''}</div></div><div class="wu-actions"><button class="wu-btn" data-chapter-edit="${type}" data-id="${c.id}">Edit</button><button class="wu-btn" data-chapter-publish="${type}" data-id="${c.id}" data-published="${published}">${published?'Unpublish':'Publish'}</button><button class="wu-btn" data-chapter-delete="${type}" data-id="${c.id}">Delete</button></div></div>`;
+  }).join('')||'<p class="wu-muted">No chapters or episodes yet.</p>';
+ }catch(e){msg(e.message);}
+}
+async function uploadAudio(chapterId,file){
+ if(!file||(!/\.mp3$/i.test(file.name)&&file.type!=='audio/mpeg'))throw new Error('Select an MP3 audio file.');
+ if(file.size>500*1024*1024)throw new Error('MP3 must be 500 MB or smaller.');
+ const send=async(path,body)=>{const r=await fetch(MEDIA+path,{method:'POST',headers,body:JSON.stringify(body)});const d=await r.json();if(!r.ok||!d.success)throw new Error(d.message||'Audio upload failed.');return d;};
+ $('audioUploadStatus').textContent='Starting upload…';
+ const start=await send(`/chapters/${chapterId}/start`,{file_name:file.name,mime_type:'audio/mpeg',file_size:file.size});
+ const parts=[],size=Number(start.part_size)||10*1024*1024,total=Math.ceil(file.size/size);
+ for(let n=1;n<=total;n++){
+  $('audioUploadStatus').textContent=`Uploading part ${n}/${total}…`;
+  const blob=file.slice((n-1)*size,Math.min(n*size,file.size));
+  const signed=await send(`/chapters/${chapterId}/sign-part`,{upload_id:start.upload_id,object_key:start.object_key,part_number:n});
+  const put=await fetch(signed.url,{method:'PUT',headers:{'Content-Type':'audio/mpeg'},body:blob});
+  if(!put.ok)throw new Error(`Audio part ${n} upload failed.`);
+  const etag=put.headers.get('ETag');if(!etag)throw new Error('Upload succeeded but ETag was not returned. Check B2 bucket CORS configuration.');
+  parts.push({part_number:n,etag});
+ }
+ $('audioUploadStatus').textContent='Finalizing audio…';
+ await send(`/chapters/${chapterId}/complete`,{upload_id:start.upload_id,object_key:start.object_key,parts,duration_seconds:0});
+ $('audioUploadStatus').textContent='✓ Audio uploaded successfully.';
+}
+$('chapterForm').onsubmit=async e=>{
+ e.preventDefault();const type=$('chapterType').value,id=$('chapterProjectId').value,editId=$('chapterEditId').value;
+ const body={chapter_no:Number($('cNumber').value),title:$('cTitle').value.trim(),is_premium:$('cPremium').checked,coins_required:Number($('cCoins').value)||0,early_access:$('cEarly').checked,publish_at:$('cPublishAt').value||null};
+ if(type==='originals'){body.media_type=$('cMediaType').value;body.content=$('cContent').value;}
+ try{
+  let saved;
+  if(editId){saved=await api(type==='audio'?`/audio/chapters/${editId}`:`/originals/episodes/${editId}`,{method:'PUT',body:JSON.stringify(body)});}
+  else {saved=await api(`/${type}/${id}/${type==='audio'?'chapters':'episodes'}`,{method:'POST',body:JSON.stringify(body)});}
+  const chapter=(saved.chapter||saved.episode);
+  if(type==='audio'&&$('cAudioFile').files[0]){
+   if(!chapter?.id)throw new Error('Chapter saved, but could not identify it for audio upload. Refresh and edit the chapter to upload audio.');
+   await uploadAudio(chapter.id,$('cAudioFile').files[0]);
+  }
+  $('chapterForm').reset();$('cCoins').value=0;$('chapterEditId').value='';
+  $('chapterForm').querySelector('button[type=submit]').textContent='Add chapter / episode';
+  msg(editId?'Chapter / episode updated.':'Chapter / episode created.');await loadChapters();
+ }catch(err){msg(err.message);}
+};
+$('closeChapters').onclick=()=>hidden('chapterEditor',false);
+document.addEventListener('click',async e=>{
+ const m=e.target.closest('[data-manage]');if(m){manage(m.dataset.manage,m.dataset.id,m.dataset.title);return;}
+ const ed=e.target.closest('[data-edit]');if(ed){try{const d=await api('/'+ed.dataset.edit),arr=ed.dataset.edit==='audio'?d.audio:d.originals,p=arr.find(x=>String(x.id)===ed.dataset.id);if(p)openProject(ed.dataset.edit,p);}catch(err){msg(err.message);}return;}
+ const pp=e.target.closest('[data-project-publish]');if(pp){const type=pp.dataset.projectPublish;try{await api(`/${type}/${pp.dataset.id}/publish`,{method:'POST',body:JSON.stringify({published:pp.dataset.published!=='true'})});msg('Project publication updated.');await load();}catch(err){msg(err.message);}return;}
+ const pd=e.target.closest('[data-project-delete]');if(pd){if(!confirm('Delete this project and all its chapters/episodes? This cannot be undone.'))return;try{await api(`/${pd.dataset.projectDelete}/${pd.dataset.id}`,{method:'DELETE'});msg('Project deleted.');await load();}catch(err){msg(err.message);}return;}
+ const ce=e.target.closest('[data-chapter-edit]');if(ce){try{
+  const type=ce.dataset.chapterEdit,id=$('chapterProjectId').value,d=await api(`/${type}/${id}/${type==='audio'?'chapters':'episodes'}`),arr=type==='audio'?d.chapters:d.episodes,c=arr.find(x=>String(x.id)===ce.dataset.id);if(!c)return;
+  $('chapterEditId').value=c.id;$('cNumber').value=c.chapter_no;$('cTitle').value=c.title;$('cPremium').checked=!!c.is_premium;$('cCoins').value=c.coins_required||0;$('cEarly').checked=!!c.early_access;$('cPublishAt').value=c.publish_at?new Date(c.publish_at).toISOString().slice(0,16):'';
+  if(type==='originals'){$('cMediaType').value=c.media_type||'video';$('cContent').value=c.content||'';}
+  $('chapterForm').querySelector('button[type=submit]').textContent='Save changes';$('chapterForm').scrollIntoView({behavior:'smooth'});
+ }catch(err){msg(err.message);}return;}
+ const cp=e.target.closest('[data-chapter-publish]');if(cp){try{const type=cp.dataset.chapterPublish;await api(type==='audio'?`/audio/chapters/${cp.dataset.id}/publish`:`/originals/episodes/${cp.dataset.id}/publish`,{method:'POST',body:JSON.stringify({published:cp.dataset.published!=='true'})});msg('Chapter / episode publication updated.');await loadChapters();}catch(err){msg(err.message);}return;}
+ const cd=e.target.closest('[data-chapter-delete]');if(cd){if(!confirm('Delete this chapter / episode? This cannot be undone.'))return;try{const type=cd.dataset.chapterDelete;await api(type==='audio'?`/audio/chapters/${cd.dataset.id}`:`/originals/episodes/${cd.dataset.id}`,{method:'DELETE'});msg('Chapter / episode deleted.');await loadChapters();}catch(err){msg(err.message);}return;}
+});
+if(!token)msg('Please sign in first.');else load();
 })();
