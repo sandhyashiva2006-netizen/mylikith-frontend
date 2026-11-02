@@ -65,7 +65,7 @@ async function manage(type,id,name){
  $('chapterProjectId').value=id;$('chapterType').value=type;$('chapterEditId').value='';
  $('chapterHeading').textContent=type==='audio'?'Audio chapters':'Originals episodes';$('chapterProjectName').textContent=name;
  hidden('mediaTypeLabel',type==='originals');hidden('contentLabel',type==='originals');hidden('audioUploadLabel',type==='audio');
- $('chapterForm').reset();$('cCoins').value=0;$('cAudioFile').value='';$('audioUploadStatus').textContent='MP3 only, maximum 500 MB.';
+ $('chapterForm').reset();$('cCoins').value=0;$('cAudioFile').value='';$('audioUploadStatus').textContent='MP3 only, maximum 500 MB. Select a file, then click Save changes to start uploading.';$('audioUploadStatus').style.color='';$('audioUploadProgress').hidden=true;$('audioUploadPercent').hidden=true;$('audioUploadProgress').value=0;
  $('chapterForm').querySelector('button[type=submit]').textContent='Add chapter / episode';
  await loadChapters();$('chapterEditor').scrollIntoView({behavior:'smooth'});
 }
@@ -82,28 +82,58 @@ async function loadChapters(){
 async function uploadAudio(chapterId,file){
  if(!file||(!/\.mp3$/i.test(file.name)&&file.type!=='audio/mpeg'))throw new Error('Select an MP3 audio file.');
  if(file.size>500*1024*1024)throw new Error('MP3 must be 500 MB or smaller.');
- const send=async(path,body)=>{const r=await fetch(MEDIA+path,{method:'POST',headers,body:JSON.stringify(body)});const d=await r.json();if(!r.ok||!d.success)throw new Error(d.message||'Audio upload failed.');return d;};
- $('audioUploadStatus').textContent='Starting upload…';
- const start=await send(`/chapters/${chapterId}/start`,{file_name:file.name,mime_type:'audio/mpeg',file_size:file.size});
- const parts=[],size=Number(start.part_size)||10*1024*1024,total=Math.ceil(file.size/size);
- for(let n=1;n<=total;n++){
-  $('audioUploadStatus').textContent=`Uploading part ${n}/${total}…`;
-  const blob=file.slice((n-1)*size,Math.min(n*size,file.size));
-  const signed=await send(`/chapters/${chapterId}/sign-part`,{upload_id:start.upload_id,object_key:start.object_key,part_number:n});
-  const put=await fetch(signed.url,{method:'PUT',headers:{'Content-Type':'audio/mpeg'},body:blob});
-  if(!put.ok)throw new Error(`Audio part ${n} upload failed.`);
-  const etag=put.headers.get('ETag');if(!etag)throw new Error('Upload succeeded but ETag was not returned. Check B2 bucket CORS configuration.');
-  parts.push({part_number:n,etag});
+ const status=$('audioUploadStatus'),bar=$('audioUploadProgress'),percent=$('audioUploadPercent');
+ const setProgress=n=>{const v=Math.max(0,Math.min(100,Math.round(n)));bar.value=v;percent.textContent=`${v}% uploaded`;};
+ bar.hidden=false;percent.hidden=false;setProgress(0);
+ const send=async(path,body)=>{const r=await fetch(MEDIA+path,{method:'POST',headers,body:JSON.stringify(body)});let d={};try{d=await r.json()}catch{}if(!r.ok||!d.success)throw new Error(d.message||`Upload request failed (${r.status}).`);return d;};
+ try{
+  status.textContent='Starting secure upload to storage…';
+  const start=await send(`/chapters/${chapterId}/start`,{file_name:file.name,mime_type:'audio/mpeg',file_size:file.size});
+  if(!start.upload_id||!start.object_key||!start.part_size)throw new Error('The server did not return a valid upload session.');
+  const parts=[],size=Number(start.part_size),total=Math.ceil(file.size/size);
+  let uploaded=0;
+  for(let n=1;n<=total;n++){
+   status.textContent=`Uploading audio · part ${n} of ${total}`;
+   const blob=file.slice((n-1)*size,Math.min(n*size,file.size));
+   const signed=await send(`/chapters/${chapterId}/sign-part`,{upload_id:start.upload_id,object_key:start.object_key,part_number:n});
+   const etag=await new Promise((resolve,reject)=>{
+    const xhr=new XMLHttpRequest();
+    xhr.open('PUT',signed.url,true);
+    xhr.setRequestHeader('Content-Type','audio/mpeg');
+    xhr.upload.onprogress=ev=>{
+     if(ev.lengthComputable){setProgress((uploaded+ev.loaded)/file.size*100);}
+    };
+    xhr.onerror=()=>reject(new Error('Network error while uploading audio. Check your connection and B2 CORS settings.'));
+    xhr.onabort=()=>reject(new Error('Audio upload was cancelled.'));
+    xhr.onload=()=>{
+     if(xhr.status<200||xhr.status>=300)return reject(new Error(`Audio storage rejected part ${n} (HTTP ${xhr.status}).`));
+     const value=xhr.getResponseHeader('ETag');
+     if(!value)return reject(new Error('Audio was sent, but storage did not expose the ETag. B2 CORS must expose the ETag response header.'));
+     resolve(value);
+    };
+    xhr.send(blob);
+   });
+   parts.push({part_number:n,etag});
+   uploaded+=blob.size;setProgress(uploaded/file.size*100);
+  }
+  status.textContent='All parts uploaded. Finalizing and verifying audio…';
+  await send(`/chapters/${chapterId}/complete`,{upload_id:start.upload_id,object_key:start.object_key,parts,duration_seconds:0});
+  setProgress(100);status.textContent='✓ Audio uploaded and verified successfully. You can now publish this chapter.';
+ }catch(err){
+  status.textContent=`Upload failed: ${err.message}`;
+  status.style.color='#ff8585';
+  throw err;
  }
- $('audioUploadStatus').textContent='Finalizing audio…';
- await send(`/chapters/${chapterId}/complete`,{upload_id:start.upload_id,object_key:start.object_key,parts,duration_seconds:0});
- $('audioUploadStatus').textContent='✓ Audio uploaded successfully.';
 }
 $('chapterForm').onsubmit=async e=>{
  e.preventDefault();const type=$('chapterType').value,id=$('chapterProjectId').value,editId=$('chapterEditId').value;
  const body={chapter_no:Number($('cNumber').value),title:$('cTitle').value.trim(),is_premium:$('cPremium').checked,coins_required:Number($('cCoins').value)||0,early_access:$('cEarly').checked,publish_at:$('cPublishAt').value||null};
  if(type==='originals'){body.media_type=$('cMediaType').value;body.content=$('cContent').value;}
+ const saveButton=$('chapterForm').querySelector('button[type=submit]');
+ saveButton.disabled=true;
+ const originalButtonText=saveButton.textContent;
  try{
+  saveButton.textContent='Saving…';
   let saved;
   if(editId){saved=await api(type==='audio'?`/audio/chapters/${editId}`:`/originals/episodes/${editId}`,{method:'PUT',body:JSON.stringify(body)});}
   else {saved=await api(`/${type}/${id}/${type==='audio'?'chapters':'episodes'}`,{method:'POST',body:JSON.stringify(body)});}
@@ -113,9 +143,10 @@ $('chapterForm').onsubmit=async e=>{
    await uploadAudio(chapter.id,$('cAudioFile').files[0]);
   }
   $('chapterForm').reset();$('cCoins').value=0;$('chapterEditId').value='';
-  $('chapterForm').querySelector('button[type=submit]').textContent='Add chapter / episode';
+  saveButton.textContent='Add chapter / episode';
   msg(editId?'Chapter / episode updated.':'Chapter / episode created.');await loadChapters();
  }catch(err){msg(err.message);}
+ finally{saveButton.disabled=false;if(saveButton.textContent==='Saving…')saveButton.textContent=originalButtonText;}
 };
 $('closeChapters').onclick=()=>hidden('chapterEditor',false);
 document.addEventListener('click',async e=>{
