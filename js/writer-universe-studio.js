@@ -5,6 +5,15 @@ const token=localStorage.getItem('token')||'';
 const $=id=>document.getElementById(id);
 const headers={'Content-Type':'application/json',Authorization:`Bearer ${token}`};
 let currentProject=null;
+function switchTab(tab){
+ document.querySelectorAll('.wu-tabs [data-tab]').forEach(button=>button.classList.toggle('active',button.dataset.tab===tab));
+ $('audioPanel').classList.toggle('wu-hidden',tab!=='audio');
+ $('originalsPanel').classList.toggle('wu-hidden',tab!=='originals');
+ hidden('projectEditor',false);hidden('chapterEditor',false);
+}
+document.querySelectorAll('.wu-tabs [data-tab]').forEach(button=>{
+ button.addEventListener('click',()=>switchTab(button.dataset.tab));
+});
 async function api(path,options={}) {
  const r=await fetch(API+path,{...options,headers:{...headers,...(options.headers||{})}});
  let d={}; try{d=await r.json()}catch{}
@@ -66,7 +75,7 @@ async function manage(type,id,name){
  $('chapterHeading').textContent=type==='audio'?'Audio chapters':'Originals episodes';$('chapterProjectName').textContent=name;
  hidden('mediaTypeLabel',type==='originals');hidden('contentLabel',type==='originals');hidden('audioUploadLabel',type==='audio');
  $('chapterForm').reset();$('cCoins').value=0;$('cAudioFile').value='';$('audioUploadStatus').textContent='MP3 only, maximum 500 MB. Select a file, then click Save changes to start uploading.';$('audioUploadStatus').style.color='';$('audioUploadProgress').hidden=true;$('audioUploadPercent').hidden=true;$('audioUploadProgress').value=0;
- $('chapterForm').querySelector('button[type=submit]').textContent='Add chapter / episode';
+ $('chapterForm').querySelector('button[type=submit]').textContent=type==='audio'?'Save chapter & upload MP3':'Add chapter / episode';
  await loadChapters();$('chapterEditor').scrollIntoView({behavior:'smooth'});
 }
 async function loadChapters(){
@@ -79,6 +88,10 @@ async function loadChapters(){
   }).join('')||'<p class="wu-muted">No chapters or episodes yet.</p>';
  }catch(e){msg(e.message);}
 }
+$('cAudioFile').addEventListener('change',()=>{
+ const file=$('cAudioFile').files[0];
+ if(file){$('audioUploadStatus').style.color='';$('audioUploadStatus').textContent=`Selected ${file.name} (${(file.size/1024/1024).toFixed(2)} MB). Click “Save changes & upload MP3” to begin.`;}
+});
 async function uploadAudio(chapterId,file){
  if(!file||(!/\.mp3$/i.test(file.name)&&file.type!=='audio/mpeg'))throw new Error('Select an MP3 audio file.');
  if(file.size>500*1024*1024)throw new Error('MP3 must be 500 MB or smaller.');
@@ -143,7 +156,7 @@ $('chapterForm').onsubmit=async e=>{
    await uploadAudio(chapter.id,$('cAudioFile').files[0]);
   }
   $('chapterForm').reset();$('cCoins').value=0;$('chapterEditId').value='';
-  saveButton.textContent='Add chapter / episode';
+  saveButton.textContent=type==='audio'?'Save chapter & upload MP3':'Add chapter / episode';
   msg(editId?'Chapter / episode updated.':'Chapter / episode created.');await loadChapters();
  }catch(err){msg(err.message);}
  finally{saveButton.disabled=false;if(saveButton.textContent==='Saving…')saveButton.textContent=originalButtonText;}
@@ -158,7 +171,7 @@ document.addEventListener('click',async e=>{
   const type=ce.dataset.chapterEdit,id=$('chapterProjectId').value,d=await api(`/${type}/${id}/${type==='audio'?'chapters':'episodes'}`),arr=type==='audio'?d.chapters:d.episodes,c=arr.find(x=>String(x.id)===ce.dataset.id);if(!c)return;
   $('chapterEditId').value=c.id;$('cNumber').value=c.chapter_no;$('cTitle').value=c.title;$('cPremium').checked=!!c.is_premium;$('cCoins').value=c.coins_required||0;$('cEarly').checked=!!c.early_access;$('cPublishAt').value=c.publish_at?new Date(c.publish_at).toISOString().slice(0,16):'';
   if(type==='originals'){$('cMediaType').value=c.media_type||'video';$('cContent').value=c.content||'';}
-  $('chapterForm').querySelector('button[type=submit]').textContent='Save changes';$('chapterForm').scrollIntoView({behavior:'smooth'});
+  $('chapterForm').querySelector('button[type=submit]').textContent=type==='audio'?'Save changes & upload MP3':'Save changes';$('chapterForm').scrollIntoView({behavior:'smooth'});
  }catch(err){msg(err.message);}return;}
  const cp=e.target.closest('[data-chapter-publish]');if(cp){try{const type=cp.dataset.chapterPublish;await api(type==='audio'?`/audio/chapters/${cp.dataset.id}/publish`:`/originals/episodes/${cp.dataset.id}/publish`,{method:'POST',body:JSON.stringify({published:cp.dataset.published!=='true'})});msg('Chapter / episode publication updated.');await loadChapters();}catch(err){msg(err.message);}return;}
  const cd=e.target.closest('[data-chapter-delete]');if(cd){if(!confirm('Delete this chapter / episode? This cannot be undone.'))return;try{const type=cd.dataset.chapterDelete;await api(type==='audio'?`/audio/chapters/${cd.dataset.id}`:`/originals/episodes/${cd.dataset.id}`,{method:'DELETE'});msg('Chapter / episode deleted.');await loadChapters();}catch(err){msg(err.message);}return;}
