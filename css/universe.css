@@ -690,3 +690,22 @@
         width: 100%;
     }
 }
+
+/* Published content inside MyLikith Universe */
+.universe-content-section { padding-top: 20px; }
+.universe-content-block { margin-top: 34px; }
+.universe-content-heading { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:16px; }
+.universe-content-heading h3 { margin:0; color:var(--text-primary, #fff); font-size:22px; }
+.universe-content-heading a { color:#b99aff; text-decoration:none; font-weight:600; }
+.universe-content-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:18px; }
+.universe-content-card { display:block; overflow:hidden; text-decoration:none; color:inherit; border:1px solid rgba(180,150,255,.17); border-radius:16px; background:rgba(255,255,255,.045); transition:transform .2s ease,border-color .2s ease; }
+.universe-content-card:hover { transform:translateY(-4px); border-color:rgba(180,150,255,.55); }
+.universe-content-cover { height:220px; background:linear-gradient(135deg,rgba(112,70,190,.35),rgba(35,25,60,.8)); display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.universe-content-cover img { width:100%; height:100%; object-fit:cover; }
+.universe-content-placeholder { font-size:48px; color:#c6aaff; }
+.universe-content-card-body { padding:14px; }
+.universe-content-card-body h4 { margin:0 0 7px; font-size:16px; }
+.universe-content-card-body p,.universe-content-card-body span { display:block; margin:0; color:var(--text-secondary,#aaa); font-size:13px; }
+.universe-content-card-body span { margin-top:6px; }
+.universe-content-empty { color:var(--text-secondary,#aaa); padding:12px 0; }
+@media(max-width:650px) { .universe-content-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; } .universe-content-cover { height:185px; } .universe-content-card-body { padding:11px; } .universe-content-heading h3 { font-size:19px; } }
